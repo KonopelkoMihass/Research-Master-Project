@@ -74,4 +74,16 @@ class UIFactory
 
 		return elementDict;
 	}
+
+
+	insertTooltip(elementToInsertInto, tooltip)
+	{
+		elementToInsertInto.className += " tooltip";
+
+		var tooltipSpan = document.createElement("SPAN");
+		tooltipSpan.className = "tooltiptext";
+		tooltipSpan.innerHTML = tooltip;
+
+		elementToInsertInto.appendChild(tooltipSpan);
+	}
 }
