@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<project name="ProjectOrganiser">
+	<property name="ip" value="gamecore.itcarlow.ie"/>
+
+
+	<target name="create_database">
+
+	</target>
+
+
+	<!--Local build and run-->
+	<target name="build_and_run">
+	<exec executable="docker-compose">
+		<arg value="-f"/>
+		<arg value="Docker/docker-compose.yml"/>
+		<arg value="down"/>
+	</exec>
+	<exec executable="docker-compose">
+		<arg value="-f"/>
+		<arg value="Docker/docker-compose.yml"/>
+		<arg value="build"/>
+	</exec>
+	<exec executable="docker-compose">
+		<arg value="-f"/>
+		<arg value="Docker/docker-compose.yml"/>
+		<arg value="up"/>
+	</exec>
+	</target>
+
+
+	<!--Build image of python server-->
+	<target name="build_base_python_server">
+	<exec executable="docker">
+		<arg value="build"/>
+		<arg value="-t"/>
+		<arg value="python-server"/>
+		<arg value="-f"/>
+		<arg value="Docker/BaseServerDockerfile"/>
+		<arg value="."/>
+	</exec>
+	</target>
+
+
+	<!--Build image of python server-->
+	<target name="build_python_server">
+	<exec executable="docker">
+		<arg value="build"/>
+		<arg value="-t"/>
+		<arg value="python-server"/>
+	</exec>
+	</target>
+
+
+	<!--Run all unit tests-->
+	<target name="unit_tests">
+	<exec executable="python3">
+		<arg value="tests/test_signup.py"/>
+		<arg value="tests/test_signin.py"/>
+	</exec>
+	</target>
+
+
+	<!--run all selenium tests-->
+	<target name="selenium_tests">
+	<exec executable="python3">
+		<arg value="tests/testbot.py"/>
+	</exec>
+	</target>
+
+
+	<!--Local build and run-->
+	<target name="local_run">
+	<exec executable="docker-compose">
+		<arg value="up"/>
+	</exec>
+	</target>
+
+
+	<!--Local build and run-->
+	<target name="local_run_fast">
+	<exec executable="docker-compose">
+		<arg value="-f"/>
+		<arg value="docker-compose-apache-python-only.yml"/>
+		<arg value="up"/>
+	</exec>
+	</target>
+
+
+	<!--Local build and run-->
+	<target name="local_run_mysql">
+	<exec executable="docker-compose">
+		<arg value="-f"/>
+		<arg value="docker-compose-mysql-only.yml"/>
+		<arg value="up"/>
+	</exec>
+	</target>
+
+
+	<!--Build image of python server-->
+	<target name="run_python_server">
+	<exec executable="docker">
+		<arg value="stop"/>
+		<arg value="server"/>
+	</exec>
+	<exec executable="docker">
+		<arg value="rm"/>
+		<arg value="server"/>
+	</exec>
+	<exec executable="docker">
+		<arg value="run"/>
+		<arg value="--name"/>
+		<arg value="server"/>
+		<arg value="--link"/>
+		<arg value="ProjectOrganiser_mysql_1:mysql"/>
+		<arg value="--net"/>
+		<arg value="ProjectOrganiser_default"/>
+		<arg value="-p"/>
+		<arg value="8080:8080"/>
+		<arg value="-d"/>
+		<arg value="-t"/>
+		<arg value="python-server"/>
+	</exec>
+	</target>
+
+
+	<target name="gamecore-build">
+		<input message="Enter github username:" addproperty="username" />
+		<input message="secure-input:" addproperty="password">
+	    <handler classname="org.apache.tools.ant.input.SecureInputHandler" />
+		</input>
+		<taskdef name="sshexec" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" classpath="lib/jsch-0.1.50.jar" />
+		<sshexec host="${ip}"
+			username="gamecore"
+			trust="true"
+			password="j01nin17."
+			command="
+			(cd ProjectOrganiser; sudo git pull https://${username}:${password}@github.com/ITCOnlineGaming/PostgradSystem.git);
+			(cd ProjectOrganiser; sudo git checkout sprint2);
+
+			(cd ProjectOrganiser; sudo docker-compose  -f Docker/docker-compose.yml build);"
+
+		/>
+	</target>
+
+
+	<target name="run">
+		<taskdef name="sshexec" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" classpath="lib/jsch-0.1.50.jar" />
+		<sshexec host="${ip}"
+			username="gamecore"
+			trust="true"
+			password="j01nin17."
+			command="
+			(cd ProjectOrganiser; sudo docker-compose -f Docker/docker-compose.yml down);
+			(cd ProjectOrganiser; sudo docker-compose -f Docker/docker-compose.yml up -d);"
+		/>
+	</target>
+</project>

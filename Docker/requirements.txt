@@ -1,0 +1,6 @@
+tornado==4.4.2
+requests==2.18.4
+mysql-connector==2.1.6
+selenium==3.7.0
+unittest2py3k==0.5.1
+pytest==3.2.5
