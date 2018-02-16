@@ -1,44 +1,83 @@
-/**For speeding up creating UI elements (This is the module pattern)**/
-var uiFactory = (function UIFactory()
+class UIFactory
 {
-	var module={};
-
-	module.createRadioElement = function (id, labelid, name, checked, text)
+	constructor()
 	{
-		var label = '<label id = '+labelid+' for = ' + id + '>' + text + '</label> <br>';
-		var radioHtml = '<input type = "radio" id = "' + id + '" name="' + name + '"';
 
-		if (checked)
-		{
-			radioHtml += ' checked = "checked"';
-		}
-
-		radioHtml += '/>';
-	  radioHtml += label;
-
-		return radioHtml;
 	}
 
-	/**create a textbox**/
-	module.createTextBox = function(id, text)
+	createModal(modalIDPrefix, title)
 	{
-		var textBox = "";
+		// Create all elements
+		var modal = document.createElement("DIV");
+		modal.className = "modal";
+		modal.id = modalIDPrefix + "-modal";
 
-		textBox += '<label id = "' + id + ' lablel">' + text + '</label>'
-		textBox += '<input type = "textbox" id = "' + id + '" placeholder = "' + text + '"/>'
+		var modalSandbox = document.createElement("DIV");
+		modalSandbox.className = "modal-sandbox";
 
-		return textBox;
+		var modalBox = document.createElement("DIV");
+		modalBox.className = "modal-box";
+
+		var modalHeader = document.createElement("DIV");
+		modalHeader.className = "modal-header";
+
+		var modalClose = document.createElement("DIV");
+		modalClose.className = "close-modal";
+		modalClose.name = modalIDPrefix + "-close";
+		modalClose.innerHTML = "&#10006;";
+
+		var modalTitle = document.createElement("H1");
+		var titleText = document.createTextNode(title);
+    	modalTitle.appendChild(titleText);
+
+		var modalBody = document.createElement("DIV");
+		modalBody.className = "modal-body";
+		modalBody.name = modalIDPrefix + "-modal-body";
+
+
+		var submitBtn = document.createElement("Button");
+		submitBtn.className = "button-modal";
+		submitBtn.name = modalIDPrefix + "-close";
+		submitBtn.innerHTML = "Submit";
+
+
+		var cancelBtn = document.createElement("Button");
+		cancelBtn.className = "button-modal";
+		cancelBtn.name = modalIDPrefix + "-close";
+		cancelBtn.innerHTML = "Close";
+
+
+		//Assemble all
+		modal.appendChild(modalSandbox);
+		modal.appendChild(modalBox);
+		modalBox.appendChild(modalHeader);
+		modalHeader.appendChild(modalClose);
+		modalHeader.appendChild(modalTitle);
+		modalBox.appendChild(modalBody);
+
+		modalBox.appendChild(submitBtn);
+		modalBox.appendChild(cancelBtn);
+
+
+		var elementDict = {};
+		elementDict.modal = modal;
+		elementDict.body = modalBody;
+		elementDict.closes = [modalClose, cancelBtn];
+		elementDict.submit = submitBtn;
+
+
+
+        for (i = 0; i <elementDict.closes.length;i++){
+			elementDict.closes[i].addEventListener("click", function ()
+			{
+				var parentNode = modal.parentNode;
+				parentNode.removeChild(modal);
+			});
+        }
+
+
+
+
+		return elementDict;
 	}
-
-	/**this method creates a password text box**/
-	module.createPasswordBox = function(id, text)
-	{
-		var textBox = "";
-
-		textBox += '<label id = "' + id + ' lablel">' + text + '</label>'
-		textBox += '<input type = "password" id = "' + id + '" placeholder = "' + text + '"/>'
-		return textBox;
-	}
-
-	return module;
-}());
+}

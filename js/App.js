@@ -16,6 +16,8 @@ class App
 
 		this.viewManager= new ViewManager();
 		this.templateManager = new TemplateManager();
+		this.uiFactory = new UIFactory();
+
 
 		//load views
 		for (var viewName in this.viewManager.VIEW)
