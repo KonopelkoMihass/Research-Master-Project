@@ -62,10 +62,7 @@ class UIFactory
 		var elementDict = {};
 		elementDict.modal = modal;
 		elementDict.body = modalBody;
-		elementDict.closes = [modalClose, cancelBtn];
 		elementDict.submit = submitBtn;
-
-
 
         for (i = 0; i <elementDict.closes.length;i++){
 			elementDict.closes[i].addEventListener("click", function ()
@@ -74,9 +71,6 @@ class UIFactory
 				parentNode.removeChild(modal);
 			});
         }
-
-
-
 
 		return elementDict;
 	}

@@ -33,7 +33,6 @@ class SignupController
 			{
 				this.model.signup(email, githubUsername, githubEmail, name, surname, noun, password);
 				this.cleanSignup();
-
 			}
 
 			else

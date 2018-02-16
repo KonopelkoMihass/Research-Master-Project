@@ -11,6 +11,7 @@ class User extends Model
         this.name = "";
         this.surname = "";
         this.noun = "";
+        this.role = "";
     }
 
     signup(email, githubUsername, githubEmail, name, surname, noun, password)
@@ -24,6 +25,7 @@ class User extends Model
         userData.surname = surname;
         userData.noun = noun;
         userData.password = password;
+        userData.role = "student";
 
         app.net.sendMessage("signup", userData);
     }
@@ -40,10 +42,11 @@ class User extends Model
     setData(data)
     {
          this.email = data.email;
-         this.githubUsername =  data.githubUsername;
-         this.githubEmail =  data.githubEmail;
+         this.githubUsername =  data.github_username;
+         this.githubEmail =  data.github_email;
          this.name =  data.name;
          this.surname =  data.surname;
          this.noun =  data.noun;
+         this.role = data.role;
     }
 }

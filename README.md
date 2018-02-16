@@ -16,3 +16,33 @@ To stop docker:
 
 # cd Docker 
 # docker-compose stop
+
+
+Features Completed:
+-Signin
+-Signup
+
+
+To Do:
+-Navigation Bar***
+-Submit Assignment
+    -Selector***
+    -Submission Window (1)***
+-Submit Review
+    -Select Mode*
+    -Review Mode (3 + spike)***
+
+-Read Feedback**
+-Review Selector**
+-Space Game*
+-View Review**
+-Profile
+    -Skill Window
+    -Statistics
+
+
+-Teacher System side
+    -Add New Standards**
+    -Add/Modify Assignment**
+    -Review Assignment*
+

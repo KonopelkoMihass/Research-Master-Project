@@ -28,10 +28,11 @@ class MessageHandler
 		else if(type === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
 		{
 			app.user.setData(data);
-
+			app.viewManager.goToView(app.viewManager.VIEW.HOMEPAGE);
+			
 			//var modalData = app.uiFactory.createModal("Brebere", "Hallo");
 			//document.body.appendChild(modalData.modal);
-			//modalData.modal.style.display = "block";
+			//odalData.modal.style.display = "block";
 		}
 
 

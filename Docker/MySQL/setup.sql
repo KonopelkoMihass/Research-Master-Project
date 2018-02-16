@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `surname` VARCHAR(45) NOT NULL,
   `noun` VARCHAR(45) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
+  `role` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
