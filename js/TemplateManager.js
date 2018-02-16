@@ -6,7 +6,7 @@ class TemplateManager
 		this.downloadQueue = [];
 		this.cache={};
 		this.successCount = 0;
-	  this.errorCount = 0;
+	  	this.errorCount = 0;
 	}
 
 	/**Queue a template for downloading**/
@@ -52,8 +52,8 @@ class TemplateManager
 
 			if (that.isDone())
 			{
-        downloadCallback();
-    	}
+				downloadCallback();
+			}
 		};
 
 		xhr.onerror = function()
@@ -62,8 +62,8 @@ class TemplateManager
 
 			if (that.isDone())
 			{
-        downloadCallback();
-    	}
+        		downloadCallback();
+    		}
 		};
 
 		xhr.open("GET", url);
@@ -92,5 +92,30 @@ class TemplateManager
 	processTemplate (template)
 	{
 
+	}
+
+	loadFromCache()
+	{
+		for(var index in this.cache)
+		{
+			//add root element for this view
+			var divNode = document.createElement("div");
+			divNode.id = index;
+			document.body.appendChild(divNode);
+			var view = this.cache[index];
+
+			if(index == undefined)
+			{
+				console.error("Trying to use a view that doesn't exist.  Check the this.title in your views exist in ViewManager.VIEW");
+			}
+			else if(view == undefined)
+			{
+				console.error(this.title +" view is not defined");
+			}
+			else
+			{
+				divNode.innerHTML = this.cache[index].innerHTML;
+			}
+		}
 	}
 }

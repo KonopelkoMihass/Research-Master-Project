@@ -18,10 +18,10 @@ class App
 		this.templateManager = new TemplateManager();
 		this.uiFactory = new UIFactory();
 
-
 		//load views
 		for (var viewName in this.viewManager.VIEW)
 		{
+			console.log(this.viewManager.VIEW[viewName]);
 			this.templateManager.queueTemplate(this.viewManager.VIEW[viewName]);
 		}
 
@@ -38,6 +38,7 @@ class App
 
 	setup()
 	{
+		this.templateManager.loadFromCache();
 		//models
 		this.user = new User();
 
@@ -47,25 +48,29 @@ class App
 		//add views
 		this.setupViews();
 
-		//add controllers
-		this.setupControllers();
-
 		this.viewManager.goToView("signin");
 	}
 
 	setupViews()
 	{
-		this.viewManager.addView(new SigninView());
-		this.viewManager.addView(new SignupView());
-		this.viewManager.addView(new HomepageView());
+		var signinController = new SigninController(this.user);
+		var signinView = new SigninView(signinController);
+		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
+		this.viewManager.addView(signinView);
+
+		var signupController = new SignupController(this.user);
+		var signupView = new SignupView( signupController);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
+		this.viewManager.addView(signupView);
+
+		var homepageController = new HomepageController(this.user);
+		var homepageView = new HomepageView( homepageController);
+		this.viewManager.addView(homepageView);
 	}
 
-	setupControllers()
-	{
-		this.signinController = new SigninController(this.user);
-		this.signupController = new SignupController(this.user);
-		this.homepageController = new HomepageController(this.user);
-	}
+
 
 	loadResources()
 	{

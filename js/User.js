@@ -14,6 +14,20 @@ class User extends Model
         this.role = "";
     }
 
+
+    update(data, messageType)
+    {
+      if (data !== "" && !Number.isInteger(data))
+      {
+        this.setData(data);
+      }
+
+      this.notify(messageType);
+    }
+
+
+
+
     signup(email, githubUsername, githubEmail, name, surname, noun, password)
     {
         var userData = {};

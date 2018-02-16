@@ -5,20 +5,26 @@ class SigninView extends View
 	{
 		super();
 
-		this.title = app.viewManager.VIEW.SIGNIN;;
+		this.title = app.viewManager.VIEW.SIGNIN;
 		this.controller = controller;
 		this.setup();
 	}
 
-	/**Updates the view to reflect the latest model**/
-	display (model)
-	{
-
-	}
-
 	/**Called whenever the model changes**/
-	onNotify (model)
+	onNotify (model, messageType)
 	{
-		this.display(model);
+		if(messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
+		{
+			app.viewManager.goToView(app.viewManager.VIEW.HOMEPAGE);
+
+			//var modalData = app.uiFactory.createModal("Brebere", "Hallo");
+			//document.body.appendChild(modalData.modal);
+			//modalData.modal.style.display = "block";
+		}
+
+		else if(messageType === app.net.messageHandler.types.SIGN_IN_FAILED)
+		{
+			this.controller.showError("Details incorrect, please try again!");
+		}
 	}
 }

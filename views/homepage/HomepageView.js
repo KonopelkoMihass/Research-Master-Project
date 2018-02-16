@@ -10,21 +10,10 @@ class HomepageView extends View
 		this.setup();
 	}
 
-	/**Updates the view to reflect the latest model**/
-	display (model)
-	{
-	}
-
-	/**Called whenever the model changes**/
-	onNotify (model)
-	{
-		this.display(model);
-	}
-
 	show()
 	{
-		//console.log("Trigger get data");
-		//app.net.sendMessage("get_user_data","");
+		var menuPanel = document.getElementById("menupanel");
+		menuPanel.style.display = "block";
 		super.show();
 	}
 }

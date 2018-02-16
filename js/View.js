@@ -15,22 +15,13 @@ class View
 	setup ()
 	{
 		//add root element for this view
-		this.root = document.createElement("div");
-		this.root.id = this.title;
-		document.body.appendChild(this.root);
-		var view = app.templateManager.cache[this.title];
-
-		if(this.title == undefined)
+		if(this.title === undefined)
 		{
 			console.error("Trying to use a view that doesn't exist.  Check the this.title in your views exist in ViewManager.VIEW");
 		}
-		else if(view == undefined)
-		{
-			console.error(this.title +" view is not defined");
-		}
 		else
 		{
-			this.root.innerHTML = app.templateManager.cache[this.title].innerHTML;
+			this.root = document.getElementById(this.title);
 		}
 
 		//hide the view initially
@@ -51,7 +42,7 @@ class View
 		else
 		{
 			//unhide the elements of the scene
-			this.root.style.display= 'block';
+			this.root.style.display = 'block';
 		}
 	}
 
