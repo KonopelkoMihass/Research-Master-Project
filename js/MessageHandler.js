@@ -16,6 +16,11 @@ class MessageHandler
 			GET_ASSIGNMENTS_SUCCESSFUL: "get_assignments_successful",
 			GET_ASSIGNMENTS_FAILED: "get_assignments_failed",
 
+			ASSIGNMENT_DELETE_SUCCESSFUL: "assignment_delete_successful",
+			ASSIGNMENT_DELETE_FAILED: "assignment_delete_failed",
+
+
+
 		};
 	}
 

@@ -31,6 +31,31 @@ class AssignmentsManager:
 		message = [type, data]
 		return message
 
+	def delete_assignment(self, id):
+		type = "assignment_delete_successful"
+		data = {}
+
+		try:
+			pass
+			self.database_manager.delete_assignment(id)
+			print("Deleted Assignment Successfully")
+			data = self.database_manager.select_all_from_table("Assignments")
+			print("Retrieved Assignments Successfully")
+		except:
+			type = "assignment_delete_failed"
+			print("Deleted Assignment Failed")
+
+		message = [type, data]
+		return message
+
+
+
+
+
+
+
+
+
 	def get_assignments(self):
 		print("add_assignment")
 		type = "get_assignments_successful"

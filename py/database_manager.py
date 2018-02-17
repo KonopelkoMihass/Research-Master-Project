@@ -97,6 +97,22 @@ class DatabaseManager:
 		return data
 
 
+	def delete_assignment(self, id):
+		#Inserts a dictionary into table table_name
+		print("delete assignment")
+		id = str(id)
+
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		stmt = ("DELETE FROM Assignments WHERE Assignments.id="+ id +" LIMIT 1")
+		print(stmt)
+
+		cursor.execute(stmt)
+
+		connector.commit()
+		cursor.close()
+		connector.close()
 
 
 	def delete_user(self, email):
@@ -105,12 +121,10 @@ class DatabaseManager:
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
-		stmt = ("DELETE * FROM Users WHERE Users.email='"+email+"'")
+		stmt = ("DELETE FROM Users WHERE Users.email='"+email+"' LIMIT 1")
 		print("stmt:")
 		print(stmt)
-
 		cursor.execute(stmt)
-
 		connector.commit()
 		cursor.close()
 		connector.close()

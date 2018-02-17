@@ -43,6 +43,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "get_assignments":
 			self.get_assignments()
 
+		elif message_type == "delete_assignment":
+			self.delete_assignment(message_data["id"])
+
 
 
 
@@ -88,7 +91,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message = assignments_manager.add_assignment(message_data)
 		self.send_message(message[0], message[1])
 
-	def get_assignments(self, ):
+	def delete_assignment(self, id):
+		message = assignments_manager.delete_assignment(id)
+		self.send_message(message[0], message[1])
+
+
+	def get_assignments(self):
 		message = assignments_manager.get_assignments()
 		self.send_message(message[0], message[1])
 

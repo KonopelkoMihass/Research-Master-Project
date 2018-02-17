@@ -54,6 +54,11 @@ class AssignmentsTeacherController
 		this.model.createAssignment(name, deadlineTime, deadlineDate, description);
 	}
 
+	deleteAssignment(id)
+	{
+		this.model.deleteAssignment(id);
+	}
+
 
 
 

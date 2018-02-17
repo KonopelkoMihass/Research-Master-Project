@@ -17,7 +17,8 @@ class AssignmentsTeacherView extends View
 
 		// Update the table of assessments
 		if (messageType === app.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL ||
-			messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL)
+			messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
+			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL )
 		{
 			var assignmentTable = document.getElementById("assignments-table");
 
@@ -41,7 +42,18 @@ class AssignmentsTeacherView extends View
 				var cell3 = row.insertCell(3);
 				var cell4 = row.insertCell(4);
 
-				cell0.innerHTML = "icons";
+				var img = document.createElement("IMG");
+				img.src = "resources/images/trash-button.png";
+				img.id = assignments[i].id + "-delete-assignment-button";
+				img.className = "trash-button";
+				img.addEventListener("click", function()
+				{
+					var id = parseInt(this.id.split('-')[0]);
+					that.controller.deleteAssignment(id);
+				});
+				cell0.appendChild(img);
+
+
 				cell1.innerHTML = assignments[i].name;
 				cell2.innerHTML = assignments[i].description;
 				cell3.innerHTML = assignments[i].deadlineDate;

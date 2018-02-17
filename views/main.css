@@ -94,5 +94,10 @@ input
 
 .plus-button
 {
-    width:20%
+    width:40%;
+}
+
+.trash-button
+{
+    width:40%;
 }

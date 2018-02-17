@@ -14,12 +14,13 @@ class Assignments extends Model
         if (data !== "" && !Number.isInteger(data))
         {
             if (messageType === app.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL ||
-                messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL)
+                messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
+                messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL)
             {
+                this.assignments = [];
                 for (var i = 0; i < data.length; i++)
                 {
-                    var assignment = new Assignment();
-                    assignment.deserialise(data[i]);
+                    var assignment = new Assignment(data[i]);
                     this.assignments.push(assignment);
                 }
             }
@@ -37,8 +38,13 @@ class Assignments extends Model
 
     createAssignment(name, deadlineTime, deadlineDate, description)
     {
-        var assignment = new Assignment(name, deadlineTime, deadlineDate, description);
-        app.net.sendMessage("add_assignment", assignment.serialise());
+        var data = {};
+        data.name = name;
+        data.deadline_time = deadlineTime;
+        data.deadline_date = deadlineDate;
+        data.description = description;
+
+        app.net.sendMessage("add_assignment", data);
     }
 
     getAllAssignment()
@@ -46,4 +52,8 @@ class Assignments extends Model
         app.net.sendMessage("get_assignments", {});
     }
 
+    deleteAssignment(id)
+    {
+        app.net.sendMessage("delete_assignment", {"id":id});
+    }
 }
