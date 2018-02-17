@@ -16,7 +16,9 @@ class App
 
 		this.viewManager= new ViewManager();
 		this.templateManager = new TemplateManager();
+		this.modalContentManager = new ModalContentManager();
 		this.uiFactory = new UIFactory();
+
 
 		//load views
 		for (var viewName in this.viewManager.VIEW)
@@ -32,8 +34,9 @@ class App
 
 		this.audioManager.downloadAll(function() {
 			that.templateManager.downloadAll(function()	{
-				app.setup();
-			})});
+				that.modalContentManager.downloadAll(function () {
+					app.setup();
+		});});});
 	}
 
 	setup()

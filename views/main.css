@@ -91,3 +91,8 @@ input
     visibility: visible;
     opacity: 1;
 }
+
+.plus-button
+{
+    width:20%
+}

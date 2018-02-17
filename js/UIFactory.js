@@ -5,7 +5,7 @@ class UIFactory
 
 	}
 
-	createModal(modalIDPrefix, title)
+	createModal(modalIDPrefix, title, body)
 	{
 		// Create all elements
 		var modal = document.createElement("DIV");
@@ -33,6 +33,7 @@ class UIFactory
 		var modalBody = document.createElement("DIV");
 		modalBody.className = "modal-body";
 		modalBody.name = modalIDPrefix + "-modal-body";
+		modalBody.innerHTML = body;
 
 
 		var submitBtn = document.createElement("Button");
@@ -61,8 +62,8 @@ class UIFactory
 
 		var elementDict = {};
 		elementDict.modal = modal;
-		elementDict.body = modalBody;
 		elementDict.submit = submitBtn;
+		elementDict.closes = [cancelBtn, modalClose];
 
         for (i = 0; i <elementDict.closes.length;i++){
 			elementDict.closes[i].addEventListener("click", function ()

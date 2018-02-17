@@ -10,6 +10,7 @@ class AssignmentsTeacherView extends View
 		this.setup();
 	}
 
+
 	show()
 	{
 		var menuPanel = document.getElementById("menupanel-teacher");

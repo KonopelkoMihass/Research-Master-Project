@@ -1,0 +1,38 @@
+.assignments-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.assignments-table th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    word-break:break-all;
+}
+
+.assignments-table tr:hover {background-color:#f5f5f5;}
+
+
+.assignments-box
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 1%;
+
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 5%;
+    bottom: 40%;
+    overflow:auto;
+}
+
+.add-assignment-button
+{
+    position:relative;
+    display: block;
+    float: left;
+}
