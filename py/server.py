@@ -2,6 +2,9 @@ import tornado
 import json
 
 from user_manager import UserManager
+from assignments_manager import AssignmentsManager
+
+
 from tornado import websocket, web, ioloop, httpserver
 from tornado import autoreload
 
@@ -33,6 +36,15 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		elif message_type == "signin":
 			self.signin(message_data)
+
+		elif message_type == "add_assignment":
+			self.add_assignment(message_data)
+
+		elif message_type == "get_assignments":
+			self.get_assignments()
+
+
+
 
 
 	def signup(self, message_data):
@@ -72,6 +84,15 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 			print("Connections", connections)
 
+	def add_assignment(self, message_data):
+		message = assignments_manager.add_assignment(message_data)
+		self.send_message(message[0], message[1])
+
+	def get_assignments(self, ):
+		message = assignments_manager.get_assignments()
+		self.send_message(message[0], message[1])
+
+
 
 
 	def on_close(self):
@@ -96,6 +117,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 user_manager = UserManager()
+assignments_manager = AssignmentsManager()
+
 settings = {
 	'debug':True	#includes autoreload
 }

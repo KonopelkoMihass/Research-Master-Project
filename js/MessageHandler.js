@@ -8,7 +8,14 @@ class MessageHandler
 			SIGN_IN_FAILED: "signin_failed",
 
 			SIGN_UP_SUCCESSFUL: "signup_successful",
-			SIGN_UP_FAILED: "signup_failed"
+			SIGN_UP_FAILED: "signup_failed",
+
+			TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL: "teacher_assignments_creation_successful",
+			TEACHER_ASSIGNMENTS_CREATION_FAILED: "teacher_assignments_creation_failed",
+
+			GET_ASSIGNMENTS_SUCCESSFUL: "get_assignments_successful",
+			GET_ASSIGNMENTS_FAILED: "get_assignments_failed",
+
 		};
 	}
 
@@ -21,12 +28,7 @@ class MessageHandler
 
 		console.log("Message received:", type,"-", data);
 
-		if (type === this.types.SIGN_UP_SUCCESSFUL ||
-			type === this.types.SIGN_IN_SUCCESSFUL ||
-			type === this.types.SIGN_IN_FAILED ||
-			type === this.types.SIGN_UP_FAILED)
-		{
-			app.user.update(data, type);
-		}
+		app.user.update(data, type);
+		app.assignments.update(data, type);
 	}
 }

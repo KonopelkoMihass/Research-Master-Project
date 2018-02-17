@@ -80,7 +80,23 @@ class DatabaseManager:
 		connector.commit()
 		cursor.close()
 		connector.close()
-		print("complete")
+
+
+	def select_all_from_table(self, table_name):
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		stmt = "SELECT * FROM `"+table_name+"`;"
+
+		print(stmt)
+		cursor.execute(stmt)
+		data = cursor.fetchall()
+		cursor.close()
+		connector.close()
+
+		return data
+
+
 
 
 	def delete_user(self, email):

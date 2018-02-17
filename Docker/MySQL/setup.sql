@@ -14,9 +14,23 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `role` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`id`));
 
-
 -- creating dummy teacher
 INSERT INTO ProjectOrganiser.Users (email, github_username, github_email, name, surname, noun, password, role)
 VALUES ('q','q','q','q','q','q','q','teacher');
+
+
+-- Table `ProjectOrganiser`.`Assignments`
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Assignments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(63) NOT NULL,
+  `deadline_date` VARCHAR(16) NOT NULL,
+  `deadline_time` VARCHAR(16) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+
+
+
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);

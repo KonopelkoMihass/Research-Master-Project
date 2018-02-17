@@ -63,10 +63,13 @@ class UIFactory
 		var elementDict = {};
 		elementDict.modal = modal;
 		elementDict.submit = submitBtn;
-		elementDict.closes = [cancelBtn, modalClose];
 
-        for (i = 0; i <elementDict.closes.length;i++){
-			elementDict.closes[i].addEventListener("click", function ()
+		var closeButtons = [cancelBtn, modalClose];
+
+
+
+        for (i = 0; i <closeButtons.length;i++){
+			closeButtons[i].addEventListener("click", function ()
 			{
 				var parentNode = modal.parentNode;
 				parentNode.removeChild(modal);

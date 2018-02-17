@@ -42,8 +42,10 @@ class App
 	setup()
 	{
 		this.templateManager.loadFromCache();
+
 		//models
 		this.user = new User();
+		this.assignments = new Assignments();
 
 		this.net.setHost(location.hostname,8080);
 		this.net.connect();
@@ -58,23 +60,34 @@ class App
 	{
 		var signinController = new SigninController(this.user);
 		var signinView = new SigninView(signinController);
-		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
-		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
 		this.viewManager.addView(signinView);
 
 		var signupController = new SignupController(this.user);
 		var signupView = new SignupView( signupController);
-		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
-		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 		this.viewManager.addView(signupView);
 
 		var profileController = new ProfileController(this.user);
-		var profileView = new ProfileView( ProfileController);
+		var profileView = new ProfileView(profileController);
 		this.viewManager.addView(profileView);
 
-		var assignmentsTeacherController = new AssignmentsTeacherController(this.user);
+		var assignmentsTeacherController = new AssignmentsTeacherController(this.assignments);
 		var assignmentsTeacherView = new AssignmentsTeacherView( assignmentsTeacherController);
+
 		this.viewManager.addView(assignmentsTeacherView);
+
+
+		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
+
+
+		this.assignments.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL);
+		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_FAILED);
+		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
+		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_FAILED);
+
 	}
 
 

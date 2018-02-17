@@ -19,19 +19,21 @@ class Model
 	/**Call this whenever the model changes (in this case the rating of the film)**/
 	notify (messageType)
 	{
-		if (this.observers[messageType] === undefined)
-		{
-			console.log(this.observers[messageType]);
-			console.error("Trying to notify a view that doesn't exist.  " +
-				"Check that the correct model is assigned the right observer in App.js");
-		}
 
-		else
+
+		if (this.observers[messageType] !== undefined)
 		{
 			for (var i = 0; i < this.observers[messageType].length; i++)
 			{
 				this.observers[messageType][i].onNotify(this, messageType);
 			}
+		}
+
+		else
+		{
+			console.log("Trying to notify a view that doesn't exist.  " +
+				"Check that the correct model is assigned the right observer in App.js");
+			console.log("Iff all works as needed - ignore the message");
 		}
 	}
 }

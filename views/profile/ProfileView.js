@@ -10,6 +10,12 @@ class ProfileView extends View
 		this.setup();
 	}
 
+	onNotify (model, messageType)
+	{
+
+	}
+
+
 	show()
 	{
 		var menuPanel = document.getElementById("menupanel-student");
