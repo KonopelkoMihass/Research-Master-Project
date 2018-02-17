@@ -1,4 +1,4 @@
-class HomepageController
+class AssignmentsTeacherController
 {
 	constructor(model)
 	{

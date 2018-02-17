@@ -15,11 +15,15 @@ class SigninView extends View
 	{
 		if(messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
 		{
-			app.viewManager.goToView(app.viewManager.VIEW.HOMEPAGE);
+			if(model.role === "student")
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+			}
 
-			//var modalData = app.uiFactory.createModal("Brebere", "Hallo");
-			//document.body.appendChild(modalData.modal);
-			//modalData.modal.style.display = "block";
+			else if (model.role === "teacher")
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+			}
 		}
 
 		else if(messageType === app.net.messageHandler.types.SIGN_IN_FAILED)

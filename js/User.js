@@ -26,8 +26,6 @@ class User extends Model
     }
 
 
-
-
     signup(email, githubUsername, githubEmail, name, surname, noun, password)
     {
         var userData = {};

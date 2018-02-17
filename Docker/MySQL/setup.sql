@@ -14,4 +14,9 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `role` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`id`));
 
+
+-- creating dummy teacher
+INSERT INTO ProjectOrganiser.Users (email, github_username, github_email, name, surname, noun, password, role)
+VALUES ('q','q','q','q','q','q','q','teacher');
+
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);

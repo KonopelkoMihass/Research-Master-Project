@@ -23,11 +23,11 @@ input
 .menu-panel
 {
 	border: 1px solid;
-  font-size: 0;
-  margin: 0 auto;
+    font-size: 0;
+    margin: 0 auto;
 	position: sticky;
 	text-align: center;
-  width: 80%;
+    width: 80%;
 }
 
 .menu-panel button
@@ -39,7 +39,7 @@ input
     display: inline-block;
 	font-size: calc(9px + 0.5vw);
     padding: 0.2% 0;
-	width: 15%;
+	width: 150px;
 }
 .menu-panel button:hover
 {

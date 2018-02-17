@@ -76,6 +76,6 @@ class Goals extends Model
 
     goToHomeview()
     {
-        app.viewManager.goToView(app.viewManager.VIEW.HOMEPAGE);
+        app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
     }
 }

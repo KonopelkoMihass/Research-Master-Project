@@ -24,30 +24,42 @@
     <script src = "views/signup/SignupController.js"></script>
     <script src = "views/signup/SignupView.js"></script>
 
-    <script src = "views/homepage/HomepageController.js"></script>
-    <script src = "views/homepage/HomepageView.js"></script>
+    <script src = "views/profile/ProfileController.js"></script>
+    <script src = "views/profile/ProfileView.js"></script>
+
+    <script src = "views/assignments-teacher/AssignmentsTeacherController.js"></script>
+    <script src = "views/assignments-teacher/AssignmentsTeacherView.js"></script>
 
 
 
     <!-- Aditional Styles -->
-
     <link rel="stylesheet" href="views/modal.css">
     <link rel="stylesheet" href="views/main.css">
     <link rel="stylesheet" href="views/signin/signin.css">
     <link rel="stylesheet" href="views/signup/signup.css">
-    <link rel="stylesheet" href="views/homepage/homepage.css">
+    <link rel="stylesheet" href="views/profile/profile.css">
+    <link rel="stylesheet" href="views/assignments-teacher/assignments-teacher.css">
+
 
   </head>
 
 
   <body onload="main()">
-    <div id="menupanel" style="display: none">
+
+    <div id="menupanel-student" style="display: none">
       <div class="menu-panel">
-        <button id="mp-profile-button">Your Profile</button>
-        <button id="mp-homepage-button">Homepage</button>
-        <button id="mp-assignments-button">Assignments</button>
-        <button id="mp-standards-button">Standards</button>
-        <button id="mp-iterations-button">Reviews</button>
+        <button id="mps-profile-button">Your Profile</button>
+        <button id="mps-assignments-button">Assignments</button>
+        <button id="mps-standards-button">Standards</button>
+        <button id="mps-reviews-button">Reviews</button>
+      </div>
+    </div>
+
+    <div id="menupanel-teacher" style="display: none">
+      <div class="menu-panel">
+        <button id="mpt-assignments-button">Assignments</button>
+        <button id="mpt-standards-button">Standards</button>
+        <button id="mpt-reviews-button">Reviews</button>
       </div>
     </div>
 

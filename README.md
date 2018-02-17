@@ -46,3 +46,8 @@ To Do:
     -Add/Modify Assignment**
     -Review Assignment*
 
+- Sample code
+//Create a modal
+var modalData = app.uiFactory.createModal("id", "title");
+document.body.appendChild(modalData.modal);
+modalData.modal.style.display = "block";

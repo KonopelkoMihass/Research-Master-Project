@@ -65,9 +65,13 @@ class App
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 		this.viewManager.addView(signupView);
 
-		var homepageController = new HomepageController(this.user);
-		var homepageView = new HomepageView( homepageController);
-		this.viewManager.addView(homepageView);
+		var profileController = new ProfileController(this.user);
+		var profileView = new ProfileView( ProfileController);
+		this.viewManager.addView(profileView);
+
+		var assignmentsTeacherController = new AssignmentsTeacherController(this.user);
+		var assignmentsTeacherView = new AssignmentsTeacherView( assignmentsTeacherController);
+		this.viewManager.addView(assignmentsTeacherView);
 	}
 
 

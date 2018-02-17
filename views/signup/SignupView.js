@@ -15,7 +15,7 @@ class SignupView extends View
 	{
 		if(messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
 		{
-			app.viewManager.goToView(app.viewManager.VIEW.HOMEPAGE);
+			app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
 		}
 
 		else if(messageType === app.net.messageHandler.types.SIGN_UP_FAILED)
