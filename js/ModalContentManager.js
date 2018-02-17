@@ -7,8 +7,9 @@ class ModalContentManager
 		this.successCount = 0;
 	  	this.errorCount = 0;
 
-	  	this.modals = ["add-assignment"
-
+	  	this.modals = [
+	  		"add-assignment",
+			"submit-assignment"
 		];
 	}
 

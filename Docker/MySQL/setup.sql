@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
 
 -- creating dummy teacher
 INSERT INTO ProjectOrganiser.Users (email, github_username, github_email, name, surname, noun, password, role)
-VALUES ('q','q','q','q','q','q','q','teacher');
+VALUES ('q','q','q','q','q','q','q','teacher'),  ('w','w','w','w','w','w','w','student') ;
+
+
 
 
 -- Table `ProjectOrganiser`.`Assignments`

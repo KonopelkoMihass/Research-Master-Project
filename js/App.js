@@ -53,6 +53,8 @@ class App
 		//add views
 		this.setupViews();
 
+		this.setupMenuPanel();
+
 		this.viewManager.goToView("signin");
 	}
 
@@ -72,9 +74,11 @@ class App
 
 		var assignmentsTeacherController = new AssignmentsTeacherController(this.assignments);
 		var assignmentsTeacherView = new AssignmentsTeacherView( assignmentsTeacherController);
-
 		this.viewManager.addView(assignmentsTeacherView);
 
+		var assignmentsStudentController = new AssignmentsStudentController(this.assignments);
+		var assignmentsStudentView = new AssignmentsStudentView(assignmentsStudentController);
+		this.viewManager.addView(assignmentsStudentView);
 
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
@@ -89,9 +93,43 @@ class App
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_FAILED);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_FAILED);
+
+		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
+		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
+
 	}
 
 
+
+
+	setupMenuPanel()
+	{
+		document.getElementById("mps-profile-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+			}
+		});
+
+		document.getElementById("mps-assignments-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
+			}
+		});
+
+
+
+		document.getElementById("mpt-assignments-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+			}
+		});
+
+
+
+	}
 
 	loadResources()
 	{

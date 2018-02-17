@@ -20,7 +20,7 @@ class AssignmentsTeacherView extends View
 			messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
 			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL )
 		{
-			var assignmentTable = document.getElementById("assignments-table");
+			var assignmentTable = document.getElementById("teacher-assignments-table");
 
 			// remove all data in there.
 			var rowCount = assignmentTable.rows.length;
@@ -44,11 +44,11 @@ class AssignmentsTeacherView extends View
 
 				var img = document.createElement("IMG");
 				img.src = "resources/images/trash-button.png";
-				img.id = assignments[i].id + "-delete-assignment-button";
-				img.className = "trash-button";
+				img.id = "delete-assignment-button##" + assignments[i].id;
+				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
-					var id = parseInt(this.id.split('-')[0]);
+					var id = parseInt(this.id.split('##')[1]);
 					that.controller.deleteAssignment(id);
 				});
 				cell0.appendChild(img);
@@ -72,7 +72,7 @@ class AssignmentsTeacherView extends View
 			var img = document.createElement("IMG");
 			img.src = "resources/images/plus-button.png";
 			img.id = "add-assignment-button";
-			img.className = "plus-button";
+			img.className = "picture-button";
 			img.addEventListener("click", function()
 			{
 				that.controller.createAddAssignmentModal();
@@ -80,12 +80,6 @@ class AssignmentsTeacherView extends View
 			iconCell.appendChild(img);
 		}
 	}
-
-
-
-
-
-
 
 	show()
 	{

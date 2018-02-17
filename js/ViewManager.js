@@ -11,7 +11,8 @@ class ViewManager
 			SIGNIN: "signin",
 			SIGNUP: "signup",
 			PROFILE: "profile",
-			ASSIGNMENTS_TEACHER: "assignments-teacher"
+			ASSIGNMENTS_TEACHER: "assignments-teacher",
+			ASSIGNMENTS_STUDENT: "assignments-student",
 		}
 	}
 
