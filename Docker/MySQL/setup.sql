@@ -35,8 +35,8 @@ CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Assignments` (
 -- Table `ProjectOrganiser`.`Submissions`
 CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Submissions` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` VARCHAR(3) NOT NULL,
-  `assignment_id` VARCHAR(3) NOT NULL,
+  `user_id` INT NOT NULL,
+  `assignment_id` INT NOT NULL,
   `github_link` VARCHAR(63) NOT NULL,
   PRIMARY KEY (`id`));
 

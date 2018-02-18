@@ -39,10 +39,7 @@ class DatabaseManager:
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
-		columns = ', '.join(my_dict.keys())
 		placeholders = ", ".join(["%s"] * len(my_dict))
-
-		print("TEST", columns, placeholders)
 
 		stmt = "INSERT INTO `{table}` ({columns}) VALUES ({values});".format(
 			table=table_name,
@@ -63,10 +60,7 @@ class DatabaseManager:
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
-		columns = ', '.join(my_dict.keys())
 		placeholders = ", ".join(["%s"] * len(my_dict))
-
-		print("TEST", columns, my_dict)
 
 		stmt = "REPLACE INTO `{table}` ({columns}) VALUES ({values});".format(
 			table=table_name,
@@ -198,7 +192,7 @@ class DatabaseManager:
 		user_id = str(user_id)
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
-		query = ("SELECT * FROM Submissions WHERE Submissions.user_id='" + user_id + "'")
+		query = ("SELECT * FROM Submissions WHERE Submissions.user_id=" + user_id )
 
 		print(query)
 

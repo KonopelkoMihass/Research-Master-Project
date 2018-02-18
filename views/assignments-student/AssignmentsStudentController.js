@@ -53,39 +53,6 @@ class AssignmentsStudentController
 		this.model.submitAssignment(assignmentID, githubLink);
 	}
 
-
-
-
-
-	/*
-
-
-	}
-
-	createAssignment()
-	{
-		var name = document.getElementById("assignment-name").value;
-		var description = document.getElementById("assignment-description").value;
-		var deadlineDate = document.getElementById("assignment-deadline").value.split('T')[0];
-		var deadlineTime = document.getElementById("assignment-deadline").value.split('T')[1];
-		this.model.createAssignment(name, deadlineTime, deadlineDate, description);
-	}
-
-	deleteAssignment(id)
-	{
-		this.model.deleteAssignment(id);
-	}*/
-
-
-
-
-
-
-
-
-
-
-
 	update()
 	{
 

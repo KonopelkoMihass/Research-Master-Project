@@ -98,6 +98,7 @@ class App
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL);
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 	}
 

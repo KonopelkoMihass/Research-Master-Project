@@ -76,7 +76,7 @@ class AssignmentsManager:
 			submissions = self.database_manager.select_all_from_table("Submissions")
 			print("Submissions:",submissions )
 			for submission in submissions:
-				if submission["user_id"] == str(message_data["user_id"]):
+				if submission["user_id"] == message_data["user_id"]:
 					data.append(submission)
 
 			print("Retrieved Submissions Successfully")
