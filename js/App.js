@@ -46,6 +46,7 @@ class App
 		//models
 		this.user = new User();
 		this.assignments = new Assignments();
+		this.submissions = new Submissions();
 
 		this.net.setHost(location.hostname,8080);
 		this.net.connect();
@@ -62,6 +63,7 @@ class App
 	{
 		var signinController = new SigninController(this.user);
 		var signinView = new SigninView(signinController);
+
 		this.viewManager.addView(signinView);
 
 		var signupController = new SignupController(this.user);
@@ -85,7 +87,6 @@ class App
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 
-
 		this.assignments.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_FAILED);
@@ -93,10 +94,11 @@ class App
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_FAILED);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_FAILED);
-
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 
+		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 	}
 
 
@@ -117,7 +119,6 @@ class App
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
 			}
 		});
-
 
 
 		document.getElementById("mpt-assignments-button").addEventListener("click", function() {

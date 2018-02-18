@@ -8,4 +8,4 @@ class Assignment
         this.description = data.description;
         this.id = data.id;
     }
-    }
+}

@@ -192,3 +192,19 @@ class DatabaseManager:
 			users.append(user)
 
 		return users
+
+	def select_submissions_from_assignments(self, user_id):
+		print("select_submissions_from_assignments")
+		user_id = str(user_id)
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+		query = ("SELECT * FROM Submissions WHERE Submissions.user_id='" + user_id + "'")
+
+		print(query)
+
+		cursor.execute(query)
+		data = cursor.fetchall()
+
+		cursor.close()
+		connector.close()
+		return data

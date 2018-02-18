@@ -29,11 +29,11 @@ class Model
 			}
 		}
 
-		else
+		/*else
 		{
 			console.log("Trying to notify a view that doesn't exist.  " +
 				"Check that the correct model is assigned the right observer in App.js");
-			console.log("Iff all works as needed - ignore the message");
-		}
+			console.log("If all works as intended - ignore the message");
+		}*/
 	}
 }

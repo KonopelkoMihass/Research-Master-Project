@@ -49,13 +49,6 @@ class AssignmentsManager:
 		return message
 
 
-
-
-
-
-
-
-
 	def get_assignments(self):
 		print("add_assignment")
 		type = "get_assignments_successful"
@@ -72,9 +65,42 @@ class AssignmentsManager:
 		return message
 
 
+	def submit_assignment(self, message_data):
+		print("submit_assignment")
+		type = "submit_assignment_successful"
+		data = []
 
+		try:
+			self.database_manager.insert_into_table("Submissions", message_data)
+			print("Submitted Assignment Successfully")
+			submissions = self.database_manager.select_all_from_table("Submissions")
+			print("Submissions:",submissions )
+			for submission in submissions:
+				if submission["user_id"] == str(message_data["user_id"]):
+					data.append(submission)
 
+			print("Retrieved Submissions Successfully")
+		except:
+			type = "submit_assignment_failed"
+			print("Submitted Assignment Failed")
 
+		message = [type, data]
+		return message
+
+	def get_submissions(self, user_id):
+		print("get_submissions")
+		type = "get_submissions_successful"
+		data = []
+
+		try:
+			data = self.database_manager.select_submissions_from_assignments(user_id)
+			print("Get Submissions Successfully")
+		except:
+			type = "get_submissions_failed"
+			print("Get Submissions Failed")
+
+		message = [type, data]
+		return message
 
 
 

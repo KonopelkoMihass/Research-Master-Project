@@ -36,43 +36,28 @@ class AssignmentsStudentController
 		document.getElementById("assignment-description").innerText = "Description: " + assignment.description;
 		document.getElementById("assignment-deadline").innerHTML = "Deadline: " + assignment.deadlineDate + " " + assignment.deadlineTime;
 
+
+		var submitBtn = modalData.submit;
+		submitBtn.addEventListener("click", function () {
+			var githubLink = document.getElementById("assignment-link").value;
+
+			controller.submitAssignment(id, githubLink);
+			var parentNode = modalData.modal.parentNode;
+			parentNode.removeChild(modalData.modal);
+        });
+
+	}
+
+	submitAssignment(assignmentID, githubLink)
+	{
+		this.model.submitAssignment(assignmentID, githubLink);
 	}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-	/*createAddAssignmentModal()
-	{
-		var controller = this;
-
-		// Init Modal
-		var modalBody = app.modalContentManager.getModalContent("add-assignment");
-		var modalData = app.uiFactory.createModal("add-assignment", "Add Assignment", modalBody);
-		document.body.appendChild(modalData.modal);
-		modalData.modal.style.display = "block";
-
-		//Set minimum datetime and current datetime to now.
-		var today = new Date().toISOString();
-		today = today.substr(0, today.lastIndexOf("."));
-		document.getElementById("assignment-deadline").min = today;
-		document.getElementById("assignment-deadline").value = today;
-
-		var submitBtn = modalData.submit;
-		submitBtn.addEventListener("click", function () {
-			controller.createAssignment();
-			var parentNode = modalData.modal.parentNode;
-			parentNode.removeChild(modalData.modal);
-        });
+	/*
 
 
 	}

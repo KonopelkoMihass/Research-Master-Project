@@ -19,7 +19,11 @@ class MessageHandler
 			ASSIGNMENT_DELETE_SUCCESSFUL: "assignment_delete_successful",
 			ASSIGNMENT_DELETE_FAILED: "assignment_delete_failed",
 
+			SUBMIT_ASSIGNMENT_SUCCESSFUL: "submit_assignment_successful",
+			SUBMIT_ASSIGNMENT_FAILED: "submit_assignment_failed",
 
+			GET_SUBMISSIONS_SUCCESSFUL: "get_submissions_successful",
+			GET_SUBMISSIONS_FAILED: "get_submissions_failed",
 
 		};
 	}
@@ -35,5 +39,6 @@ class MessageHandler
 
 		app.user.update(data, type);
 		app.assignments.update(data, type);
+		app.submissions.update(data, type);
 	}
 }

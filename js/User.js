@@ -12,6 +12,7 @@ class User extends Model
         this.surname = "";
         this.noun = "";
         this.role = "";
+        this.id = ""
     }
 
 
@@ -19,7 +20,11 @@ class User extends Model
     {
       if (data !== "" && !Number.isInteger(data))
       {
-        this.setData(data);
+          if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL ||
+                messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
+            {
+                this.setData(data);
+            }
       }
 
       this.notify(messageType);
@@ -60,5 +65,6 @@ class User extends Model
          this.surname =  data.surname;
          this.noun =  data.noun;
          this.role = data.role;
+         this.id = data.id;
     }
 }

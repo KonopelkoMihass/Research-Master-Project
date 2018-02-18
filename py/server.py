@@ -46,13 +46,18 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "delete_assignment":
 			self.delete_assignment(message_data["id"])
 
+		elif message_type == "submit_assignment":
+			self.submit_assignment(message_data)
+
+		elif message_type == "get_submissions":
+			self.get_submissions(message_data["user_id"])
 
 
 
 
 	def signup(self, message_data):
-		message_type = user_manager.signup(message_data)
-		self.send_message(message_type, message_data)
+		message= user_manager.signup(message_data)
+		self.send_message(message[0], message[1])
 
 
 	def signin(self, message_data):
@@ -100,6 +105,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message = assignments_manager.get_assignments()
 		self.send_message(message[0], message[1])
 
+	def submit_assignment(self, message_data):
+		message = assignments_manager.submit_assignment(message_data)
+		self.send_message(message[0], message[1])
+
+	def get_submissions(self, user_id):
+		message = assignments_manager.get_submissions(user_id)
+		self.send_message(message[0], message[1])
 
 
 
