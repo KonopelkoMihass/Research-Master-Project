@@ -30,5 +30,17 @@ class Submissions extends Model {
         app.net.sendMessage("get_submissions", {"user_id":userID});
     }
 
+    getIfSubmitted(assignmentID, userID)
+    {
+        for (var i = 0; i < this.submissions.length;i++)
+        {
+            let sub = this.submissions[i];
+            if (sub.assignmentID === assignmentID && sub.userID === userID)
+            {
+                return this.submissions[i].serialize();
+            }
+        }
+        return {};
+    }
 
 }

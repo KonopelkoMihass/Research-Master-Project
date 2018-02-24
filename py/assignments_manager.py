@@ -81,7 +81,7 @@ class AssignmentsManager:
 			feedbacks = json.dumps(message_data["feedbacks"])
 			message_data["feedbacks"] = feedbacks
 
-			self.database_manager.insert_into_table("Submissions", message_data)
+			self.database_manager.replace_into_table("Submissions", message_data)
 			print("Submitted Assignment Successfully")
 
 

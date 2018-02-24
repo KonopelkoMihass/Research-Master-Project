@@ -59,15 +59,23 @@ class Assignments extends Model
 
     submitAssignment(assignmentID, filesSubmitted)
     {
-        var data = {};
+        var data = app.submissions.getIfSubmitted( assignmentID, app.user.id);
 
-        data.user_id = app.user.id;
-        data.assignment_id = assignmentID;
-        data.submission_data = [filesSubmitted];
-        data.is_complete = 0;
-        data.iteration = 1;
-        data.reviewers_ids = [];
-        data.feedbacks = [];
+        if (Object.keys(data).length === 0)
+        {
+            data.user_id = app.user.id;
+            data.assignment_id = assignmentID;
+            data.submission_data = [filesSubmitted];
+            data.is_complete = 0;
+            data.iteration = 1;
+            data.reviewers_ids = [];
+            data.feedbacks = [];
+        }
+
+        else
+        {
+            data.submission_data = [filesSubmitted];
+        }
 
 
         app.net.sendMessage("submit_assignment", data);

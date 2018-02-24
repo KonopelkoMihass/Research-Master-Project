@@ -47,10 +47,6 @@ class DatabaseManager:
 			values=placeholders
 		)
 
-
-		for key in my_dict:
-			print(key, type(my_dict[key]))
-
 		print(stmt)
 		cursor.execute(stmt, list(my_dict.values()))
 

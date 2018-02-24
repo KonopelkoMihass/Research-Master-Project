@@ -42,5 +42,5 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Submissions` (
   `iteration` INT NOT NULL,
   `reviewers_ids` MEDIUMTEXT,
   `feedbacks` MEDIUMTEXT,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`, `user_id`, `assignment_id`));
 

@@ -3,8 +3,29 @@ class Submission
     constructor(data)
     {
         this.id = data.id;
-        this.user_id = data.user_id;
-        this.assignment_id = data.assignment_id;
-        this.github_link = data.github_link;
+        this.userID = data.user_id;
+        this.assignmentID = data.assignment_id;
+        this.submissionData = data.submission_data;
+        this.isComplete = data.is_complete;
+        this.iteration = data.iteration;
+        this.reviewersIDs = data.reviewers_ids;
+        this.feedbacks = data.feedbacks;
+    }
+
+    serialize()
+    {
+        var data = {};
+
+        data.id = this.id;
+        data.user_id = this.userID;
+        data.assignment_id = this.assignmentID;
+        data.submission_data = this.submissionData;
+        data.is_complete = this.isComplete;
+        data.iteration = this.iteration;
+        data.reviewers_ids = this.reviewersIDs;
+        data.feedbacks = this.feedbacks;
+
+        return data;
+
     }
 }

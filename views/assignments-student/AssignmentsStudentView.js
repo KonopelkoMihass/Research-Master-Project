@@ -79,7 +79,7 @@ class AssignmentsStudentView extends View
 			var organisedSubData = {};
 			for (var i = 0; i < model.submissions.length; i++)
 			{
-				organisedSubData[model.submissions[i].assignment_id] = model.submissions[i].id;
+				organisedSubData[model.submissions[i].assignmentID] = model.submissions[i].id;
 			}
 
 
