@@ -65,14 +65,6 @@ class AssignmentsTeacherController
 
 
 
-
-
-
-
-
-
-
-
 	update()
 	{
 

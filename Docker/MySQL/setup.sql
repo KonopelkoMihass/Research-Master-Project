@@ -37,6 +37,10 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Submissions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `assignment_id` INT NOT NULL,
-  `github_link` VARCHAR(63) NOT NULL,
+  `submission_data` MEDIUMTEXT NOT NULL,
+  `is_complete` INT NOT NULL,
+  `iteration` INT NOT NULL,
+  `reviewers_ids` MEDIUMTEXT,
+  `feedbacks` MEDIUMTEXT,
   PRIMARY KEY (`id`));
 

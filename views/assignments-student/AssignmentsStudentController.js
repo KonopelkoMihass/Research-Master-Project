@@ -4,6 +4,7 @@ class AssignmentsStudentController
 	{
 		this.model = model;
 		this.setup();
+		this.filesParsed = [];
 	}
 
 	setup()
@@ -11,7 +12,6 @@ class AssignmentsStudentController
 		var controller = this;
 		console.log(this.model);
 	}
-
 
 	createSubmitAssignmentModal(id)
 	{
@@ -33,28 +33,155 @@ class AssignmentsStudentController
 
 		}
 
+		// Description in modal.
 		document.getElementById("assignment-description").innerText = "Description: " + assignment.description;
 		document.getElementById("assignment-deadline").innerHTML = "Deadline: " + assignment.deadlineDate + " " + assignment.deadlineTime;
 
 
-		var submitBtn = modalData.submit;
-		submitBtn.addEventListener("click", function () {
-			var githubLink = document.getElementById("assignment-link").value;
+		// Adds logic to the filedrop area.
+		this.prepareFiledropArea();
 
-			controller.submitAssignment(id, githubLink);
+
+		var submitBtn = modalData.submit;
+		submitBtn.addEventListener("click", function ()
+		{
+			// THERE WE WILL HANDLE FILE SUBMISSION
+			controller.submitAssignment(id);
 			var parentNode = modalData.modal.parentNode;
 			parentNode.removeChild(modalData.modal);
+
         });
 
 	}
 
-	submitAssignment(assignmentID, githubLink)
+	submitAssignment(assignmentID)
 	{
-		this.model.submitAssignment(assignmentID, githubLink);
+		this.model.submitAssignment(assignmentID, this.filesParsed);
 	}
 
 	update()
 	{
 
 	}
+
+	uploadFile(name, content){
+		this.filesParsed[name] = content;
+		this.updateModal();
+	}
+
+	deleteFile(name){
+		delete this.filesParsed[name];
+		this.updateModal();
+
+	}
+
+	updateModal(){
+		var controller = this;
+		var filesLoadedDiv = document.getElementById("files-loaded");
+		filesLoadedDiv.innerHTML = "";
+
+		for (var key in this.filesParsed)
+		{
+
+			var fileDiv = document.createElement("div");
+			fileDiv.className = "file-uploaded-box";
+
+
+			var deleteSpan = document.createElement("SPAN");
+			deleteSpan.innerHTML = "&#10006;  ";
+			deleteSpan.id =  "delete-file#" + key;
+			deleteSpan.addEventListener("click", function()
+			{
+				controller.deleteFile(this.id.split("#")[1]);
+			});
+
+			fileDiv.appendChild(deleteSpan);
+
+			var nameSpan = document.createElement("SPAN");
+			nameSpan.innerHTML = key;
+			fileDiv.appendChild(nameSpan);
+
+			filesLoadedDiv.appendChild(fileDiv);
+			filesLoadedDiv.appendChild(document.createElement("BR"));
+
+		}
+	}
+
+
+
+
+	prepareFiledropArea()
+	{
+		var controller = this;
+
+		var fileselect = document.getElementById("file-select");
+		var	filedrag = document.getElementById("file-drag");
+		var submitbutton = document.getElementById("submit-button");
+
+
+		var fileDragHover = function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			e.target.className = (e.type === "dragover" ? "hover" : "");
+		};
+
+
+		var fileSelectHandler = function (e) {
+			fileDragHover(e);
+			var files = e.target.files || e.dataTransfer.files;
+			for (var i = 0, f; f = files[i]; i++)
+			{
+				parseFile(f);
+			}
+		};
+
+		// output file information
+		var parseFile = function parseFile(file) {
+			var fileFormat = file.name.split(".")[1];
+			if (fileFormat === "cpp" || fileFormat === "h" || fileFormat === "py" ||
+				fileFormat === "js"|| fileFormat === "html"|| fileFormat === "css" ) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					controller.uploadFile(file.name, reader.result);
+				};
+				reader.readAsText(file);
+				document.getElementById("messages").innerHTML = ""
+			}
+			else {
+				document.getElementById("messages").innerHTML = "Failed to load file " + file.name + ".<br>"
+			}
+		};
+
+
+		// file select
+		fileselect.addEventListener("change", fileSelectHandler, false);
+
+		var xhr = new XMLHttpRequest();
+		if (xhr.upload)
+		{
+			// file drop
+			filedrag.addEventListener("dragover", fileDragHover, false);
+			filedrag.addEventListener("dragleave", fileDragHover, false);
+			filedrag.addEventListener("drop", fileSelectHandler, false);
+			filedrag.style.display = "block";
+
+			// remove submit button
+			submitbutton.style.display = "none";
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

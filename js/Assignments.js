@@ -57,15 +57,19 @@ class Assignments extends Model
         app.net.sendMessage("delete_assignment", {"id":id});
     }
 
-    submitAssignment(assignmentID, githubLink)
+    submitAssignment(assignmentID, filesSubmitted)
     {
         var data = {};
-        // Get userID
+
         data.user_id = app.user.id;
         data.assignment_id = assignmentID;
-        data.github_link = githubLink;
+        data.submission_data = [filesSubmitted];
+        data.is_complete = 0;
+        data.iteration = 1;
+        data.reviewers_ids = [];
+        data.feedbacks = [];
+
 
         app.net.sendMessage("submit_assignment", data);
-
     }
 }

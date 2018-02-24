@@ -71,9 +71,34 @@ class AssignmentsManager:
 		data = []
 
 		try:
+
+			submission_data = json.dumps(message_data["submission_data"])
+			message_data["submission_data"] = submission_data
+
+			reviewers_ids = json.dumps(message_data["reviewers_ids"])
+			message_data["reviewers_ids"] = reviewers_ids
+
+			feedbacks = json.dumps(message_data["feedbacks"])
+			message_data["feedbacks"] = feedbacks
+
 			self.database_manager.insert_into_table("Submissions", message_data)
 			print("Submitted Assignment Successfully")
+
+
 			submissions = self.database_manager.select_all_from_table("Submissions")
+
+			submission_data = json.loads(message_data["submission_data"])
+			message_data["submission_data"] = submission_data
+
+			reviewers_ids = json.loads(message_data["reviewers_ids"])
+			message_data["reviewers_ids"] = reviewers_ids
+
+			feedbacks = json.loads(message_data["feedbacks"])
+			message_data["feedbacks"] = feedbacks
+
+
+
+
 			print("Submissions:",submissions )
 			for submission in submissions:
 				if submission["user_id"] == message_data["user_id"]:
