@@ -9,7 +9,7 @@ services:
   ports:
    - "80:80"
   volumes:
-   - ..:/usr/local/apache2/htdocs/ProjectOrganiser
+   - ..:/usr/local/apache2/htdocs/MihassGamifiedMasterProject
 
  server:
    build:

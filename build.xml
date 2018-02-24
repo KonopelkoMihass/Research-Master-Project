@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<project name="ProjectOrganiser">
+<project name="MihassGamifiedMasterProject">
 	<property name="ip" value="gamecore.itcarlow.ie"/>
-
 
 	<target name="create_database">
 
 	</target>
-
 
 	<!--Local build and run-->
 	<target name="build_and_run">
@@ -124,20 +122,23 @@
 
 
 	<target name="gamecore-build">
-		<input message="Enter github username:" addproperty="username" />
-		<input message="secure-input:" addproperty="password">
+		<input message="Enter username" addproperty="username">
 	    <handler classname="org.apache.tools.ant.input.SecureInputHandler" />
 		</input>
+		<input message="Enter password:" addproperty="password">
+	    <handler classname="org.apache.tools.ant.input.SecureInputHandler" />
+		</input>
+
 		<taskdef name="sshexec" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" classpath="lib/jsch-0.1.50.jar" />
 		<sshexec host="${ip}"
 			username="gamecore"
 			trust="true"
 			password="j01nin17."
 			command="
-			(cd ProjectOrganiser; sudo git pull https://${username}:${password}@github.com/ITCOnlineGaming/PostgradSystem.git);
-			(cd ProjectOrganiser; sudo git checkout sprint2);
-
-			(cd ProjectOrganiser; sudo docker-compose  -f Docker/docker-compose.yml build);"
+			sudo rm -rf ~/MihassGamifiedMasterProject;
+			(sudo git clone https://${username}:${password}@github.com/ITCOnlineGaming/MihassGamifiedMasterProject.git);
+			(cd MihassGamifiedMasterProject; sudo git checkout dev);
+			(cd MihassGamifiedMasterProject; sudo docker-compose  -f Docker/docker-compose.yml build);"
 
 		/>
 	</target>
@@ -150,8 +151,8 @@
 			trust="true"
 			password="j01nin17."
 			command="
-			(cd ProjectOrganiser; sudo docker-compose -f Docker/docker-compose.yml down);
-			(cd ProjectOrganiser; sudo docker-compose -f Docker/docker-compose.yml up -d);"
+			(cd MihassGamifiedMasterProject; sudo docker-compose -f Docker/docker-compose.yml down);
+			(cd MihassGamifiedMasterProject; sudo docker-compose -f Docker/docker-compose.yml up -d);"
 		/>
 	</target>
 </project>
