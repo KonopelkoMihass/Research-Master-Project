@@ -58,7 +58,7 @@ class Assignments extends Model
         {
             data.user_id = app.user.id;
             data.assignment_id = assignmentID;
-            data.submission_data = [filesSubmitted];
+            data.submission_data = filesSubmitted;
             data.is_complete = 0;
             data.iteration = 1;
             data.reviewers_ids = [];
@@ -67,10 +67,12 @@ class Assignments extends Model
 
         else
         {
-            data.submission_data = [filesSubmitted];
+            data.submission_data = filesSubmitted;
         }
 
 
+
+    console.log(typeof data.submission_data);
         app.net.sendMessage("submit_assignment", data);
     }
 }

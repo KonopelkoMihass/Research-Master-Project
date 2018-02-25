@@ -10,6 +10,7 @@ class Submissions extends Model {
         // Comments - code and comments (no review mechanisms)
         // Review - code and review ability
         this.codeViewState = "Clear";
+        this.submissionCodeToView = -1;
     }
 
     retrieveAssignmentNames(model)

@@ -49,8 +49,8 @@ class SeeSubmissionsStudentView extends View
 				cell0.id = "see-submission-student#" + submissions[i].id;
 				cell0.addEventListener("click", function()
 				{
-					console.log ("Will go to submission", this.id.split('#')[1]);
 					app.submissions.codeViewState = "Clear";
+					app.submissions.submissionCodeToView = parseInt(this.id.split('#')[1]);
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 				});
 

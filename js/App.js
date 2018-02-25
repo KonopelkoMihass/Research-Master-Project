@@ -106,7 +106,7 @@ class App
 		var seeSubmissionsTeacherView = new SeeSubmissionsTeacherView(seeSubmissionsTeacherController);
 		this.viewManager.addView(seeSubmissionsTeacherView);
 
-		var codeViewController = new SeeSubmissionsTeacherController(this.submissions);
+		var codeViewController = new CodeViewController(this.submissions);
 		var codeView = new CodeView(codeViewController);
 		this.viewManager.addView(codeView);
 
@@ -134,6 +134,7 @@ class App
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
 
 
 		// Student -Submission

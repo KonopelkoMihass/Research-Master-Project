@@ -84,25 +84,20 @@ class AssignmentsManager:
 			self.database_manager.replace_into_table("Submissions", message_data)
 			print("Submitted Assignment Successfully")
 
+			submissions = self.database_manager.select_submissions_for_user(message_data["user_id"])
 
-			submissions = self.database_manager.select_all_from_table("Submissions")
-
-			submission_data = json.loads(message_data["submission_data"])
-			message_data["submission_data"] = submission_data
-
-			reviewers_ids = json.loads(message_data["reviewers_ids"])
-			message_data["reviewers_ids"] = reviewers_ids
-
-			feedbacks = json.loads(message_data["feedbacks"])
-			message_data["feedbacks"] = feedbacks
-
-
-
-
-			print("Submissions:",submissions )
 			for submission in submissions:
-				if submission["user_id"] == message_data["user_id"]:
-					data.append(submission)
+				submission_data = json.loads(submission["submission_data"])
+				submission["submission_data"] = submission_data
+
+				reviewers_ids = json.loads(submission["reviewers_ids"])
+				submission["reviewers_ids"] = reviewers_ids
+
+				feedbacks = json.loads(submission["feedbacks"])
+				submission["feedbacks"] = feedbacks
+
+
+			data = submissions
 
 			print("Retrieved Submissions Successfully")
 		except:
@@ -118,7 +113,20 @@ class AssignmentsManager:
 		data = []
 
 		try:
-			data = self.database_manager.select_submissions_from_assignments(user_id)
+			submissions = self.database_manager.select_submissions_for_user(user_id)
+
+			for submission in submissions:
+				submission_data = json.loads(submission["submission_data"])
+				submission["submission_data"] = submission_data
+
+				reviewers_ids = json.loads(submission["reviewers_ids"])
+				submission["reviewers_ids"] = reviewers_ids
+
+				feedbacks = json.loads(submission["feedbacks"])
+				submission["feedbacks"] = feedbacks
+
+			data = submissions
+
 			print("Get Submissions Successfully")
 		except:
 			type = "get_submissions_failed"

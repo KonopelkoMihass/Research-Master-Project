@@ -4,7 +4,7 @@ class AssignmentsStudentController
 	{
 		this.model = model;
 		this.setup();
-		this.filesParsed = [];
+		this.filesParsed = {};
 	}
 
 	setup()
@@ -138,8 +138,7 @@ class AssignmentsStudentController
 		// output file information
 		var parseFile = function parseFile(file) {
 			var fileFormat = file.name.split(".")[1];
-			if (fileFormat === "cpp" || fileFormat === "h" || fileFormat === "py" ||
-				fileFormat === "js"|| fileFormat === "html"|| fileFormat === "css" ) {
+			if (fileFormat === "cpp" || fileFormat === "h") {
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					controller.uploadFile(file.name, reader.result);

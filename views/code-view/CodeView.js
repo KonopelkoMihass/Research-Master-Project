@@ -18,7 +18,21 @@ class CodeView extends View
 
 	setupView()
 	{
+		this.controller.prepareCodeHTMLs();
+		var state = this.controller.model.codeViewState;
 
+		if (state === "Clear")
+		{
+			this.controller.setViewAsClear();
+		}
+		else if (state === "Comments")
+		{
+
+		}
+		else if (state === "Review")
+		{
+
+		}
 
 	}
 
