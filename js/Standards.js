@@ -18,7 +18,7 @@ class Standards extends Model {
         }
         else if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
         {
-            this.getSubmissions(data.id);
+            this.getPersonalSubmissions(data.id);
         }
 
         this.notify(messageType);*/

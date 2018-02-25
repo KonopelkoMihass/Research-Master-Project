@@ -18,7 +18,8 @@ class ViewManager
 			SEE_SUBMISSIONS_STUDENT: "see-submissions-student",
 			SEE_SUBMISSIONS_TEACHER: "see-submissions-teacher",
 			SEE_STANDARDS_STUDENT: "see-standards-student",
-			SEE_STANDARDS_TEACHER: "see-standards-teacher"
+			SEE_STANDARDS_TEACHER: "see-standards-teacher",
+			CODE_VIEW:"code-view"
 		}
 	}
 

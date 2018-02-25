@@ -19,7 +19,7 @@ class AssignmentsStudentView extends View
 
 		// Update the table of assessments
 		if (messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
-			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL )
+			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL  )
 		{
 			var assignmentTable = document.getElementById("student-assignments-table");
 
@@ -61,11 +61,10 @@ class AssignmentsStudentView extends View
 				cell4.id = "assignment-submission##" + assignments[i].id;
 
 				this.tickAreas[assignments[i].id] = cell4;
-
-
-
 			}
 		}
+
+
 
 		else if (messageType === app.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL ||
 				messageType === app.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL)

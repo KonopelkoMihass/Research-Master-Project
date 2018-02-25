@@ -24,6 +24,15 @@ class User extends Model
                 messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
             {
                 this.setData(data);
+
+                app.assignments.getAllAssignment();
+
+                if (data.role === "student")
+                {
+                    app.submissions.getPersonalSubmissions(data.id);
+                }
+
+
             }
       }
 

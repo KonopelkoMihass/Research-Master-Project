@@ -102,33 +102,46 @@ class App
 		var seeSubmissionsStudentView = new SeeSubmissionsStudentView(seeSubmissionsStudentController);
 		this.viewManager.addView(seeSubmissionsStudentView);
 
-
 		var seeSubmissionsTeacherController = new SeeSubmissionsTeacherController(this.submissions);
 		var seeSubmissionsTeacherView = new SeeSubmissionsTeacherView(seeSubmissionsTeacherController);
 		this.viewManager.addView(seeSubmissionsTeacherView);
 
+		var codeViewController = new SeeSubmissionsTeacherController(this.submissions);
+		var codeView = new CodeView(codeViewController);
+		this.viewManager.addView(codeView);
 
 
-		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
 
+
+		// KEEP ADDING OBSERVERS AS THEY ARE NEEDEd
+
+		// On entering a system, we need to store user info or notify user if he failed to enter the system
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
-		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_IN_FAILED);
 
-		this.assignments.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+
+		// Teacher - Assignment
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_FAILED);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.GET_ASSIGNMENTS_FAILED);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.ASSIGNMENT_DELETE_FAILED);
+
+		// Student - Assignment
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
-
-		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
-		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL);
+
+
+		// Student -Submission
+		this.submissions.addObserver(seeSubmissionsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(seeSubmissionsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
+
+
+
 	}
 
 

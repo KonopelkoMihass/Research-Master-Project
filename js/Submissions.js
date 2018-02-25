@@ -2,29 +2,43 @@ class Submissions extends Model {
     constructor() {
         super();
         this.submissions = [];
+        this.assignmentNames = {};
+
+        // it will regulate what user will be able to do with the submission in the code view.
+        // Values:
+        // Clear - code only
+        // Comments - code and comments (no review mechanisms)
+        // Review - code and review ability
+        this.codeViewState = "Clear";
+    }
+
+    retrieveAssignmentNames(model)
+    {
+        for (var i = 0; i < model.assignments.length; i++)
+        {
+            this.assignmentNames[ model.assignments[i].id] =  model.assignments[i].name;
+        }
     }
 
 
-    update(data, messageType) {
-        if (messageType === app.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL ||
-            messageType === app.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
+
+    update(data, messageType)
+    {
+        if (   messageType === app.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL ||
+                    messageType === app.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
         {
             this.submissions = [];
             for (var i = 0; i < data.length; i++)
             {
-                var submission = new Submission(data[i]);
-                this.submissions.push(submission);
+                this.submissions.push(new Submission(data[i]));
             }
         }
-        else if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
-        {
-            this.getSubmissions(data.id);
-        }
+
 
         this.notify(messageType);
     }
 
-    getSubmissions(id)
+    getPersonalSubmissions(id)
     {
         var userID = id;
         app.net.sendMessage("get_submissions", {"user_id":userID});

@@ -10,10 +10,9 @@ class AssignmentsTeacherView extends View
 		this.setup();
 	}
 
-
 	onNotify (model, messageType)
 	{
-		var that = this;
+		var view = this;
 
 		// Update the table of assessments
 		if (messageType === app.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL ||
@@ -49,7 +48,7 @@ class AssignmentsTeacherView extends View
 				img.addEventListener("click", function()
 				{
 					var id = parseInt(this.id.split('##')[1]);
-					that.controller.deleteAssignment(id);
+					view.controller.deleteAssignment(id);
 				});
 				cell0.appendChild(img);
 
@@ -75,7 +74,7 @@ class AssignmentsTeacherView extends View
 			img.className = "picture-button";
 			img.addEventListener("click", function()
 			{
-				that.controller.createAddAssignmentModal();
+				view.controller.createAddAssignmentModal();
 			});
 			iconCell.appendChild(img);
 		}

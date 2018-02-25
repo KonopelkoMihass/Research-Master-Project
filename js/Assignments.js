@@ -13,23 +13,16 @@ class Assignments extends Model
     {
         if (data !== "" && !Number.isInteger(data))
         {
-            if (messageType === app.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL ||
-                messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
-                messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL)
+            if (   messageType === app.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL ||
+                        messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
+                        messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL)
             {
                 this.assignments = [];
                 for (var i = 0; i < data.length; i++)
                 {
-                    var assignment = new Assignment(data[i]);
-                    this.assignments.push(assignment);
+                    this.assignments.push( new Assignment(data[i]));
                 }
             }
-
-            if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
-            {
-                this.getAllAssignment();
-            }
-
         }
 
         // updates views

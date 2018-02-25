@@ -12,7 +12,52 @@ class SeeSubmissionsStudentView extends View
 
 	onNotify (model, messageType)
 	{
+		var view = this;
 
+		// Update the table of assessments
+		if (messageType === app.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL ||
+			messageType === app.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL)
+		{
+			var submissionsTable = document.getElementById("student-submissions-table");
+
+			// remove all data in there.
+			var rowCount = submissionsTable.rows.length;
+			while(--rowCount)
+			{
+				submissionsTable.deleteRow(rowCount);
+			}
+
+			var submissions = model.submissions;
+			var assignments = app.assignments.assignments;
+
+
+			for (var i = 0; i < submissions.length; i++)
+			{
+				var row = submissionsTable.insertRow(i + 1);
+
+				var name = "";
+
+				for (var j = 0; j < assignments.length; j++)
+				{
+					if (assignments[j].id === submissions[i].assignmentID){
+						name = assignments[j].name;
+					}
+				}
+
+				var cell0 = row.insertCell(0);
+				cell0.innerHTML = name;
+				cell0.id = "see-submission-student#" + submissions[i].id;
+				cell0.addEventListener("click", function()
+				{
+					console.log ("Will go to submission", this.id.split('#')[1]);
+					app.submissions.codeViewState = "Clear";
+					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+				});
+
+
+
+			}
+		}
 	}
 
 
