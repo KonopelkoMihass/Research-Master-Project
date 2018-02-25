@@ -47,6 +47,7 @@ class App
 		this.user = new User();
 		this.assignments = new Assignments();
 		this.submissions = new Submissions();
+		this.standards = new Standards();
 
 		this.net.setHost(location.hostname,8080);
 		this.net.connect();
@@ -63,7 +64,6 @@ class App
 	{
 		var signinController = new SigninController(this.user);
 		var signinView = new SigninView(signinController);
-
 		this.viewManager.addView(signinView);
 
 		var signupController = new SignupController(this.user);
@@ -82,6 +82,35 @@ class App
 		var assignmentsStudentView = new AssignmentsStudentView(assignmentsStudentController);
 		this.viewManager.addView(assignmentsStudentView);
 
+		var feedbackController = new FeedbackController(this.submissions);
+		var feedbackView = new FeedbackView(feedbackController);
+		this.viewManager.addView(feedbackView);
+
+		var performReviewController = new PerformReviewStudentController(this.submissions);
+		var performReviewView = new PerformReviewStudentView(performReviewController);
+		this.viewManager.addView(performReviewView);
+
+		var seeStandardsStudentController = new SeeStandardsStudentController(this.standards);
+		var seeStandardsStudentView = new SeeStandardsStudentView(seeStandardsStudentController);
+		this.viewManager.addView(seeStandardsStudentView);
+
+		var seeStandardsTeacherController = new SeeStandardsTeacherController(this.standards);
+		var seeStandardsTeacherView = new SeeStandardsTeacherView(seeStandardsTeacherController);
+		this.viewManager.addView(seeStandardsTeacherView);
+
+		var seeSubmissionsStudentController = new SeeSubmissionsStudentController(this.submissions);
+		var seeSubmissionsStudentView = new SeeSubmissionsStudentView(seeSubmissionsStudentController);
+		this.viewManager.addView(seeSubmissionsStudentView);
+
+
+		var seeSubmissionsTeacherController = new SeeSubmissionsTeacherController(this.submissions);
+		var seeSubmissionsTeacherView = new SeeSubmissionsTeacherView(seeSubmissionsTeacherController);
+		this.viewManager.addView(seeSubmissionsTeacherView);
+
+
+
+		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
+
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
@@ -97,9 +126,9 @@ class App
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL);
 		this.assignments.addObserver(assignmentsStudentView, this.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL);
 
+		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
 		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL);
-		this.submissions.addObserver(assignmentsStudentView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 	}
 
 
@@ -121,6 +150,35 @@ class App
 			}
 		});
 
+		document.getElementById("mps-standards-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_STUDENT)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+			}
+		});
+
+		document.getElementById("mps-reviews-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PERFORM_REVIEW_STUDENT)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
+			}
+		});
+
+		document.getElementById("mps-feedback-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
+			}
+		});
+
+		document.getElementById("mps-submissions-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
+			}
+		});
+
+
 
 		document.getElementById("mpt-assignments-button").addEventListener("click", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
@@ -129,8 +187,19 @@ class App
 			}
 		});
 
+		document.getElementById("mpt-standards-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_TEACHER);
+			}
+		});
 
-
+		document.getElementById("mpt-submissions-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER);
+			}
+		});
 	}
 
 	loadResources()

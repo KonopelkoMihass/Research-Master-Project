@@ -15,6 +15,8 @@
     <script src = "js/User.js"></script>
     <script src = "js/Assignments.js"></script>
     <script src = "js/Submissions.js"></script>
+    <script src = "js/Standards.js"></script>
+
 
     <!--View Base-->
     <script src = "js/View.js"></script>
@@ -28,6 +30,7 @@
     <script src = "js/UIFactory.js"></script>
     <script src = "js/Assignment.js"></script>
     <script src = "js/Submission.js"></script>
+    <script src = "js/Standard.js"></script>
 
 
     <!--Views-->
@@ -46,6 +49,27 @@
     <script src = "views/assignments-student/AssignmentsStudentController.js"></script>
     <script src = "views/assignments-student/AssignmentsStudentView.js"></script>
 
+    <script src = "views/feedback/FeedbackController.js"></script>
+    <script src = "views/feedback/FeedbackView.js"></script>
+
+    <script src = "views/perform-review-student/PerformReviewStudentController.js"></script>
+    <script src = "views/perform-review-student/PerformReviewStudentView.js"></script>
+
+    <script src = "views/see-submissions-student/SeeSubmissionsStudentController.js"></script>
+    <script src = "views/see-submissions-student/SeeSubmissionsStudentView.js"></script>
+
+    <script src = "views/see-submissions-teacher/SeeSubmissionsTeacherController.js"></script>
+    <script src = "views/see-submissions-teacher/SeeSubmissionsTeacherView.js"></script>
+
+    <script src = "views/see-standards-student/SeeStandardsStudentController.js"></script>
+    <script src = "views/see-standards-student/SeeStandardsStudentView.js"></script>
+
+    <script src = "views/see-standards-teacher/SeeStandardsTeacherController.js"></script>
+    <script src = "views/see-standards-teacher/SeeStandardsTeacherView.js"></script>
+
+
+
+
     <!-- Additional Styles -->
     <link rel="stylesheet" href="modals/submit-assignment.css">
     <link rel="stylesheet" href="views/modal.css">
@@ -55,8 +79,12 @@
     <link rel="stylesheet" href="views/profile/profile.css">
     <link rel="stylesheet" href="views/assignments-teacher/assignments-teacher.css">
     <link rel="stylesheet" href="views/assignments-student/assignments-student.css">
-
-
+    <link rel="stylesheet" href="views/feedback/feedback.css">
+    <link rel="stylesheet" href="views/perform-review-student/perform-review-student.css">
+    <link rel="stylesheet" href="views/see-submissions-student/see-submissions-student.css">
+    <link rel="stylesheet" href="views/see-submissions-teacher/see-submissions-teacher.css">
+    <link rel="stylesheet" href="views/see-standards-student/see-standards-student.css">
+    <link rel="stylesheet" href="views/see-standards-teacher/see-standards-teacher.css">
   </head>
 
 
@@ -66,8 +94,10 @@
       <div class="menu-panel">
         <button id="mps-profile-button">Your Profile</button>
         <button id="mps-assignments-button">Assignments</button>
+        <button id="mps-submissions-button">Work Submitted</button>
         <button id="mps-standards-button">Standards</button>
-        <button id="mps-reviews-button">Reviews</button>
+        <button id="mps-reviews-button">Reviews To Do</button>
+        <button id="mps-feedback-button">Feedback</button>
       </div>
     </div>
 
@@ -75,7 +105,7 @@
       <div class="menu-panel">
         <button id="mpt-assignments-button">Assignments</button>
         <button id="mpt-standards-button">Standards</button>
-        <button id="mpt-reviews-button">Reviews</button>
+        <button id="mpt-submissions-button">Submissions</button>
       </div>
     </div>
 
