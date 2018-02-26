@@ -22,8 +22,6 @@ class AssignmentsManager:
 			pass
 			self.database_manager.insert_into_table("Assignments", message_data)
 			print("Added Assignment Successfully")
-			data = self.database_manager.select_all_from_table("Assignments")
-			print("Retrieved Assignments Successfully")
 		except:
 			type = "teacher_assignments_creation_failed"
 			print("Added Assignment Failed")
@@ -39,8 +37,6 @@ class AssignmentsManager:
 			pass
 			self.database_manager.delete_assignment(id)
 			print("Deleted Assignment Successfully")
-			data = self.database_manager.select_all_from_table("Assignments")
-			print("Retrieved Assignments Successfully")
 		except:
 			type = "assignment_delete_failed"
 			print("Deleted Assignment Failed")
@@ -71,7 +67,6 @@ class AssignmentsManager:
 		data = []
 
 		try:
-
 			submission_data = json.dumps(message_data["submission_data"])
 			message_data["submission_data"] = submission_data
 
@@ -84,22 +79,6 @@ class AssignmentsManager:
 			self.database_manager.replace_into_table("Submissions", message_data)
 			print("Submitted Assignment Successfully")
 
-			submissions = self.database_manager.select_submissions_for_user(message_data["user_id"])
-
-			for submission in submissions:
-				submission_data = json.loads(submission["submission_data"])
-				submission["submission_data"] = submission_data
-
-				reviewers_ids = json.loads(submission["reviewers_ids"])
-				submission["reviewers_ids"] = reviewers_ids
-
-				feedbacks = json.loads(submission["feedbacks"])
-				submission["feedbacks"] = feedbacks
-
-
-			data = submissions
-
-			print("Retrieved Submissions Successfully")
 		except:
 			type = "submit_assignment_failed"
 			print("Submitted Assignment Failed")
@@ -130,19 +109,6 @@ class AssignmentsManager:
 					for id in feedback:
 						review = json.loads(feedback[id]["review"])
 						feedback[id]["review"] = review
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 			data = submissions
 
@@ -205,34 +171,6 @@ class AssignmentsManager:
 			self.database_manager.add_review(message_data)
 			print("Submitted Assignment Successfully")
 
-			submissions = []
-			if message_data["reviewer_role"] == "student":
-				submissions = self.database_manager.select_submissions_for_user(message_data["reviewer_id"])
-			else:
-				submissions = self.database_manager.select_all_from_table("Submissions")
-
-
-			for submission in submissions:
-				submission_data = json.loads(submission["submission_data"])
-				submission["submission_data"] = submission_data
-
-				reviewers_ids = json.loads(submission["reviewers_ids"])
-				submission["reviewers_ids"] = reviewers_ids
-
-				feedbacks = json.loads(submission["feedbacks"])
-				submission["feedbacks"] = feedbacks
-
-				for feedback in feedbacks:
-					for id in feedback:
-						review = json.loads(feedback[id]["review"])
-						feedback[id]["review"] = review
-
-
-
-
-			data = submissions
-
-			print("Submit Review Successfully")
 		except:
 			type = "submit_review_failed"
 			print("Submit Review  Failed")

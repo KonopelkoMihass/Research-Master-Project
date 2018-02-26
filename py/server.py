@@ -126,8 +126,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def add_assignment(self, message_data):
 		message = assignments_manager.add_assignment(message_data)
-		print ("I CREATED ASSIGNMENT")
-		self.send_message(message[0], message[1])
+		self.send_message(message[0],{})
 		for k, item in connections.items():
 			if item["socket"] != self:
 				item["socket"].get_assignments()
@@ -135,34 +134,32 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 					item["socket"].get_all_submissions()
 				else:
 					item["socket"].get_submissions(item["user_data"]["id"])
-
-
 
 	def delete_assignment(self, id):
 		message = assignments_manager.delete_assignment(id)
-		self.send_message(message[0], message[1])
+		self.send_message(message[0], {})
 		for k, item in connections.items():
-			if item["socket"] != self:
-				item["socket"].get_assignments()
-				if item["user_data"]["role"] == "teacher":
-					item["socket"].get_all_submissions()
-				else:
-					item["socket"].get_submissions(item["user_data"]["id"])
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "teacher":
+				item["socket"].get_all_submissions()
+			else:
+				item["socket"].get_submissions(item["user_data"]["id"])
 
 
 	def get_assignments(self):
 		message = assignments_manager.get_assignments()
 		self.send_message(message[0], message[1])
 
+
 	def submit_assignment(self, message_data):
 		message = assignments_manager.submit_assignment(message_data)
-		self.send_message(message[0], message[1])
+		self.send_message(message[0], {})
 		for k, item in connections.items():
-			if item["socket"] != self:
-				if item["user_data"]["role"] == "teacher":
-					item["socket"].get_all_submissions()
-				else:
-					item["socket"].get_submissions(item["user_data"]["id"])
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "teacher":
+				item["socket"].get_all_submissions()
+			else:
+				item["socket"].get_submissions(item["user_data"]["id"])
 
 
 
@@ -176,13 +173,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def submit_review(self, message_data):
 		message = assignments_manager.submit_review(message_data)
-		self.send_message(message[0], message[1])
+		self.send_message(message[0], {})
 		for k, item in connections.items():
-			if item["socket"] != self:
-				if item["user_data"]["role"] == "teacher":
-					item["socket"].get_all_submissions()
-				else:
-					item["socket"].get_submissions(item["user_data"]["id"])
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "teacher":
+				item["socket"].get_all_submissions()
+			else:
+				item["socket"].get_submissions(item["user_data"]["id"])
 
 
 
