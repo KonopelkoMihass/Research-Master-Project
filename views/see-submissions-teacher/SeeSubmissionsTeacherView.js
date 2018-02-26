@@ -39,6 +39,15 @@ class SeeSubmissionsTeacherView extends View
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+
+
+					var rowCount = submissionsTable.rows.length;
+					while (--rowCount) {
+						submissionsTable.deleteRow(rowCount);
+					}
+
+
+
 				});
 
 
@@ -100,8 +109,15 @@ class SeeSubmissionsTeacherView extends View
 					cell0.addEventListener("click", function () {
 						view.showSubmissions(parseInt(this.id.split("#")[1]));
 					});
+
+
+
+
 				}
             }
+
+
+
         }
 	}
 

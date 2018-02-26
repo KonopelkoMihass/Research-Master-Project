@@ -55,7 +55,7 @@ class FeedbackView extends View
         }
 	}
 
-	createReviewSelectModal(submissionID, assignmentName)
+	createReviewSelectModal(assignmentID, assignmentName)
 	{
 		var modalBody = app.modalContentManager.getModalContent("select-review-student");
 		var modalData = app.uiFactory.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
@@ -65,7 +65,7 @@ class FeedbackView extends View
 		var submission = undefined;
 		for (var i = 0; i < submissions.length; i++)
 		{
-			if (submissions[i].id === submissionID)
+			if (submissions[i].assignmentID === assignmentID)
 			{
 				submission = submissions[i];
 			}
