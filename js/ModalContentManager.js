@@ -9,7 +9,8 @@ class ModalContentManager
 
 	  	this.modals = [
 	  		"add-assignment",
-			"submit-assignment"
+			"submit-assignment",
+			"select-review-student"
 		];
 	}
 

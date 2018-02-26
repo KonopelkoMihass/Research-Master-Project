@@ -23,7 +23,10 @@ class MessageHandler
 			SUBMIT_ASSIGNMENT_FAILED: "submit_assignment_failed",
 
 			GET_SUBMISSIONS_SUCCESSFUL: "get_submissions_successful",
-			GET_SUBMISSIONS_FAILED: "get_submissions_failed"
+			GET_SUBMISSIONS_FAILED: "get_submissions_failed",
+
+			SUBMIT_REVIEW_SUCCESSFUL:"submit_review_successful",
+			SUBMIT_REVIEW_FAILED:"submit_review_failed"
 		};
 	}
 

@@ -11,6 +11,7 @@ class Submissions extends Model {
         // Review - code and review ability
         this.codeViewState = "Clear";
         this.submissionIDToCodeView = -1;
+        this.reviewerIDToCodeView = -1;
     }
 
     retrieveAssignmentNames(model)

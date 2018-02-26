@@ -5,7 +5,7 @@ class UIFactory
 
 	}
 
-	createModal(modalIDPrefix, title, body)
+	createModal(modalIDPrefix, title, body, includeSubmitButton)
 	{
 		// Create all elements
 		var modal = document.createElement("DIV");
@@ -56,7 +56,11 @@ class UIFactory
 		modalHeader.appendChild(modalTitle);
 		modalBox.appendChild(modalBody);
 
-		modalBox.appendChild(submitBtn);
+		if (includeSubmitButton)
+		{
+			modalBox.appendChild(submitBtn);
+		}
+
 		modalBox.appendChild(cancelBtn);
 
 

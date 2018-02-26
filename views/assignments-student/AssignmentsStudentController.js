@@ -18,7 +18,7 @@ class AssignmentsStudentController
 		var controller = this;
 
 		var modalBody = app.modalContentManager.getModalContent("submit-assignment");
-		var modalData = app.uiFactory.createModal("add-assignment", "Submit Assignment", modalBody);
+		var modalData = app.uiFactory.createModal("add-assignment", "Submit Assignment", modalBody, true);
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
 
@@ -106,8 +106,6 @@ class AssignmentsStudentController
 
 		}
 	}
-
-
 
 
 	prepareFiledropArea()

@@ -34,6 +34,7 @@ class SeeSubmissionsTeacherView extends View
 				cell0.addEventListener("click", function () {
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
+					app.submissions.reviewerIDToCodeView = app.user.id;
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 				});
 				rowIndex++;
@@ -69,45 +70,6 @@ class SeeSubmissionsTeacherView extends View
                 });
             }
         }
-
-
-
-
-
-
-
-
-
-			/*
-
-			for (var i = 0; i < submissions.length; i++)
-			{
-				var row = assignmentsTable.insertRow(i + 1);
-
-				var name = "";
-
-				for (var j = 0; j < assignments.length; j++)
-				{
-					if (assignments[j].id === submissions[i].assignmentID){
-						name = assignments[j].name;
-					}
-				}
-
-				var cell0 = row.insertCell(0);
-				cell0.innerHTML = name;
-				cell0.id = "see-submission-teacher#" + submissions[i].id;
-				cell0.addEventListener("click", function()
-				{
-					app.submissions.codeViewState = "Clear";
-					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
-					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
-				});
-
-
-
-			}*/
-
-
 	}
 
 

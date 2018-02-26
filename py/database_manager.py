@@ -229,7 +229,10 @@ class DatabaseManager:
 			feedbacks.append(feedback)
 
 		else:
-			feedbacks[iteration-1][data["reviewer"]] = data
+			print("HERE", iteration)
+			feedback = feedbacks[iteration-1]
+			print("OLDA AND NEWA", feedback, data)
+			feedback[data["reviewer_id"]] = data
 
 		submission["feedbacks"] = feedbacks
 		json_subs_feedback = json.dumps(submission["feedbacks"])

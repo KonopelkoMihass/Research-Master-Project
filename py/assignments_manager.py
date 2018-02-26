@@ -125,6 +125,25 @@ class AssignmentsManager:
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
 
+
+				for feedback in feedbacks:
+					for id in feedback:
+						review = json.loads(feedback[id]["review"])
+						feedback[id]["review"] = review
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			data = submissions
 
 			print("Get Submissions Successfully")
@@ -153,6 +172,11 @@ class AssignmentsManager:
 
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
+
+				for feedback in feedbacks:
+					for id in feedback:
+						review = json.loads(feedback[id]["review"])
+						feedback[id]["review"] = review
 
 				for user in users:
 					if user["id"] == submission["user_id"]:
@@ -197,6 +221,13 @@ class AssignmentsManager:
 
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
+
+				for feedback in feedbacks:
+					for id in feedback:
+						review = json.loads(feedback[id]["review"])
+						feedback[id]["review"] = review
+
+
 
 
 			data = submissions

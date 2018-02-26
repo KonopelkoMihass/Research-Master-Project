@@ -18,14 +18,30 @@ class CodeView extends View
 
 	setupView()
 	{
+		this.controller.cleanUp();
 		this.controller.prepareCodeHTMLs();
+
 		var state = this.controller.model.codeViewState;
 
 		if (state === "Clear")
 		{
+			this.controller.setupFileSelector(false);
 			this.controller.setViewAsClear();
 		}
 
+		if (state === "Comments")
+		{
+			this.controller.retrieveAnyPreviousReviewData();
+			this.controller.setupFileSelector(false);
+			this.controller.setReviewData();
+		}
+
+		if (state === "Review")
+		{
+			this.controller.retrieveAnyPreviousReviewData();
+			this.controller.setupFileSelector(true);
+			this.controller.setReviewData();
+		}
 	}
 
 

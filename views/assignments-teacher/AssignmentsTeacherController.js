@@ -25,7 +25,7 @@ class AssignmentsTeacherController
 
 		// Init Modal
 		var modalBody = app.modalContentManager.getModalContent("add-assignment");
-		var modalData = app.uiFactory.createModal("add-assignment", "Add Assignment", modalBody);
+		var modalData = app.uiFactory.createModal("add-assignment", "Add Assignment", modalBody, true);
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
 

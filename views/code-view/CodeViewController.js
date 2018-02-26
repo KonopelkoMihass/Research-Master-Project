@@ -24,59 +24,92 @@ class CodeViewController
 		document.getElementById("code-box").classList.remove("box");
 		document.getElementById("code-box").classList.add("box-left");
 		document.getElementById("comment-box").style.display = "block";
+		document.getElementById("submit-review-div").style.display = "block";
+	}
+
+	// Hide Review/Comments div and reposition code view.
+	setViewAsClear()
+	{
+		document.getElementById("code-box").classList.remove("box-left");
+		document.getElementById("code-box").classList.add("box");
+		document.getElementById("comment-box").style.display = "none";
 	}
 
 
 
 	prepareCodeHTMLs()
 	{
-		this.cleanUp();
+        // Get files and parse them into a highlighted HTML.  Then put them in a parsedCodeHTMLs.
+        for (var i = 0; i < this.model.submissions.length; i++) {
+            if (this.model.submissions[i].id === this.model.submissionIDToCodeView) {
+                var submissionFiles = this.model.submissions[i].submissionData;
+                for (var name in submissionFiles) {
+                    this.parsedCodeHTMLs[name] = Prism.highlight(submissionFiles[name], Prism.languages.cpp);
+                }
+            }
+        }
+    }
 
+    retrieveAnyPreviousReviewData()
+	{
+		for (var i = 0; i < this.model.submissions.length; i++) {
+            if (this.model.submissions[i].id === this.model.submissionIDToCodeView) {
+                var feedbacks = this.model.submissions[i].feedbacks;
+                var iteration = this.model.submissions[i].iteration;
+                var feedback = feedbacks[iteration-1];
+
+
+                for (var userID in feedback) {
+                	if (parseInt(userID) === this.model.reviewerIDToCodeView)
+                	{
+                		this.allFilesReview = feedback[userID].review;
+
+					}
+                }
+            }
+        }
+
+	}
+
+
+
+    setupFileSelector(allowReview)
+	{
 		var controller = this;
-		// Get files
-		for (var i = 0; i <	this.model.submissions.length; i++)
-		{
-			if (this.model.submissions[i].id === this.model.submissionIDToCodeView)
-			{
-				var submissionFiles = this.model.submissions[i].submissionData;
-				for (var name in submissionFiles)
-				{
-					this.parsedCodeHTMLs[name] = Prism.highlight(submissionFiles[name], Prism.languages.cpp);
-				}
-			}
-		}
 
 		//Add file button selector
-		var fileDiv = document.getElementById("file-select");
+		var fileSelectDiv = document.getElementById("file-select");
 		for (var name in this.parsedCodeHTMLs)
 		{
 			var button = document.createElement("BUTTON");
 			button.innerHTML = name;
+			button.id = "file-select-button#"+name;
+			fileSelectDiv.appendChild(button);
+
 			button.addEventListener("click", function ( )
             {
             	var filename = this.innerHTML;
 
 				 // Now we insert it into a <code> area
-    			var codeArea = document.getElementById("code-review");
-				codeArea.innerHTML = controller.parsedCodeHTMLs[filename];
+				document.getElementById("code-review").innerHTML = controller.parsedCodeHTMLs[filename];
 
 				// Needed to restore line numbers
     			Prism.highlightAllUnder(document.getElementById("precode-area"));
 
+				controller.tweakCodeBlock(filename, allowReview);
 
-    			if (controller.model.codeViewState === "Review")
-    			{
-					// Adds ability to review this code file
-    				controller.setReviewAbility(filename);
-
-    				// reapply selections and review data.
-    				controller.setReviewData(filename);
-    			}
+				// reapply selections and review data.
+				controller.setReviewData(filename);
 			});
+		}
 
-			fileDiv.appendChild(button);
+		if (!allowReview)
+		{
+			document.getElementById("submit-review-div").style.display = "none";
 		}
 	}
+
+
 
 	setReviewData(filename)
 	{
@@ -110,7 +143,6 @@ class CodeViewController
 			if (reviewDict[id].type === "token")
 			{
 				cell0.innerHTML = reviewDict[id].content;
-
 			}
 
 			else
@@ -120,54 +152,50 @@ class CodeViewController
 
 			cell1.innerHTML = reviewDict[id].review;
 
-
 			var codeSpan = document.getElementById(id);
 			codeSpan.classList.add("selected");
 		}
 	}
 
 
-	// Hide Review/ commenting div and reposition code view.
-	setViewAsClear()
-	{
-		document.getElementById("code-box").classList.remove("box-left");
-		document.getElementById("code-box").classList.add("box");
-		document.getElementById("comment-box").style.display = "none";
-	}
 
-
-	setReviewAbility(filename)
+	tweakLineNumbers(filename, pressable)
 	{
 		var controller = this;
 
-		// makes line numbers pressable
+		// fixes line numbers
 		var lineNumSpans = document.getElementsByName("lineNumSpan");
     	for (var i = 0; i < lineNumSpans.length; i++ )
 		{
 			var codeElement = lineNumSpans[i];
 			codeElement.id = "reviewLineID#" + (i+1);
 
-
-
-			codeElement.addEventListener("click", function ()
+			if (pressable)
 			{
-				var lineNum = this.id.split("#")[1];
-
-				//Check if it is already has a class "selected"
-				if ( !this.classList.contains("selected"))
+				codeElement.addEventListener("click", function ()
 				{
-					this.className += " selected";
-					controller.addLineBit(this.id, filename);
-				}
+					var lineNum = this.id.split("#")[1];
 
-				else
-				{
-					this.classList.remove("selected");
-					controller.deleteLineBit(this.id, filename);
-				}
-			});
+					//Check if it is already has a class "selected"
+					if (!this.classList.contains("selected")) {
+						this.className += " selected";
+						controller.addLineBit(this.id, filename);
+					}
+
+					else {
+						this.classList.remove("selected");
+						controller.deleteLineBit(this.id, filename);
+					}
+				});
+			}
 		}
+	}
 
+	tweakTokens(filename, pressable)
+	{
+		var controller = this;
+
+		// Tweak tokens
 		var tokens = document.getElementById("code-review").childNodes;
 		for (var i = 0; i < tokens.length; i++ )
 		{
@@ -197,31 +225,54 @@ class CodeViewController
 
 			// Then I add ID for each span and a click event.
 			token.id = "reviewTokenID#" + i ;
-			token.addEventListener("click", function()
+
+			if(pressable)
 			{
-				var wordNum = this.id.split("#")[1];
-				var content = this.textContent;
-
-				//Check if does not have a class "selected"
-				if ( !this.classList.contains("selected"))
+				token.addEventListener("click", function()
 				{
-					this.className += " selected";
-					controller.addCodeBit(this.id, content, filename);
-				}
+					var wordNum = this.id.split("#")[1];
+					var content = this.textContent;
 
+					//Check if does not have a class "selected"
+					if ( !this.classList.contains("selected"))
+					{
+						this.className += " selected";
+						controller.addCodeBit(this.id, content, filename);
+					}
+
+					else
+					{
+						this.classList.remove("selected");
+						controller.deleteCodeBit(this.id, filename);
+					}
+
+				});
+			}
+		}
+	}
+
+	tweakCodeBlock(filename, pressable)
+	{
+		var controller = this;
+
+		this.tweakLineNumbers(filename, pressable);
+		this.tweakTokens(filename, pressable);
+
+		if (pressable){
+			document.getElementById("submit-review").addEventListener("click", function ()
+			{
+				controller.model.submitReview(controller.allFilesReview);
+				if (app.user.role === "teacher")
+				{
+					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+				}
 				else
 				{
-					this.classList.remove("selected");
-					controller.deleteCodeBit(this.id, filename);
+					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
 				}
-
 			});
 		}
 
-		document.getElementById("submit-review").addEventListener("click", function () {
-
-			controller.model.submitReview(controller.allFilesReview);
-		});
 	}
 
 	addCodeBit(id, content, filename)
@@ -237,8 +288,6 @@ class CodeViewController
 			this.allFilesReview[filename] = {};
 			reviewDict = this.allFilesReview[filename];
 		}
-
-
 
 		// Save it to review (for now.  Can be done after the review)
 		var codeBit = {};
@@ -309,9 +358,6 @@ class CodeViewController
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
-
-
 
 
 
