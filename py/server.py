@@ -63,6 +63,34 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message= user_manager.signup(message_data)
 		self.send_message(message[0], message[1])
 
+		if  message[0] =="signup_successful":
+			#Save connection in there.
+			ip_address = ""
+
+			# Get IP and Port from connection context if possible
+			address = self.request.connection.context.address
+			if address:
+				ip = address[0]
+				port = str(address[1])
+				ip_address = ip + ":" + port
+
+			# Original method
+			else:
+				ip = self.request.remote_ip
+				port = self.request.stream.socket.getpeername()[1]
+				ip_address = ip + ":" + str(port)
+
+			message[1]["users"] = {}
+
+			connection = {}
+			connection["ip"] = ip_address
+			connection["socket"] = self
+			connection["user_data"] = message[1]
+
+			connections[message[1]["email"]] = 	connection
+
+			print("Connections", connections)
+
 
 	def signin(self, message_data):
 		message = user_manager.signin(message_data)
@@ -98,11 +126,28 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def add_assignment(self, message_data):
 		message = assignments_manager.add_assignment(message_data)
+		print ("I CREATED ASSIGNMENT")
 		self.send_message(message[0], message[1])
+		for k, item in connections.items():
+			if item["socket"] != self:
+				item["socket"].get_assignments()
+				if item["user_data"]["role"] == "teacher":
+					item["socket"].get_all_submissions()
+				else:
+					item["socket"].get_submissions(item["user_data"]["id"])
+
+
 
 	def delete_assignment(self, id):
 		message = assignments_manager.delete_assignment(id)
 		self.send_message(message[0], message[1])
+		for k, item in connections.items():
+			if item["socket"] != self:
+				item["socket"].get_assignments()
+				if item["user_data"]["role"] == "teacher":
+					item["socket"].get_all_submissions()
+				else:
+					item["socket"].get_submissions(item["user_data"]["id"])
 
 
 	def get_assignments(self):
@@ -112,6 +157,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 	def submit_assignment(self, message_data):
 		message = assignments_manager.submit_assignment(message_data)
 		self.send_message(message[0], message[1])
+		for k, item in connections.items():
+			if item["socket"] != self:
+				if item["user_data"]["role"] == "teacher":
+					item["socket"].get_all_submissions()
+				else:
+					item["socket"].get_submissions(item["user_data"]["id"])
+
+
 
 	def get_submissions(self, user_id):
 		message = assignments_manager.get_submissions(user_id)
@@ -124,6 +177,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 	def submit_review(self, message_data):
 		message = assignments_manager.submit_review(message_data)
 		self.send_message(message[0], message[1])
+		for k, item in connections.items():
+			if item["socket"] != self:
+				if item["user_data"]["role"] == "teacher":
+					item["socket"].get_all_submissions()
+				else:
+					item["socket"].get_submissions(item["user_data"]["id"])
+
+
 
 
 	def on_close(self):

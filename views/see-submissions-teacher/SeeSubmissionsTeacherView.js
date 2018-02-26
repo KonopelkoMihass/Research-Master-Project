@@ -25,7 +25,10 @@ class SeeSubmissionsTeacherView extends View
 
 		var rowIndex = 0;
 		for (var i = 0; i < submissions.length; i++) {
-            if (submissions[i].assignmentID === assignmentID)
+			var submission = submissions[i];
+
+
+            if (submission.assignmentID === assignmentID)
             {
 				var row = submissionsTable.insertRow(rowIndex + 1);
 				var cell0 = row.insertCell(0);
@@ -37,6 +40,24 @@ class SeeSubmissionsTeacherView extends View
 					app.submissions.reviewerIDToCodeView = app.user.id;
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 				});
+
+
+				var cell1 = row.insertCell(1);
+				// Check if feedback was already submitted by this user.
+				var feedback = submission.feedbacks[submission.feedbacks.length - 1];
+				if (feedback)
+				{
+					if (feedback[app.user.id])
+					{
+                        var img = document.createElement("IMG");
+						img.src = "resources/images/tick.png";
+						img.className = "picture-button";
+						cell1.appendChild(img);
+					}
+				}
+
+
+
 				rowIndex++;
 			}
 
@@ -58,16 +79,28 @@ class SeeSubmissionsTeacherView extends View
                 assignmentsTable.deleteRow(rowCount);
             }
             var assignments = app.assignments.assignments;
+			var submissions = model.submissions;
 
             for (var i = 0; i < assignments.length; i++) {
-                var row = assignmentsTable.insertRow(i + 1);
+            	var hasSubmissions = false;
+				for (var j = 0; j < submissions.length; j++) {
+					if (assignments[i].id === submissions[j].assignmentID)
+					{
+						hasSubmissions = true;
+					}
+				}
 
-                var cell0 = row.insertCell(0);
-                cell0.innerHTML = assignments[i].name;
-                cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
-                cell0.addEventListener("click", function () {
-                    view.showSubmissions(parseInt(this.id.split("#")[1]));
-                });
+				if (hasSubmissions)
+				{
+					var row = assignmentsTable.insertRow(assignmentsTable.rows.length);
+
+					var cell0 = row.insertCell(0);
+					cell0.innerHTML = assignments[i].name;
+					cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
+					cell0.addEventListener("click", function () {
+						view.showSubmissions(parseInt(this.id.split("#")[1]));
+					});
+				}
             }
         }
 	}

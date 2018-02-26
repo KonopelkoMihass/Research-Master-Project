@@ -119,7 +119,7 @@ class App
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
-		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_IN_FAILED);
+		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 
 
 		// Teacher - Assignment
@@ -158,10 +158,13 @@ class App
 
 	setupMenuPanel()
 	{
+		var viewLabel = document.getElementById("view-title");
+
 		document.getElementById("mps-profile-button").addEventListener("click", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+				viewLabel.innerText = "Your Profile";
 			}
 		});
 
@@ -169,6 +172,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
+				viewLabel.innerText = "Assignments";
 			}
 		});
 
@@ -176,6 +180,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+				viewLabel.innerText = "Standards Available";
 			}
 		});
 
@@ -183,6 +188,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PERFORM_REVIEW_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
+				viewLabel.innerText = "Reviews To Do";
 			}
 		});
 
@@ -190,6 +196,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
+				viewLabel.innerText = "Feedback You Received";
 			}
 		});
 
@@ -197,6 +204,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
+				viewLabel.innerText = "Your Submissions";
 			}
 		});
 
@@ -206,6 +214,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+				viewLabel.innerText = "Assignments";
 			}
 		});
 
@@ -213,6 +222,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_TEACHER);
+				viewLabel.innerText = "Standards Available";
 			}
 		});
 
@@ -220,6 +230,7 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER);
+				viewLabel.innerText = "Student's Submissions";
 			}
 		});
 	}
@@ -230,3 +241,61 @@ class App
     	this.audioManager.queueSound("button_click.wav");
 	}
 }
+
+
+
+getRandomAdjective = function () {
+	var result = Math.floor(Math.random() * 10);
+
+	switch (result){
+		case 0:
+			return "Gigantic ";
+			break;
+		case 1:
+			return "Epic ";
+			break;
+		case 2:
+			return "Cunning ";
+			break;
+		case 3:
+			return "Flying ";
+			break;
+		case 4:
+			return "Tasty ";
+			break;
+		case 5:
+			return "Poisonous ";
+			break;
+		case 6:
+			return "Sleepy ";
+			break;
+		case 7:
+			return "Spontaneous ";
+			break;
+		case 8:
+			return "Sneaky ";
+			break;
+		case 9:
+			return "Tiny ";
+			break;
+	}
+	return "Tired ";
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

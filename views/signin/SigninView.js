@@ -17,12 +17,12 @@ class SigninView extends View
 		{
 			if(model.role === "student")
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+				document.getElementById("mps-profile-button").click();
 			}
 
 			else if (model.role === "teacher")
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+				document.getElementById("mpt-assignments-button").click();
 			}
 		}
 

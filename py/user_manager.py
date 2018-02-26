@@ -30,15 +30,15 @@ class UserManager:
 	def signup(self, message_data):
 		"""Returns message type : string"""
 		data = {}
+		message_type = "signup_successful"
+
 		try:
 			self.database_manager.insert_into_table("Users", message_data)
 			data = self.database_manager.get_user_info(message_data)
 
-			message_type = "signup_successful"
 		except:
 			message_type = "signup_failed"
 
 		message = [message_type, data]
-
 
 		return message

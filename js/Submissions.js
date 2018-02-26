@@ -30,6 +30,13 @@ class Submissions extends Model {
         data.reviewer_role = app.user.role;
         data.submission_id = this.submissionIDToCodeView;
 
+        if (app.user.role === "teacher") {
+            data.reviewer_name = app.user.name + " " + app.user.surname;
+        }
+        else {
+            data.reviewer_name = getRandomAdjective() + app.user.noun;
+        }
+
         app.net.sendMessage("submit_review", data);
     }
 
