@@ -52,7 +52,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "get_submissions":
 			self.get_submissions(message_data["user_id"])
 
+		elif message_type == "get_all_submissions":
+			self.get_all_submissions()
 
+		elif message_type == "submit_review":
+			self.submit_review(message_data)
 
 
 	def signup(self, message_data):
@@ -113,6 +117,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message = assignments_manager.get_submissions(user_id)
 		self.send_message(message[0], message[1])
 
+	def get_all_submissions(self):
+		message = assignments_manager.get_all_submissions()
+		self.send_message(message[0], message[1])
+
+	def submit_review(self, message_data):
+		message = assignments_manager.submit_review(message_data)
+		self.send_message(message[0], message[1])
 
 
 	def on_close(self):

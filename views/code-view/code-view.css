@@ -3,39 +3,6 @@
     outline:3px solid red;
 }
 
-.code-block
-{
-	border-style: solid;
-	border-width: 1px;
-	margin: 2%;
-	padding: 1%;
-	width: 45%;
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    overflow:auto;
-}
-
-.code-block-centralised
-{
-    width: 80%;
-    left: 8%;
-}
-
-.review-block
-{
-	border-style: solid;
-	border-width: 1px;
-	margin: 2%;
-	padding: 0;
-	width: 45%;
-    position: absolute;
-    right: 0%;
-    top: 10%;
-    bottom: 10%;
-    overflow:auto;
-}
-
 .comments-table {
 
     border-collapse: collapse;
@@ -52,3 +19,11 @@
 }
 
 .comments-table tr:hover {background-color:#f5f5f5;}
+
+
+.submit-review
+{
+    position:absolute;
+    bottom: 0;
+    left:40%;
+}

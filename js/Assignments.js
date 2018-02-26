@@ -71,8 +71,6 @@ class Assignments extends Model
         }
 
 
-
-    console.log(typeof data.submission_data);
         app.net.sendMessage("submit_assignment", data);
     }
 }

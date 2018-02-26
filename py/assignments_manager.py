@@ -135,9 +135,79 @@ class AssignmentsManager:
 		message = [type, data]
 		return message
 
+	def get_all_submissions(self):
+		print("get_all_submissions")
+		type = "get_submissions_successful"
+		data = []
+
+		try:
+			submissions = self.database_manager.select_all_from_table("Submissions")
+			users = self.database_manager.select_all_from_table("Users")
+
+			for submission in submissions:
+				submission_data = json.loads(submission["submission_data"])
+				submission["submission_data"] = submission_data
+
+				reviewers_ids = json.loads(submission["reviewers_ids"])
+				submission["reviewers_ids"] = reviewers_ids
+
+				feedbacks = json.loads(submission["feedbacks"])
+				submission["feedbacks"] = feedbacks
+
+				for user in users:
+					if user["id"] == submission["user_id"]:
+						submission["user_data"] = user
+
+			data = submissions
+
+			print("Get All Submissions Successfully")
+		except:
+			type = "get_submissions_failed"
+			print("Get all Submissions Failed")
+
+		message = [type, data]
+		return message
 
 
 
+	def submit_review(self, message_data):
+		print("submit_review")
+		type = "submit_review_successful"
+		data = []
+
+		try:
+			review = json.dumps(message_data["review"])
+			message_data["review"] = review
+			self.database_manager.add_review(message_data)
+			print("Submitted Assignment Successfully")
+
+			submissions = []
+			if message_data["reviewer_role"] == "student":
+				submissions = self.database_manager.select_submissions_for_user(message_data["reviewer_id"])
+			else:
+				submissions = self.database_manager.select_all_from_table("Submissions")
+
+
+			for submission in submissions:
+				submission_data = json.loads(submission["submission_data"])
+				submission["submission_data"] = submission_data
+
+				reviewers_ids = json.loads(submission["reviewers_ids"])
+				submission["reviewers_ids"] = reviewers_ids
+
+				feedbacks = json.loads(submission["feedbacks"])
+				submission["feedbacks"] = feedbacks
+
+
+			data = submissions
+
+			print("Submit Review Successfully")
+		except:
+			type = "submit_review_failed"
+			print("Submit Review  Failed")
+
+		message = [type, data]
+		return message
 
 
 

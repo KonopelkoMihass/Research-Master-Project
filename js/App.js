@@ -141,6 +141,10 @@ class App
 		this.submissions.addObserver(seeSubmissionsStudentView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
 		this.submissions.addObserver(seeSubmissionsStudentView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
 
+		// Teacher -Submission
+		this.submissions.addObserver(seeSubmissionsTeacherView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(seeSubmissionsTeacherView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL)
+
 
 
 	}

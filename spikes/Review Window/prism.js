@@ -1121,9 +1121,10 @@ Prism.hooks.add('complete', function completeHook(env) {
 		lineNumbersWrapper.className = 'line-numbers-rows';
 		lineNumbersWrapper.innerHTML = lines;
 
-		for (var i = 0; i < lineNumbersWrapper.childNodes.length; i++) {
-			lineNumbersWrapper.childNodes[i].id = i+1;
-		}
+	/*	for (var i = 0; i < lineNumbersWrapper.childNodes.length; i++) {
+			var id = "reviewLine#" + (i+1)
+			lineNumbersWrapper.childNodes[i].id = id;
+		}*/
 
 
 

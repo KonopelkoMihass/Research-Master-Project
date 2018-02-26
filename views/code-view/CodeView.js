@@ -25,14 +25,6 @@ class CodeView extends View
 		{
 			this.controller.setViewAsClear();
 		}
-		else if (state === "Comments")
-		{
-
-		}
-		else if (state === "Review")
-		{
-
-		}
 
 	}
 

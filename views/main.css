@@ -30,23 +30,7 @@ input
     width: 80%;
 }
 
-.menu-panel button
-{
-	background-color: white;
-	border: 2px solid;
-	box-shadow: 2px 2px black;
-	cursor: pointer;
-    display: inline-block;
-	font-size: calc(9px + 0.5vw);
-    padding: 0.2% 0;
-	width: 150px;
-}
-.menu-panel button:hover
-{
-	background-color: gray;
-    color: white;
-    font-weight: bold;
-}
+
 
 
 /******************************************************/
@@ -122,12 +106,49 @@ table tr:hover {background-color:#f5f5f5;}
 	padding: 1%;
 
     position: absolute;
-    left: 25%;
-    right: 25%;
-    top: 16%;
+    left: 15%;
+    right: 15%;
+    top: 10%;
     bottom: 20%;
     overflow:auto;
 }
+
+
+.box-left
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 1%;
+
+	width: 45%;
+    position: absolute;
+    top: 10%;
+    bottom: 20%;
+    overflow:auto;
+}
+
+.code-block-centralised
+{
+    width: 80%;
+    left: 8%;
+}
+
+.box-right
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 0;
+	width: 45%;
+    position: absolute;
+    right: 0;
+    top: 10%;
+    bottom: 20%;
+    overflow:auto;
+}
+
+
 .add-assignment-button
 {
     position:relative;
@@ -141,4 +162,22 @@ table tr:hover {background-color:#f5f5f5;}
 .picture-button
 {
     width:40%;
+}
+
+button
+{
+	background-color: white;
+	border: 1px solid;
+	box-shadow: 1px 1px black;
+	cursor: pointer;
+    display: inline-block;
+	font-size: calc(9px + 0.5vw);
+    margin: 0.4% 0.1%;
+    padding: .2% 4%;
+}
+button:hover
+{
+	background-color: gray;
+    color: white;
+    font-weight: bold;
 }

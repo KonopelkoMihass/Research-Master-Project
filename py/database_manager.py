@@ -202,3 +202,38 @@ class DatabaseManager:
 		cursor.close()
 		connector.close()
 		return data
+
+
+	def add_review(self, data):
+		print("add_review")
+		connector = self.cnxpool.get_connection()
+
+		# first we need to get the submission
+		cursor = connector.cursor(dictionary=True)
+		submission_id = str(data["submission_id"])
+		query = ("SELECT * FROM Submissions WHERE Submissions.id=" + submission_id)
+		cursor.execute(query)
+		submission = cursor.fetchall()[0]
+		cursor.close()
+		connector.close()
+
+		# now we need to modify this submission to contain this review
+		iteration = int(submission["iteration"])
+
+		feedbacks = json.loads(submission["feedbacks"])
+
+		#add a feedback dictionary if not present
+		if len(feedbacks) < iteration:
+			feedback = {}
+			feedback[data["reviewer_id"]] = data
+			feedbacks.append(feedback)
+
+		else:
+			feedbacks[iteration-1][data["reviewer"]] = data
+
+		submission["feedbacks"] = feedbacks
+		json_subs_feedback = json.dumps(submission["feedbacks"])
+		submission["feedbacks"] = json_subs_feedback
+		self.replace_into_table("Submissions", submission)
+
+

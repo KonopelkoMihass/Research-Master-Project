@@ -10,6 +10,13 @@ class Submission
         this.iteration = data.iteration;
         this.reviewersIDs = data.reviewers_ids;
         this.feedbacks = data.feedbacks;
+
+        this.userData = {};
+        if(data.user_data)
+        {
+            this.userData = data.user_data;
+        }
+
     }
 
     serialize()

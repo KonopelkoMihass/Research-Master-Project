@@ -31,6 +31,9 @@ class User extends Model
                 {
                     app.submissions.getPersonalSubmissions(data.id);
                 }
+                else{
+                    app.submissions.getAllSubmissions();
+                }
 
 
             }
