@@ -32,11 +32,18 @@ class AssignmentsTeacherController
 		//Set minimum datetime and current datetime to now.
 		var today = new Date().toISOString();
 		today = today.substr(0, today.lastIndexOf("."));
-		document.getElementById("assignment-deadline").min = today;
-		document.getElementById("assignment-deadline").value = today;
+
+
+		document.getElementById("assignment-submission-deadline").min = today;
+		document.getElementById("assignment-submission-deadline").value = today;
+
+		document.getElementById("assignment-review-deadline").min = today;
+		document.getElementById("assignment-review-deadline").value = today;
+
 
 		var submitBtn = modalData.submit;
-		submitBtn.addEventListener("click", function () {
+		submitBtn.addEventListener("click", function ()
+		{
 			controller.createAssignment();
 			var parentNode = modalData.modal.parentNode;
 			parentNode.removeChild(modalData.modal);
@@ -48,14 +55,20 @@ class AssignmentsTeacherController
 	createAssignment()
 	{
 		var name = document.getElementById("assignment-name").value;
-		var description = document.getElementById("assignment-description").value;
-		var deadlineDate = document.getElementById("assignment-deadline").value.split('T')[0];
-		var deadlineTime = document.getElementById("assignment-deadline").value.split('T')[1];
+
+		var deadlineDate = document.getElementById("assignment-submission-deadline").value.split('T')[0];
+		var deadlineTime = document.getElementById("assignment-submission-deadline").value.split('T')[1];
 		deadlineTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
 
+		var reviewTillDate = document.getElementById("assignment-review-deadline").value.split('T')[0];
+		var reviewTillTime = document.getElementById("assignment-review-deadline").value.split('T')[1];
+		reviewTillTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
+
+		var description = document.getElementById("assignment-description").value;
+		var reviewersAmount = document.getElementById("assignment-total-reviewers").value;
 
 
-		this.model.createAssignment(name, deadlineTime, deadlineDate, description);
+		this.model.createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount);
 	}
 
 	deleteAssignment(id)

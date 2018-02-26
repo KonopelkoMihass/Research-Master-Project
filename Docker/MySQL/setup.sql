@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Assignments` (
   `name` VARCHAR(63) NOT NULL,
   `deadline_date` VARCHAR(16) NOT NULL,
   `deadline_time` VARCHAR(16) NOT NULL,
+  `review_till_date` VARCHAR(16) NOT NULL,
+  `review_till_time` VARCHAR(16) NOT NULL,
+  `reviewers_amount` INT NOT NULL,
+  `assignment_state` VARCHAR(32) NOT NULL,
+
   `description` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`));
 

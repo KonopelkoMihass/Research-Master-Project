@@ -29,13 +29,18 @@ class Assignments extends Model
         this.notify(messageType);
     }
 
-    createAssignment(name, deadlineTime, deadlineDate, description)
+    createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount)
     {
         var data = {};
         data.name = name;
         data.deadline_time = deadlineTime;
         data.deadline_date = deadlineDate;
         data.description = description;
+        data.review_till_date = reviewTillDate;
+        data.review_till_time = reviewTillTime;
+        data.reviewers_amount = reviewersAmount;
+        data.assignment_state = "normal";
+
 
         app.net.sendMessage("add_assignment", data);
     }

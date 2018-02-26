@@ -8,9 +8,15 @@
   </div>
 
   <div> <!--DEADLINE DATE-->
-    <label>Deadline</label>
+    <label>Submission Deadline</label>
     <br>
-    <input id="assignment-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
+    <input id="assignment-submission-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
+  </div>
+
+   <div> <!--DEADLINE DATE-->
+    <label>Review Deadline</label>
+    <br>
+    <input id="assignment-review-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
   </div>
 
   <div> <!--DESCRIPTION TEXTAREA-->
@@ -18,4 +24,12 @@
     <br>
     <textarea rows="15" cols="50" id="assignment-description" style="resize:none" placeholder="Insert description here!"></textarea>
   </div>
+
+   <div> <!--REVIEWER COUNT TEXTBOX-->
+    <label>Minimum reviewers per submission</label>
+    <br>
+    <input type="number" id="assignment-total-reviewers" min="1" placeholder="1">
+  </div>
+
+
 </div>
