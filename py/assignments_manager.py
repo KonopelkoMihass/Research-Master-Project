@@ -93,15 +93,22 @@ class AssignmentsManager:
 		data = []
 
 		try:
-			submissions = self.database_manager.select_submissions_for_user(user_id)
+			submissions = self.database_manager.select_all_from_table("Submissions")
 			users = self.database_manager.select_all_from_table("Users")
-			
+
+			# these include a.Personal submissions and b.Submission to review.
+			actual_submissions = []
+
 			for submission in submissions:
+
+				#if it is our submission - we grab it
+				if submission["user_id"] == user_id:
+					actual_submissions.append(submission)
+
 				submission_data = json.loads(submission["submission_data"])
 				submission["submission_data"] = submission_data
 
 				reviewers_ids = json.loads(submission["reviewers_ids"])
-
 
 				if len(reviewers_ids) > 0:
 					for i in range(0, len(reviewers_ids)):
@@ -109,23 +116,23 @@ class AssignmentsManager:
 							if user["id"] == reviewers_ids[i]:
 								reviewers_ids[i] = user
 
+						# if user requesting submissions is mentioned as a reviewer - we grab the submission
+						if reviewers_ids[i]["id"] == user_id:
+							actual_submissions.append(submission)
+
+
 				submission["reviewers_ids"] = reviewers_ids
-
-
-
-
-
 
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
-
 
 				for feedback in feedbacks:
 					for id in feedback:
 						review = json.loads(feedback[id]["review"])
 						feedback[id]["review"] = review
 
-			data = submissions
+
+			data = actual_submissions
 
 			print("Get Submissions Successfully")
 		except:
