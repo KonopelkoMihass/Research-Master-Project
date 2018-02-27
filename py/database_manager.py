@@ -62,6 +62,8 @@ class DatabaseManager:
 
 		placeholders = ", ".join(["%s"] * len(my_dict))
 
+
+
 		stmt = "REPLACE INTO `{table}` ({columns}) VALUES ({values});".format(
 			table=table_name,
 			columns=",".join(my_dict.keys()),

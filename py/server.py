@@ -3,11 +3,12 @@ import json
 
 from user_manager import UserManager
 from assignments_manager import AssignmentsManager
+import planner
 
 
 from tornado import websocket, web, ioloop, httpserver
 from tornado import autoreload
-
+from tornado.ioloop import PeriodicCallback
 
 #A dictionary, key = ip:port, value = websocket associated with the ip
 #(techincally the websockethandler associated with the ip, but it's easier
@@ -128,12 +129,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message = assignments_manager.add_assignment(message_data)
 		self.send_message(message[0],{})
 		for k, item in connections.items():
-			if item["socket"] != self:
-				item["socket"].get_assignments()
-				if item["user_data"]["role"] == "teacher":
-					item["socket"].get_all_submissions()
-				else:
-					item["socket"].get_submissions(item["user_data"]["id"])
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "teacher":
+				item["socket"].get_all_submissions()
+			else:
+				item["socket"].get_submissions(item["user_data"]["id"])
 
 	def delete_assignment(self, id):
 		message = assignments_manager.delete_assignment(id)
@@ -222,5 +222,17 @@ if __name__ == '__main__':
 	print("server ON")
 	app.listen(server_port)
 	ioloop = tornado.ioloop.IOLoop.instance()
+
+	# runs a periodic update method to handle time based features.
+	# go to daemon_update file to add/change the logic
+	# set it to run 300000 for one run each 5 min or so.
+	PeriodicCallback(planner.update, 4000).start()
+
+
+
+
+
+
+
 	autoreload.start(ioloop)
 	ioloop.start()

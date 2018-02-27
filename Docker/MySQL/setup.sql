@@ -18,7 +18,7 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
 
 -- creating dummy teacher
 INSERT INTO ProjectOrganiser.Users (email, github_username, github_email, name, surname, noun, password, role)
-VALUES ('q','q','q','q','q','q','q','teacher'),  ('w','w','w','w','w','w','w','student') ;
+VALUES ('q','q','q','q','q','q','q','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Assignments` (
   `review_till_date` VARCHAR(16) NOT NULL,
   `review_till_time` VARCHAR(16) NOT NULL,
   `reviewers_amount` INT NOT NULL,
-  `assignment_state` VARCHAR(32) NOT NULL,
-
+  `status` VARCHAR(32) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
+
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Assignments` (`name` ASC);

@@ -58,11 +58,23 @@ class AssignmentsTeacherController
 
 		var deadlineDate = document.getElementById("assignment-submission-deadline").value.split('T')[0];
 		var deadlineTime = document.getElementById("assignment-submission-deadline").value.split('T')[1];
-		deadlineTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
 
 		var reviewTillDate = document.getElementById("assignment-review-deadline").value.split('T')[0];
 		var reviewTillTime = document.getElementById("assignment-review-deadline").value.split('T')[1];
-		reviewTillTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
+
+		var totalColons = deadlineTime.split(":").length-1;
+		// Remove seconds
+		if (totalColons === 2) {
+			deadlineTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
+		}
+
+
+		totalColons = reviewTillTime.split(":").length-1;
+		// Remove seconds
+		if (totalColons === 2) {
+			reviewTillTime = reviewTillTime.substring(0, reviewTillTime.lastIndexOf(":"));
+		}
+
 
 		var description = document.getElementById("assignment-description").value;
 		var reviewersAmount = document.getElementById("assignment-total-reviewers").value;

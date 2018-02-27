@@ -67,6 +67,7 @@ class AssignmentsManager:
 		data = []
 
 		try:
+
 			submission_data = json.dumps(message_data["submission_data"])
 			message_data["submission_data"] = submission_data
 
@@ -160,6 +161,21 @@ class AssignmentsManager:
 
 
 
+	def get_submissions_for_assignment(self,assignment_id):
+		all_submissions = self.get_all_submissions()[1]
+		submissions = []
+		for submission in all_submissions:
+			if submission["assignment_id"] == assignment_id:
+				submissions.append(submission)
+
+		return submissions
+
+
+
+
+
+
+
 	def submit_review(self, message_data):
 		print("submit_review")
 		type = "submit_review_successful"
@@ -177,6 +193,7 @@ class AssignmentsManager:
 
 		message = [type, data]
 		return message
+
 
 
 

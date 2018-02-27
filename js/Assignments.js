@@ -39,7 +39,7 @@ class Assignments extends Model
         data.review_till_date = reviewTillDate;
         data.review_till_time = reviewTillTime;
         data.reviewers_amount = reviewersAmount;
-        data.assignment_state = "normal";
+        data.status = "normal";
 
 
         app.net.sendMessage("add_assignment", data);
