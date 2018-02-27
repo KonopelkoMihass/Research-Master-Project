@@ -5,6 +5,7 @@ from assignments_manager import AssignmentsManager
 #from email_system import EmailSystem
 from database_manager import DatabaseManager
 
+
 class CheckAssignmentStage():
     def __init__(self):
         self.assignments_manager = AssignmentsManager()
@@ -14,6 +15,8 @@ class CheckAssignmentStage():
         #print("##########################################")
         #print("DAEMON IS UPDATED")
         #print("##########################################")
+
+        update_clients = False
 
         #Thsi method returns a message pack (type, data).  We need data
         assignments = self.assignments_manager.get_assignments()[1]
@@ -46,6 +49,7 @@ class CheckAssignmentStage():
                 if time_remaining < datetime.timedelta(hours=0):
                     status = "review"
                     self.reviewer_assigning(assignment)
+                    update_clients = True
                     # SEND EMAIL
 
                     pass
@@ -54,17 +58,21 @@ class CheckAssignmentStage():
                 time_remaining = review_till_time - datetime.datetime.now()
                 if time_remaining < datetime.timedelta(hours=0):
                     status = "Completed"
+                    update_clients = True
+                    self.set_teachers_as_only_reviewers(assignment)
+
                     # SEND EMAIL
                     pass
 
             if old_status != status:
                 try:
                     assignment["status"] = status
-                    print("Will update now")
                     self.database_manager.replace_into_table("Assignments", assignment)
-                    print("Updated Assignment State")
                 except:
                     pass
+
+        return update_clients
+
 
 
     def reviewer_assigning(self, assignment):
@@ -110,8 +118,29 @@ class CheckAssignmentStage():
 
 
 
+    def set_teachers_as_only_reviewers(self, assignment):
+        submissions = self.assignments_manager.get_submissions_for_assignment(assignment["id"])
+
+        users = self.database_manager.select_all_from_table("Users")
+
+        teachers = []
+        for user in users:
+            if user["role"] == "teacher":
+                teachers.append(user["id"])
+
+
+        for i in range(0, len(submissions)):
+            submissions[i]["reviewers_ids"] = teachers
+            del submissions[i]["user_data"]
+
+            try:
+                self.assignments_manager.submit_assignment(submissions[i])
+                print("Updated Submission")
+            except:
+                pass
+
 
 check_time = CheckAssignmentStage()
 
 def update():
-    check_time.update()
+    return check_time.update()

@@ -15,6 +15,22 @@ from tornado.ioloop import PeriodicCallback
 #to imagine as just the websocket.)
 connections={}
 
+def globalDaemonMethod():
+	update_clients = planner.update()
+	print ("Okay - Do we update =", update_clients)
+
+
+	if update_clients == True:
+		print("hello here")
+		for k, item in connections.items():
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "teacher":
+				item["socket"].get_all_submissions()
+			else:
+				item["socket"].get_submissions(item["user_data"]["id"])
+
+
+
 class WSHandler(tornado.websocket.WebSocketHandler):
 	#This can be used to restrict which ip addresses can connect to the server
 	#return True means any machine can connect
@@ -226,7 +242,7 @@ if __name__ == '__main__':
 	# runs a periodic update method to handle time based features.
 	# go to daemon_update file to add/change the logic
 	# set it to run 300000 for one run each 5 min or so.
-	PeriodicCallback(planner.update, 4000).start()
+	PeriodicCallback(globalDaemonMethod, 15000).start()
 
 
 
