@@ -27,7 +27,18 @@ class SeeSubmissionsStudentView extends View
 				submissionsTable.deleteRow(rowCount);
 			}
 
-			var submissions = model.submissions;
+			var allSubmissions = model.submissions;
+			var submissions = [];
+			for (var i = 0; i < allSubmissions.length; i++)
+			{
+				if (allSubmissions[i].userID === app.user.id)
+				{
+					submissions.push(allSubmissions[i]);
+				}
+			}
+
+
+
 			var assignments = app.assignments.assignments;
 
 
