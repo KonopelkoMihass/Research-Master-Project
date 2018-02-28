@@ -26,14 +26,24 @@ class FeedbackView extends View
             }
 
             var assignments = app.assignments.assignments;
-            var submissions = model.submissions;
+			var allSubmissions = model.submissions;
+			var submissions = [];
+			for (var i = 0; i < allSubmissions.length; i++)
+			{
+				// if he is an owner - then he is the one to see these.
+				if (allSubmissions[i].userID === app.user.id)
+				{
+					submissions.push(allSubmissions[i]);
+				}
+			}
 
 
+			var rowIndex = 0;
             for (var i = 0; i < submissions.length; i++)
             {
             	if (submissions[i].feedbacks.length !== 0)
             	{
-					var row = submissionsTable.insertRow(i + 1);
+					var row = submissionsTable.insertRow(rowIndex + 1);
 
 					var cell0 = row.insertCell(0);
 					for (var j = 0; j < assignments.length; j++)
@@ -49,7 +59,7 @@ class FeedbackView extends View
 					{
 						view.createReviewSelectModal(parseInt(this.id.split("#")[1]), this.innerHTML);
 					});
-
+					rowIndex++;
 				}
             }
         }
@@ -61,41 +71,52 @@ class FeedbackView extends View
 		var modalData = app.uiFactory.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
 		document.body.appendChild(modalData.modal);
 
+
+
+
+
 		var submissions = this.controller.model.submissions;
 		var submission = undefined;
 		for (var i = 0; i < submissions.length; i++)
 		{
 			if (submissions[i].assignmentID === assignmentID)
 			{
-				submission = submissions[i];
+				if (submissions[i].userID === app.user.id)
+				{
+					submission = submissions[i];
+				}
 			}
 		}
 
-		var latestFeedback = submission.feedbacks[submission.feedbacks.length - 1];
 
-		var reviewDiv = document.getElementById("select-review-students-buttons");
-
-		for (var userID in latestFeedback)
+		for (var i = 0; i < submission.feedbacks.length; i++)
 		{
-			var feedback = latestFeedback[userID];
+			var feedback = submission.feedbacks[i];
+			var reviewDiv = document.getElementById("select-review-students-buttons");
 
-            var reviewBtn = document.createElement("BUTTON");
-            reviewBtn.innerHTML ="Review by " + feedback.reviewer_name;
-            reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + userID;
+			for (var userID in feedback)
+			{
+				var fbdata = feedback[userID];
+
+				var reviewBtn = document.createElement("BUTTON");
+				reviewBtn.innerHTML ="Review by " + fbdata.reviewer_name;
+				reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + userID;
 
 
-			reviewBtn.addEventListener("click", function () {
-				var parentNode = modalData.modal.parentNode;
-				parentNode.removeChild(modalData.modal);
+				reviewBtn.addEventListener("click", function () {
+					var parentNode = modalData.modal.parentNode;
+					parentNode.removeChild(modalData.modal);
 
-				app.submissions.codeViewState = "Comments";
-				app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
-				app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
-				app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
-			});
+					app.submissions.codeViewState = "Comments";
+					app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
+					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
+					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+				});
 
-			reviewDiv.appendChild(reviewBtn);
-        }
+				reviewDiv.appendChild(reviewBtn);
+			}
+		}
+
 
 		modalData.modal.style.display = "block";
 	}

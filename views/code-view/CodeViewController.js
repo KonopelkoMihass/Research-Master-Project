@@ -262,6 +262,10 @@ class CodeViewController
 			document.getElementById("submit-review").addEventListener("click", function ()
 			{
 				controller.model.submitReview(controller.allFilesReview);
+
+				controller.parsedCodeHTMLs = {};
+				controller.allFilesReview = {};
+
 				if (app.user.role === "teacher")
 				{
 					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);

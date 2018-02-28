@@ -11,6 +11,6 @@ class Assignment
         this.reviewTillDate = data.review_till_date;
         this.reviewTillTime = data.review_till_time;
         this.reviewersAmounts = data.reviewers_amount;
-        this.state = data.state;
+        this.status = data.status;
     }
 }

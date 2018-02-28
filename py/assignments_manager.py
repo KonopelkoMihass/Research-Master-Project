@@ -46,7 +46,7 @@ class AssignmentsManager:
 
 
 	def get_assignments(self):
-		print("add_assignment")
+		print("get_assignment")
 		type = "get_assignments_successful"
 		data = {}
 

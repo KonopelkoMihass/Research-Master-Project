@@ -149,6 +149,10 @@ class App
 		this.submissions.addObserver(seeSubmissionsTeacherView, this.net.messageHandler.types.SUBMIT_REVIEW_SUCCESSFUL);
 
 
+		// Student - Reviews To Do
+		this.submissions.addObserver(performReviewView, this.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL);
+		this.submissions.addObserver(performReviewView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL);
+		this.submissions.addObserver(performReviewView, this.net.messageHandler.types.SUBMIT_REVIEW_SUCCESSFUL);
 
 
 	}

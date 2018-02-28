@@ -57,9 +57,9 @@ class CheckAssignmentStage():
             elif status == "review_end_soon":
                 time_remaining = review_till_time - datetime.datetime.now()
                 if time_remaining < datetime.timedelta(hours=0):
-                    status = "Completed"
+                    status = "completed"
                     update_clients = True
-                    self.set_teachers_as_only_reviewers(assignment)
+                    #self.set_teachers_as_only_reviewers(assignment)
 
                     # SEND EMAIL
                     pass

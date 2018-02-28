@@ -33,9 +33,12 @@ class Submissions extends Model {
         if (app.user.role === "teacher") {
             data.reviewer_name = app.user.name + " " + app.user.surname;
         }
-        else {
+        else
+        {
             data.reviewer_name = getRandomAdjective() + app.user.noun;
         }
+
+
 
         app.net.sendMessage("submit_review", data);
     }

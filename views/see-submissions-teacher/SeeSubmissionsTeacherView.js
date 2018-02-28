@@ -90,34 +90,33 @@ class SeeSubmissionsTeacherView extends View
             var assignments = app.assignments.assignments;
 			var submissions = model.submissions;
 
+
             for (var i = 0; i < assignments.length; i++) {
             	var hasSubmissions = false;
-				for (var j = 0; j < submissions.length; j++) {
-					if (assignments[i].id === submissions[j].assignmentID)
-					{
+
+            	if (assignments[i].status === "completed")
+            	{
+					for (var j = 0; j < submissions.length; j++) {
+						if (assignments[i].id === submissions[j].assignmentID)
+						{
 						hasSubmissions = true;
+						}
 					}
-				}
 
-				if (hasSubmissions)
-				{
-					var row = assignmentsTable.insertRow(assignmentsTable.rows.length);
+					if (hasSubmissions)
+					{
+						var row = assignmentsTable.insertRow(assignmentsTable.rows.length);
 
-					var cell0 = row.insertCell(0);
-					cell0.innerHTML = assignments[i].name;
-					cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
-					cell0.addEventListener("click", function () {
-						view.showSubmissions(parseInt(this.id.split("#")[1]));
-					});
-
-
-
+						var cell0 = row.insertCell(0);
+						cell0.innerHTML = assignments[i].name;
+						cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
+						cell0.addEventListener("click", function () {
+							view.showSubmissions(parseInt(this.id.split("#")[1]));
+						});
+					}
 
 				}
             }
-
-
-
         }
 	}
 
