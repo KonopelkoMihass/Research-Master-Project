@@ -65,6 +65,7 @@ class Assignments extends Model
             data.assignment_id = assignmentID;
             data.submission_data = filesSubmitted;
             data.is_complete = 0;
+
             data.iteration = 1;
             data.reviewers_ids = [];
             data.feedbacks = [];
@@ -72,6 +73,16 @@ class Assignments extends Model
 
         else
         {
+            for (var i = 0; i < this.assignments.length; i++)
+            {
+                if (this.assignments[i].id === assignmentID && (this.assignments[i].status === "review" || this.assignments[i].status === "review_end_soon" ))
+                {
+                    data.iteration++;
+                }
+
+            }
+
+
             data.submission_data = filesSubmitted;
         }
 

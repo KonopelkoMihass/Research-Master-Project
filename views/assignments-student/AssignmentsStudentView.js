@@ -17,13 +17,13 @@ class AssignmentsStudentView extends View
 	{
 		var that = this;
 
+		var assignmentTable = document.getElementById("student-assignments-table");
+		var reviewDeadlineTable = document.getElementById("student-assignments-review-deadlines-table");
+
 		// Update the table of assessments
 		if (messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
 			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL  )
 		{
-			var assignmentTable = document.getElementById("student-assignments-table");
-			var reviewDeadlineTable = document.getElementById("student-assignments-review-deadlines-table");
-
 			// remove all data in there.
 			var rowCount = assignmentTable.rows.length;
 			while(--rowCount)
@@ -55,8 +55,8 @@ class AssignmentsStudentView extends View
 				else if (status === "normal" || status === "submission_soon")
 				{
 					row = assignmentTable.insertRow(assignmentTable.rows.length);
-					dlTime = assignments[i].deadlineDate;
-					dlDate = assignments[i].deadlineTime;
+					dlTime = assignments[i].deadlineTime;
+					dlDate = assignments[i].deadlineDate;
 				}
 
 				else{
@@ -83,13 +83,14 @@ class AssignmentsStudentView extends View
 
 
 				cell1.innerHTML = assignments[i].name;
-				cell2.innerHTML = dlTime;
-				cell3.innerHTML = dlDate;
+				cell2.innerHTML = dlDate;
+				cell3.innerHTML = dlTime;
 
 
 				if (status === "review" || status === "review_end_soon")
 				{
-					cell4.innerHTML = "Version code here.";
+					cell4.id = "assignment-submission-iteration##" + assignments[i].id;
+					cell4.innerHTML = 0;
 				}
 
 				if (status === "normal" || status === "submission_soon")
@@ -115,14 +116,17 @@ class AssignmentsStudentView extends View
 			var organisedSubData = {};
 			for (var i = 0; i < model.submissions.length; i++)
 			{
-				organisedSubData[model.submissions[i].assignmentID] = model.submissions[i].id;
+				if (model.submissions[i].userID === app.user.id)
+				{
+					organisedSubData[model.submissions[i].assignmentID] = model.submissions[i];
+				}
 			}
 
 
 			for(var assID in organisedSubData)
 			{
 
-  				var subID = organisedSubData[assID];
+  				var subID = organisedSubData[assID].id;
 
   				var cell = this.tickAreas[assID];
 
@@ -142,6 +146,14 @@ class AssignmentsStudentView extends View
 
 					cell.appendChild(subImg);
   				}
+
+  				//Lets see if there is a sell with where I can put a version in?
+				var cell = document.getElementById("assignment-submission-iteration##" + assID);
+  				if (cell)
+  				{
+  					cell.innerHTML = organisedSubData[parseInt(assID)].iteration;
+				}
+
 			}
 		}
 	}
