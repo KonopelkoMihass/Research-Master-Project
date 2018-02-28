@@ -22,6 +22,7 @@ class AssignmentsStudentView extends View
 			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL  )
 		{
 			var assignmentTable = document.getElementById("student-assignments-table");
+			var reviewDeadlineTable = document.getElementById("student-assignments-review-deadlines-table");
 
 			// remove all data in there.
 			var rowCount = assignmentTable.rows.length;
@@ -29,12 +30,38 @@ class AssignmentsStudentView extends View
 			{
 				assignmentTable.deleteRow(rowCount);
 			}
+			rowCount = reviewDeadlineTable.rows.length;
+			while(--rowCount)
+			{
+				reviewDeadlineTable.deleteRow(rowCount);
+			}
 
 			var assignments = model.assignments;
 
 			for (var i = 0; i < assignments.length; i++)
 			{
-				var row = assignmentTable.insertRow(i + 1);
+				var status = assignments[i].status;
+				var row = 0;
+				var dlTime = 0;
+				var dlDate = 0;
+
+				if (status === "review" || status === "review_end_soon")
+				{
+					row = reviewDeadlineTable.insertRow(reviewDeadlineTable.rows.length);
+					dlTime = assignments[i].reviewTillTime;
+					dlDate = assignments[i].reviewTillDate;
+				}
+
+				else if (status === "normal" || status === "submission_soon")
+				{
+					row = assignmentTable.insertRow(assignmentTable.rows.length);
+					dlTime = assignments[i].deadlineDate;
+					dlDate = assignments[i].deadlineTime;
+				}
+
+				else{
+					continue;
+				}
 
 
 				var cell0 = row.insertCell(0);
@@ -56,11 +83,21 @@ class AssignmentsStudentView extends View
 
 
 				cell1.innerHTML = assignments[i].name;
-				cell2.innerHTML = assignments[i].deadlineDate;
-				cell3.innerHTML = assignments[i].deadlineTime;
-				cell4.id = "assignment-submission##" + assignments[i].id;
+				cell2.innerHTML = dlTime;
+				cell3.innerHTML = dlDate;
 
-				this.tickAreas[assignments[i].id] = cell4;
+
+				if (status === "review" || status === "review_end_soon")
+				{
+					cell4.innerHTML = "Version code here.";
+				}
+
+				if (status === "normal" || status === "submission_soon")
+				{
+					cell4.id = "assignment-submission##" + assignments[i].id;
+					this.tickAreas[assignments[i].id] = cell4;
+				}
+
 			}
 		}
 
@@ -84,23 +121,27 @@ class AssignmentsStudentView extends View
 
 			for(var assID in organisedSubData)
 			{
+
   				var subID = organisedSubData[assID];
 
   				var cell = this.tickAreas[assID];
 
-  				//Set tick image and button.
-				var subImg = document.createElement("IMG");
-				subImg.src = "resources/images/tick.png";
-				subImg.className = "picture-button";
-				subImg.id = "submission-picture##" + subID;
+  				if(cell !== undefined)
+  				{
+					//Set tick image and button.
+					var subImg = document.createElement("IMG");
+					subImg.src = "resources/images/tick.png";
+					subImg.className = "picture-button";
+					subImg.id = "submission-picture##" + subID;
 
-				subImg.addEventListener("click", function()
-				{
-					var id = parseInt(this.id.split('##')[1]);
-					console.log("MAY TRANSPORT YOU TO SUB", id, "Someday");
-				});
+					subImg.addEventListener("click", function()
+					{
+						var id = parseInt(this.id.split('##')[1]);
+						alert("Hi there!");
+					});
 
-  				cell.appendChild(subImg);
+					cell.appendChild(subImg);
+  				}
 			}
 		}
 	}

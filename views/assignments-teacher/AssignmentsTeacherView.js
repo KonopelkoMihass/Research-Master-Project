@@ -40,6 +40,8 @@ class AssignmentsTeacherView extends View
 				var cell2 = row.insertCell(2);
 				var cell3 = row.insertCell(3);
 				var cell4 = row.insertCell(4);
+				var cell5 = row.insertCell(5);
+
 
 				var img = document.createElement("IMG");
 				img.src = "resources/images/trash-button.png";
@@ -55,8 +57,30 @@ class AssignmentsTeacherView extends View
 
 				cell1.innerHTML = assignments[i].name;
 				cell2.innerHTML = assignments[i].description;
-				cell3.innerHTML = assignments[i].deadlineDate;
-				cell4.innerHTML = assignments[i].deadlineTime;
+				cell3.innerHTML = assignments[i].reviewTillDate;
+				cell4.innerHTML = assignments[i].reviewTillTime;
+
+				var status = assignments[i].status;
+
+				if (status === "normal") {
+					status = "Normal";
+				}
+				else if (status === "submission_soon") {
+					status = "Submissions Due Soon";
+				}
+				else if (status === "review") {
+					status = "Review Time";
+				}
+				else if (status === "review_end_soon") {
+					status = "Reviewing Ends Soon";
+				}
+				else if (status === "completed") {
+					status = "Completed";
+				}
+
+
+
+				cell5.innerHTML = status;
 			}
 
 			// Add one more, where you can add a new assignment
@@ -66,7 +90,7 @@ class AssignmentsTeacherView extends View
 			emptyRow.insertCell(2);
 			emptyRow.insertCell(3);
 			emptyRow.insertCell(4);
-
+			emptyRow.insertCell(5);
 
 			var img = document.createElement("IMG");
 			img.src = "resources/images/plus-button.png";
