@@ -33,11 +33,13 @@ class SeeSubmissionsTeacherView extends View
 				var row = submissionsTable.insertRow(rowIndex + 1);
 				var cell0 = row.insertCell(0);
 				cell0.innerHTML = submissions[i].userData.name + " " + submissions[i].userData.surname;
-				cell0.id = "see-submission-teacher#" + submissions[i].id;
+				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submissions[i].iteration;
+
 				cell0.addEventListener("click", function () {
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
+					app.submissions.iterationReviewed = parseInt(this.id.split('#')[2]);
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 
 

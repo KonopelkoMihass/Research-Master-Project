@@ -13,11 +13,30 @@ class CodeViewController
 	{
 		var that = this;
 		console.log(this.model);
+
+
+		document.getElementById("submit-review").addEventListener("click", function ()
+		{
+			that.model.submitReview(that.allFilesReview);
+
+			that.parsedCodeHTMLs = {};
+			that.allFilesReview = {};
+
+			if (app.user.role === "teacher")
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+			}
+			else
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+			}
+		});
 	}
 
 	cleanUp()
 	{
 		this.parsedCodeHTMLs = {};
+		this.allFilesReview = {};
 		document.getElementById("file-select").innerHTML = "";
 		document.getElementById("code-review").innerHTML = "";
 
@@ -33,6 +52,7 @@ class CodeViewController
 		document.getElementById("code-box").classList.remove("box-left");
 		document.getElementById("code-box").classList.add("box");
 		document.getElementById("comment-box").style.display = "none";
+
 	}
 
 
@@ -54,16 +74,26 @@ class CodeViewController
 	{
 		for (var i = 0; i < this.model.submissions.length; i++) {
             if (this.model.submissions[i].id === this.model.submissionIDToCodeView) {
+
                 var feedbacks = this.model.submissions[i].feedbacks;
                 var iteration = this.model.submissions[i].iteration;
-                var feedback = feedbacks[iteration-1];
 
 
-                for (var userID in feedback) {
-                	if (parseInt(userID) === this.model.reviewerIDToCodeView)
+                var currentFeedbacks =  []; //feedbacks[iteration];
+				for(var j = 0; j < feedbacks.length; j++)
+				{
+					if (feedbacks[j].iteration_submitted === this.model.submissions[i].iteration)
+					{
+						currentFeedbacks.push(feedbacks[j]);
+					}
+
+				}
+
+                for (var j = 0; j < currentFeedbacks.length; j++)
+                {
+                	if (parseInt(currentFeedbacks[j].reviewer_id) === this.model.reviewerIDToCodeView)
                 	{
-                		this.allFilesReview = feedback[userID].review;
-
+                		this.allFilesReview = currentFeedbacks[j].review;
 					}
                 }
             }
@@ -106,6 +136,10 @@ class CodeViewController
 		if (!allowReview)
 		{
 			document.getElementById("submit-review-div").style.display = "none";
+		}
+		else
+		{
+			document.getElementById("submit-review-div").style.display = "block";
 		}
 	}
 
@@ -257,26 +291,6 @@ class CodeViewController
 
 		this.tweakLineNumbers(filename, pressable);
 		this.tweakTokens(filename, pressable);
-
-		if (pressable){
-			document.getElementById("submit-review").addEventListener("click", function ()
-			{
-				controller.model.submitReview(controller.allFilesReview);
-
-				controller.parsedCodeHTMLs = {};
-				controller.allFilesReview = {};
-
-				if (app.user.role === "teacher")
-				{
-					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
-				}
-				else
-				{
-					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
-				}
-			});
-		}
-
 	}
 
 	addCodeBit(id, content, filename)

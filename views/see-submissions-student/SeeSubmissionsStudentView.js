@@ -41,7 +41,6 @@ class SeeSubmissionsStudentView extends View
 
 			var assignments = app.assignments.assignments;
 
-
 			for (var i = 0; i < submissions.length; i++)
 			{
 				var row = submissionsTable.insertRow(i + 1);
@@ -62,6 +61,8 @@ class SeeSubmissionsStudentView extends View
 				{
 					app.submissions.codeViewState = "Clear";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
+					app.submissions.reviewerIDToCodeView = -1;
+
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 				});
 

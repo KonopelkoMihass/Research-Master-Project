@@ -17,11 +17,8 @@ connections={}
 
 def globalDaemonMethod():
 	update_clients = planner.update()
-	print ("Okay - Do we update =", update_clients)
-
-
+	#print ("Okay - Do we update =", update_clients)
 	if update_clients == True:
-		print("hello here")
 		for k, item in connections.items():
 			item["socket"].get_assignments()
 			if item["user_data"]["role"] == "teacher":

@@ -72,9 +72,6 @@ class FeedbackView extends View
 		document.body.appendChild(modalData.modal);
 
 
-
-
-
 		var submissions = this.controller.model.submissions;
 		var submission = undefined;
 		for (var i = 0; i < submissions.length; i++)
@@ -89,33 +86,61 @@ class FeedbackView extends View
 		}
 
 
-		for (var i = 0; i < submission.feedbacks.length; i++)
+
+		var currentFeedbacksIDs = [];
+		for (var i = 0;i< submission.feedbacks.length; i++)
 		{
-			var feedback = submission.feedbacks[i];
-			var reviewDiv = document.getElementById("select-review-students-buttons");
-
-			for (var userID in feedback)
+			if (submission.feedbacks[i].iteration_submitted === submission.iteration)
 			{
-				var fbdata = feedback[userID];
-
-				var reviewBtn = document.createElement("BUTTON");
-				reviewBtn.innerHTML ="Review by " + fbdata.reviewer_name;
-				reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + userID;
-
-
-				reviewBtn.addEventListener("click", function () {
-					var parentNode = modalData.modal.parentNode;
-					parentNode.removeChild(modalData.modal);
-
-					app.submissions.codeViewState = "Comments";
-					app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
-					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
-					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
-				});
-
-				reviewDiv.appendChild(reviewBtn);
+				var feedback = submission.feedbacks[i];
+				// test if there are no feedback from a same user on a same iteration
+				var foundUser = false;
+				for (var j = 0; j< currentFeedbacksIDs.length; j++)
+				{
+					if (currentFeedbacksIDs[j].reviewer_id === feedback.reviewer_id &&  currentFeedbacksIDs[j].iteration_submitted === feedback.iteration_submitted)
+					{
+                        foundUser = true;
+                        break;
+                    }
+				}
+				if(foundUser)
+				{
+					currentFeedbacksIDs[j] = i;
+				}
+				else
+				{
+					currentFeedbacksIDs.push(i);
+				}
 			}
 		}
+
+
+		var reviewDiv = document.getElementById("select-review-students-buttons");
+
+		for (var i = 0; i < currentFeedbacksIDs.length; i++)
+		{
+			var fbdata = submission.feedbacks[currentFeedbacksIDs[i]];
+
+			var reviewBtn = document.createElement("BUTTON");
+			reviewBtn.innerHTML ="Review by " + fbdata.reviewer_name;
+			reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + fbdata.reviewer_id + "#" + currentFeedbacksIDs[i];
+
+
+			reviewBtn.addEventListener("click", function () {
+				var parentNode = modalData.modal.parentNode;
+				parentNode.removeChild(modalData.modal);
+
+				app.submissions.codeViewState = "Comments";
+				app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
+				app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
+
+				app.submissions.feedbacIndexToReview = parseInt(this.id.split('#')[3]);
+				app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+			});
+
+			reviewDiv.appendChild(reviewBtn);
+		}
+
 
 
 		modalData.modal.style.display = "block";

@@ -59,7 +59,7 @@ class CheckAssignmentStage():
                 if time_remaining < datetime.timedelta(hours=0):
                     status = "completed"
                     update_clients = True
-                    #self.set_teachers_as_only_reviewers(assignment)
+
 
                     # SEND EMAIL
                     pass
@@ -112,32 +112,10 @@ class CheckAssignmentStage():
 
             try:
                 self.assignments_manager.submit_assignment(submissions[i])
-                print("Updated Submission")
+                #print("Updated Submission")
             except:
                 pass
 
-
-
-    def set_teachers_as_only_reviewers(self, assignment):
-        submissions = self.assignments_manager.get_submissions_for_assignment(assignment["id"])
-
-        users = self.database_manager.select_all_from_table("Users")
-
-        teachers = []
-        for user in users:
-            if user["role"] == "teacher":
-                teachers.append(user["id"])
-
-
-        for i in range(0, len(submissions)):
-            submissions[i]["reviewers_ids"] = teachers
-            del submissions[i]["user_data"]
-
-            try:
-                self.assignments_manager.submit_assignment(submissions[i])
-                print("Updated Submission")
-            except:
-                pass
 
 
 check_time = CheckAssignmentStage()

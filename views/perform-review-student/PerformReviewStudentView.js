@@ -97,12 +97,14 @@ class PerformReviewStudentView extends View
             {
 				var row = submissionsTable.insertRow(rowIndex + 1);
 				var cell0 = row.insertCell(0);
-				cell0.innerHTML = "Submission Nu. " + (rowIndex+1);
-				cell0.id = "see-submission-teacher#" + submissions[i].id;
+				cell0.innerHTML = "Submission No. " + (rowIndex+1);
+				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submission.iteration;
 				cell0.addEventListener("click", function () {
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
+					app.submissions.iterationReviewed = parseInt(this.id.split('#')[2]);
+
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 
 

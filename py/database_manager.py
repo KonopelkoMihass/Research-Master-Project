@@ -62,15 +62,13 @@ class DatabaseManager:
 
 		placeholders = ", ".join(["%s"] * len(my_dict))
 
-
-
 		stmt = "REPLACE INTO `{table}` ({columns}) VALUES ({values});".format(
 			table=table_name,
 			columns=",".join(my_dict.keys()),
 			values=placeholders
 		)
 
-		print(stmt)
+		#print(stmt)
 		cursor.execute(stmt, list(my_dict.values()))
 
 		connector.commit()
@@ -84,7 +82,7 @@ class DatabaseManager:
 
 		stmt = "SELECT * FROM `"+table_name+"`;"
 
-		print(stmt)
+		#print(stmt)
 		cursor.execute(stmt)
 		data = cursor.fetchall()
 		cursor.close()
@@ -95,14 +93,14 @@ class DatabaseManager:
 
 	def delete_assignment(self, id):
 		#Inserts a dictionary into table table_name
-		print("delete assignment")
+		#print("delete assignment")
 		id = str(id)
 
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
 		stmt = ("DELETE FROM Assignments WHERE Assignments.id="+ id +" LIMIT 1")
-		print(stmt)
+		#print(stmt)
 
 		cursor.execute(stmt)
 
@@ -113,13 +111,13 @@ class DatabaseManager:
 
 	def delete_user(self, email):
 		#Inserts a dictionary into table table_name
-		print("delete user")
+		#print("delete user")
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
 		stmt = ("DELETE FROM Users WHERE Users.email='"+email+"' LIMIT 1")
-		print("stmt:")
-		print(stmt)
+		#print("stmt:")
+		#print(stmt)
 		cursor.execute(stmt)
 		connector.commit()
 		cursor.close()
@@ -127,15 +125,15 @@ class DatabaseManager:
 
 	def check_password(self, email, password):
 		#return true if successful
-		print("check_password")
+		#print("check_password")
 		result = False
 
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 
 		query = ("SELECT * FROM Users WHERE Users.email='"+email+"' AND Users.password='"+password+"'")
-		print("query:")
-		print(query)
+		#print("query:")
+		#print(query)
 
 		cursor.execute(query)
 		cursor.fetchall()
@@ -149,14 +147,14 @@ class DatabaseManager:
 		return result
 
 	def get_user_info(self, message_data):
-		print ("get_user_data")
+		#print ("get_user_data")
 		email = message_data["email"]
 
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
 		query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
 
-		print(query)
+		#print(query)
 
 		cursor.execute(query)
 		datas = cursor.fetchall()
@@ -171,7 +169,7 @@ class DatabaseManager:
 		cursor = connector.cursor(dictionary=True)
 		query = ("SELECT * FROM Users")
 
-		print(query)
+		#print(query)
 
 		cursor.execute(query)
 		users_table = cursor.fetchall()
@@ -196,7 +194,7 @@ class DatabaseManager:
 		cursor = connector.cursor(dictionary=True)
 		query = ("SELECT * FROM Submissions WHERE Submissions.user_id=" + user_id )
 
-		print(query)
+		#print(query)
 
 		cursor.execute(query)
 		data = cursor.fetchall()
@@ -219,26 +217,9 @@ class DatabaseManager:
 		cursor.close()
 		connector.close()
 
-		# now we need to modify this submission to contain this review
-		iteration = int(submission["iteration"])
 
 		feedbacks = json.loads(submission["feedbacks"])
+		feedbacks.append(data)
+		submission["feedbacks"] = json.dumps(feedbacks)
 
-		#add a feedback dictionary if not present
-		if len(feedbacks) < iteration:
-			feedback = {}
-			feedback[data["reviewer_id"]] = data
-			feedbacks.append(feedback)
-
-		else:
-			print("HERE", iteration)
-			feedback = feedbacks[iteration-1]
-			print("OLDA AND NEWA", feedback, data)
-			feedback[data["reviewer_id"]] = data
-
-		submission["feedbacks"] = feedbacks
-		json_subs_feedback = json.dumps(submission["feedbacks"])
-		submission["feedbacks"] = json_subs_feedback
 		self.replace_into_table("Submissions", submission)
-
-

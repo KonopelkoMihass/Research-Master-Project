@@ -57,6 +57,7 @@ class AssignmentsStudentController
 	submitAssignment(assignmentID)
 	{
 		this.model.submitAssignment(assignmentID, this.filesParsed);
+		this.filesParsed = {};
 	}
 
 	update()

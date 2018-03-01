@@ -92,52 +92,49 @@ class AssignmentsManager:
 		type = "get_submissions_successful"
 		data = []
 
-		try:
-			submissions = self.database_manager.select_all_from_table("Submissions")
-			users = self.database_manager.select_all_from_table("Users")
+		#try:
+		submissions = self.database_manager.select_all_from_table("Submissions")
+		users = self.database_manager.select_all_from_table("Users")
 
-			# these include a.Personal submissions and b.Submission to review.
-			actual_submissions = []
+		# these include a.Personal submissions and b.Submission to review.
+		actual_submissions = []
 
-			for submission in submissions:
+		for submission in submissions:
 
-				#if it is our submission - we grab it
-				if submission["user_id"] == user_id:
-					actual_submissions.append(submission)
+			#if it is our submission - we grab it
+			if submission["user_id"] == user_id:
+				actual_submissions.append(submission)
 
-				submission_data = json.loads(submission["submission_data"])
-				submission["submission_data"] = submission_data
+			submission_data = json.loads(submission["submission_data"])
+			submission["submission_data"] = submission_data
 
-				reviewers_ids = json.loads(submission["reviewers_ids"])
+			reviewers_ids = json.loads(submission["reviewers_ids"])
 
-				if len(reviewers_ids) > 0:
-					for i in range(0, len(reviewers_ids)):
-						for user in users:
-							if user["id"] == reviewers_ids[i]:
-								reviewers_ids[i] = user
+			if len(reviewers_ids) > 0:
+				for i in range(0, len(reviewers_ids)):
+					for user in users:
+						if user["id"] == reviewers_ids[i]:
+							reviewers_ids[i] = user
 
-						# if user requesting submissions is mentioned as a reviewer - we grab the submission
-						if reviewers_ids[i]["id"] == user_id:
-							actual_submissions.append(submission)
-
-
-				submission["reviewers_ids"] = reviewers_ids
-
-				feedbacks = json.loads(submission["feedbacks"])
-				submission["feedbacks"] = feedbacks
-
-				for feedback in feedbacks:
-					for id in feedback:
-						review = json.loads(feedback[id]["review"])
-						feedback[id]["review"] = review
+					# if user requesting submissions is mentioned as a reviewer - we grab the submission
+					if reviewers_ids[i]["id"] == user_id:
+						actual_submissions.append(submission)
 
 
-			data = actual_submissions
+			submission["reviewers_ids"] = reviewers_ids
 
-			print("Get Submissions Successfully")
-		except:
-			type = "get_submissions_failed"
-			print("Get Submissions Failed")
+			feedbacks = json.loads(submission["feedbacks"])
+			submission["feedbacks"] = feedbacks
+
+
+
+
+		data = actual_submissions
+
+		print("Get Submissions Successfully")
+		#except:
+		#	type = "get_submissions_failed"
+		#	print("Get Submissions Failed")
 
 		message = [type, data]
 		return message
@@ -168,10 +165,7 @@ class AssignmentsManager:
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
 
-				for feedback in feedbacks:
-					for id in feedback:
-						review = json.loads(feedback[id]["review"])
-						feedback[id]["review"] = review
+
 
 				for user in users:
 					if user["id"] == submission["user_id"]:
@@ -209,15 +203,13 @@ class AssignmentsManager:
 		type = "submit_review_successful"
 		data = []
 
-		try:
-			review = json.dumps(message_data["review"])
-			message_data["review"] = review
-			self.database_manager.add_review(message_data)
-			print("Submitted Assignment Successfully")
+		#try:
+		self.database_manager.add_review(message_data)
+		print("Submitted Assignment Successfully")
 
-		except:
-			type = "submit_review_failed"
-			print("Submit Review  Failed")
+		#except:
+			#type = "submit_review_failed"
+			#print("Submit Review  Failed")
 
 		message = [type, data]
 		return message

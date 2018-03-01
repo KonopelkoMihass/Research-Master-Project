@@ -12,6 +12,10 @@ class Submissions extends Model {
         this.codeViewState = "Clear";
         this.submissionIDToCodeView = -1;
         this.reviewerIDToCodeView = -1;
+        this.iterationReviewed = -1;
+
+        this.feedbacIndexToReview = -1;
+
     }
 
     retrieveAssignmentNames(model)
@@ -25,10 +29,17 @@ class Submissions extends Model {
     submitReview(allFilesReview)
     {
         var data = {};
+
+        // HACK - sometimes there is an undefined:undefined thing present - better remove it
+        delete allFilesReview[undefined];
+
+
+
         data.review = allFilesReview;
         data.reviewer_id = app.user.id;
         data.reviewer_role = app.user.role;
         data.submission_id = this.submissionIDToCodeView;
+        data.iteration_submitted = this.iterationReviewed;
 
         if (app.user.role === "teacher") {
             data.reviewer_name = app.user.name + " " + app.user.surname;
