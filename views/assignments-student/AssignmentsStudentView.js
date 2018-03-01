@@ -50,6 +50,21 @@ class AssignmentsStudentView extends View
 					row = reviewDeadlineTable.insertRow(reviewDeadlineTable.rows.length);
 					dlTime = assignments[i].reviewTillTime;
 					dlDate = assignments[i].reviewTillDate;
+
+					// Student should not be able to re submit code if he have not submitted it initially.
+					var submissions = app.submissions.submissions;
+					var submissionPresent = false;
+					for (var j = 0; j < submissions.length; j++)
+					{
+						if (submissions[j].assignmentID === assignments[i].id)
+						{
+							submissionPresent = true;
+						}
+					}
+					if (submissionPresent === false)
+					{
+						continue;
+					}
 				}
 
 				else if (status === "normal" || status === "submission_soon")

@@ -18,7 +18,7 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `MihassGProject`.`Users` (`email` ASC);
 
 -- creating dummy teacher
 INSERT INTO MihassGProject.Users (email, github_username, github_email, name, surname, noun, password, role)
-VALUES ('q','q','q','q','q','q','q','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
+VALUES ('test@itcarlow.ie','test','test','John','Doe','Potato','teacher','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
