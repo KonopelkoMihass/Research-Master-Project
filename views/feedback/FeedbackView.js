@@ -26,35 +26,44 @@ class FeedbackView extends View
             }
 
             var assignments = app.assignments.assignments;
-			var allSubmissions = model.submissions;
-			var submissions = [];
-			for (var i = 0; i < allSubmissions.length; i++)
+			var submissions = model.submissions;
+			var subIns = [];
+			for (var i = 0; i < submissions.length; i++)
 			{
 				// if he is an owner - then he is the one to see these.
-				if (allSubmissions[i].userID === app.user.id)
+				if (submissions[i].userID === app.user.id)
 				{
-					submissions.push(allSubmissions[i]);
+					var submission = submissions[i];
+					var currentFeedbacksIDs = [];
+
+					for (var k = 0;k < submission.feedbacks.length; k++)
+					{
+						if (submission.feedbacks[k].iteration_submitted === submission.iteration)
+						{
+							subIns.push(i);
+						}
+					}
 				}
 			}
 
 
 			var rowIndex = 0;
-            for (var i = 0; i < submissions.length; i++)
+            for (var i = 0; i < subIns.length; i++)
             {
-            	if (submissions[i].feedbacks.length !== 0)
+            	if (submissions[subIns[i]].feedbacks.length !== 0)
             	{
 					var row = submissionsTable.insertRow(rowIndex + 1);
 
 					var cell0 = row.insertCell(0);
 					for (var j = 0; j < assignments.length; j++)
 					{
-						if (submissions[i].assignmentID === assignments[j].id)
+						if (submissions[subIns[i]].assignmentID === assignments[j].id)
 						{
 							cell0.innerHTML = assignments[j].name;
 						}
 					}
 
-					cell0.id = "see-student-assignment-feedback#" + assignments[i].id;
+					cell0.id = "see-student-assignment-feedback#" + subIns[i];
 					cell0.addEventListener("click", function ()
 					{
 						view.createReviewSelectModal(parseInt(this.id.split("#")[1]), this.innerHTML);
@@ -65,28 +74,14 @@ class FeedbackView extends View
         }
 	}
 
-	createReviewSelectModal(assignmentID, assignmentName)
+	createReviewSelectModal(subIndex, assignmentName)
 	{
 		var modalBody = app.modalContentManager.getModalContent("select-review-student");
 		var modalData = app.uiFactory.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
 		document.body.appendChild(modalData.modal);
 
-
-		var submissions = this.controller.model.submissions;
-		var submission = undefined;
-		for (var i = 0; i < submissions.length; i++)
-		{
-			if (submissions[i].assignmentID === assignmentID)
-			{
-				if (submissions[i].userID === app.user.id)
-				{
-					submission = submissions[i];
-				}
-			}
-		}
-
-
-
+		var submission = app.submissions.submissions[subIndex];
+		
 		var currentFeedbacksIDs = [];
 		for (var i = 0;i< submission.feedbacks.length; i++)
 		{
@@ -97,7 +92,7 @@ class FeedbackView extends View
 				var foundUser = false;
 				for (var j = 0; j< currentFeedbacksIDs.length; j++)
 				{
-					if (currentFeedbacksIDs[j].reviewer_id === feedback.reviewer_id &&  currentFeedbacksIDs[j].iteration_submitted === feedback.iteration_submitted)
+					if (currentFeedbacksIDs[j].reviewer_id === feedback.reviewer_id && currentFeedbacksIDs[j].iteration_submitted === feedback.iteration_submitted)
 					{
                         foundUser = true;
                         break;
@@ -113,6 +108,7 @@ class FeedbackView extends View
 				}
 			}
 		}
+
 
 
 		var reviewDiv = document.getElementById("select-review-students-buttons");
