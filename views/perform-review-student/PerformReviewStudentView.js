@@ -116,18 +116,26 @@ class PerformReviewStudentView extends View
 
 
 				var cell1 = row.insertCell(1);
+
+
 				// Check if feedback was already submitted by this user.
-				var feedback = submission.feedbacks[submission.feedbacks.length - 1];
-				if (feedback)
+
+				// if he is an owner - then he is the one to see these.
+
+				for (var k = 0;k < submission.feedbacks.length; k++)
 				{
-					if (feedback[app.user.id])
+					if (submission.feedbacks[k].iteration_submitted === submission.iteration)
 					{
-                        var img = document.createElement("IMG");
+						var img = document.createElement("IMG");
 						img.src = "resources/images/tick.png";
 						img.className = "picture-button";
 						cell1.appendChild(img);
+
 					}
+
 				}
+
+
 
 				rowIndex++;
 			}

@@ -81,7 +81,7 @@ class FeedbackView extends View
 		document.body.appendChild(modalData.modal);
 
 		var submission = app.submissions.submissions[subIndex];
-		
+
 		var currentFeedbacksIDs = [];
 		for (var i = 0;i< submission.feedbacks.length; i++)
 		{
