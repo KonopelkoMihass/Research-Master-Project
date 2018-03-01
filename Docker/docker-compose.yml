@@ -9,7 +9,7 @@ services:
   ports:
    - "80:80"
   volumes:
-   - ..:/usr/local/apache2/htdocs/MihassGamifiedMasterProject
+   - ..:/usr/local/apache2/htdocs/MihassGProject
 
  server:
    build:
@@ -30,7 +30,7 @@ services:
     - "3306:3306"
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7
-   MYSQL_DATABASE: ProjectOrganiser
+   MYSQL_DATABASE: MihassGProject
   volumes:
     - ./MySQL:/docker-entrypoint-initdb.d
     - ./MySQL/data:/var/lib/mysql

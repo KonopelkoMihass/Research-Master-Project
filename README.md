@@ -10,7 +10,7 @@ $ cd Docker
 $ docker-compose build 
 $ docker-compose up
 
-Then go to http://localhost/ProjectOrganiser/ (if you use Docker for Windows/MacOS) or an IP stated when you start docker-toolbox.
+Then go to http://localhost/MihassGProject/ (if you use Docker for Windows/MacOS) or an IP stated when you start docker-toolbox.
 
 To stop docker:
 

@@ -16,7 +16,7 @@ class DatabaseManager:
 		"user": "root",
 		"password":"xboxorpc7",
 		"host":'mysql', #set host to mysql using docker run link
-		"database":'ProjectOrganiser',
+		"database":'MihassGProject',
 		"port":'3306'
 		}
 
