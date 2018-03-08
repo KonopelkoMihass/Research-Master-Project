@@ -39,6 +39,20 @@ class App
 		});});});
 	}
 
+
+	heartbeat()
+	{
+		app.net.sendMessage("heartbeat", {});
+	}
+
+
+
+
+
+
+
+
+
 	setup()
 	{
 		this.templateManager.loadFromCache();
@@ -287,6 +301,7 @@ getRandomAdjective = function () {
 };
 
 
+setInterval(function(){ app.heartbeat() }, 20000);
 
 
 
