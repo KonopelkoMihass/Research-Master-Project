@@ -234,7 +234,7 @@ settings = {
 
 app= tornado.web.Application([
 	#map the handler to the URI named "wstest"
-	(r'/wstest', WSHandler),
+	(r'/GCodeReviewer', WSHandler),
 ], settings)
 
 if __name__ == '__main__':

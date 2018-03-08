@@ -15,8 +15,8 @@ class DatabaseManager:
 		dbconfig = {
 		"user": "root",
 		"password":"xboxorpc7",
-		"host":'mysql', #set host to mysql using docker run link
-		"database":'MihassGProject',
+		"host":'mihass-g-mysql', #set host to mysql using docker run link
+		"database":'ProjectOrganiser',
 		"port":'3306'
 		}
 

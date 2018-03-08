@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
-<project name="MihassGamifiedMasterProject">
+<project name="ProjectOrganiser">
 	<property name="ip" value="gamecore.itcarlow.ie"/>
+
 
 	<target name="create_database">
 
 	</target>
+
 
 	<!--Local build and run-->
 	<target name="build_and_run">
@@ -122,22 +124,19 @@
 
 
 	<target name="gamecore-build">
-		<input message="Enter username" addproperty="username">
+		<!--<input message="Enter github username:" addproperty="username" />
+		<input message="secure-input:" addproperty="password">
 	    <handler classname="org.apache.tools.ant.input.SecureInputHandler" />
-		</input>
-		<input message="Enter password:" addproperty="password">
-	    <handler classname="org.apache.tools.ant.input.SecureInputHandler" />
-		</input>
-
+		</input>-->
 		<taskdef name="sshexec" classname="org.apache.tools.ant.taskdefs.optional.ssh.SSHExec" classpath="lib/jsch-0.1.50.jar" />
 		<sshexec host="${ip}"
 			username="gamecore"
 			trust="true"
 			password="j01nin17."
 			command="
-			sudo rm -rf ~/MihassGamifiedMasterProject;
-			(sudo git clone https://${username}:${password}@github.com/ITCOnlineGaming/MihassGamifiedMasterProject.git);
-			(cd MihassGamifiedMasterProject; sudo git checkout dev);
+			(cd MihassGamifiedMasterProject; sudo rm build.xml);
+			(cd MihassGamifiedMasterProject; sudo git pull https://github.com/ITCOnlineGaming/MihassGamifiedMasterProject.git);
+			(cd MihassGamifiedMasterProject; sudo git checkout test_branch);
 			(cd MihassGamifiedMasterProject; sudo docker-compose  -f Docker/docker-compose.yml build);"
 
 		/>

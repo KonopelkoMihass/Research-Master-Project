@@ -17,7 +17,7 @@ class Net
 	connect ()
 	{
 		var that = this;
-		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/wstest");
+		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/GCodeReviewer");
 
 		this.ws.onopen = function()
 		{

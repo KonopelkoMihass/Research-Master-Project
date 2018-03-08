@@ -2,35 +2,41 @@ version: '3.3'
 
 services:
 
- apache:
+ mihass-g-apache:
   build:
    context: ../
    dockerfile: Docker/ApacheDockerfile
   ports:
-   - "80:80"
+   - "81:80"
+  networks:
+   - net2
   volumes:
-   - ..:/usr/local/apache2/htdocs/MihassGProject
+   - ..:/usr/local/apache2/htdocs/
 
- server:
+ mihass-g-server:
    build:
     context: ../
     dockerfile: Docker/ServerDockerfile
    ports:
-    - "8080:8080"
-   links:
-    - mysql:mysql
+    - "8081:8080"
+   networks:
+    - net2
    volumes:
     - ../py:/app
    tty: true
 
 
- mysql:
+ mihass-g-mysql:
   image: mysql
-  ports:
-    - "3306:3306"
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7
-   MYSQL_DATABASE: MihassGProject
+   MYSQL_DATABASE: ProjectOrganiser
+  networks:
+   - net2
   volumes:
     - ./MySQL:/docker-entrypoint-initdb.d
     - ./MySQL/data:/var/lib/mysql
+
+networks:
+  net2:
+    driver: bridge

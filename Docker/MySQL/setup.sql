@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS MihassGProject;
-USE MihassGProject;
+CREATE DATABASE IF NOT EXISTS ProjectOrganiser;
+USE ProjectOrganiser;
 
 -- Table `ProjectOrganiser`.`Users`
-CREATE TABLE IF NOT EXISTS `MihassGProject`.`Users` (
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
   `github_username` VARCHAR(45) NOT NULL,
@@ -14,15 +14,15 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Users` (
   `role` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`id`));
 
-CREATE UNIQUE INDEX `email_UNIQUE` ON `MihassGProject`.`Users` (`email` ASC);
+CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
 
 -- creating dummy teacher
-INSERT INTO MihassGProject.Users (email, github_username, github_email, name, surname, noun, password, role)
+INSERT INTO ProjectOrganiser.Users (email, github_username, github_email, name, surname, noun, password, role)
 VALUES ('q','test','test','John','Doe','Potato','q','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
-CREATE TABLE IF NOT EXISTS `MihassGProject`.`Assignments` (
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Assignments` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(63) NOT NULL,
   `deadline_date` VARCHAR(16) NOT NULL,
@@ -35,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Assignments` (
 
   PRIMARY KEY (`id`));
 
-CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `MihassGProject`.`Assignments` (`name` ASC);
+CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Assignments` (`name` ASC);
 
 -- Table `ProjectOrganiser`.`Submissions`
-CREATE TABLE IF NOT EXISTS `MihassGProject`.`Submissions` (
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Submissions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `assignment_id` INT NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Submissions` (
   PRIMARY KEY (`id`, `user_id`, `assignment_id`));
 
 -- Table `ProjectOrganiser`.`Standards`
-CREATE TABLE IF NOT EXISTS `MihassGProject`.`Standards` (
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category` VARCHAR(255),
   `sub_category` VARCHAR(255),
