@@ -72,7 +72,7 @@ class UIFactory
 
 
 
-        for (i = 0; i <closeButtons.length;i++){
+        for (var i= 0; i <closeButtons.length;i++){
 			closeButtons[i].addEventListener("click", function ()
 			{
 				var parentNode = modal.parentNode;
