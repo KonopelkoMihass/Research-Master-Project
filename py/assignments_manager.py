@@ -1,5 +1,6 @@
 from database_manager import DatabaseManager
 from email_system import EmailSystem
+from bs4 import BeautifulSoup
 import requests
 import random
 import json
@@ -194,31 +195,75 @@ class AssignmentsManager:
 
 
 
-
-
-
-
 	def submit_review(self, message_data):
 		print("submit_review")
 		type = "submit_review_successful"
 		data = []
 
-		#try:
-		self.database_manager.add_review(message_data)
-		print("Submitted Assignment Successfully")
+		try:
+			self.database_manager.add_review(message_data)
+			print("Submitted Assignment Successfully")
 
-		#except:
-			#type = "submit_review_failed"
-			#print("Submit Review  Failed")
+		except:
+			type = "submit_review_failed"
+			print("Submit Review  Failed")
 
 		message = [type, data]
 		return message
 
 
+	def push_standard(self, message_data):
+		print("push_standard")
+		type = "submit_review_successful"
+		data = {}
+
+		skip_title_h1 = True
+
+		html_content = message_data["html_content"]
+		soup = BeautifulSoup(html_content, 'html.parser')
+		node_list = soup.find_all(["h1", "h2"])
+
+		standards = []
+		standard_bit = {}
 
 
 
+		for n in node_list:
+			if n.get_text() == "":
+				continue
 
+			if n.name == "h1":
+				if skip_title_h1:
+					skip_title_h1 = False
+					continue
+				standard_bit["category"] = n.get_text()
 
+			if n.name == "h2":
+				standard_bit["sub_category"] = n.get_text()
+				standard_bit["description"] = ""
+				for elem in n.next_siblings:
+					if elem.name == 'p':
+						if elem.get_text() != "":
+							description = elem.get_text()
+							description.replace("┬а", " ")
+							standard_bit["description"] += description + "<br>"
+
+					if elem.name and elem.name.startswith('h'):
+						category = standard_bit["category"]
+						standards.append(standard_bit)
+						standard_bit = {"category":category}
+						break
+
+		try:
+			for standard in standards:
+				self.database_manager.replace_into_table("Standards", standard)
+			print("Submitted Standard Successfully")
+
+		except:
+			type = "submit_review_failed"
+			pass
+
+		message = [type, standards]
+		return message
 
 

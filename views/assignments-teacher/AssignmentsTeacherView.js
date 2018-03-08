@@ -106,12 +106,6 @@ class AssignmentsTeacherView extends View
 
 	show()
 	{
-		var menuPanel = document.getElementById("menupanel-teacher");
-		menuPanel.style.display = "block";
-
-		var viewNameBox = document.getElementsByClassName("view-name-box")[0];
-		viewNameBox.style.display = "block";
-
 		super.show();
 	}
 }

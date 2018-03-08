@@ -18,7 +18,7 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `MihassGProject`.`Users` (`email` ASC);
 
 -- creating dummy teacher
 INSERT INTO MihassGProject.Users (email, github_username, github_email, name, surname, noun, password, role)
-VALUES ('test@itcarlow.ie','test','test','John','Doe','Potato','teacher','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
+VALUES ('q','test','test','John','Doe','Potato','q','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
@@ -49,3 +49,10 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Submissions` (
   `feedbacks` MEDIUMTEXT,
   PRIMARY KEY (`id`, `user_id`, `assignment_id`));
 
+-- Table `ProjectOrganiser`.`Standards`
+CREATE TABLE IF NOT EXISTS `MihassGProject`.`Standards` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(255),
+  `sub_category` VARCHAR(255),
+  `description` MEDIUMTEXT,
+  PRIMARY KEY (`id`,`sub_category`));

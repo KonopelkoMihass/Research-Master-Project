@@ -18,11 +18,7 @@ class ProfileView extends View
 
 	show()
 	{
-		var menuPanel = document.getElementById("menupanel-student");
-		menuPanel.style.display = "block";
 
-		var viewNameBox = document.getElementsByClassName("view-name-box")[0];
-		viewNameBox.style.display = "block";
 
 
 

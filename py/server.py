@@ -72,6 +72,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "submit_review":
 			self.submit_review(message_data)
 
+		elif message_type == "push_standard":
+			self.push_standard(message_data)
+
+
 
 	def signup(self, message_data):
 		message= user_manager.signup(message_data)
@@ -194,6 +198,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			else:
 				item["socket"].get_submissions(item["user_data"]["id"])
 
+
+	def push_standard(self, message_data):
+		message = assignments_manager.push_standard(message_data)
 
 
 

@@ -15,7 +15,13 @@ class SignupView extends View
 	{
 		if(messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
 		{
-			document.getElementById("mps-profile-button").click();
+			document.getElementById("mps-assignments-button").click();
+			var menuPanel = document.getElementById("menupanel-student");
+			menuPanel.style.display = "block";
+
+			var viewNameBox = document.getElementsByClassName("view-name-box")[0];
+			viewNameBox.style.display = "block";
+
 		}
 
 		else if(messageType === app.net.messageHandler.types.SIGN_UP_FAILED)

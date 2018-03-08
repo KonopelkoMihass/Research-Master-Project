@@ -26,7 +26,12 @@ class MessageHandler
 			GET_SUBMISSIONS_FAILED: "get_submissions_failed",
 
 			SUBMIT_REVIEW_SUCCESSFUL:"submit_review_successful",
-			SUBMIT_REVIEW_FAILED:"submit_review_failed"
+			SUBMIT_REVIEW_FAILED:"submit_review_failed",
+
+			PUSH_STANDARD_SUCCESSFUL:"push_standard_successful",
+			PUSH_STANDARD_FAILED:"push_standard_failed"
+
+
 		};
 	}
 

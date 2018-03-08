@@ -25,7 +25,6 @@ class User extends Model
             {
                 this.setData(data);
 
-                app.assignments.getAllAssignment();
 
                 if (data.role === "student")
                 {
@@ -35,6 +34,7 @@ class User extends Model
                     app.submissions.getAllSubmissions();
                 }
 
+                app.assignments.getAllAssignment();
 
             }
       }

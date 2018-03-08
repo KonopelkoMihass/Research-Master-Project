@@ -47,7 +47,7 @@ class DatabaseManager:
 			values=placeholders
 		)
 
-		print(stmt)
+
 		cursor.execute(stmt, list(my_dict.values()))
 
 		connector.commit()
@@ -68,7 +68,7 @@ class DatabaseManager:
 			values=placeholders
 		)
 
-		#print(stmt)
+
 		cursor.execute(stmt, list(my_dict.values()))
 
 		connector.commit()
