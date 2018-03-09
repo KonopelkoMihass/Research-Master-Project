@@ -128,6 +128,19 @@ class CodeViewController
 		else
 		{
 			document.getElementById("submit-review-div").style.display = "block";
+
+
+			var removeEventListener = function ()
+			{
+				var oldEl = document.getElementById("submit-review");
+				var newEl = oldEl.cloneNode(true);
+				oldEl.parentNode.replaceChild(newEl, oldEl);
+            };
+
+
+
+
+
 			document.getElementById("submit-review").addEventListener("click", function ()
 			{
 				that.model.submitReview(that.allFilesReview, that.newReview);
@@ -143,6 +156,8 @@ class CodeViewController
 				{
 					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
 				}
+
+				removeEventListener();
 			});
 		}
 	}

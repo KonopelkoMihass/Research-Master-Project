@@ -246,9 +246,13 @@ class DatabaseManager:
 		for i in range(0,len(feedbacks)):
 			if feedbacks[i]["reviewer_id"] == data["reviewer_id"]:
 				if feedbacks[i]["iteration_submitted"] == data["iteration_submitted"]:
-					feedbacks[i] = data
+					#print("FEEDback old:", feedbacks[i])
+					print("FEEDback new:", data["review"])
+					feedbacks[i]["review"] = data["review"] #TEST THIS PLACE
+					print("WHY", feedbacks[i]["review"])
 
 		submission["feedbacks"] = json.dumps(feedbacks)
+		print ("RESULT:", submission["feedbacks"])
 
 		self.replace_into_table("Submissions", submission)
 
