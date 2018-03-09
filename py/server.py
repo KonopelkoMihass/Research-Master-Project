@@ -75,6 +75,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "push_standard":
 			self.push_standard(message_data)
 
+		elif message_type == "get_standard":
+			self.get_standard()
+
 
 
 	def signup(self, message_data):
@@ -201,8 +204,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def push_standard(self, message_data):
 		message = assignments_manager.push_standard(message_data)
+		self.send_message(message[0], message[1])
+		for k, item in connections.items():
+			item["socket"].get_standard()
 
 
+	def get_standard(self):
+		message = assignments_manager.get_standard()
+		self.send_message(message[0], message[1])
 
 	def on_close(self):
 		print ("WebSocket closed")

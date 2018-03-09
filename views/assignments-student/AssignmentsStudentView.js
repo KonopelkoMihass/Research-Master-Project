@@ -196,16 +196,6 @@ class AssignmentsStudentView extends View
 				cell4.innerHTML = submission.iteration;
 			}
 		}
-
-
-
-
-
-
-
-
-
-
 	}
 
 	show()

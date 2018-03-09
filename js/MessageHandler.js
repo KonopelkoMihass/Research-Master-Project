@@ -29,9 +29,10 @@ class MessageHandler
 			SUBMIT_REVIEW_FAILED:"submit_review_failed",
 
 			PUSH_STANDARD_SUCCESSFUL:"push_standard_successful",
-			PUSH_STANDARD_FAILED:"push_standard_failed"
+			PUSH_STANDARD_FAILED:"push_standard_failed",
 
-
+			GET_STANDARD_SUCCESSFUL:"get_standard_successful",
+			GET_STANDARD_FAILED:"get_standard_failed"
 		};
 	}
 
@@ -47,5 +48,6 @@ class MessageHandler
 		app.user.update(data, type);
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
+		app.standards.update(data, type);
 	}
 }

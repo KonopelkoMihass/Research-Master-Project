@@ -113,7 +113,7 @@ class App
 
 
 
-		// KEEP ADDING OBSERVERS AS THEY ARE NEEDEd
+		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
 
 		// On entering a system, we need to store user info or notify user if he failed to enter the system
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
@@ -154,6 +154,12 @@ class App
 		this.submissions.addObserver(performReviewView, this.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL);
 		this.submissions.addObserver(performReviewView, this.net.messageHandler.types.SUBMIT_REVIEW_SUCCESSFUL);
 
+
+		// Teacher - Standards
+		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.PUSH_STANDARD_SUCCESSFUL);
+		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
+
+		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 
 	}
 

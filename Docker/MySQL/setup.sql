@@ -55,4 +55,6 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Standards` (
   `category` VARCHAR(255),
   `sub_category` VARCHAR(255),
   `description` MEDIUMTEXT,
-  PRIMARY KEY (`id`,`sub_category`));
+  PRIMARY KEY (`id`));
+
+CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `MihassGProject`.`Standards` (`category`, `sub_category` ASC);

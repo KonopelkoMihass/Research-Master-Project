@@ -26,7 +26,7 @@ class User extends Model
                 this.setData(data);
 
                 app.assignments.getAllAssignment();
-
+                app.standards.getStandards();
 
                 if (data.role === "student")
                 {

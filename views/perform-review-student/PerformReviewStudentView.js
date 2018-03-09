@@ -39,7 +39,8 @@ class PerformReviewStudentView extends View
 				}
 			}
 
-			for (var i = 0; i < assignments.length; i++) {
+			for (var i = 0; i < assignments.length; i++)
+			{
 				if (assignments[i].status !== "completed")
 				{
 					var hasSubmissions = false;
