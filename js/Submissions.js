@@ -26,7 +26,7 @@ class Submissions extends Model {
         }
     }
 
-    submitReview(allFilesReview)
+    submitReview(allFilesReview, newReview)
     {
         var data = {};
 
@@ -34,12 +34,13 @@ class Submissions extends Model {
         delete allFilesReview[undefined];
 
 
-
         data.review = allFilesReview;
         data.reviewer_id = app.user.id;
         data.reviewer_role = app.user.role;
         data.submission_id = this.submissionIDToCodeView;
         data.iteration_submitted = this.iterationReviewed;
+        data.new_review = newReview;
+
 
         if (app.user.role === "teacher") {
             data.reviewer_name = app.user.name + " " + app.user.surname;
@@ -48,7 +49,6 @@ class Submissions extends Model {
         {
             data.reviewer_name = getRandomAdjective() + app.user.noun;
         }
-
 
 
         app.net.sendMessage("submit_review", data);

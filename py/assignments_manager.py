@@ -198,15 +198,23 @@ class AssignmentsManager:
 	def submit_review(self, message_data):
 		print("submit_review")
 		type = "submit_review_successful"
+
+		new_review = message_data["new_review"]
+		del message_data["new_review"]
+
 		data = []
 
-		try:
+		#try:
+		if new_review:
 			self.database_manager.add_review(message_data)
-			print("Submitted Assignment Successfully")
+			print("Submitted New Review Successfully")
+		else:
+			self.database_manager.update_review(message_data)
+			print("Submitted Updated Review Successfully")
 
-		except:
-			type = "submit_review_failed"
-			print("Submit Review  Failed")
+		#except:
+		#	type = "submit_review_failed"
+		#	print("Submit Review Failed")
 
 		message = [type, data]
 		return message

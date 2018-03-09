@@ -33,6 +33,7 @@ class CodeView extends View
 		{
 			this.controller.retrieveAnyPreviousReviewData();
 			this.controller.setupFileSelector(false);
+			this.controller.allowReview(false);
 			this.controller.setReviewData();
 		}
 
@@ -40,6 +41,7 @@ class CodeView extends View
 		{
 			this.controller.retrieveAnyPreviousReviewData();
 			this.controller.setupFileSelector(true);
+			this.controller.allowReview(true);
 			this.controller.setReviewData();
 		}
 	}

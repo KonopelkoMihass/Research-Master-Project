@@ -6,31 +6,13 @@ class CodeViewController
 		this.setup();
 		this.parsedCodeHTMLs = {};
 		this.allFilesReview = {};
-
+		this.newReview = true;
 	}
 
 	setup()
 	{
 		var that = this;
 		console.log(this.model);
-
-
-		document.getElementById("submit-review").addEventListener("click", function ()
-		{
-			that.model.submitReview(that.allFilesReview);
-
-			that.parsedCodeHTMLs = {};
-			that.allFilesReview = {};
-
-			if (app.user.role === "teacher")
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
-			}
-			else
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
-			}
-		});
 	}
 
 	cleanUp()
@@ -79,21 +61,22 @@ class CodeViewController
                 var iteration = this.model.submissions[i].iteration;
 
 
-                var currentFeedbacks =  []; //feedbacks[iteration];
+                var currentFeedbacks = []; //feedbacks[iteration];
 				for(var j = 0; j < feedbacks.length; j++)
 				{
 					if (feedbacks[j].iteration_submitted === this.model.submissions[i].iteration)
 					{
 						currentFeedbacks.push(feedbacks[j]);
 					}
-
 				}
 
                 for (var j = 0; j < currentFeedbacks.length; j++)
                 {
                 	if (parseInt(currentFeedbacks[j].reviewer_id) === this.model.reviewerIDToCodeView)
                 	{
+                		this.newReview = false;
                 		this.allFilesReview = currentFeedbacks[j].review;
+                		break;
 					}
                 }
             }
@@ -132,14 +115,35 @@ class CodeViewController
 				controller.setReviewData(filename);
 			});
 		}
+	}
 
-		if (!allowReview)
+
+	allowReview(allow)
+	{
+		var that = this;
+		if (!allow)
 		{
 			document.getElementById("submit-review-div").style.display = "none";
 		}
 		else
 		{
 			document.getElementById("submit-review-div").style.display = "block";
+			document.getElementById("submit-review").addEventListener("click", function ()
+			{
+				that.model.submitReview(that.allFilesReview, that.newReview);
+
+				that.parsedCodeHTMLs = {};
+				that.allFilesReview = {};
+
+				if (app.user.role === "teacher")
+				{
+					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+				}
+				else
+				{
+					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+				}
+			});
 		}
 	}
 
