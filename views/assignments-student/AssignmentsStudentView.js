@@ -30,11 +30,8 @@ class AssignmentsStudentView extends View
 			{
 				assignmentTable.deleteRow(rowCount);
 			}
-			rowCount = reviewDeadlineTable.rows.length;
-			while(--rowCount)
-			{
-				reviewDeadlineTable.deleteRow(rowCount);
-			}
+
+
 
 			var assignments = model.assignments;
 
@@ -45,29 +42,7 @@ class AssignmentsStudentView extends View
 				var dlTime = 0;
 				var dlDate = 0;
 
-				if (status === "review" || status === "review_end_soon")
-				{
-					row = reviewDeadlineTable.insertRow(reviewDeadlineTable.rows.length);
-					dlTime = assignments[i].reviewTillTime;
-					dlDate = assignments[i].reviewTillDate;
-
-					// Student should not be able to re submit code if he have not submitted it initially.
-					var submissions = app.submissions.submissions;
-					var submissionPresent = false;
-					for (var j = 0; j < submissions.length; j++)
-					{
-						if (submissions[j].assignmentID === assignments[i].id)
-						{
-							submissionPresent = true;
-						}
-					}
-					if (submissionPresent === false)
-					{
-						continue;
-					}
-				}
-
-				else if (status === "normal" || status === "submission_soon")
+				if (status === "normal" || status === "submission_soon")
 				{
 					row = assignmentTable.insertRow(assignmentTable.rows.length);
 					dlTime = assignments[i].deadlineTime;
@@ -101,22 +76,10 @@ class AssignmentsStudentView extends View
 				cell2.innerHTML = dlDate;
 				cell3.innerHTML = dlTime;
 
-
-				if (status === "review" || status === "review_end_soon")
-				{
-					cell4.id = "assignment-submission-iteration##" + assignments[i].id;
-					cell4.innerHTML = 0;
-				}
-
-				if (status === "normal" || status === "submission_soon")
-				{
-					cell4.id = "assignment-submission##" + assignments[i].id;
-					this.tickAreas[assignments[i].id] = cell4;
-				}
-
+				cell4.id = "assignment-submission##" + assignments[i].id;
+				this.tickAreas[assignments[i].id] = cell4;
 			}
 		}
-
 
 
 		else if (messageType === app.net.messageHandler.types.GET_SUBMISSIONS_SUCCESSFUL ||
@@ -171,6 +134,78 @@ class AssignmentsStudentView extends View
 
 			}
 		}
+
+		// update review section
+		rowCount = reviewDeadlineTable.rows.length;
+		while(--rowCount)
+		{
+			reviewDeadlineTable.deleteRow(rowCount);
+		}
+
+		var assignments = app.assignments.assignments;
+
+		for (var i = 0; i < assignments.length; i++)
+		{
+
+				if (assignments[i].status === "review" || assignments[i].status === "review_end_soon")
+			{
+
+				// Student should not be able to re submit code if he have not submitted it initially.
+				var submissions = app.submissions.submissions;
+				var submissionPresent = false;
+				var submission = {};
+
+				for (var j = 0; j < submissions.length; j++)
+				{
+					if (submissions[j].assignmentID === assignments[i].id)
+					{
+						submissionPresent = true;
+						submission = submissions[j];
+					}
+				}
+				if (submissionPresent === false)
+				{
+					continue;
+				}
+
+
+				var row = reviewDeadlineTable.insertRow(reviewDeadlineTable.rows.length);
+
+				var cell0 = row.insertCell(0);
+				var cell1 = row.insertCell(1);
+				var cell2 = row.insertCell(2);
+				var cell3 = row.insertCell(3);
+				var cell4 = row.insertCell(4);
+
+				var img = document.createElement("IMG");
+				img.src = "resources/images/upload-button.png";
+				img.id = "upload-assignment-button##" + assignments[i].id;
+				img.className = "picture-button";
+				img.addEventListener("click", function()
+				{
+					var id = parseInt(this.id.split('##')[1]);
+					that.controller.createSubmitAssignmentModal(id);
+				});
+				cell0.appendChild(img);
+
+				cell1.innerHTML = assignments[i].name;
+				cell2.innerHTML = assignments[i].reviewTillDate;
+				cell3.innerHTML = assignments[i].reviewTillTime;
+
+				cell4.id = "assignment-submission-iteration##" + assignments[i].id;
+				cell4.innerHTML = submission.iteration;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
 	}
 
 	show()
