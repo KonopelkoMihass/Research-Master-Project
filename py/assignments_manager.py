@@ -242,10 +242,10 @@ class AssignmentsManager:
 				if skip_title_h1:
 					skip_title_h1 = False
 					continue
-				standard_bit["category"] = n.get_text()
+				standard_bit["category"] = n.get_text().rstrip()
 
 			if n.name == "h2":
-				standard_bit["sub_category"] = n.get_text()
+				standard_bit["sub_category"] = n.get_text().rstrip()
 				standard_bit["description"] = ""
 				for elem in n.next_siblings:
 					if elem.name == 'p':

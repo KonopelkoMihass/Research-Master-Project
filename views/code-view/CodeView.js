@@ -20,6 +20,8 @@ class CodeView extends View
 	{
 		this.controller.cleanUp();
 		this.controller.prepareCodeHTMLs();
+		this.controller.setupSideModal();
+
 
 		var state = this.controller.model.codeViewState;
 
