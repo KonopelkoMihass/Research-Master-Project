@@ -55,10 +55,10 @@ class SeeSubmissionsTeacherView extends View
 
 				var cell1 = row.insertCell(1);
 				// Check if feedback was already submitted by this user.
-				var feedback = submission.feedbacks[submission.feedbacks.length - 1];
-				if (feedback)
+				var feedbacks = submission.feedbacks;
+				for (var j = 0; j < feedbacks.length; j++)
 				{
-					if (feedback[app.user.id])
+					if (feedbacks[j].reviewer_id === app.user.id)
 					{
                         var img = document.createElement("IMG");
 						img.src = "resources/images/tick.png";
@@ -66,6 +66,8 @@ class SeeSubmissionsTeacherView extends View
 						cell1.appendChild(img);
 					}
 				}
+
+
 
 
 

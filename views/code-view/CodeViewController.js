@@ -40,6 +40,13 @@ class CodeViewController
             });
 
 
+			document.getElementById("submit-comment").addEventListener("click", function () {
+				var comment = document.getElementById("code-review-sidenav-comment-textbox").value;
+				document.getElementById("code-review-sidenav-comment-textbox").value = "";
+				that.closeSidenavAndSaveTheReview("comment", comment)
+            });
+
+
             var standards = app.standards.standards;
 
             var categorySelectDiv = document.getElementById("code-review-category-select-div");
@@ -109,8 +116,6 @@ class CodeViewController
             this.setSideModal = false;
         }
 	}
-
-
 
 
 	cleanUp()
@@ -287,6 +292,7 @@ class CodeViewController
 			row.id = id + "-row";
 			var cell0 = row.insertCell(0);
 			var cell1 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
 
 			if (reviewDict[id].type === "token")
 			{
@@ -298,7 +304,8 @@ class CodeViewController
 				cell0.innerHTML = "Whole Line " + reviewDict[id].content;
 			}
 
-			cell1.innerHTML = reviewDict[id].review;
+			cell1.innerHTML = reviewDict[id].review_type.charAt(0).toUpperCase() + reviewDict[id].review_type.slice(1);
+			cell2.innerHTML = reviewDict[id].review;
 
 			var codeSpan = document.getElementById(id);
 			codeSpan.classList.add("selected");
@@ -430,8 +437,6 @@ class CodeViewController
 
 	}
 
-
-
 	deleteCodeBit(id, filename)
 	{
 		var reviewDict = this.allFilesReview[filename];
@@ -439,7 +444,6 @@ class CodeViewController
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
 
 	addLineBit(id, filename)
 	{
@@ -465,7 +469,6 @@ class CodeViewController
 		this.openSidenavAndConstructIssue(id, codeBit);
 	}
 
-
 	deleteLineBit(id, filename)
 	{
 		var reviewDict = this.allFilesReview[filename];
@@ -473,7 +476,6 @@ class CodeViewController
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
 
 
 	update()
@@ -497,7 +499,6 @@ class CodeViewController
 
 
 
-
 	closeSidenavAndSaveTheReview(type, content)
 	{
 		// Close sidenav and return all in sidenav elements to its original state.
@@ -510,24 +511,14 @@ class CodeViewController
 		document.getElementById("code-review-sidenav-issue-subcategory").style.display = "none";
 
 
-
-		this.categoryElemSelected.classList.remove("standard-bit-selected");
-		this.categoryElemSelected = "";
-
-
-
-
+		if (this.categoryElemSelected !== "")
+		{
+			this.categoryElemSelected.classList.remove("standard-bit-selected");
+			this.categoryElemSelected = "";
+		}
 
 
 
-
-
-
-
-
-
-
-		this.categoryElemSelected = "";
 
 
 
@@ -538,15 +529,17 @@ class CodeViewController
 		this.codeBitReviewed = "";
 		this.codeElementIdReviewed = "";
 
-
+		codeBit.review_type = type.charAt(0).toUpperCase() + type.slice(1);
 		if (type === "issue")
 		{
 			codeBit.review = content.category + "->" + content.subCategory;
 		}
 
-		else{
+		else
+		{
 			codeBit.review = content;
 		}
+
 
 		var reviewDict = this.allFilesReview[this.fileOpened];
 		reviewDict[id] = codeBit;
@@ -555,21 +548,23 @@ class CodeViewController
 		var row = reviewTable.insertRow(-1);
 
 		row.id = id + "-row";
+
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
 
 
 		if( codeBit.type === "line")
 		{
 			cell0.innerHTML = "Whole line " + codeBit.content;
 		}
-
-		else{
+		else
+		{
 			cell0.innerHTML = codeBit.content;
 		}
 
-
-		cell1.innerHTML = codeBit.review;
+		cell1.innerHTML = codeBit.review_type;
+		cell2.innerHTML = codeBit.review;
 	}
 
 

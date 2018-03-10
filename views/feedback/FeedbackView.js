@@ -41,6 +41,7 @@ class FeedbackView extends View
 						if (submission.feedbacks[k].iteration_submitted === submission.iteration)
 						{
 							subIns.push(i);
+							break;
 						}
 					}
 				}
@@ -118,7 +119,20 @@ class FeedbackView extends View
 			var fbdata = submission.feedbacks[currentFeedbacksIDs[i]];
 
 			var reviewBtn = document.createElement("BUTTON");
-			reviewBtn.innerHTML ="Review by " + fbdata.reviewer_name;
+
+			if (fbdata.reviewer_role === "student")
+			{
+				reviewBtn.innerHTML ="Some Review by " + fbdata.reviewer_name;
+			}
+
+			else
+			{
+				reviewBtn.innerHTML ="Review by the Lecturer " + fbdata.reviewer_name;
+				reviewBtn.style="font-weight:bold"
+			}
+
+
+
 			reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + fbdata.reviewer_id + "#" + currentFeedbacksIDs[i];
 
 

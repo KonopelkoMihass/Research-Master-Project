@@ -24,25 +24,25 @@ class SeeStandardsTeacherView extends View
 			}
 
 
-			for (var i = 0; i < model.standards.length; i++)
+			for (var key in model.standards)
 			{
-				var standard = model.standards[i];
+				var substandard = model.standards[key];
 
 
-				var row = table.insertRow(table.rows.length);
+				for(var i =0; i< substandard.length; i++)
+				{
+					var row = table.insertRow(table.rows.length);
 
-				var cell0 = row.insertCell(0);
-				var cell1 = row.insertCell(1);
-				var cell2 = row.insertCell(2);
+					var cell0 = row.insertCell(0);
+					var cell1 = row.insertCell(1);
+					var cell2 = row.insertCell(2);
 
 
-				cell0.innerHTML = standard.category;
-				cell1.innerHTML = standard.subCategory;
-				cell2.innerHTML = standard.description;
+					cell0.innerHTML = substandard[i].category;
+					cell1.innerHTML = substandard[i].subCategory;
+					cell2.innerHTML = substandard[i].description;
+				}
 			}
-
-
-
 
 		}
 

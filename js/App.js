@@ -159,6 +159,7 @@ class App
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.PUSH_STANDARD_SUCCESSFUL);
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 
+
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 
 	}
