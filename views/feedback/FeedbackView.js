@@ -8,6 +8,8 @@ class FeedbackView extends View
 		this.title = app.viewManager.VIEW.FEEDBACK;
 		this.controller = controller;
 		this.setup();
+
+
 	}
 
 	onNotify (model, messageType)
@@ -77,9 +79,16 @@ class FeedbackView extends View
 
 	createReviewSelectModal(subIndex, assignmentName)
 	{
+		var that = this;
+
 		var modalBody = app.modalContentManager.getModalContent("select-review-student");
 		var modalData = app.uiFactory.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
 		document.body.appendChild(modalData.modal);
+
+		var modalSpaceGame = app.modalContentManager.getModalContent("rocket-game");
+		var modalSpaceGameData = app.uiFactory.createModal("select-review-student", "Rocket Test", modalSpaceGame, false);
+		document.body.appendChild(modalSpaceGameData.modal);
+
 
 		var submission = app.submissions.submissions[subIndex];
 
@@ -136,16 +145,24 @@ class FeedbackView extends View
 			reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + fbdata.reviewer_id + "#" + currentFeedbacksIDs[i];
 
 
-			reviewBtn.addEventListener("click", function () {
+			reviewBtn.addEventListener("click", function ()
+			{
 				var parentNode = modalData.modal.parentNode;
 				parentNode.removeChild(modalData.modal);
+
+
+
+				modalSpaceGameData.modal.style.display = "block";
+
+
+
+				that.setupRocketGame(modalSpaceGameData);
 
 				app.submissions.codeViewState = "Comments";
 				app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
 				app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 
-				app.submissions.feedbacIndexToReview = parseInt(this.id.split('#')[3]);
-				app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+				app.submissions.feedbackIndexToReview = parseInt(this.id.split('#')[3]);
 			});
 
 			reviewDiv.appendChild(reviewBtn);
@@ -161,5 +178,25 @@ class FeedbackView extends View
 	show()
 	{
 		super.show();
+	}
+
+	setupRocketGame(gameModalData)
+	{
+		var modalBody = gameModalData.modal;
+		var closeButtons = gameModalData.closes;
+
+		// Clicking close buttons should bring to the code view
+		 for (var i = 0; i <closeButtons.length;i++){
+			closeButtons[i].addEventListener("click", function ()
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
+
+
+			});
+        }
+
+
+
+
 	}
 }

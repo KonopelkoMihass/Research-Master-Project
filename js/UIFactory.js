@@ -70,8 +70,6 @@ class UIFactory
 
 		var closeButtons = [cancelBtn, modalClose];
 
-
-
         for (var i = 0; i <closeButtons.length;i++){
 			closeButtons[i].addEventListener("click", function ()
 			{
@@ -79,6 +77,9 @@ class UIFactory
 				parentNode.removeChild(modal);
 			});
         }
+
+        elementDict.closes = closeButtons;
+
 
 		return elementDict;
 	}

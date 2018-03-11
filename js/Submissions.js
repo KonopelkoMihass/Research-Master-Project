@@ -14,7 +14,7 @@ class Submissions extends Model {
         this.reviewerIDToCodeView = -1;
         this.iterationReviewed = -1;
 
-        this.feedbacIndexToReview = -1;
+        this.feedbackIndexToReview = -1;
 
     }
 

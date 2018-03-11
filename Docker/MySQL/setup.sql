@@ -5,10 +5,9 @@ USE MihassGProject;
 CREATE TABLE IF NOT EXISTS `MihassGProject`.`Users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
-  `github_username` VARCHAR(45) NOT NULL,
-  `github_email` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
+  `team_name` VARCHAR(45) NOT NULL,
   `noun` VARCHAR(45) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `role` VARCHAR(32) NOT NULL,
@@ -17,8 +16,12 @@ CREATE TABLE IF NOT EXISTS `MihassGProject`.`Users` (
 CREATE UNIQUE INDEX `email_UNIQUE` ON `MihassGProject`.`Users` (`email` ASC);
 
 -- creating dummy teacher
-INSERT INTO MihassGProject.Users (email, github_username, github_email, name, surname, noun, password, role)
-VALUES ('q','test','test','John','Doe','Potato','q','teacher'),  ('w','w','w','w','w','w','w','student') ,  ('e','e','e','e','e','e','e','student'),  ('r','r','r','r','r','r','r','student');
+INSERT INTO MihassGProject.Users (email, team_name, name, surname, noun, password, role)
+VALUES ('q','teacher','John','Doe','Potato','q','teacher'),
+  ('w','1','w','w','Bed','w','student'),
+  ('e','1','e','e','Chair','e','student'),
+  ('r','2','r','r','Pizza','r','student'),
+  ('t','2','t','t','Grass','t','student');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
