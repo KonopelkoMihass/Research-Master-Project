@@ -37,7 +37,7 @@ class ViewManager
 
 		while(i < this.views.length && !viewFound)
 		{
-			if(this.views[i].title==title)
+			if(this.views[i].title===title)
 			{
 				viewFound=true;
 				this.nextView = this.views[i];
@@ -47,7 +47,7 @@ class ViewManager
 
 		if(viewFound)
 		{
-			if(this.currentView!=undefined)
+			if(this.currentView!==undefined)
 			{
 				console.log("Change view from:", this.currentView.title);
 				this.currentView.hide();

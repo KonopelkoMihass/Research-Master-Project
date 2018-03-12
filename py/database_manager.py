@@ -223,3 +223,48 @@ class DatabaseManager:
 		submission["feedbacks"] = json.dumps(feedbacks)
 
 		self.replace_into_table("Submissions", submission)
+
+
+
+
+	def update_review(self, data):
+		print("update_review")
+		connector = self.cnxpool.get_connection()
+
+		# first we need to get the submission
+		cursor = connector.cursor(dictionary=True)
+		submission_id = str(data["submission_id"])
+		query = ("SELECT * FROM Submissions WHERE Submissions.id=" + submission_id)
+		cursor.execute(query)
+		submission = cursor.fetchall()[0]
+		cursor.close()
+		connector.close()
+
+
+		feedbacks = json.loads(submission["feedbacks"])
+
+		for i in range(0,len(feedbacks)):
+			if feedbacks[i]["reviewer_id"] == data["reviewer_id"]:
+				if feedbacks[i]["iteration_submitted"] == data["iteration_submitted"]:
+					#print("FEEDback old:", feedbacks[i])
+					print("FEEDback new:", data["review"])
+					feedbacks[i]["review"] = data["review"] #TEST THIS PLACE
+					print("WHY", feedbacks[i]["review"])
+
+		submission["feedbacks"] = json.dumps(feedbacks)
+		print ("RESULT:", submission["feedbacks"])
+
+		self.replace_into_table("Submissions", submission)
+
+
+
+
+
+
+
+
+
+
+
+
+

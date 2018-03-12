@@ -6,32 +6,117 @@ class CodeViewController
 		this.setup();
 		this.parsedCodeHTMLs = {};
 		this.allFilesReview = {};
+		this.newReview = true;
 
+		this.setSideModal = true;
+
+		this.categoryElemSelected = "";
+
+		this.codeBitReviewed = "";
+		this.codeElementIdReviewed = "";
+		this.fileOpened = "";
 	}
 
 	setup()
 	{
 		var that = this;
 		console.log(this.model);
-
-
-		document.getElementById("submit-review").addEventListener("click", function ()
-		{
-			that.model.submitReview(that.allFilesReview);
-
-			that.parsedCodeHTMLs = {};
-			that.allFilesReview = {};
-
-			if (app.user.role === "teacher")
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
-			}
-			else
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
-			}
-		});
 	}
+
+	setupSideModal()
+	{
+		var that = this;
+		if (this.setSideModal)
+		{
+            // The choice buttons
+            document.getElementById("code-review-sidenav-choice-left").addEventListener("click", function () {
+                document.getElementById("code-review-sidenav-comment").style.display = "block";
+                document.getElementById("code-review-sidenav-issue-category").style.display = "none";
+            });
+
+            document.getElementById("code-review-sidenav-choice-right").addEventListener("click", function () {
+                document.getElementById("code-review-sidenav-issue-category").style.display = "block";
+                document.getElementById("code-review-sidenav-comment").style.display = "none";
+            });
+
+
+			document.getElementById("submit-comment").addEventListener("click", function () {
+				var comment = document.getElementById("code-review-sidenav-comment-textbox").value;
+				document.getElementById("code-review-sidenav-comment-textbox").value = "";
+				that.closeSidenavAndSaveTheReview("comment", comment)
+            });
+
+
+            var standards = app.standards.standards;
+
+            var categorySelectDiv = document.getElementById("code-review-category-select-div");
+            var subCategorySelectDiv = document.getElementById("code-review-subcategory-select-div");
+
+            for (var key in standards) {
+                var categoryName = key;
+
+                //create a span to insert into div
+                var categorySpan = document.createElement("SPAN");
+                categorySpan.id = "code-review-category#" + categoryName;
+                categorySpan.innerHTML = categoryName;
+                categorySpan.className = "code-review-select-category-span";
+
+                categorySelectDiv.appendChild(categorySpan);
+
+                categorySpan.addEventListener("click", function ()
+				{
+					// clean sub category
+					subCategorySelectDiv.innerHTML = "";
+
+					//show it
+					document.getElementById("code-review-sidenav-issue-subcategory").style.display = "block";
+
+					if (that.categoryElemSelected !== "")
+					{
+						that.categoryElemSelected.classList.remove("standard-bit-selected");
+					}
+					that.categoryElemSelected = this;
+					that.categoryElemSelected.classList.add("standard-bit-selected");
+
+
+
+                	var cat = this.id.split("#")[1];
+					var subcategories = standards[cat];
+					for (var i = 0; i < subcategories.length; i++)
+					{
+
+						var subcategorySpan = document.createElement("SPAN");
+						subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
+
+
+						subcategorySpan.innerHTML = subcategories[i].subCategory;
+						subcategorySpan.className = "code-review-select-subcategory-span";
+
+						app.uiFactory.insertTooltip(subcategorySpan, subcategories[i].description);
+
+						subcategorySpan.addEventListener("click", function ()
+						{
+							var lCategory =  this.id.split("#")[1];
+							var lSubCategory =  this.id.split("#")[2];
+
+							var resultStandard = app.standards.standards[lCategory][lSubCategory];
+
+							that.closeSidenavAndSaveTheReview("issue", resultStandard)
+						});
+
+
+						subCategorySelectDiv.appendChild(subcategorySpan)
+					}
+                })
+
+
+            }
+
+
+            this.setSideModal = false;
+        }
+	}
+
 
 	cleanUp()
 	{
@@ -56,7 +141,6 @@ class CodeViewController
 	}
 
 
-
 	prepareCodeHTMLs()
 	{
         // Get files and parse them into a highlighted HTML.  Then put them in a parsedCodeHTMLs.
@@ -79,28 +163,28 @@ class CodeViewController
                 var iteration = this.model.submissions[i].iteration;
 
 
-                var currentFeedbacks =  []; //feedbacks[iteration];
+                var currentFeedbacks = []; //feedbacks[iteration];
 				for(var j = 0; j < feedbacks.length; j++)
 				{
 					if (feedbacks[j].iteration_submitted === this.model.submissions[i].iteration)
 					{
 						currentFeedbacks.push(feedbacks[j]);
 					}
-
 				}
 
                 for (var j = 0; j < currentFeedbacks.length; j++)
                 {
                 	if (parseInt(currentFeedbacks[j].reviewer_id) === this.model.reviewerIDToCodeView)
                 	{
+                		this.newReview = false;
                 		this.allFilesReview = currentFeedbacks[j].review;
+                		break;
 					}
                 }
             }
         }
 
 	}
-
 
 
     setupFileSelector(allowReview)
@@ -119,6 +203,7 @@ class CodeViewController
 			button.addEventListener("click", function ( )
             {
             	var filename = this.innerHTML;
+            	controller.fileOpened = filename;
 
 				 // Now we insert it into a <code> area
 				document.getElementById("code-review").innerHTML = controller.parsedCodeHTMLs[filename];
@@ -132,17 +217,51 @@ class CodeViewController
 				controller.setReviewData(filename);
 			});
 		}
+	}
 
-		if (!allowReview)
+	allowReview(allow)
+	{
+		var that = this;
+		if (!allow)
 		{
 			document.getElementById("submit-review-div").style.display = "none";
 		}
 		else
 		{
 			document.getElementById("submit-review-div").style.display = "block";
+
+
+			var removeEventListener = function ()
+			{
+				var oldEl = document.getElementById("submit-review");
+				var newEl = oldEl.cloneNode(true);
+				oldEl.parentNode.replaceChild(newEl, oldEl);
+            };
+
+
+
+
+
+			document.getElementById("submit-review").addEventListener("click", function ()
+			{
+				that.model.submitReview(that.allFilesReview, that.newReview);
+
+				that.parsedCodeHTMLs = {};
+				that.allFilesReview = {};
+
+				if (app.user.role === "teacher")
+				{
+					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+				}
+				else
+				{
+					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+				}
+
+				removeEventListener();
+			});
 		}
 	}
-
 
 
 	setReviewData(filename)
@@ -173,6 +292,7 @@ class CodeViewController
 			row.id = id + "-row";
 			var cell0 = row.insertCell(0);
 			var cell1 = row.insertCell(1);
+			var cell2 = row.insertCell(2);
 
 			if (reviewDict[id].type === "token")
 			{
@@ -184,7 +304,8 @@ class CodeViewController
 				cell0.innerHTML = "Whole Line " + reviewDict[id].content;
 			}
 
-			cell1.innerHTML = reviewDict[id].review;
+			cell1.innerHTML = reviewDict[id].review_type.charAt(0).toUpperCase() + reviewDict[id].review_type.slice(1);
+			cell2.innerHTML = reviewDict[id].review;
 
 			var codeSpan = document.getElementById(id);
 			codeSpan.classList.add("selected");
@@ -311,21 +432,10 @@ class CodeViewController
 		var codeBit = {};
 		codeBit.content = content;
 		codeBit.type = "token";
-		codeBit.review = "There we can have review stuff needed";
 
-		reviewDict[id] = codeBit;
+		this.openSidenavAndConstructIssue(id, codeBit);
 
-		var reviewTable = document.getElementById("review-data-table");
-		var row = reviewTable.insertRow(-1);
-
-		row.id = id + "-row";
-		var cell0 = row.insertCell(0);
-		var cell1 = row.insertCell(1);
-		cell0.innerHTML = content;
-		cell1.innerHTML = "There we can have review stuff needed";
 	}
-
-
 
 	deleteCodeBit(id, filename)
 	{
@@ -334,7 +444,6 @@ class CodeViewController
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
 
 	addLineBit(id, filename)
 	{
@@ -355,19 +464,10 @@ class CodeViewController
 		var codeBit = {};
 		codeBit.content = id.split("#")[1];
 		codeBit.type = "line";
-		codeBit.review = "There we can have review stuff needed";
-		reviewDict[id] = codeBit;
 
-		var reviewTable = document.getElementById("review-data-table");
-		var row = reviewTable.insertRow(-1);
 
-		row.id = id + "-row";
-		var cell0 = row.insertCell(0);
-		var cell1 = row.insertCell(1);
-		cell0.innerHTML = "Whole line " + codeBit.content;
-		cell1.innerHTML = "There we can have review stuff needed";
+		this.openSidenavAndConstructIssue(id, codeBit);
 	}
-
 
 	deleteLineBit(id, filename)
 	{
@@ -378,9 +478,100 @@ class CodeViewController
 	}
 
 
-
 	update()
 	{
 
 	}
+
+	openSidenavAndConstructIssue(id, codeBit)
+	{
+		this.codeBitReviewed = codeBit;
+		this.codeElementIdReviewed = id;
+
+        var sideModal = document.getElementById("code-review-side-modal");
+        sideModal.style.width = "45%";
+
+        // Make an X on a side view to close the side modal
+        document.getElementById("code-review-side-modal-close").addEventListener("click", function () {
+            sideModal.style.width = "0px";
+        });
+    }
+
+
+
+	closeSidenavAndSaveTheReview(type, content)
+	{
+		// Close sidenav and return all in sidenav elements to its original state.
+		var sideModal = document.getElementById("code-review-side-modal");
+        sideModal.style.width = "0";
+
+		document.getElementById("code-review-sidenav-issue-category").style.display = "none";
+
+		document.getElementById("code-review-subcategory-select-div").innerHTML = "";
+		document.getElementById("code-review-sidenav-issue-subcategory").style.display = "none";
+
+
+		if (this.categoryElemSelected !== "")
+		{
+			this.categoryElemSelected.classList.remove("standard-bit-selected");
+			this.categoryElemSelected = "";
+		}
+
+
+
+
+
+
+
+		var codeBit = this.codeBitReviewed;
+		var id = this.codeElementIdReviewed;
+
+		this.codeBitReviewed = "";
+		this.codeElementIdReviewed = "";
+
+		codeBit.review_type = type.charAt(0).toUpperCase() + type.slice(1);
+		if (type === "issue")
+		{
+			codeBit.review = content.category + "->" + content.subCategory;
+		}
+
+		else
+		{
+			codeBit.review = content;
+		}
+
+
+		var reviewDict = this.allFilesReview[this.fileOpened];
+		reviewDict[id] = codeBit;
+
+		var reviewTable = document.getElementById("review-data-table");
+		var row = reviewTable.insertRow(-1);
+
+		row.id = id + "-row";
+
+		var cell0 = row.insertCell(0);
+		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
+
+
+		if( codeBit.type === "line")
+		{
+			cell0.innerHTML = "Whole line " + codeBit.content;
+		}
+		else
+		{
+			cell0.innerHTML = codeBit.content;
+		}
+
+		cell1.innerHTML = codeBit.review_type;
+		cell2.innerHTML = codeBit.review;
+	}
+
+
+
+
+
+
+
+
 }

@@ -198,15 +198,23 @@ class AssignmentsManager:
 	def submit_review(self, message_data):
 		print("submit_review")
 		type = "submit_review_successful"
+
+		new_review = message_data["new_review"]
+		del message_data["new_review"]
+
 		data = []
 
 		try:
-			self.database_manager.add_review(message_data)
-			print("Submitted Assignment Successfully")
+			if new_review:
+				self.database_manager.add_review(message_data)
+				print("Submitted New Review Successfully")
+			else:
+				self.database_manager.update_review(message_data)
+				print("Submitted Updated Review Successfully")
 
 		except:
 			type = "submit_review_failed"
-			print("Submit Review  Failed")
+			print("Submit Review Failed")
 
 		message = [type, data]
 		return message
@@ -226,8 +234,6 @@ class AssignmentsManager:
 		standards = []
 		standard_bit = {}
 
-
-
 		for n in node_list:
 			if n.get_text() == "":
 				continue
@@ -236,10 +242,10 @@ class AssignmentsManager:
 				if skip_title_h1:
 					skip_title_h1 = False
 					continue
-				standard_bit["category"] = n.get_text()
+				standard_bit["category"] = n.get_text().rstrip()
 
 			if n.name == "h2":
-				standard_bit["sub_category"] = n.get_text()
+				standard_bit["sub_category"] = n.get_text().rstrip()
 				standard_bit["description"] = ""
 				for elem in n.next_siblings:
 					if elem.name == 'p':
@@ -259,6 +265,7 @@ class AssignmentsManager:
 				self.database_manager.replace_into_table("Standards", standard)
 			print("Submitted Standard Successfully")
 
+
 		except:
 			type = "submit_review_failed"
 			pass
@@ -266,4 +273,17 @@ class AssignmentsManager:
 		message = [type, standards]
 		return message
 
+	def get_standard(self):
+		print("get_standard")
+		type = "get_standard_successful"
+		data = []
 
+		try:
+			data = self.database_manager.select_all_from_table("Standards")
+			print("Get All Standards Successfully")
+		except:
+			type = "get_standard_failed"
+			print("Get All Standards Failed")
+
+		message = [type, data]
+		return message

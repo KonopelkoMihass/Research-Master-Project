@@ -25,16 +25,17 @@ class User extends Model
             {
                 this.setData(data);
 
+                app.assignments.getAllAssignment();
+                app.standards.getStandards();
 
                 if (data.role === "student")
                 {
                     app.submissions.getPersonalSubmissions(data.id);
                 }
-                else{
+                else
+                {
                     app.submissions.getAllSubmissions();
                 }
-
-                app.assignments.getAllAssignment();
 
             }
       }
@@ -43,13 +44,12 @@ class User extends Model
     }
 
 
-    signup(email, githubUsername, githubEmail, name, surname, noun, password)
+    signup(email, teamName, name, surname, noun, password)
     {
         var userData = {};
 
         userData.email = email;
-        userData.github_username = githubUsername;
-        userData.github_email = githubEmail;
+        userData.team_name = teamName;
         userData.name = name;
         userData.surname = surname;
         userData.noun = noun;

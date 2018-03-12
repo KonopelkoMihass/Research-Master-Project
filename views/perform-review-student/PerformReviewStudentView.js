@@ -39,7 +39,8 @@ class PerformReviewStudentView extends View
 				}
 			}
 
-			for (var i = 0; i < assignments.length; i++) {
+			for (var i = 0; i < assignments.length; i++)
+			{
 				if (assignments[i].status !== "completed")
 				{
 					var hasSubmissions = false;
@@ -119,7 +120,6 @@ class PerformReviewStudentView extends View
 
 
 				// Check if feedback was already submitted by this user.
-
 				// if he is an owner - then he is the one to see these.
 
 				for (var k = 0;k < submission.feedbacks.length; k++)
