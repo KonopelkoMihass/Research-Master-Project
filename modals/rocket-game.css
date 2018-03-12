@@ -1,0 +1,120 @@
+.game-window {
+    background-color: #a0aaa1;
+    height:500px;
+}
+
+.messages-window{
+    margin: 5px 5px;
+    background-color: black;
+    color: darkgreen;
+    width:40%;
+    float:left;
+    border-color: #656565;
+    border-style: solid;
+	border-width: 2px;
+    height:98%;
+    font-weight: bold;
+    font-family: Consolas,monaco,monospace;
+       font-size: calc(11px + 0.5vw);
+    overflow: auto;
+}
+
+.spaceship-window {
+    margin: 5px 5px;
+    background-color: deepskyblue;
+    width: 40%;
+    float: right;
+    border-color: #656565;
+    border-style: solid;
+    border-width: 2px;
+    height:98%;
+    overflow: hidden;
+}
+
+.spaceship-span {
+
+    left: 40%;
+    top: 76%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.rocket-image{
+     width: 20%;
+}
+
+.explosion-image{
+    width: 40%;
+    left:-5%;
+    position: relative;
+}
+
+.fly{
+    -webkit-animation: spaceshipFly 10000ms ease-out;
+    -moz-animation: spaceshipFly 10000ms ease-out;
+    animation: spaceshipFly 10000ms ease-out;
+
+      -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards;    /* FF 5+ */
+  -o-animation-fill-mode: forwards;      /* Not implemented yet */
+  -ms-animation-fill-mode: forwards;     /* IE 10+ */
+  animation-fill-mode: forwards;         /* When the spec is finished */
+
+}
+
+
+
+
+
+
+@-webkit-keyframes spaceshipFly {
+    0%   { top: 76%; }
+    100% { top: 0% }
+}
+
+
+@keyframes spaceshipFly {
+    0%   { top: 76%; }
+    100% { top: 0% }
+}
+
+
+.flyOff{
+    -webkit-animation: flyOff 2000ms ease-out;
+    -moz-animation: flyOff 2000ms ease-out;
+    animation: flyOff 2000ms ease-out;
+
+    -webkit-animation-fill-mode: forwards; /* Chrome 16+, Safari 4+ */
+  -moz-animation-fill-mode: forwards;    /* FF 5+ */
+  -o-animation-fill-mode: forwards;      /* Not implemented yet */
+  -ms-animation-fill-mode: forwards;     /* IE 10+ */
+  animation-fill-mode: forwards;         /* When the spec is finished */
+
+}
+
+
+
+
+
+
+@-webkit-keyframes flyOff {
+    0%   { top: 0%; }
+    100% { top: -40% }
+}
+
+
+@keyframes flyOff {
+    0%   { top: 0%; }
+    100% { top: -40% }
+}
+
+
+
+
+
+
+
+
+
+
