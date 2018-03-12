@@ -61,4 +61,4 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
   `description` MEDIUMTEXT,
   PRIMARY KEY (`id`));
 
-CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `MihassGProject`.`Standards` (`category`, `sub_category` ASC);
+CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Standards` (`category`, `sub_category` ASC);
