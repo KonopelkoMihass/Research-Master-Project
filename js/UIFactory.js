@@ -70,6 +70,7 @@ class UIFactory
 
 		var closeButtons = [cancelBtn, modalClose];
 
+
         for (var i = 0; i <closeButtons.length;i++){
 			closeButtons[i].addEventListener("click", function ()
 			{
