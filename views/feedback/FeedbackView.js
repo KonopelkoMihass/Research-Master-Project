@@ -189,6 +189,8 @@ class FeedbackView extends View
 
 
         console.log ("feedback", feedback);
+        var whoReviewed = feedback.reviewer_role;
+
 
 		var issues = [];
 
@@ -198,7 +200,6 @@ class FeedbackView extends View
 			var fileReview = review[filename];
 			for (var bitID in fileReview)
 			{
-				console.log (fileReview[bitID].review_type);
 				if (fileReview[bitID].review_type === "Issue")
 				{
 					var issue = {};
@@ -224,18 +225,26 @@ class FeedbackView extends View
 
 		//Do prep here
 
-		this.startCountdown(shipFate, issues, closeButtons)
+		this.startCountdown(shipFate, issues, closeButtons, whoReviewed)
 
 
 	}
 
-	startCountdown(shipFate, issues, closeButtons)
+	startCountdown(shipFate, issues, closeButtons, whoReviewed)
 	{
 		var that = this;
 		var messageLog = document.getElementById("messages-window");
 
 		var prestartMessage = document.createElement("LABEL");
-		prestartMessage.innerHTML = "The launch of the spaceship will commence in:";
+
+		if (whoReviewed === "student"){
+			prestartMessage.innerHTML = "The spaceship simulation will start in:";
+		}
+
+		else
+		{
+			prestartMessage.innerHTML = "The launch of the spaceship will commence in:";
+		}
 
 		messageLog.appendChild(prestartMessage);
 
@@ -252,7 +261,7 @@ class FeedbackView extends View
 				if (timeLeft === -1)
 				{
 					clearInterval(timer);
-					that.rocketFlight(shipFate,issues, messageLog, closeButtons)
+					that.rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
                 }
 
 			}, 1000);
@@ -270,11 +279,10 @@ class FeedbackView extends View
 
 	}
 
-	rocketFlight(shipFate,issues, messageLog, closeButtons)
+	rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
 	{
 		var rocket = document.getElementById("spaceship-span");
 		var rocketSprite = document.getElementById("rocket-image");
-
 
 
 		if (shipFate === "explode")
@@ -283,11 +291,30 @@ class FeedbackView extends View
 			rocketSprite.src="resources/images/explosion.png";
 			rocketSprite.classList.remove("rocket-image");
 			rocketSprite.classList.add("explosion-image");
+
+			if(whoReviewed === "student")
+			{
+				var lastmessage = document.createElement("LABEL");
+				lastmessage.innerHTML = "Simulation was cancelled due to a severe number of breaches";
+				lastmessage.style.color = "red";
+				messageLog.appendChild(document.createElement("BR"));
+				messageLog.appendChild(lastmessage)
+			}
+
+			else{
+				var lastmessage = document.createElement("LABEL");
+				lastmessage.innerHTML = "Contact was lost.  No signal from the ship.  We lost it.";
+				lastmessage.style.color = "red";
+				messageLog.appendChild(document.createElement("BR"));
+				messageLog.appendChild(lastmessage)
+			}
+
 		}
 
 		else
 		{
 			rocket.classList.add("fly");
+			rocketSprite.src="resources/images/spaceship-flying.png";
 
 			var explosionCount = 0;
 			var flyStages = 0;
@@ -321,11 +348,22 @@ class FeedbackView extends View
 							rocketSprite.classList.add("explosion-image");
 							rocketSprite.classList.remove("rocket-image");
 
-							var lastmessage = document.createElement("LABEL");
-							lastmessage.innerHTML = "Ship was destroyed" ;
-							lastmessage.style.color = "red";
-							messageLog.appendChild(document.createElement("BR"));
-							messageLog.appendChild(lastmessage)
+							if(whoReviewed === "student")
+							{
+								var lastmessage = document.createElement("LABEL");
+								lastmessage.innerHTML = "Simulation has ended with failure.";
+								lastmessage.style.color = "red";
+								messageLog.appendChild(document.createElement("BR"));
+								messageLog.appendChild(lastmessage)
+							}
+
+							else{
+								var lastmessage = document.createElement("LABEL");
+								lastmessage.innerHTML = "Contact was lost.  No signal from the ship.  We lost it.";
+								lastmessage.style.color = "red";
+								messageLog.appendChild(document.createElement("BR"));
+								messageLog.appendChild(lastmessage)
+							}
 						}
 					}
 
@@ -335,11 +373,22 @@ class FeedbackView extends View
 
 							rocket.classList.add("flyOff");
 
-							var lastmessage = document.createElement("LABEL");
-							lastmessage.innerHTML = "Launch is successful" ;
-							lastmessage.style.color = "white";
-							messageLog.appendChild(document.createElement("BR"));
-							messageLog.appendChild(lastmessage)
+							if(whoReviewed === "student")
+							{
+								var lastmessage = document.createElement("LABEL");
+								lastmessage.innerHTML = "Simulation has ended with success" ;
+								lastmessage.style.color = "white";
+								messageLog.appendChild(document.createElement("BR"));
+								messageLog.appendChild(lastmessage)
+							}
+							else
+							{
+								var lastmessage = document.createElement("LABEL");
+								lastmessage.innerHTML = "Spaceship have passed the atmosphere and successfully goes to an orbit" ;
+								lastmessage.style.color = "white";
+								messageLog.appendChild(document.createElement("BR"));
+								messageLog.appendChild(lastmessage)
+							}
 						}
 					}
 
