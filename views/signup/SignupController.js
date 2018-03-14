@@ -19,7 +19,7 @@ class SignupController
 	signup(e)
 	{
 		var email = document.getElementById("signup-email").value;
-		var teamName = document.getElementById("signup-team-name").value;
+		var teamName = "";
 		var name = document.getElementById("signup-name").value;
     	var surname = document.getElementById("signup-surname").value;
 		var noun = document.getElementById("signup-noun").value;
