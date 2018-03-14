@@ -264,6 +264,7 @@ class App
 	{
    	 	//Sounds
     	this.audioManager.queueSound("button_click.wav");
+    	this.audioManager.queueSound("space-ship-flight.wav");
 	}
 }
 

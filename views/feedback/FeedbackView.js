@@ -258,6 +258,13 @@ class FeedbackView extends View
 
 
 				timeLeft--;
+
+
+				if (timeLeft === 5){
+					app.audioManager.playSound("space-ship-flight.wav", 1);
+				}
+
+
 				if (timeLeft === -1)
 				{
 					clearInterval(timer);
@@ -281,6 +288,7 @@ class FeedbackView extends View
 
 	rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
 	{
+		var that = this;
 		var rocket = document.getElementById("spaceship-span");
 		var rocketSprite = document.getElementById("rocket-image");
 
@@ -295,7 +303,7 @@ class FeedbackView extends View
 			if(whoReviewed === "student")
 			{
 				var lastmessage = document.createElement("LABEL");
-				lastmessage.innerHTML = "Simulation was cancelled due to a severe number of breaches";
+				lastmessage.innerHTML = "Simulation was cancelled due to a severe number of errors.";
 				lastmessage.style.color = "red";
 				messageLog.appendChild(document.createElement("BR"));
 				messageLog.appendChild(lastmessage)
@@ -322,13 +330,14 @@ class FeedbackView extends View
 			var timer = setInterval(function()
 				{
 					flyStages++;
+
 					if (issues.length > explosionCount)
 					{
 						var issue = issues[explosionCount];
 						explosionCount++;
 
 						var message = document.createElement("LABEL");
-						message.innerHTML = "Issue #" + explosionCount +": in file " + issue.file + " error \"" + issue.review   + "\" was detected!" ;
+						message.innerHTML = "Error #" + explosionCount +" has occurred in file " + issue.file;
 						message.style.color = "red";
 
 

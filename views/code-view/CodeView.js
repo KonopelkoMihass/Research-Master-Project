@@ -46,6 +46,8 @@ class CodeView extends View
 			this.controller.allowReview(true);
 			this.controller.setReviewData();
 		}
+
+		this.controller.fileButtonPointer.click();
 	}
 
 
