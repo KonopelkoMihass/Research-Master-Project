@@ -17,7 +17,9 @@ class CodeViewController
 		this.fileOpened = "";
 
 		this.fileButtonHighlighted = "";
+		this.allowSelection = true;
 
+		this.fileButtonPointer = "";
 	}
 
 	setup()
@@ -134,6 +136,8 @@ class CodeViewController
 		document.getElementById("submit-review-div").style.display = "block";
 	}
 
+
+
 	// Hide Review/Comments div and reposition code view.
 	setViewAsClear()
 	{
@@ -235,7 +239,7 @@ class CodeViewController
 
 			if (openFirstFile){
 				openFirstFile = false;
-				button.click();
+				this.fileButtonPointer = button;
 			}
 		}
 	}
@@ -305,8 +309,19 @@ class CodeViewController
 			reviewDict = this.allFilesReview[filename];
 		}
 
-		for (var id in reviewDict)
-		{
+		// "sort Dict"
+
+		var ids = Object.keys(reviewDict); // or loop over the object to get the array
+		ids.sort(function(a,b){
+			var aID = parseInt(a.split("#")[1]);
+			var bID = parseInt(b.split("#")[1]);
+			return (aID - bID);
+		});
+
+		for (var i = 0; i < ids.length; i++) { // now lets i
+			var id = ids[i];
+
+
 			// Add row to a table
 			var row = reviewTable.insertRow(-1);
 
@@ -350,17 +365,21 @@ class CodeViewController
 			{
 				codeElement.addEventListener("click", function ()
 				{
-					var lineNum = this.id.split("#")[1];
+					if (controller.allowSelection)
+					{
+						var lineNum = this.id.split("#")[1];
 
-					//Check if it is already has a class "selected"
-					if (!this.classList.contains("selected")) {
-						this.className += " selected";
-						controller.addLineBit(this.id, filename);
-					}
+						//Check if it is already has a class "selected"
+						if (!this.classList.contains("selected")) {
+							this.className += " reviewed";
+							controller.addLineBit(this.id, filename);
+							controller.allowSelection = false;
+						}
 
-					else {
-						this.classList.remove("selected");
-						controller.deleteLineBit(this.id, filename);
+						else {
+							this.classList.remove("selected");
+							controller.deleteLineBit(this.id, filename);
+						}
 					}
 				});
 			}
@@ -406,22 +425,25 @@ class CodeViewController
 			{
 				token.addEventListener("click", function()
 				{
-					var wordNum = this.id.split("#")[1];
-					var content = this.textContent;
-
-					//Check if does not have a class "selected"
-					if ( !this.classList.contains("selected"))
+					if (controller.allowSelection)
 					{
-						this.className += " selected";
-						controller.addCodeBit(this.id, content, filename);
-					}
+						var wordNum = this.id.split("#")[1];
+						var content = this.textContent;
 
-					else
-					{
-						this.classList.remove("selected");
-						controller.deleteCodeBit(this.id, filename);
-					}
+						//Check if does not have a class "selected"
+						if ( !this.classList.contains("selected"))
+						{
+							this.className += " reviewed";
+							controller.addCodeBit(this.id, content, filename);
+							controller.allowSelection = false;
+						}
 
+						else
+						{
+							this.classList.remove("selected");
+							controller.deleteCodeBit(this.id, filename);
+						}
+					}
 				});
 			}
 		}
@@ -458,14 +480,6 @@ class CodeViewController
 
 	}
 
-	deleteCodeBit(id, filename)
-	{
-		var reviewDict = this.allFilesReview[filename];
-		delete reviewDict[id];
-		var rowToDelete = document.getElementById(id + "-row");
-		rowToDelete.parentNode.removeChild(rowToDelete);
-	}
-
 	addLineBit(id, filename)
 	{
 		var reviewDict = {};
@@ -487,8 +501,20 @@ class CodeViewController
 		codeBit.type = "line";
 
 
-		this.openSidenavAndConstructIssue(id, codeBit);
+		this.openSidenavAndConstructIssue(id, filename, codeBit);
 	}
+
+
+
+	deleteCodeBit(id, filename)
+	{
+		var reviewDict = this.allFilesReview[filename];
+		delete reviewDict[id];
+		var rowToDelete = document.getElementById(id + "-row");
+		rowToDelete.parentNode.removeChild(rowToDelete);
+	}
+
+
 
 	deleteLineBit(id, filename)
 	{
@@ -504,8 +530,9 @@ class CodeViewController
 
 	}
 
-	openSidenavAndConstructIssue(id, codeBit)
+	openSidenavAndConstructIssue(id, filename, codeBit)
 	{
+		var that = this;
 		this.codeBitReviewed = codeBit;
 		this.codeElementIdReviewed = id;
 
@@ -515,6 +542,14 @@ class CodeViewController
         // Make an X on a side view to close the side modal
         document.getElementById("code-review-side-modal-close").addEventListener("click", function () {
             sideModal.style.width = "0px";
+            if (that.codeElementIdReviewed !== "")
+            {
+				document.getElementById(id).classList.remove("reviewed");
+				that.allowSelection = true;
+				this.codeElementIdReviewed  = "";
+			}
+
+
         });
     }
 
@@ -525,6 +560,9 @@ class CodeViewController
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("code-review-side-modal");
         sideModal.style.width = "0";
+
+
+
 
 		document.getElementById("code-review-sidenav-issue-category").style.display = "none";
 
@@ -539,13 +577,13 @@ class CodeViewController
 		}
 
 
-
-
-
-
-
 		var codeBit = this.codeBitReviewed;
 		var id = this.codeElementIdReviewed;
+
+		document.getElementById(id).classList.remove("reviewed");
+		document.getElementById(id).classList.add("selected");
+
+
 
 		this.codeBitReviewed = "";
 		this.codeElementIdReviewed = "";
@@ -586,6 +624,8 @@ class CodeViewController
 
 		cell1.innerHTML = codeBit.review_type;
 		cell2.innerHTML = codeBit.review;
+
+		this.allowSelection = true;
 	}
 
 

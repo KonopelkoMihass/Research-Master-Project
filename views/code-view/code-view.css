@@ -3,6 +3,14 @@
     outline:3px solid red;
 }
 
+.reviewed
+{
+    outline:4px dashed orange;
+}
+
+
+
+
 .comments-table {
 
     border-collapse: collapse;
@@ -123,7 +131,7 @@
 #code-review-sidenav-choice-right
 {
     border-color: #ffffff;
-    border-style: dashed;
+    border-style: solid;
 	border-width: 2px;
     font-weight: bold;
 	color: rgb(255, 255, 255);
@@ -141,6 +149,7 @@
 {
 	color: rgb(255, 151, 54);
     border-color: rgb(255, 151, 54);
+        border-width: 3px;
     border-style: solid;
     cursor: pointer;
 }
@@ -163,7 +172,7 @@
 .code-review-select-category-span
 {
     border-color: #ffffff;
-    border-style: dashed;
+    border-style: solid;
 	border-width: 2px;
     font-weight: bold;
 	color: rgb(255, 255, 255);
@@ -182,6 +191,7 @@
 {
 	color: rgb(255, 151, 54);
     border-color: rgb(255, 151, 54);
+    border-width: 3px;
     border-style: solid;
     cursor: pointer;
 }
@@ -191,7 +201,7 @@
 .code-review-select-subcategory-span
 {
     border-color: #ffffff;
-    border-style: dashed;
+    border-style: solid;
 	border-width: 2px;
     font-weight: bold;
 	color: rgb(255, 255, 255);
@@ -209,6 +219,7 @@
 {
 	color: rgb(255, 32, 59);
     border-color:  rgb(255, 32, 59);
+    border-width: 3px;
     border-style: solid;
     cursor: pointer;
 }
