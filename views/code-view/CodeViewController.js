@@ -15,13 +15,16 @@ class CodeViewController
 		this.codeBitReviewed = "";
 		this.codeElementIdReviewed = "";
 		this.fileOpened = "";
+
+		this.fileButtonHighlighted = "";
+
 	}
 
 	setup()
 	{
-		var that = this;
 		console.log(this.model);
 	}
+
 
 	setupSideModal()
 	{
@@ -193,6 +196,9 @@ class CodeViewController
 
 		//Add file button selector
 		var fileSelectDiv = document.getElementById("file-select");
+
+		var openFirstFile = true;
+
 		for (var name in this.parsedCodeHTMLs)
 		{
 			var button = document.createElement("BUTTON");
@@ -215,7 +221,22 @@ class CodeViewController
 
 				// reapply selections and review data.
 				controller.setReviewData(filename);
+
+
+				if (controller.fileButtonHighlighted !== "")
+				{
+					controller.fileButtonHighlighted.classList.remove("file-selected");
+				}
+
+				this.classList.add("file-selected");
+
+				controller.fileButtonHighlighted = this;
 			});
+
+			if (openFirstFile){
+				openFirstFile = false;
+				button.click();
+			}
 		}
 	}
 

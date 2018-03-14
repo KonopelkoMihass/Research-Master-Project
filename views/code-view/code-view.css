@@ -241,22 +241,9 @@
     font-weight: bold;
     font-size: calc(8px + 0.5vw);
     text-align: left;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.file-selected{
+    background-color: #546E7A;
+    color: white;
 }

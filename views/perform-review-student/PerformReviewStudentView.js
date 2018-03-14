@@ -8,6 +8,7 @@ class PerformReviewStudentView extends View
 		this.title = app.viewManager.VIEW.PERFORM_REVIEW_STUDENT;
 		this.controller = controller;
 		this.setup();
+		this.selectedSub = "";
 	}
 
 
@@ -59,6 +60,16 @@ class PerformReviewStudentView extends View
 						cell0.innerHTML = assignments[i].name;
 						cell0.id = "see-assignment-submissions-student#" + assignments[i].id;
 						cell0.addEventListener("click", function () {
+
+							if (view.selectedSub !== "")
+							{
+								view.selectedSub.classList.remove("sub-selected");
+							}
+
+							this.classList.add("sub-selected");
+							view.selectedSub = this;
+
+
 							view.showSubmissions(parseInt(this.id.split("#")[1]));
 						});
 					}
