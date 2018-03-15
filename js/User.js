@@ -6,8 +6,6 @@ class User extends Model
     {
         super();
         this.email = "";
-        this.githubUsername = "";
-        this.githubEmail = "";
         this.name = "";
         this.surname = "";
         this.noun = "";
@@ -71,8 +69,6 @@ class User extends Model
     setData(data)
     {
          this.email = data.email;
-         this.githubUsername =  data.github_username;
-         this.githubEmail =  data.github_email;
          this.name =  data.name;
          this.surname =  data.surname;
          this.noun =  data.noun;
