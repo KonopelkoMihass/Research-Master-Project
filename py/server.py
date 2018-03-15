@@ -101,6 +101,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 				port = self.request.stream.socket.getpeername()[1]
 				ip_address = ip + ":" + str(port)
 
+			print("signup successful", ip_address)
 			message[1]["users"] = {}
 
 			connection = {}
@@ -217,10 +218,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		print ("WebSocket closed")
 		#Remove connection
 		key = ""
-		for k, item in connections.items():
-			if item["socket"] == self:
-				key = k
-		connections.pop(key)
+		try:
+			for k, item in connections.items():
+				if item["socket"] == self:
+					key = k
+			connections.pop(key)
+		except:
+			print("Key Error")
 		print("Total Connections: ", len(connections))
 
 
