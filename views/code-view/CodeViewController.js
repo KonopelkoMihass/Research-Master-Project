@@ -476,7 +476,7 @@ class CodeViewController
 		codeBit.content = content;
 		codeBit.type = "token";
 
-		this.openSidenavAndConstructIssue(id, codeBit);
+		this.openSidenavAndConstructIssue(id,filename, codeBit);
 
 	}
 
