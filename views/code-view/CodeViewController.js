@@ -546,7 +546,6 @@ class CodeViewController
             {
 				document.getElementById(id).classList.remove("reviewed");
 				that.allowSelection = true;
-				this.codeElementIdReviewed  = "";
 			}
 
 
