@@ -45,7 +45,6 @@ class AssignmentsStudentController
 		var submitBtn = modalData.submit;
 		submitBtn.addEventListener("click", function ()
 		{
-			// THERE WE WILL HANDLE FILE SUBMISSION
 			controller.submitAssignment(id);
 			var parentNode = modalData.modal.parentNode;
 			parentNode.removeChild(modalData.modal);

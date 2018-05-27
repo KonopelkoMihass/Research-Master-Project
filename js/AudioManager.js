@@ -1,9 +1,5 @@
-/**
- * TODO: add in downloader into this (so can queue sounds)
- * Responsible for loading and playing sounds.
- * @constructor
- */
-function AudioManager() {
+function AudioManager()
+{
 	this.audioContext={};
 	this.audioBuffers=[];
 

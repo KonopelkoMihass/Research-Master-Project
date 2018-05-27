@@ -1,5 +1,3 @@
-/**Model of User info sends information to the server and updates
-*  the view depending on what is returned (e.g. signs in or error)**/
 class Assignments extends Model
 {
     constructor()

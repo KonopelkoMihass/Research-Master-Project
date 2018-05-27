@@ -251,7 +251,7 @@ app= tornado.web.Application([
 ], settings)
 
 if __name__ == '__main__':
-	server_port = 8080
+	server_port = 443 #replace with 8080 when putting on gamecore
 	print("server ON")
 	app.listen(server_port)
 	ioloop = tornado.ioloop.IOLoop.instance()

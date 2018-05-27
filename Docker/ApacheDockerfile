@@ -1,6 +1,6 @@
 FROM httpd:2.4
 
-RUN mkdir /usr/local/apache2/htdocs/ProjectOrganiser
+RUN mkdir /usr/local/apache2/htdocs/gs
 # https://stackoverflow.com/questions/26504846/copy-directory-to-other-directory-at-docker-using-add-command
 # ADD index.html /usr/local/apache2/htdocs/ProjectOrganiser
 # ADD js /usr/local/apache2/htdocs/ProjectOrganiser

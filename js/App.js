@@ -45,14 +45,6 @@ class App
 		app.net.sendMessage("heartbeat", {});
 	}
 
-
-
-
-
-
-
-
-
 	setup()
 	{
 		this.templateManager.loadFromCache();
@@ -63,7 +55,7 @@ class App
 		this.submissions = new Submissions();
 		this.standards = new Standards();
 
-		this.net.setHost(location.hostname,8080);
+		this.net.setHost(location.hostname,443); // replace with 8080 when putting on gamecore
 		this.net.connect();
 
 		//add views
@@ -175,11 +167,7 @@ class App
 
 
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
-
 	}
-
-
-
 
 	setupMenuPanel()
 	{
