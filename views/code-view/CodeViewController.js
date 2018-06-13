@@ -155,7 +155,7 @@ class CodeViewController
             if (this.model.submissions[i].id === this.model.submissionIDToCodeView) {
                 var submissionFiles = this.model.submissions[i].submissionData;
                 for (var name in submissionFiles) {
-                    this.parsedCodeHTMLs[name] = Prism.highlight(submissionFiles[name], Prism.languages.cpp);
+                    this.parsedCodeHTMLs[name] = Prism.highlight(submissionFiles[name], Prism.languages.js);
                 }
             }
         }

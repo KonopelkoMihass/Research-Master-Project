@@ -136,7 +136,7 @@ class AssignmentsStudentController
 		// output file information
 		var parseFile = function parseFile(file) {
 			var fileFormat = file.name.split(".")[1];
-			if (fileFormat === "cpp" || fileFormat === "h") {
+			if (fileFormat === "js" ) {
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					controller.uploadFile(file.name, reader.result);

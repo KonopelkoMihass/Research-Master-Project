@@ -247,11 +247,11 @@ settings = {
 
 app= tornado.web.Application([
 	#map the handler to the URI named "wstest"
-	(r'/GCodeReviewer', WSHandler),
+	(r'/CRServer', WSHandler),
 ], settings)
 
 if __name__ == '__main__':
-	server_port = 443 #replace with 8080 when putting on gamecore
+	server_port = 8001 #replace with 8080 when putting on gamecore
 	print("server ON")
 	app.listen(server_port)
 	ioloop = tornado.ioloop.IOLoop.instance()
@@ -260,12 +260,6 @@ if __name__ == '__main__':
 	# go to daemon_update file to add/change the logic
 	# set it to run 300000 for one run each 5 min or so.
 	PeriodicCallback(globalDaemonMethod, 15000).start()
-
-
-
-
-
-
 
 	autoreload.start(ioloop)
 	ioloop.start()
