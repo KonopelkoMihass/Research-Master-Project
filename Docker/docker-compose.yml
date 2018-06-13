@@ -7,7 +7,7 @@ services:
    context: ../
    dockerfile: Docker/ApacheDockerfile
   ports:
-   - "8002:80"    # turn to "81:80" when putting on gamecore
+   - "8002:8002"    # turn to "81:80" when putting on gamecore
   networks:
    - net2
   volumes:
@@ -18,7 +18,7 @@ services:
     context: ../
     dockerfile: Docker/ServerDockerfile
    ports:
-    - "8001:8080" # turn to "8081:8080" when putting on gamecore
+    - "8001:8001" # turn to "8081:8080" when putting on gamecore
    networks:
     - net2
    volumes:
