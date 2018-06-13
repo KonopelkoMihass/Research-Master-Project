@@ -39,5 +39,5 @@ services:
     - ./MySQL/data:/var/lib/mysql
 
 networks:
-  mihass-g-net2:
+  mihass-g-net:
     driver: bridge
