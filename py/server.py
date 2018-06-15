@@ -251,7 +251,7 @@ app= tornado.web.Application([
 ], settings)
 
 if __name__ == '__main__':
-	server_port = 8001 
+	server_port = 443
 	print("server ON")
 	app.listen(server_port)
 	ioloop = tornado.ioloop.IOLoop.instance()

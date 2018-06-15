@@ -7,18 +7,18 @@ services:
    context: ../
    dockerfile: Docker/ApacheDockerfile
   ports:
-   - "8002:80"    # turn to "81:80" when putting on gamecore
+   - "80:80"    # turn to "81:80" when putting on gamecore
   networks:
    - "mihass-g-net"
   volumes:
-   - ..:/usr/local/apache2/htdocs/
+   - ..:/usr/local/apache2/htdocs/CodeReviewer
 
  mihass-g-server:
    build:
     context: ../
     dockerfile: Docker/ServerDockerfile
    ports:
-    - "8001:8001" # turn to "8081:8080" when putting on gamecore
+    - "443:443" # turn to "8081:8080" when putting on gamecore
    networks:
     - "mihass-g-net"
    volumes:
@@ -29,7 +29,7 @@ services:
  mihass-g-mysql:
   image: mysql:5.7.22
   ports:
-    - "8017:3306"
+    - "3306:3306"
   command: --innodb_use_native_aio=0
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7
