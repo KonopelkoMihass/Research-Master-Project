@@ -17,6 +17,12 @@ class Net
 	connect ()
 	{
 		var that = this;
+
+		if(this.host !=="localhost")
+		{
+			this.port = 8080;
+		}
+		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/CRServer");
 		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/CRServer");
 
 		this.ws.onopen = function()
