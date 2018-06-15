@@ -18,7 +18,7 @@ services:
     context: ../
     dockerfile: Docker/ServerDockerfile
    ports:
-    - "8001:8080" # turn to "8081:8080" when putting on gamecore
+    - "8001:8001" # turn to "8081:8080" when putting on gamecore
    networks:
     - "mihass-g-net"
    volumes:

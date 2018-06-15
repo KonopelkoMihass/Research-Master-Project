@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 # Make port 8080 available to the world outside this container
 # turn to 8080 when putting on gamecore
-EXPOSE 8080
+EXPOSE 8002
 
 # Run app.py when the container launches
 # Note -u means unbuffered, otherwise there is no output to the logs
