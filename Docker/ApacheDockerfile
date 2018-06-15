@@ -8,5 +8,13 @@ RUN mkdir /usr/local/apache2/htdocs/CodeReviewer
 #Overwrite the "it works" page
 ADD Docker/blank-index.html /usr/local/apache2/htdocs/index.html
 
+ADD ./js /usr/local/apache2/htdocs/CodeReviewer
+ADD ./py /usr/local/apache2/htdocs/CodeReviewer
+ADD ./modals /usr/local/apache2/htdocs/CodeReviewer
+ADD ./resources /usr/local/apache2/htdocs/CodeReviewer
+ADD ./views /usr/local/apache2/htdocs/CodeReviewer
+ADD ./index.html /usr/local/apache2/htdocs/CodeReviewer
+
+
 # Make port 80 available to the world outside this container
 EXPOSE 8011
