@@ -11,7 +11,7 @@ services:
   networks:
    - "mihass-g-net"
   volumes:
-   - ..:/usr/local/apache2/htdocs/CodeReviewer
+   - ..:/usr/local/apache2/htdocs/
 
  mihass-g-server:
    build:
