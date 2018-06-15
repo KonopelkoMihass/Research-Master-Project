@@ -55,7 +55,7 @@ class App
 		this.submissions = new Submissions();
 		this.standards = new Standards();
 
-		this.net.setHost(location.hostname, 8080); // replace with 8080 when putting on gamecore
+		this.net.setHost(location.hostname, 8001); // replace with 8080 when putting on gamecore
 		this.net.connect();
 
 		//add views
