@@ -238,27 +238,33 @@ class AssignmentsManager:
 			if n.get_text() == "":
 				continue
 
+
 			if n.name == "h1":
 				if skip_title_h1:
 					skip_title_h1 = False
 					continue
 				standard_bit["category"] = n.get_text().rstrip()
+				print("--", standard_bit["category"])
 
 			if n.name == "h2":
 				standard_bit["sub_category"] = n.get_text().rstrip()
+				print("----", standard_bit["sub_category"])
 				standard_bit["description"] = ""
 				for elem in n.next_siblings:
-					if elem.name == 'p':
+					print("[", elem.name, "]")
+					if elem.name == 'p' or elem.name == 'ul':
 						if elem.get_text() != "":
 							description = elem.get_text()
 							description.replace("┬а", " ")
 							standard_bit["description"] += description + "<br>"
-
-					if elem.name and elem.name.startswith('h'):
+					else:
 						category = standard_bit["category"]
-						standards.append(standard_bit)
 						standard_bit = {"category":category}
+						standards.append(standard_bit)
+
+
 						break
+
 
 		try:
 			for standard in standards:
