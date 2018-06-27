@@ -30,8 +30,15 @@ class AssignmentsTeacherController
 		modalData.modal.style.display = "block";
 
 		//Set minimum datetime and current datetime to now.
-		var today = new Date().toISOString();
+		var date = new Date()
+		var today = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
 		today = today.substr(0, today.lastIndexOf("."));
+
+		//var today = new Date().toISOString();
+		//today = today.substr(0, today.lastIndexOf("."));
+
+
+
 
 
 		document.getElementById("assignment-submission-deadline").min = today;
