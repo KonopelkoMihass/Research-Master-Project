@@ -537,7 +537,7 @@ class CodeViewController
 		this.codeElementIdReviewed = id;
 
         var sideModal = document.getElementById("code-review-side-modal");
-        sideModal.style.width = "45%";
+        sideModal.style.width = "30%";
 
         // Make an X on a side view to close the side modal
         document.getElementById("code-review-side-modal-close").addEventListener("click", function () {

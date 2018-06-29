@@ -5,3 +5,4 @@ selenium==3.7.0
 unittest2py3k==0.5.1
 pytest==3.2.5
 beautifulsoup4
+pytz
