@@ -1,4 +1,6 @@
 import datetime
+import pytz
+
 
 #from user_manager import UserManager
 from assignments_manager import AssignmentsManager
@@ -18,7 +20,7 @@ class CheckAssignmentStage():
 
         update_clients = False
 
-        #Thsi method returns a message pack (type, data).  We need data
+        #This method returns a message pack (type, data).  We need data
         assignments = self.assignments_manager.get_assignments()[1]
         for assignment in assignments:
             status = assignment["status"]
@@ -28,24 +30,25 @@ class CheckAssignmentStage():
 
             deadline_time = datetime.datetime.strptime(deadline_string, '%Y-%m-%dT%H:%M')
             review_till_time = datetime.datetime.strptime(review_till_string, '%Y-%m-%dT%H:%M')
+            current_time = datetime.datetime.now(pytz.timezone('Europe/Dublin')).replace(tzinfo=None)
 
 
             if status == "normal":
-                time_remaining = deadline_time - datetime.datetime.now()
+                time_remaining = deadline_time - current_time
                 if time_remaining < datetime.timedelta(hours=1):
                     status = "submission_soon"
                     #SEND EMAIL
                     pass
 
             elif status == "review":
-                time_remaining = review_till_time - datetime.datetime.now()
+                time_remaining = review_till_time - current_time
                 if time_remaining < datetime.timedelta(hours=1):
                     status = "review_end_soon"
                     # SEND EMAIL
                     pass
 
             elif status == "submission_soon":
-                time_remaining = deadline_time - datetime.datetime.now()
+                time_remaining = deadline_time - current_time
                 if time_remaining < datetime.timedelta(hours=0):
                     status = "review"
                     self.reviewer_assigning(assignment)
@@ -55,7 +58,7 @@ class CheckAssignmentStage():
                     pass
 
             elif status == "review_end_soon":
-                time_remaining = review_till_time - datetime.datetime.now()
+                time_remaining = review_till_time - current_time
                 if time_remaining < datetime.timedelta(hours=0):
                     status = "completed"
                     update_clients = True
