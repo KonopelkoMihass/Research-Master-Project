@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8" />
+<title>PrismJS Demo and line Selector</title>
+<script src="prism.js"></script>
+<script src="ViewAndControllerCode.js"></script>
+</head>
+ <body onload="main()">
+
+ <div class="code-block">
+ <pre id="precode-area" class="line-numbers">
+ <code id="code-review" class="language-cpp"></code>
+ </pre>
+ </div>
+
+ <div class="review-block">
+  <table class = "comments-table" id="review-data-table">
+        <tr>
+          <th>Location</th>
+          <th>Error</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+  </table>
+ </div>
+
+
+<button id="generate-review-json">Generate Review JSON</button>
+
+
+
+
+<link rel="stylesheet" href="prism.css">
+<link rel="stylesheet" href="test.css">
+</body>
+</html>

@@ -10,6 +10,16 @@ class ViewManager
 		this.VIEW = {
 			SIGNIN: "signin",
 			SIGNUP: "signup",
+			PROFILE: "profile",
+			ASSIGNMENTS_TEACHER: "assignments-teacher",
+			ASSIGNMENTS_STUDENT: "assignments-student",
+			FEEDBACK: "feedback",
+			PERFORM_REVIEW_STUDENT: "perform-review-student",
+			SEE_SUBMISSIONS_STUDENT: "see-submissions-student",
+			SEE_SUBMISSIONS_TEACHER: "see-submissions-teacher",
+			SEE_STANDARDS_STUDENT: "see-standards-student",
+			SEE_STANDARDS_TEACHER: "see-standards-teacher",
+			CODE_VIEW:"code-view"
 		}
 	}
 
@@ -27,7 +37,7 @@ class ViewManager
 
 		while(i < this.views.length && !viewFound)
 		{
-			if(this.views[i].title==title)
+			if(this.views[i].title===title)
 			{
 				viewFound=true;
 				this.nextView = this.views[i];
@@ -37,7 +47,7 @@ class ViewManager
 
 		if(viewFound)
 		{
-			if(this.currentView!=undefined)
+			if(this.currentView!==undefined)
 			{
 				console.log("Change view from:", this.currentView.title);
 				this.currentView.hide();

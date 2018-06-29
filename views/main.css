@@ -16,3 +16,189 @@ input
 {
 	border-width: 2px;
 }
+
+/******************************************************/
+/****************MENU TAB PANEL************************/
+/******************************************************/
+.menu-panel
+{
+	border: 1px solid;
+    font-size: 0;
+    margin: 0 auto;
+	position: sticky;
+	text-align: center;
+    width: 80%;
+}
+
+
+
+
+/******************************************************/
+/****************TOOLTIP STYLE*************************/
+/******************************************************/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px  black;
+
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 97%;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 0%;
+    margin-left: 0px;
+    opacity: 0;
+    transition: opacity .3s;
+    font-size: calc(8px + 0.5vw);
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  	transition-delay: 1s;
+    visibility: visible;
+    opacity: 1;
+}
+
+/******************************************************/
+/**************ASSIGNMENT TABLE************************/
+/******************************************************/
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    word-break:break-all;
+}
+
+table tr:hover {background-color:#f5f5f5;}
+
+
+.view-name-box
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 1%;
+
+    font-size: calc(14px + 0.5vw);
+    text-align: center;
+
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 5%;
+
+    overflow:auto;
+}
+
+.box
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 1%;
+
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 13%;
+    bottom: 15%;
+    overflow:auto;
+}
+
+
+.box-left
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 1%;
+
+	width: 45%;
+    position: absolute;
+    top: 13%;
+    bottom: 15%;
+    overflow:auto;
+}
+
+.code-block-centralised
+{
+    width: 80%;
+    left: 8%;
+}
+
+.box-right
+{
+	border-style: solid;
+	border-width: 1px;
+	margin: 2%;
+	padding: 0;
+	width: 45%;
+    position: absolute;
+    right: 0;
+    top: 13%;
+    bottom: 15%;
+    overflow:auto;
+}
+
+
+.add-assignment-button
+{
+    position:relative;
+    display: block;
+    float: left;
+}
+
+/******************************************************/
+/**************PICTURE BUTTONS*************************/
+/******************************************************/
+.picture-button
+{
+    width:50px;
+    height:50px;
+}
+
+button
+{
+	background-color: white;
+	border: 1px solid;
+	box-shadow: 1px 1px black;
+	cursor: pointer;
+    display: inline-block;
+	font-size: calc(9px + 0.5vw);
+    margin: 0.4% 0.1%;
+    padding: .2% 4%;
+}
+button:hover
+{
+	background-color: gray;
+    color: white;
+    font-weight: bold;
+}

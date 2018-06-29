@@ -19,21 +19,19 @@ class SignupController
 	signup(e)
 	{
 		var email = document.getElementById("signup-email").value;
-		var githubUsername = document.getElementById("signup-github-username").value;
-		var githubEmail = document.getElementById("signup-github-email").value;
+		var teamName = "none";
 		var name = document.getElementById("signup-name").value;
     	var surname = document.getElementById("signup-surname").value;
 		var noun = document.getElementById("signup-noun").value;
 		var password = document.getElementById("signup-password").value;
 		var passwordConfirm = document.getElementById("signup-confirm-password").value;
 
-		if (email !== ""  && githubUsername !== "" && githubEmail !== "" && name !== "" && surname !== "" && noun !== "" && password !== "" && passwordConfirm !== "")
+		if (email !== "" && teamName !== "" && name !== "" && surname !== "" && noun !== "" && password !== "" && passwordConfirm !== "")
 		{
 			if (password === passwordConfirm)
 			{
-				this.model.signup(email, githubUsername, githubEmail, name, surname, noun, password);
+				this.model.signup(email, teamName, name, surname, noun, password);
 				this.cleanSignup();
-
 			}
 
 			else
@@ -45,6 +43,9 @@ class SignupController
 		{
 			this.showError("You did not fill out everything!");
 		}
+
+
+
 	}
 
 
@@ -52,14 +53,12 @@ class SignupController
 	{
 		// Clean values
 		document.getElementById("signup-email").value = "";
-		document.getElementById("signup-github-username").value = "";
-		document.getElementById("signup-github-email").value = "";
+		document.getElementById("signup-team-name").value = "";
 		document.getElementById("signup-name").value = "";
 		document.getElementById("signup-surname").value = "";
 		document.getElementById("signup-noun").value = "";
 		document.getElementById("signup-password").value = "";
 		document.getElementById("signup-confirm-password").value = "";
-
 	}
 
 	showError(errMessage)

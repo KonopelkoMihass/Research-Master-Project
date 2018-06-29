@@ -12,12 +12,18 @@ class Net
 	{
 		this.host = ip;
 		this.port = port;
+
+		if (this.host === "192.168.99.100")
+		{
+			this.port = 8001;
+		}
 	}
 
 	connect ()
 	{
 		var that = this;
-		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/wstest");
+
+		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/CRServer");
 
 		this.ws.onopen = function()
 		{

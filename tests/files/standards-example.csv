@@ -1,0 +1,7 @@
+category_name	category_description	subcategory_name	subcategory_description
+Spelling & Language	Every code should be grammatically correct and use English language only.		
+		English	Allow only English language.
+		Grammar	No gramatical errors
+		No Foul Language	No cursing in the code.
+Code Formatting	C++ code should be formatted in a specific way		
+		Brackets	{}

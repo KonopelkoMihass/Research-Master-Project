@@ -6,24 +6,53 @@ class User extends Model
     {
         super();
         this.email = "";
-        this.githubUsername = "";
-        this.githubEmail = "";
         this.name = "";
         this.surname = "";
         this.noun = "";
+        this.role = "";
+        this.id = ""
     }
 
-    signup(email, githubUsername, githubEmail, name, surname, noun, password)
+
+    update(data, messageType)
+    {
+      if (data !== "" && !Number.isInteger(data))
+      {
+          if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL ||
+                messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
+            {
+                this.setData(data);
+
+                app.assignments.getAllAssignment();
+                app.standards.getStandards();
+
+                if (data.role === "student")
+                {
+                    app.submissions.getPersonalSubmissions(data.id);
+                }
+                else
+                {
+                    app.submissions.getAllSubmissions();
+                }
+
+            }
+      }
+
+      this.notify(messageType);
+    }
+
+
+    signup(email, teamName, name, surname, noun, password)
     {
         var userData = {};
 
         userData.email = email;
-        userData.github_username = githubUsername;
-        userData.github_email = githubEmail;
+        userData.team_name = teamName;
         userData.name = name;
         userData.surname = surname;
         userData.noun = noun;
         userData.password = password;
+        userData.role = "student";
 
         app.net.sendMessage("signup", userData);
     }
@@ -40,10 +69,10 @@ class User extends Model
     setData(data)
     {
          this.email = data.email;
-         this.githubUsername =  data.githubUsername;
-         this.githubEmail =  data.githubEmail;
          this.name =  data.name;
          this.surname =  data.surname;
          this.noun =  data.noun;
+         this.role = data.role;
+         this.id = data.id;
     }
 }

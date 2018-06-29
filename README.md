@@ -10,9 +10,44 @@ $ cd Docker
 $ docker-compose build 
 $ docker-compose up
 
-Then go to http://localhost/ProjectOrganiser/ (if you use Docker for Windows/MacOS) or an IP stated when you start docker-toolbox.
+Then go to http://localhost/MihassGProject/ (if you use Docker for Windows/MacOS) or an IP stated when you start docker-toolbox.
 
 To stop docker:
 
 # cd Docker 
 # docker-compose stop
+
+
+Features Completed:
+-Signin
+-Signup
+
+
+To Do:
+-Navigation Bar***
+-Submit Assignment
+    -Selector***
+    -Submission Window (1)***
+-Submit Review
+    -Select Mode*
+    -Review Mode (3 + spike)***
+
+-Read Feedback**
+-Review Selector**
+-Space Game*
+-View Review**
+-Profile
+    -Skill Window
+    -Statistics
+
+
+-Teacher System side
+    -Add New Standards**
+    -Add/Modify Assignment**
+    -Review Assignment*
+
+- Sample code
+//Create a modal
+var modalData = app.uiFactory.createModal("id", "title");
+document.body.appendChild(modalData.modal);
+modalData.modal.style.display = "block";

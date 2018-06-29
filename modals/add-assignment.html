@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<div>
+  <div> <!--NAME TEXTBOX-->
+    <label>Name</label>
+    <br>
+    <input type="textbox" id="assignment-name" placeholder="Assignment name">
+  </div>
+
+  <div> <!--DEADLINE DATE-->
+    <label>Submission Deadline</label>
+    <br>
+    <input id="assignment-submission-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
+  </div>
+
+   <div> <!--DEADLINE DATE-->
+    <label>Review Deadline</label>
+    <br>
+    <input id="assignment-review-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
+  </div>
+
+  <div> <!--DESCRIPTION TEXTAREA-->
+    <label>Description</label>
+    <br>
+    <textarea rows="15" cols="50" id="assignment-description" style="resize:none" placeholder="Insert description here!"></textarea>
+  </div>
+
+   <div> <!--REVIEWER COUNT TEXTBOX-->
+    <label>Minimum reviewers per submission</label>
+    <br>
+    <input type="number" id="assignment-total-reviewers" min="1" value="1">
+  </div>
+
+
+</div>

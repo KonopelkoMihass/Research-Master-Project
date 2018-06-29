@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<div>
+  <div> <!--Description TEXTBOX-->
+   <p id="assignment-description">There will be the description data from the assignment</p>
+  </div>
+
+  <hr>
+
+  <div> <!--DEADLINE DATE-->
+    <label id="assignment-deadline">Deadline: </label>
+  </div>
+
+  <hr>
+
+  <div> <!--FILE UPLOAD BOX-->
+    <form id="upload" action="submit-assignment.html" method="POST" enctype="multipart/form-data">
+      <fieldset>
+        <legend class="filebox-legend">File Upload</legend>
+
+        <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+
+        <div>
+          <input type="file" id="file-select" name="fileselect[]" multiple="multiple" style="display: none;" />
+          <div id="file-drag">drop files here</div>
+        </div>
+
+
+        <div id="submit-button">
+	      <button type="submit">Upload Files</button>
+        </div>
+
+        <div id="messages"> </div>
+     </fieldset>
+    </form>
+    <fieldset>
+        <legend class="filebox-legend">Files Uploaded</legend>
+        <div id="files-loaded">
+
+        </div>
+
+    </fieldset>
+
+
+  </div>
+</div>

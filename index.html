@@ -3,38 +3,124 @@
 <html>
   <head>
     <title>Ankylo</title>
+    <script src = "js/App.js"></script>
 
     <!--Content Management-->
     <script src = "js/AudioManager.js"></script>
-
-    <script src = "js/UIFactory.js"></script>
-    <script src = "js/Model.js"></script>
-    <script src = "js/App.js"></script>
-    <script src = "js/View.js"></script>
-    <script src = "js/User.js"></script>
-    <script src = "js/ViewManager.js"></script>
     <script src = "js/TemplateManager.js"></script>
+    <script src = "js/ModalContentManager.js"></script>
+
+    <!--Models-->
+    <script src = "js/Model.js"></script>
+    <script src = "js/User.js"></script>
+    <script src = "js/Assignments.js"></script>
+    <script src = "js/Submissions.js"></script>
+    <script src = "js/Standards.js"></script>
+
+
+    <!--View Base-->
+    <script src = "js/View.js"></script>
+    <script src = "js/ViewManager.js"></script>
+
+    <!--Messaging-->
     <script src = "js/MessageHandler.js"></script>
     <script src = "js/Net.js"></script>
 
+    <!--Other-->
+    <script src = "js/UIFactory.js"></script>
+    <script src = "js/Assignment.js"></script>
+    <script src = "js/Submission.js"></script>
+    <script src = "js/Standard.js"></script>
+    <script src = "js/prism.js"></script>
 
+
+    <!--Views-->
     <script src = "views/signin/SigninController.js"></script>
     <script src = "views/signin/SigninView.js"></script>
 
     <script src = "views/signup/SignupController.js"></script>
     <script src = "views/signup/SignupView.js"></script>
 
-    <!-- Aditional Styles -->
+    <script src = "views/profile/ProfileController.js"></script>
+    <script src = "views/profile/ProfileView.js"></script>
 
-    <link rel="stylesheet" href="views/utilities/modal.css">
+    <script src = "views/assignments-teacher/AssignmentsTeacherController.js"></script>
+    <script src = "views/assignments-teacher/AssignmentsTeacherView.js"></script>
+
+    <script src = "views/assignments-student/AssignmentsStudentController.js"></script>
+    <script src = "views/assignments-student/AssignmentsStudentView.js"></script>
+
+    <script src = "views/feedback/FeedbackController.js"></script>
+    <script src = "views/feedback/FeedbackView.js"></script>
+
+    <script src = "views/perform-review-student/PerformReviewStudentController.js"></script>
+    <script src = "views/perform-review-student/PerformReviewStudentView.js"></script>
+
+    <script src = "views/see-submissions-student/SeeSubmissionsStudentController.js"></script>
+    <script src = "views/see-submissions-student/SeeSubmissionsStudentView.js"></script>
+
+    <script src = "views/see-submissions-teacher/SeeSubmissionsTeacherController.js"></script>
+    <script src = "views/see-submissions-teacher/SeeSubmissionsTeacherView.js"></script>
+
+    <script src = "views/see-standards-student/SeeStandardsStudentController.js"></script>
+    <script src = "views/see-standards-student/SeeStandardsStudentView.js"></script>
+
+    <script src = "views/see-standards-teacher/SeeStandardsTeacherController.js"></script>
+    <script src = "views/see-standards-teacher/SeeStandardsTeacherView.js"></script>
+
+    <script src = "views/code-view/CodeViewController.js"></script>
+    <script src = "views/code-view/CodeView.js"></script>
+
+
+    <!-- Additional Styles -->
+    <link rel="stylesheet" href="modals/submit-assignment.css">
+    <link rel="stylesheet" href="views/modal.css">
     <link rel="stylesheet" href="views/main.css">
     <link rel="stylesheet" href="views/signin/signin.css">
     <link rel="stylesheet" href="views/signup/signup.css">
+    <link rel="stylesheet" href="views/profile/profile.css">
+    <link rel="stylesheet" href="views/assignments-teacher/assignments-teacher.css">
+    <link rel="stylesheet" href="views/assignments-student/assignments-student.css">
+    <link rel="stylesheet" href="views/feedback/feedback.css">
+    <link rel="stylesheet" href="views/perform-review-student/perform-review-student.css">
+    <link rel="stylesheet" href="views/see-submissions-student/see-submissions-student.css">
+    <link rel="stylesheet" href="views/see-submissions-teacher/see-submissions-teacher.css">
+    <link rel="stylesheet" href="views/see-standards-student/see-standards-student.css">
+    <link rel="stylesheet" href="views/see-standards-teacher/see-standards-teacher.css">
+    <link rel="stylesheet" href="views/code-view/code-view.css">
+
+
+    <link rel="stylesheet" href="views/prism.css">
 
   </head>
 
 
   <body onload="main()">
+
+    <div class="view-name-box" style="display: none">
+      <label id="view-title"> Title goes here</label>
+    </div>
+
+
+
+    <div id="menupanel-student" style="display: none">
+      <div class="menu-panel">
+        <button id="mps-profile-button">Your Profile</button>
+        <button id="mps-assignments-button">Assignments</button>
+        <button id="mps-submissions-button">Work Submitted</button>
+        <button id="mps-standards-button">Standards</button>
+        <button id="mps-reviews-button">Reviews To Do</button>
+        <button id="mps-feedback-button">Feedback</button>
+      </div>
+    </div>
+
+    <div id="menupanel-teacher" style="display: none">
+      <div class="menu-panel">
+        <button id="mpt-assignments-button">Assignments</button>
+        <button id="mpt-standards-button">Standards</button>
+        <button id="mpt-submissions-button">Submissions</button>
+      </div>
+    </div>
 
   </body>
 

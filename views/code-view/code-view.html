@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="code-view.css">
+</head>
+
+<body>
+
+<div class="box-left" id="code-box">
+<div id="file-select">
+</div>
+<pre id="precode-area" class="line-numbers">
+<code id="code-review" class="language-cpp"></code>
+</pre>
+</div>
+
+<div class="box-right" id="comment-box">
+<div id="code-view-instructions">
+<p>Click a filename to read it.  Click a code element to create an issue or add comment (review mode).  Click that code element again to remove it.  Hovering over a sub-category will prompt the rule for it.</p>
+</div>
+
+
+
+
+<table id="review-data-table">
+<tr>
+<th>Location</th>
+<th>Type</th>
+<th>Content</th>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<div id="submit-review-div">
+     <button id="submit-review" style="left: 37%; position: relative;">Submit Review!</button>
+</div>
+
+</div>
+
+
+
+
+<!-- Side Modal with work to review -->
+<div id="code-review-side-modal" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" id="code-review-side-modal-close">&times;</a>
+      <fieldset class="code-review-sidenav-fieldset">
+        <legend class="code-review-sidenav-legend">What do you want to do?</legend>
+
+          <div id="code-review-sidenav-choice-left">Add a comment</div>
+          <div id="code-review-sidenav-choice-right">State the issue</div>
+
+     </fieldset>
+
+    <fieldset class="code-review-sidenav-fieldset" id="code-review-sidenav-comment">
+        <legend class="code-review-sidenav-legend">Please type your comment below</legend>
+        <input type="textbox" id="code-review-sidenav-comment-textbox">
+
+        <button id="submit-comment" style="left: 37%; position: relative;">Submit Comment</button>
+     </fieldset>
+
+
+
+
+    <fieldset class="code-review-sidenav-fieldset" id="code-review-sidenav-issue-category">
+        <legend class="code-review-sidenav-legend">Select the category of the issue</legend>
+        <div id="code-review-category-select-div">
+
+        </div>
+
+     </fieldset>
+
+    <fieldset class="code-review-sidenav-fieldset" id="code-review-sidenav-issue-subcategory">
+        <legend class="code-review-sidenav-legend">Select the sub-category of the issue</legend>
+        <div id="code-review-subcategory-select-div">
+
+        </div>
+
+     </fieldset>
+
+
+
+
+
+</div>
+
+
+</body>
+</html>
