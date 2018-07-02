@@ -11,7 +11,7 @@ services:
   networks:
    - "mihass-g-net"
   volumes:
-   - ..:/usr/local/apache2/htdocs/CodeReviewer
+   - ..:/usr/local/apache2/htdocs/
 
  mihass-g-server:
    build:
@@ -29,7 +29,7 @@ services:
  mihass-g-mysql:
   image: mysql:5.7.22
   ports:
-    - "8003:3306"
+    - "8017:3306"
   command: --innodb_use_native_aio=0
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7
