@@ -53,6 +53,6 @@ class MessageHandler
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
 		app.standards.update(data, type);
-		app.tracker.update(data, type)
+		app.tracker.trackServerMessages(data, type)
 	}
 }

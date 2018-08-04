@@ -32,6 +32,8 @@ class ViewManager
 	/**@param {string} title**/
 	goToView (title)
 	{
+		var viewManager = this;
+
 		var viewFound=false;
 		var i=0;
 
@@ -51,6 +53,8 @@ class ViewManager
 			{
 				console.log("Change view from:", this.currentView.title);
 				this.currentView.hide();
+				app.tracker.trackViewChanges(viewManager.currentView.title, viewManager.nextView.title);
+				///app.tracker.updateTracks();
 			}
 
 			this.currentView = this.nextView;

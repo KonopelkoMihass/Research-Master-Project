@@ -19,7 +19,6 @@ class AssignmentsStudentController
 
 		var modalBody = app.modalContentManager.getModalContent("submit-assignment");
 		var modalData = app.uiFactory.createModal("add-assignment", "Submit Assignment", modalBody, true);
-		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
 
 		// Find assignment

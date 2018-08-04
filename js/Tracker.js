@@ -6,11 +6,6 @@ class Tracker
         this.logs = [];
         this.userID = "";
 
-
-
-
-
-
         var logEntry = {};
         logEntry.side = "client";
         logEntry.type = "entered the site";
@@ -18,12 +13,18 @@ class Tracker
         this.logs.push(logEntry);
     }
 
-
-    setup()
+    updateTracks()
     {
         var docBodyChildren = document.getElementsByTagName("body")[0].children;
         this.recursiveCheck(docBodyChildren);
     }
+
+    setupWithinModal(body)
+    {
+        var docBodyChildren = body.children;
+        this.recursiveCheck(docBodyChildren);
+    }
+
 
     setUserID (id)
     {
@@ -34,9 +35,8 @@ class Tracker
     {
         var tracker = this;
         //for every element in the body
-        for (var i=0; i<docBodyIn.length; i++)
+        for (var i = 0; i < docBodyIn.length; i++)
         {
-            //if it has at least 1 child
             if(docBodyIn[i].children.length > 0)
             {
                 this.recursiveCheck(docBodyIn[i].children);
@@ -46,8 +46,9 @@ class Tracker
             {
                 try
                 {
-                    if(docBodyIn[i].id !== null)
+                    if(docBodyIn[i].id !== "")
                     {
+                        console.log("TRACK -> ", docBodyIn[i].id);
                         app.uiFactory.assignFuncToButtonViaID(docBodyIn[i].id, function(){tracker.track(this)} );
                     }
                 }
@@ -68,7 +69,7 @@ class Tracker
         this.logs.push(logEntry);
     }
 
-    update(data, messageType)
+    trackServerMessages(data, messageType)
     {
         if (data !== "" && !Number.isInteger(data))
         {
@@ -77,9 +78,9 @@ class Tracker
                 //Get user ID - without it we cannot allocate track logs to someone.
                 this.userID = data.id;
             }
-
-            var logThis = !(messageType ===mesTypes.SAVE_LOGS_FAILED ||
-                            messageType ===mesTypes.SAVE_LOGS_SUCCESSFUL);
+            var mesTypes = app.net.messageHandler.types;
+            var logThis = !(messageType === mesTypes.SAVE_LOGS_FAILED ||
+                            messageType === mesTypes.SAVE_LOGS_SUCCESSFUL);
 
             if (logThis)
             {
@@ -90,7 +91,7 @@ class Tracker
                 logEntry.datetime = new Date();
                 logEntry.messageData = {};
 
-                var mesTypes = app.net.messageHandler.types;
+
                 var saveData = !(messageType === mesTypes.GET_STANDARD_SUCCESSFUL);
 
                 if (saveData)
@@ -103,7 +104,46 @@ class Tracker
         }
     }
 
-    sendToServerAndClear(isPageUnload)
+    trackViewChanges(oldView, newView)
+    {
+        var tracker = this;
+        var logEntry = {};
+        logEntry.side = "client";
+        logEntry.type = "view change";
+        logEntry.datetime = new Date();
+        logEntry.from = oldView;
+        logEntry.to = newView;
+
+        // minor delay to keep the log order.
+        setTimeout(function(){tracker.logs.push(logEntry) }, 200);
+    }
+
+    trackModalCreation(title)
+    {
+        var logEntry = {};
+        logEntry.side = "client";
+        logEntry.type = "modal created";
+        logEntry.datetime = new Date();
+        logEntry.modalName = title;
+        this.logs.push(logEntry);
+    }
+
+    trackModalDestruction(title)
+    {
+        var logEntry = {};
+        logEntry.side = "client";
+        logEntry.type = "modal destroyed";
+        logEntry.datetime = new Date();
+        logEntry.modalName = title;
+        this.logs.push(logEntry);
+    }
+
+
+
+
+
+
+    sendAndClearLogs(isPageUnload)
     {
         if (this.userID !== "")
         {
@@ -116,9 +156,9 @@ class Tracker
                 this.logs.push(logEntry);
             }
 
-            app.net.sendMessage("save_logs", {"user_id":this.userID, "logs": this.logs});
-            console.log("logs", this.logs);
-            this.logs = [];
+            //app.net.sendMessage("save_logs", {"user_id":this.userID, "logs": this.logs});
+            //console.log("logs", this.logs);
+            //this.logs = [];
         }
     }
 }

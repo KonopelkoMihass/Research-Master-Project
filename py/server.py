@@ -19,7 +19,7 @@ connections={}
 
 def globalDaemonMethod():
 	update_clients = planner.update()
-	#print ("Okay - Do we update =", update_clients)
+	#print ("Okay - Do we trackServerMessages =", update_clients)
 	if update_clients == True:
 		for k, item in connections.items():
 			item["socket"].get_assignments()
@@ -283,7 +283,7 @@ if __name__ == '__main__':
 	app.listen(server_port)
 	ioloop = tornado.ioloop.IOLoop.instance()
 
-	# runs a periodic update method to handle time based features.
+	# runs a periodic trackServerMessages method to handle time based features.
 	# go to daemon_update file to add/change the logic
 	# set it to run 300000 for one run each 5 min or so.
 	PeriodicCallback(globalDaemonMethod, 15000).start()

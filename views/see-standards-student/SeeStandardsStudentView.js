@@ -16,7 +16,7 @@ class SeeStandardsStudentView extends View
 		{
 			var table = document.getElementById("standards-st-table");
 
-			// update review section
+			// trackServerMessages review section
 			var rowCount = table.rows.length;
 			while(--rowCount)
 			{

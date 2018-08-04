@@ -83,11 +83,9 @@ class FeedbackView extends View
 
 		var modalBody = app.modalContentManager.getModalContent("select-review-student");
 		var modalData = app.uiFactory.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
-		document.body.appendChild(modalData.modal);
 
 		var modalSpaceGame = app.modalContentManager.getModalContent("rocket-game");
 		var modalSpaceGameData = app.uiFactory.createModal("select-review-student", "Rocket Test", modalSpaceGame, false);
-		document.body.appendChild(modalSpaceGameData.modal);
 
 
 		var submission = app.submissions.submissions[subIndex];

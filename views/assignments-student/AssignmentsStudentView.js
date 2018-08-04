@@ -135,7 +135,7 @@ class AssignmentsStudentView extends View
 			}
 		}
 
-		// update review section
+		// trackServerMessages review section
 		rowCount = reviewDeadlineTable.rows.length;
 		while(--rowCount)
 		{

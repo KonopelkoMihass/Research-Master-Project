@@ -26,7 +26,6 @@ class AssignmentsTeacherController
 		// Init Modal
 		var modalBody = app.modalContentManager.getModalContent("add-assignment");
 		var modalData = app.uiFactory.createModal("add-assignment", "Add Assignment", modalBody, true);
-		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
 
 		//Set minimum datetime and current datetime to now.
@@ -34,18 +33,13 @@ class AssignmentsTeacherController
 		var today = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
 		today = today.substr(0, today.lastIndexOf("."));
 
-		console.log("tooday", today);
-		console.log("another today", (new Date(new Date().getTime()).getTimezoneOffset()).toISOString());
-
-
-
+		console.log("today", today);
 
 		document.getElementById("assignment-submission-deadline").min = today;
 		document.getElementById("assignment-submission-deadline").value = today;
 
 		document.getElementById("assignment-review-deadline").min = today;
 		document.getElementById("assignment-review-deadline").value = today;
-
 
 		var submitBtn = modalData.submit;
 		submitBtn.addEventListener("click", function ()

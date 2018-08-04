@@ -35,18 +35,15 @@ class UIFactory
 		modalBody.name = modalIDPrefix + "-modal-body";
 		modalBody.innerHTML = body;
 
-
 		var submitBtn = document.createElement("Button");
 		submitBtn.className = "button-modal";
 		submitBtn.name = modalIDPrefix + "-close";
 		submitBtn.innerHTML = "Submit";
 
-
 		var cancelBtn = document.createElement("Button");
 		cancelBtn.className = "button-modal";
 		cancelBtn.name = modalIDPrefix + "-close";
 		cancelBtn.innerHTML = "Close";
-
 
 		//Assemble all
 		modal.appendChild(modalSandbox);
@@ -59,10 +56,10 @@ class UIFactory
 		if (includeSubmitButton)
 		{
 			modalBox.appendChild(submitBtn);
+			submitBtn.addEventListener("click", function(){app.tracker.trackModalDestruction(title)});
 		}
 
 		modalBox.appendChild(cancelBtn);
-
 
 		var elementDict = {};
 		elementDict.modal = modal;
@@ -70,16 +67,23 @@ class UIFactory
 
 		var closeButtons = [cancelBtn, modalClose];
 
-
         for (var i = 0; i <closeButtons.length;i++){
 			closeButtons[i].addEventListener("click", function ()
 			{
+				app.tracker.trackModalDestruction(title);
 				var parentNode = modal.parentNode;
 				parentNode.removeChild(modal);
 			});
         }
-
         elementDict.closes = closeButtons;
+
+
+        document.body.appendChild(modal);
+
+
+		app.tracker.trackModalCreation(title);
+		app.tracker.updateTracks();
+
 
 
 		return elementDict;

@@ -2,7 +2,7 @@ var app;
 
 window.onbeforeunload = function()
 {
-	app.tracker.sendToServerAndClear(true);
+	app.tracker.sendAndClearLogs(true);
 }
 
 function main()
@@ -45,7 +45,7 @@ class App
 			app.templateManager.downloadAll(function()	{
 				app.modalContentManager.downloadAll(function () {
 					app.setup();
-					app.tracker.setup();
+					app.tracker.updateTracks();
 		});});});
 	}
 
@@ -307,7 +307,7 @@ getRandomAdjective = function () {
 
 setInterval(function()
 {
-	app.tracker.sendToServerAndClear(false);
+	app.tracker.sendAndClearLogs(false);
 	app.heartbeat()
 }, 20000);
 
