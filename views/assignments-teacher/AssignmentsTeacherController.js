@@ -34,9 +34,8 @@ class AssignmentsTeacherController
 		var today = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
 		today = today.substr(0, today.lastIndexOf("."));
 
-		//var today = new Date().toISOString();
-		//today = today.substr(0, today.lastIndexOf("."));
-
+		console.log("tooday", today);
+		console.log("another today", (new Date(new Date().getTime()).getTimezoneOffset()).toISOString());
 
 
 

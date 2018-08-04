@@ -1,15 +1,21 @@
 var app;
 
+window.onbeforeunload = function()
+{
+	app.tracker.sendToServerAndClear(true);
+}
+
 function main()
 {
 	app = new App();
 }
 
-/**SpaceRocket**/
+
 class App
 {
  	constructor()
  	{
+
 		this.net = new Net();
 
 		this.audioManager = new AudioManager();
@@ -18,6 +24,8 @@ class App
 		this.templateManager = new TemplateManager();
 		this.modalContentManager = new ModalContentManager();
 		this.uiFactory = new UIFactory();
+		this.tracker =  new Tracker(this.net);
+
 
 
 		//load views
@@ -27,15 +35,17 @@ class App
 			this.templateManager.queueTemplate(this.viewManager.VIEW[viewName]);
 		}
 
+
+
 		//load resources
 		this.loadResources();
 
-		var that = this;
 
 		this.audioManager.downloadAll(function() {
-			that.templateManager.downloadAll(function()	{
-				that.modalContentManager.downloadAll(function () {
+			app.templateManager.downloadAll(function()	{
+				app.modalContentManager.downloadAll(function () {
 					app.setup();
+					app.tracker.setup();
 		});});});
 	}
 
@@ -58,9 +68,7 @@ class App
 		this.net.setHost(location.hostname, 80); // replace with 80 when putting on gamecore
 		this.net.connect();
 
-		//add views
 		this.setupViews();
-
 		this.setupMenuPanel();
 
 		this.viewManager.goToView("signin");
@@ -165,7 +173,7 @@ class App
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.PUSH_STANDARD_SUCCESSFUL);
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 
-
+		// Student - Standards
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 	}
 
@@ -297,7 +305,11 @@ getRandomAdjective = function () {
 };
 
 
-setInterval(function(){ app.heartbeat() }, 20000);
+setInterval(function()
+{
+	app.tracker.sendToServerAndClear(false);
+	app.heartbeat()
+}, 20000);
 
 
 

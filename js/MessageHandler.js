@@ -32,7 +32,11 @@ class MessageHandler
 			PUSH_STANDARD_FAILED:"push_standard_failed",
 
 			GET_STANDARD_SUCCESSFUL:"get_standard_successful",
-			GET_STANDARD_FAILED:"get_standard_failed"
+			GET_STANDARD_FAILED:"get_standard_failed",
+
+            SAVE_LOGS_SUCCESSFUL:"save_logs_successful",
+			SAVE_LOGS_FAILED:"save_logs_failed",
+
 		};
 	}
 
@@ -49,5 +53,6 @@ class MessageHandler
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
 		app.standards.update(data, type);
+		app.tracker.update(data, type)
 	}
 }

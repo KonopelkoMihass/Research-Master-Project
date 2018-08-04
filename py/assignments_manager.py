@@ -8,9 +8,9 @@ import json
 
 
 class AssignmentsManager:
-	def __init__(self):
+	def __init__(self, database_manager):
 		print("AssignmentsManager: __init__")
-		self.database_manager = DatabaseManager()
+		self.database_manager = database_manager
 		self.email_system = EmailSystem()
 
 

@@ -62,3 +62,11 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Standards` (`category`, `sub_category` ASC);
+
+
+-- Table `ProjectOrganiser`.`Logs`
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Logs` (
+  `user_id` INT NOT NULL ,
+  `logs` MEDIUMTEXT);
+
+CREATE UNIQUE INDEX `user_id_UNIQUE` ON `ProjectOrganiser`.`Logs` (`user_id` ASC);

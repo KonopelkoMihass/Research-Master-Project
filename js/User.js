@@ -10,7 +10,8 @@ class User extends Model
         this.surname = "";
         this.noun = "";
         this.role = "";
-        this.id = ""
+        this.id = "";
+        this.log = "";
     }
 
 

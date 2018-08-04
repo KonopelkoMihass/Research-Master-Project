@@ -225,8 +225,6 @@ class DatabaseManager:
 		self.replace_into_table("Submissions", submission)
 
 
-
-
 	def update_review(self, data):
 		print("update_review")
 		connector = self.cnxpool.get_connection()
@@ -239,7 +237,6 @@ class DatabaseManager:
 		submission = cursor.fetchall()[0]
 		cursor.close()
 		connector.close()
-
 
 		feedbacks = json.loads(submission["feedbacks"])
 
@@ -257,10 +254,22 @@ class DatabaseManager:
 		self.replace_into_table("Submissions", submission)
 
 
+	def get_logs_for_user(self,id):
+		print("get_logs_for_user")
+		connector = self.cnxpool.get_connection()
+
+		logs = []
+
+		# first we need to get the submission
+		cursor = connector.cursor(dictionary=True)
+		query = ("SELECT * FROM Logs WHERE Logs.user_id=" + str(id))
+		cursor.execute(query)
+		data = cursor.fetchall()
+		if data != []:
+			logs = json.loads(data[0]["logs"])
 
 
-
-
+		return logs
 
 
 

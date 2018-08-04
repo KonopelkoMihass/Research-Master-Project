@@ -96,4 +96,11 @@ class UIFactory
 
 		elementToInsertInto.appendChild(tooltipSpan);
 	}
+
+	assignFuncToButtonViaID(elementID, func)
+	{
+        var elem = document.getElementById(elementID);
+        elem.addEventListener("click", func);
+    }
+
 }

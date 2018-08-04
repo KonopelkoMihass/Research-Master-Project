@@ -1,9 +1,9 @@
 from database_manager import DatabaseManager
 
 class UserManager:
-	def __init__(self):
+	def __init__(self, database_manager):
 		print("UserManager: __init__")
-		self.database_manager = DatabaseManager()
+		self.database_manager = database_manager
 
 	def signin(self, message_data):
 		"""Returns message type : string"""

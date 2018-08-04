@@ -10,8 +10,9 @@ from database_manager import DatabaseManager
 
 class CheckAssignmentStage():
     def __init__(self):
-        self.assignments_manager = AssignmentsManager()
         self.database_manager = DatabaseManager()
+        self.assignments_manager = AssignmentsManager(self.database_manager)
+
 
     def update(self):
         #print("##########################################")

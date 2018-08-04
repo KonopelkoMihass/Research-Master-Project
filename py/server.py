@@ -1,8 +1,10 @@
 import tornado
 import json
 
+from database_manager import DatabaseManager
 from user_manager import UserManager
 from assignments_manager import AssignmentsManager
+
 import planner
 
 
@@ -77,6 +79,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		elif message_type == "get_standard":
 			self.get_standard()
+
+		elif message_type == "save_logs":
+			self.save_logs(message_data)
+
+
+
 
 
 
@@ -166,11 +174,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			else:
 				item["socket"].get_submissions(item["user_data"]["id"])
 
-
 	def get_assignments(self):
 		message = assignments_manager.get_assignments()
 		self.send_message(message[0], message[1])
-
 
 	def submit_assignment(self, message_data):
 		message = assignments_manager.submit_assignment(message_data)
@@ -181,8 +187,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 				item["socket"].get_all_submissions()
 			else:
 				item["socket"].get_submissions(item["user_data"]["id"])
-
-
 
 	def get_submissions(self, user_id):
 		message = assignments_manager.get_submissions(user_id)
@@ -202,17 +206,40 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			else:
 				item["socket"].get_submissions(item["user_data"]["id"])
 
-
 	def push_standard(self, message_data):
 		message = assignments_manager.push_standard(message_data)
 		self.send_message(message[0], message[1])
 		for k, item in connections.items():
 			item["socket"].get_standard()
 
-
 	def get_standard(self):
 		message = assignments_manager.get_standard()
 		self.send_message(message[0], message[1])
+
+
+	def save_logs(self,message_data):
+		user_id = message_data["user_id"]
+
+		saved_logs = database_manager.get_logs_for_user(user_id)
+		saved_logs.extend( message_data["logs"])
+
+		message_data["logs"] = json.dumps(saved_logs)
+
+		type = "save_logs_successful"
+		try:
+			pass
+			database_manager.replace_into_table("Logs", message_data)
+			print("Updated logs Successfully")
+		except:
+			type = "save_logs_failed"
+			print("Updated logs Failed")
+
+
+		self.send_message(type, {})
+
+
+
+
 
 	def on_close(self):
 		print ("WebSocket closed")
@@ -227,8 +254,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			print("Key Error")
 		print("Total Connections: ", len(connections))
 
-
-
 	def send_message(self,type,data):
 		print("send_message")
 		msg=dict()
@@ -238,8 +263,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		self.write_message(msg)
 
 
-user_manager = UserManager()
-assignments_manager = AssignmentsManager()
+database_manager = DatabaseManager()
+user_manager = UserManager(database_manager)
+assignments_manager = AssignmentsManager(database_manager)
+
 
 settings = {
 	'debug':True	#includes autoreload
