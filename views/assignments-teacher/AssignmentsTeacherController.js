@@ -33,11 +33,8 @@ class AssignmentsTeacherController
 		var today = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
 		today = today.substr(0, today.lastIndexOf("."));
 
-		console.log("today", today);
-
 		document.getElementById("assignment-submission-deadline").min = today;
 		document.getElementById("assignment-submission-deadline").value = today;
-
 		document.getElementById("assignment-review-deadline").min = today;
 		document.getElementById("assignment-review-deadline").value = today;
 
@@ -64,10 +61,10 @@ class AssignmentsTeacherController
 
 		var totalColons = deadlineTime.split(":").length-1;
 		// Remove seconds
-		if (totalColons === 2) {
+		if (totalColons === 2)
+		{
 			deadlineTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
 		}
-
 
 		totalColons = reviewTillTime.split(":").length-1;
 		// Remove seconds
@@ -75,10 +72,8 @@ class AssignmentsTeacherController
 			reviewTillTime = reviewTillTime.substring(0, reviewTillTime.lastIndexOf(":"));
 		}
 
-
 		var description = document.getElementById("assignment-description").value;
 		var reviewersAmount = document.getElementById("assignment-total-reviewers").value;
-
 
 		this.model.createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount);
 	}
@@ -87,8 +82,6 @@ class AssignmentsTeacherController
 	{
 		this.model.deleteAssignment(id);
 	}
-
-
 
 	update()
 	{

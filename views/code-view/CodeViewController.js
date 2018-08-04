@@ -27,7 +27,6 @@ class CodeViewController
 		console.log(this.model);
 	}
 
-
 	setupSideModal()
 	{
 		var that = this;

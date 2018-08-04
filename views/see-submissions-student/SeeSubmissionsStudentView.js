@@ -38,15 +38,11 @@ class SeeSubmissionsStudentView extends View
 			}
 
 
-
 			var assignments = app.assignments.assignments;
-
 			for (var i = 0; i < submissions.length; i++)
 			{
 				var row = submissionsTable.insertRow(i + 1);
-
 				var name = "";
-
 				for (var j = 0; j < assignments.length; j++)
 				{
 					if (assignments[j].id === submissions[i].assignmentID){
@@ -59,6 +55,7 @@ class SeeSubmissionsStudentView extends View
 				cell0.id = "see-submission-student#" + submissions[i].id;
 				cell0.addEventListener("click", function()
 				{
+					app.tracker.track(this);
 					app.submissions.codeViewState = "Clear";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = -1;

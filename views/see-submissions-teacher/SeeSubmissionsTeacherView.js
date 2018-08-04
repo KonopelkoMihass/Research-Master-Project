@@ -4,7 +4,6 @@ class SeeSubmissionsTeacherView extends View
 	constructor(controller)
 	{
 		super();
-
 		this.title = app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER;
 		this.controller = controller;
 		this.setup();
@@ -26,34 +25,29 @@ class SeeSubmissionsTeacherView extends View
 		var rowIndex = 0;
 		for (var i = 0; i < submissions.length; i++) {
 			var submission = submissions[i];
-
-
             if (submission.assignmentID === assignmentID)
             {
 				var row = submissionsTable.insertRow(rowIndex + 1);
 				var cell0 = row.insertCell(0);
 				cell0.innerHTML = submissions[i].userData.name + " " + submissions[i].userData.surname;
 				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submissions[i].iteration;
-
-				cell0.addEventListener("click", function () {
+				cell0.addEventListener("click", function ()
+				{
+					app.tracker.track(this);
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
 					app.submissions.iterationReviewed = parseInt(this.id.split('#')[2]);
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 
-
 					var rowCount = submissionsTable.rows.length;
 					while (--rowCount) {
 						submissionsTable.deleteRow(rowCount);
 					}
-
-
-
 				});
 
-
 				var cell1 = row.insertCell(1);
+
 				// Check if feedback was already submitted by this user.
 				var feedbacks = submission.feedbacks;
 				for (var j = 0; j < feedbacks.length; j++)
@@ -67,13 +61,8 @@ class SeeSubmissionsTeacherView extends View
 					}
 				}
 
-
-
-
-
 				rowIndex++;
 			}
-
 		}
 	}
 
@@ -94,16 +83,15 @@ class SeeSubmissionsTeacherView extends View
             var assignments = app.assignments.assignments;
 			var submissions = model.submissions;
 
-
-            for (var i = 0; i < assignments.length; i++) {
+            for (var i = 0; i < assignments.length; i++)
+            {
             	var hasSubmissions = false;
-
             	if (assignments[i].status === "completed")
             	{
 					for (var j = 0; j < submissions.length; j++) {
 						if (assignments[i].id === submissions[j].assignmentID)
 						{
-						hasSubmissions = true;
+							hasSubmissions = true;
 						}
 					}
 
@@ -115,10 +103,10 @@ class SeeSubmissionsTeacherView extends View
 						cell0.innerHTML = assignments[i].name;
 						cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
 						cell0.addEventListener("click", function () {
+							app.tracker.track(this);
 							view.showSubmissions(parseInt(this.id.split("#")[1]));
 						});
 					}
-
 				}
             }
         }

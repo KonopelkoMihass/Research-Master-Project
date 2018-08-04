@@ -59,17 +59,15 @@ class PerformReviewStudentView extends View
 						var cell0 = row.insertCell(0);
 						cell0.innerHTML = assignments[i].name;
 						cell0.id = "see-assignment-submissions-student#" + assignments[i].id;
-						cell0.addEventListener("click", function () {
-
+						cell0.addEventListener("click", function ()
+						{
+							app.tracker.track(this);
 							if (view.selectedSub !== "")
 							{
 								view.selectedSub.classList.remove("sub-selected");
 							}
-
 							this.classList.add("sub-selected");
 							view.selectedSub = this;
-
-
 							view.showSubmissions(parseInt(this.id.split("#")[1]));
 						});
 					}
@@ -111,7 +109,10 @@ class PerformReviewStudentView extends View
 				var cell0 = row.insertCell(0);
 				cell0.innerHTML = "Submission No. " + (rowIndex+1);
 				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submission.iteration;
-				cell0.addEventListener("click", function () {
+				cell0.addEventListener("click", function ()
+				{
+					app.tracker.track(this);
+
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
@@ -119,20 +120,16 @@ class PerformReviewStudentView extends View
 
 					app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 
-
 					var rowCount = submissionsTable.rows.length;
 					while (--rowCount) {
 						submissionsTable.deleteRow(rowCount);
 					}
 				});
 
-
 				var cell1 = row.insertCell(1);
-
 
 				// Check if feedback was already submitted by this user.
 				// if he is an owner - then he is the one to see these.
-
 				for (var k = 0;k < submission.feedbacks.length; k++)
 				{
 					if (submission.feedbacks[k].iteration_submitted === submission.iteration)
@@ -141,13 +138,9 @@ class PerformReviewStudentView extends View
 						img.src = "resources/images/tick.png";
 						img.className = "picture-button";
 						cell1.appendChild(img);
-
 					}
 
 				}
-
-
-
 				rowIndex++;
 			}
 

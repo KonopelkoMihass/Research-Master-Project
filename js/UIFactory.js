@@ -76,15 +76,10 @@ class UIFactory
 			});
         }
         elementDict.closes = closeButtons;
-
-
         document.body.appendChild(modal);
-
 
 		app.tracker.trackModalCreation(title);
 		app.tracker.updateTracks();
-
-
 
 		return elementDict;
 	}

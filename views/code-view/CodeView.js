@@ -12,9 +12,7 @@ class CodeView extends View
 
 	onNotify (model, messageType)
 	{
-
 	}
-
 
 	setupView()
 	{
@@ -22,24 +20,20 @@ class CodeView extends View
 		this.controller.prepareCodeHTMLs();
 		this.controller.setupSideModal();
 
-
 		var state = this.controller.model.codeViewState;
-
 		if (state === "Clear")
 		{
 			this.controller.setupFileSelector(false);
 			this.controller.setViewAsClear();
 		}
-
-		if (state === "Comments")
+		else if (state === "Comments")
 		{
 			this.controller.retrieveAnyPreviousReviewData();
 			this.controller.setupFileSelector(false);
 			this.controller.allowReview(false);
 			this.controller.setReviewData();
 		}
-
-		if (state === "Review")
+		else if (state === "Review")
 		{
 			this.controller.retrieveAnyPreviousReviewData();
 			this.controller.setupFileSelector(true);
@@ -50,14 +44,9 @@ class CodeView extends View
 		this.controller.fileButtonPointer.click();
 	}
 
-
-
-
 	show()
 	{
-
 		this.setupView();
-
 		super.show();
 	}
 }

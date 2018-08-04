@@ -23,20 +23,16 @@ class SeeStandardsStudentView extends View
 				table.deleteRow(rowCount);
 			}
 
-
 			for (var key in model.standards)
 			{
 				var substandard = model.standards[key];
 
-
 				for(var i =0; i< substandard.length; i++)
 				{
 					var row = table.insertRow(table.rows.length);
-
 					var cell0 = row.insertCell(0);
 					var cell1 = row.insertCell(1);
 					var cell2 = row.insertCell(2);
-
 
 					cell0.innerHTML = substandard[i].category;
 					cell1.innerHTML = substandard[i].subCategory;

@@ -3,8 +3,9 @@ class AssignmentsStudentController
 	constructor(model)
 	{
 		this.model = model;
-		this.setup();
 		this.filesParsed = {};
+
+		this.setup();
 	}
 
 	setup()
@@ -25,21 +26,18 @@ class AssignmentsStudentController
 		var assignment = undefined;
 		for (var i = 0; i < this.model.assignments.length; i++)
 		{
-			if( this.model.assignments[i].id === id)
+			if (this.model.assignments[i].id === id)
 			{
 				assignment = this.model.assignments[i] ;
 			}
-
 		}
 
 		// Description in modal.
 		document.getElementById("assignment-description").innerText = "Description: " + assignment.description;
 		document.getElementById("assignment-deadline").innerHTML = "Deadline: " + assignment.deadlineDate + " " + assignment.deadlineTime;
 
-
 		// Adds logic to the filedrop area.
 		this.prepareFiledropArea();
-
 
 		var submitBtn = modalData.submit;
 		submitBtn.addEventListener("click", function ()
@@ -49,7 +47,6 @@ class AssignmentsStudentController
 			parentNode.removeChild(modalData.modal);
 
         });
-
 	}
 
 	submitAssignment(assignmentID)
@@ -63,34 +60,35 @@ class AssignmentsStudentController
 
 	}
 
-	uploadFile(name, content){
+	uploadFile(name, content)
+	{
 		this.filesParsed[name] = content;
 		this.updateModal();
 	}
 
-	deleteFile(name){
+	deleteFile(name)
+	{
 		delete this.filesParsed[name];
 		this.updateModal();
-
 	}
 
-	updateModal(){
+	updateModal()
+	{
 		var controller = this;
 		var filesLoadedDiv = document.getElementById("files-loaded");
 		filesLoadedDiv.innerHTML = "";
 
 		for (var key in this.filesParsed)
 		{
-
 			var fileDiv = document.createElement("div");
 			fileDiv.className = "file-uploaded-box";
-
 
 			var deleteSpan = document.createElement("SPAN");
 			deleteSpan.innerHTML = "&#10006;  ";
 			deleteSpan.id =  "delete-file#" + key;
 			deleteSpan.addEventListener("click", function()
 			{
+				app.tracker.track(this);
 				controller.deleteFile(this.id.split("#")[1]);
 			});
 
@@ -99,7 +97,6 @@ class AssignmentsStudentController
 			var nameSpan = document.createElement("SPAN");
 			nameSpan.innerHTML = key;
 			fileDiv.appendChild(nameSpan);
-
 			filesLoadedDiv.appendChild(fileDiv);
 			filesLoadedDiv.appendChild(document.createElement("BR"));
 
@@ -115,13 +112,11 @@ class AssignmentsStudentController
 		var	filedrag = document.getElementById("file-drag");
 		var submitbutton = document.getElementById("submit-button");
 
-
 		var fileDragHover = function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			e.target.className = (e.type === "dragover" ? "hover" : "");
 		};
-
 
 		var fileSelectHandler = function (e) {
 			fileDragHover(e);
@@ -151,7 +146,6 @@ class AssignmentsStudentController
 
 		// file select
 		fileselect.addEventListener("change", fileSelectHandler, false);
-
 		var xhr = new XMLHttpRequest();
 		if (xhr.upload)
 		{

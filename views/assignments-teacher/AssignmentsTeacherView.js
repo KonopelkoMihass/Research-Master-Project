@@ -33,8 +33,6 @@ class AssignmentsTeacherView extends View
 			for (var i = 0; i < assignments.length; i++)
 			{
 				var row = assignmentTable.insertRow(i + 1);
-
-
 				var cell0 = row.insertCell(0);
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(2);
@@ -42,18 +40,17 @@ class AssignmentsTeacherView extends View
 				var cell4 = row.insertCell(4);
 				var cell5 = row.insertCell(5);
 
-
 				var img = document.createElement("IMG");
 				img.src = "resources/images/trash-button.png";
 				img.id = "delete-assignment-button##" + assignments[i].id;
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
+					app.tracker.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					view.controller.deleteAssignment(id);
 				});
 				cell0.appendChild(img);
-
 
 				cell1.innerHTML = assignments[i].name;
 				cell2.innerHTML = assignments[i].description;
@@ -78,8 +75,6 @@ class AssignmentsTeacherView extends View
 					status = "Completed";
 				}
 
-
-
 				cell5.innerHTML = status;
 			}
 
@@ -98,6 +93,7 @@ class AssignmentsTeacherView extends View
 			img.className = "picture-button";
 			img.addEventListener("click", function()
 			{
+				app.tracker.track(this);
 				view.controller.createAddAssignmentModal();
 			});
 			iconCell.appendChild(img);

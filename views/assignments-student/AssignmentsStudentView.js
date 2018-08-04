@@ -31,8 +31,6 @@ class AssignmentsStudentView extends View
 				assignmentTable.deleteRow(rowCount);
 			}
 
-
-
 			var assignments = model.assignments;
 
 			for (var i = 0; i < assignments.length; i++)
@@ -49,10 +47,10 @@ class AssignmentsStudentView extends View
 					dlDate = assignments[i].deadlineDate;
 				}
 
-				else{
+				else
+				{
 					continue;
 				}
-
 
 				var cell0 = row.insertCell(0);
 				var cell1 = row.insertCell(1);
@@ -66,16 +64,14 @@ class AssignmentsStudentView extends View
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
+					app.tracker.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					that.controller.createSubmitAssignmentModal(id);
 				});
 				cell0.appendChild(img);
-
-
 				cell1.innerHTML = assignments[i].name;
 				cell2.innerHTML = dlDate;
 				cell3.innerHTML = dlTime;
-
 				cell4.id = "assignment-submission##" + assignments[i].id;
 				this.tickAreas[assignments[i].id] = cell4;
 			}
@@ -86,7 +82,8 @@ class AssignmentsStudentView extends View
 				messageType === app.net.messageHandler.types.SUBMIT_ASSIGNMENT_SUCCESSFUL)
 		{
 			// Clean all ticks
-			for(var k in this.tickAreas) {
+			for(var k in this.tickAreas)
+			{
 				this.tickAreas[k].innerHTML = "";
 			}
 
@@ -103,9 +100,7 @@ class AssignmentsStudentView extends View
 
 			for(var assID in organisedSubData)
 			{
-
   				var subID = organisedSubData[assID].id;
-
   				var cell = this.tickAreas[assID];
 
   				if(cell !== undefined)
@@ -115,27 +110,18 @@ class AssignmentsStudentView extends View
 					subImg.src = "resources/images/tick.png";
 					subImg.className = "picture-button";
 					subImg.id = "submission-picture##" + subID;
-
-					subImg.addEventListener("click", function()
-					{
-						var id = parseInt(this.id.split('##')[1]);
-						alert("Hi there!");
-					});
-
 					cell.appendChild(subImg);
   				}
 
-  				//Lets see if there is a sell with where I can put a version in?
-				var cell = document.getElementById("assignment-submission-iteration##" + assID);
-  				if (cell)
+  				//Lets see if there is a cell  where I can put a version in?
+				var verCell = document.getElementById("assignment-submission-iteration##" + assID);
+  				if (verCell)
   				{
-  					cell.innerHTML = organisedSubData[parseInt(assID)].iteration;
+  					verCell.innerHTML = organisedSubData[parseInt(assID)].iteration;
 				}
-
 			}
 		}
 
-		// trackServerMessages review section
 		rowCount = reviewDeadlineTable.rows.length;
 		while(--rowCount)
 		{
@@ -146,10 +132,8 @@ class AssignmentsStudentView extends View
 
 		for (var i = 0; i < assignments.length; i++)
 		{
-
-				if (assignments[i].status === "review" || assignments[i].status === "review_end_soon")
+			if (assignments[i].status === "review" || assignments[i].status === "review_end_soon")
 			{
-
 				// Student should not be able to re submit code if he have not submitted it initially.
 				var submissions = app.submissions.submissions;
 				var submissionPresent = false;
@@ -168,7 +152,6 @@ class AssignmentsStudentView extends View
 					continue;
 				}
 
-
 				var row = reviewDeadlineTable.insertRow(reviewDeadlineTable.rows.length);
 
 				var cell0 = row.insertCell(0);
@@ -183,15 +166,14 @@ class AssignmentsStudentView extends View
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
+					app.tracker.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					that.controller.createSubmitAssignmentModal(id);
 				});
 				cell0.appendChild(img);
-
 				cell1.innerHTML = assignments[i].name;
 				cell2.innerHTML = assignments[i].reviewTillDate;
 				cell3.innerHTML = assignments[i].reviewTillTime;
-
 				cell4.id = "assignment-submission-iteration##" + assignments[i].id;
 				cell4.innerHTML = submission.iteration;
 			}

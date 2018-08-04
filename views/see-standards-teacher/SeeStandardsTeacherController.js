@@ -19,13 +19,9 @@ class SeeStandardsTeacherController
 		fileLoad.addEventListener("change", function(){that.addStandard();});
 	}
 
-
-
-
-
 	addStandard()
 	{
-		var that = this;
+		var controller = this;
 
 		var file = document.getElementById("standards-html-file").files[0];
 		var data = [];
@@ -33,16 +29,11 @@ class SeeStandardsTeacherController
 		var reader = new FileReader();
     	reader.onload = function()
 		{
-
     		var file = reader.result;
-
-			console.log("Read HTML: ", file);
-    		that.model.pushStandards(file);
+    		controller.model.pushStandards(file);
     	};
     	reader.readAsText(file);
 	}
-
-
 
 	update()
 	{
