@@ -37,6 +37,8 @@ class MessageHandler
             SAVE_LOGS_SUCCESSFUL:"save_logs_successful",
 			SAVE_LOGS_FAILED:"save_logs_failed",
 
+ 			TEACHER_CREATE_CHALLENGE_SUCCESSFUL:"teacher_create_challenge_successful",
+			TEACHER_CREATE_CHALLENGE_FAILED:"teacher_create_challenge_failed"
 		};
 	}
 

@@ -1,6 +1,7 @@
 import tornado
 import json
 
+from challenges_manager import ChallengesManager
 from database_manager import DatabaseManager
 from user_manager import UserManager
 from assignments_manager import AssignmentsManager
@@ -83,6 +84,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "save_logs":
 			self.save_logs(message_data)
 
+		elif message_type == "create_challenge":
+			self.create_challenge(message_data)
 
 
 
@@ -237,9 +240,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		self.send_message(type, {})
 
-
-
-
+	def create_challenge(self, message_data):
+		challenge = {}
+		challenge["code"] = message_data["code"]
+		challenge["issues"] = json.dumps(message_data["issues"])
+		message = challenges_manager.create_challenge(challenge)
+		self.send_message(message[0], message[1])
 
 	def on_close(self):
 		print ("WebSocket closed")
@@ -266,6 +272,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 database_manager = DatabaseManager()
 user_manager = UserManager(database_manager)
 assignments_manager = AssignmentsManager(database_manager)
+challenges_manager = ChallengesManager(database_manager)
 
 
 settings = {

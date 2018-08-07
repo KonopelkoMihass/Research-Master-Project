@@ -40,5 +40,4 @@ class UserManager:
 			message_type = "signup_failed"
 
 		message = [message_type, data]
-
 		return message

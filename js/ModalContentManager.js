@@ -11,7 +11,8 @@ class ModalContentManager
 	  		"add-assignment",
 			"submit-assignment",
 			"select-review-student",
-			"rocket-game"
+			"rocket-game",
+			"submit-challenge-file"
 		];
 	}
 

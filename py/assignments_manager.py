@@ -238,7 +238,6 @@ class AssignmentsManager:
 			if n.get_text() == "":
 				continue
 
-
 			if n.name == "h1":
 				if skip_title_h1:
 					skip_title_h1 = False
@@ -261,8 +260,6 @@ class AssignmentsManager:
 						category = standard_bit["category"]
 						standard_bit = {"category":category}
 						standards.append(standard_bit)
-
-
 						break
 
 

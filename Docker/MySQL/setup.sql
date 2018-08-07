@@ -70,3 +70,10 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Logs` (
   `logs` MEDIUMTEXT);
 
 CREATE UNIQUE INDEX `user_id_UNIQUE` ON `ProjectOrganiser`.`Logs` (`user_id` ASC);
+
+-- Table `ProjectOrganiser`.`Challenges`
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Challenges` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `code` MEDIUMTEXT NOT NULL,
+  `issues` MEDIUMTEXT,
+  PRIMARY KEY (`id`));

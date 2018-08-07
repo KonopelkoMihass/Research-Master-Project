@@ -64,6 +64,7 @@ class App
 		this.assignments = new Assignments();
 		this.submissions = new Submissions();
 		this.standards = new Standards();
+		this.challenge = new Challenge();
 
 		this.net.setHost(location.hostname, 80); // replace with 80 when putting on gamecore
 		this.net.connect();
@@ -124,7 +125,9 @@ class App
 		var codeView = new CodeView(codeViewController);
 		this.viewManager.addView(codeView);
 
-
+		var createChallengeController = new CreateChallengeController(this.challenge);
+		var createChallengeView = new CreateChallengeView(createChallengeController);
+		this.viewManager.addView(createChallengeView);
 
 
 		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
@@ -238,6 +241,16 @@ class App
 				viewLabel.innerText = "Assignments";
 			}
 		});
+
+		document.getElementById("mpt-challenges-button").addEventListener("click", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.CREATE_CHALLENGE);
+				viewLabel.innerText = "Before it will be a file upload modal";
+			}
+		});
+
+
 
 		document.getElementById("mpt-standards-button").addEventListener("click", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)
