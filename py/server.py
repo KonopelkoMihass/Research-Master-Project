@@ -230,7 +230,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		type = "save_logs_successful"
 		try:
-			pass
 			database_manager.replace_into_table("Logs", message_data)
 			print("Updated logs Successfully")
 		except:

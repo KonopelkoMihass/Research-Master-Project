@@ -138,11 +138,6 @@ class Tracker
         this.logs.push(logEntry);
     }
 
-
-
-
-
-
     sendAndClearLogs(isPageUnload)
     {
         if (this.userID !== "")

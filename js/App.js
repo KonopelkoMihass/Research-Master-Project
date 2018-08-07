@@ -15,8 +15,9 @@ class App
 {
  	constructor()
  	{
-
 		this.net = new Net();
+		this.urlChecker = new URLChecker();
+		this.cookieManager = new CookieManager();
 
 		this.audioManager = new AudioManager();
 
@@ -26,8 +27,6 @@ class App
 		this.uiFactory = new UIFactory();
 		this.tracker =  new Tracker(this.net);
 
-
-
 		//load views
 		for (var viewName in this.viewManager.VIEW)
 		{
@@ -35,12 +34,8 @@ class App
 			this.templateManager.queueTemplate(this.viewManager.VIEW[viewName]);
 		}
 
-
-
 		//load resources
 		this.loadResources();
-
-
 		this.audioManager.downloadAll(function() {
 			app.templateManager.downloadAll(function()	{
 				app.modalContentManager.downloadAll(function () {
@@ -69,11 +64,37 @@ class App
 		this.net.setHost(location.hostname, 80); // replace with 80 when putting on gamecore
 		this.net.connect();
 
+		this.urlChecker.setHost(location.hostname, 80);
+
 		this.setupViews();
 		this.setupMenuPanel();
 
-		this.viewManager.goToView("signin");
+		this.trySignInImmediately();
 	}
+
+	trySignInImmediately()
+	{
+		var signedInData = this.cookieManager.getCookie("SignInCR2");
+
+        if (Object.keys(signedInData).length === 0)
+        {
+            this.viewManager.goToView("signin");
+        }
+
+        else
+		{
+			var email = signedInData.email;
+			var password = signedInData.password;
+			setTimeout(function()
+			{
+				//needed as it sets a first view and a view manager as it is.
+				app.viewManager.goToView("signin");
+				app.user.signin(email, password);
+			}, 100);
+		}
+
+	}
+
 
 	setupViews()
 	{
@@ -184,7 +205,7 @@ class App
 	{
 		var viewLabel = document.getElementById("view-title");
 
-		document.getElementById("mps-profile-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mps-profile-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
@@ -192,7 +213,7 @@ class App
 			}
 		});
 
-		document.getElementById("mps-assignments-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
@@ -200,7 +221,7 @@ class App
 			}
 		});
 
-		document.getElementById("mps-standards-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mps-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
@@ -208,7 +229,7 @@ class App
 			}
 		});
 
-		document.getElementById("mps-reviews-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mps-reviews-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PERFORM_REVIEW_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
@@ -216,7 +237,10 @@ class App
 			}
 		});
 
-		document.getElementById("mps-feedback-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
+
+
+		app.uiFactory.assignFuncToButtonViaID("mps-feedback-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
@@ -224,7 +248,7 @@ class App
 			}
 		});
 
-		document.getElementById("mps-submissions-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mps-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
@@ -234,7 +258,7 @@ class App
 
 
 
-		document.getElementById("mpt-assignments-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mpt-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
@@ -242,7 +266,7 @@ class App
 			}
 		});
 
-		document.getElementById("mpt-challenges-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mpt-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.CREATE_CHALLENGE);
@@ -250,9 +274,7 @@ class App
 			}
 		});
 
-
-
-		document.getElementById("mpt-standards-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mpt-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_TEACHER);
@@ -260,13 +282,15 @@ class App
 			}
 		});
 
-		document.getElementById("mpt-submissions-button").addEventListener("click", function() {
+		app.uiFactory.assignFuncToButtonViaID("mpt-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER);
 				viewLabel.innerText = "Student's Submissions";
 			}
 		});
+
+		app.uiFactory.assignFuncToButtonViaID("mps-signout-button",function(){app.user.signout();});
 	}
 
 	loadResources()

@@ -1,5 +1,4 @@
 FROM httpd:2.4
-
 RUN mkdir /usr/local/apache2/htdocs/CodeReviewer
 
 # https://stackoverflow.com/questions/26504846/copy-directory-to-other-directory-at-docker-using-add-command
@@ -11,3 +10,6 @@ ADD Docker/blank-index.html /usr/local/apache2/htdocs/index.html
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
+
+
+

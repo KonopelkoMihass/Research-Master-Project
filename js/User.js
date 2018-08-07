@@ -23,6 +23,7 @@ class User extends Model
                 messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
             {
                 this.setData(data);
+                app.cookieManager.setCookie("SignInCR2",{email:data.email, password: data.password});
 
                 app.assignments.getAllAssignment();
                 app.standards.getStandards();
@@ -66,6 +67,13 @@ class User extends Model
 
         app.net.sendMessage("signin", userData);
     }
+
+    signout()
+    {
+        app.cookieManager.deleteCookie("SignInCR2");
+        document.location.reload();
+    }
+
 
     setData(data)
     {
