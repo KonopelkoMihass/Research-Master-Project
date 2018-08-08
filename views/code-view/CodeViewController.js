@@ -82,17 +82,12 @@ class CodeViewController
 					that.categoryElemSelected = this;
 					that.categoryElemSelected.classList.add("standard-bit-selected");
 
-
-
                 	var cat = this.id.split("#")[1];
 					var subcategories = standards[cat];
 					for (var i = 0; i < subcategories.length; i++)
 					{
-
 						var subcategorySpan = document.createElement("SPAN");
 						subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
-
-
 						subcategorySpan.innerHTML = subcategories[i].subCategory;
 						subcategorySpan.className = "code-review-select-subcategory-span";
 
@@ -108,15 +103,10 @@ class CodeViewController
 							that.closeSidenavAndSaveTheReview("issue", resultStandard)
 						});
 
-
 						subCategorySelectDiv.appendChild(subcategorySpan)
 					}
                 })
-
-
             }
-
-
             this.setSideModal = false;
         }
 	}
@@ -168,8 +158,8 @@ class CodeViewController
                 var feedbacks = this.model.submissions[i].feedbacks;
                 var iteration = this.model.submissions[i].iteration;
 
+                var currentFeedbacks = [];
 
-                var currentFeedbacks = []; //feedbacks[iteration];
 				for(var j = 0; j < feedbacks.length; j++)
 				{
 					if (feedbacks[j].iteration_submitted === this.model.submissions[i].iteration)
@@ -199,7 +189,6 @@ class CodeViewController
 
 		//Add file button selector
 		var fileSelectDiv = document.getElementById("file-select");
-
 		var openFirstFile = true;
 
 		for (var name in this.parsedCodeHTMLs)
@@ -245,7 +234,7 @@ class CodeViewController
 
 	allowReview(allow)
 	{
-		var that = this;
+		var controller = this;
 		if (!allow)
 		{
 			document.getElementById("submit-review-div").style.display = "none";
@@ -253,7 +242,6 @@ class CodeViewController
 		else
 		{
 			document.getElementById("submit-review-div").style.display = "block";
-
 
 			var removeEventListener = function ()
 			{
@@ -263,15 +251,12 @@ class CodeViewController
             };
 
 
-
-
-
 			document.getElementById("submit-review").addEventListener("click", function ()
 			{
-				that.model.submitReview(that.allFilesReview, that.newReview);
+				controller.model.submitReview(controller.allFilesReview, controller.newReview);
 
-				that.parsedCodeHTMLs = {};
-				that.allFilesReview = {};
+				controller.parsedCodeHTMLs = {};
+				controller.allFilesReview = {};
 
 				if (app.user.role === "teacher")
 				{
@@ -320,7 +305,6 @@ class CodeViewController
 		for (var i = 0; i < ids.length; i++) { // now lets i
 			var id = ids[i];
 
-
 			// Add row to a table
 			var row = reviewTable.insertRow(-1);
 
@@ -346,7 +330,6 @@ class CodeViewController
 			codeSpan.classList.add("selected");
 		}
 	}
-
 
 
 	tweakLineNumbers(filename, pressable)
@@ -406,12 +389,11 @@ class CodeViewController
 			if (token.nodeName === "#text")
 			{
 				var content = token.textContent;
-				content = content.replace(/\s/g, '');
 
 				if (content !== ""){
 					var span = document.createElement("SPAN");
 					span.className = "token";
-					span.innerText = " " + content + " ";
+					span.innerText = "" + content + "";
 					document.getElementById("code-review").replaceChild(span, token);
 					token = span;
 				}

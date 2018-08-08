@@ -236,7 +236,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			type = "save_logs_failed"
 			print("Updated logs Failed")
 
-
 		self.send_message(type, {})
 
 	def create_challenge(self, message_data):

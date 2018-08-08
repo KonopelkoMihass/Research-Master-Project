@@ -1110,11 +1110,12 @@ Prism.hooks.add('complete', function completeHook(env) {
 		var linesNum = match ? match.length + 1 : 1;
 		var lineNumbersWrapper;
 
+
+		//CUSTOM CODE
 		var lines = new Array(linesNum + 1);
-
-
-
 		lines = lines.join('<span name="lineNumSpan"></span>');
+		//CUSTOM CODE
+
 
 		lineNumbersWrapper = document.createElement('span');
 		lineNumbersWrapper.setAttribute('aria-hidden', 'true');
@@ -1124,9 +1125,6 @@ Prism.hooks.add('complete', function completeHook(env) {
 		for (var i = 0; i < lineNumbersWrapper.childNodes.length; i++) {
 			lineNumbersWrapper.childNodes[i].id = i+1;
 		}
-
-
-
 
 		if (pre.hasAttribute('data-start')) {
 			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);

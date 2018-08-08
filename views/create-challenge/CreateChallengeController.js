@@ -417,16 +417,18 @@ class CreateChallengeController
 			if (token.nodeName === "#text")
 			{
 				var content = token.textContent;
-				content = content.replace(/\s/g, '');
 
 				if (content !== ""){
 					var span = document.createElement("SPAN");
 					span.className = "token";
-					span.innerText = " " + content + " ";
+					span.innerText = "" + content + "";
 					document.getElementById("create-challenge-code-review").replaceChild(span, token);
 					token = span;
 				}
 			}
+
+
+
 
 			// Then I add ID for each span and a click event.
 			token.id = "reviewTokenID#" + i ;
