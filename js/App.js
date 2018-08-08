@@ -3,7 +3,7 @@ var app;
 window.onbeforeunload = function()
 {
 	app.tracker.sendAndClearLogs(true);
-}
+};
 
 function main()
 {

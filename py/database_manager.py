@@ -265,9 +265,11 @@ class DatabaseManager:
 		query = ("SELECT * FROM Logs WHERE Logs.user_id=" + str(id))
 		cursor.execute(query)
 		data = cursor.fetchall()
+		cursor.close()
+		connector.close()
+
 		if data != []:
 			logs = json.loads(data[0]["logs"])
-
 
 		return logs
 
