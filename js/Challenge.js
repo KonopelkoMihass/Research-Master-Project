@@ -5,6 +5,7 @@ class Challenge extends Model
         super();
         this.code = "";
         this.issues = {};
+        this.startTime = 0;
     }
 
     addCodeContent(content)
@@ -39,26 +40,85 @@ class Challenge extends Model
         {
              if (messageType === app.net.messageHandler.types.TEACHER_CREATE_CHALLENGE_SUCCESSFUL ||
                  messageType === app.net.messageHandler.types.TEACHER_CREATE_CHALLENGE_FAILED)
-            {
-                console.log(messageType);
+             {
 
-            }
+             }
 
+             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL)
+             {
+                 this.code = data.code;
+                 this.issues = data.issues;
+
+				 app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
+				 document.getElementById("view-title").innerText = "Complete the challenge";
+
+             }
         }
 
         this.notify(messageType);
     }
 
-
-
-
-    /*setData(data)
+    getChallenge()
     {
-         this.email = data.email;
-         this.name =  data.name;
-         this.surname =  data.surname;
-         this.noun =  data.noun;
-         this.role = data.role;
-         this.id = data.id;
-    }*/
+        this.code = "";
+        this.issues = {};
+        app.net.sendMessage("get_challenge", {});
+    }
+
+
+    calculateScore(issuesFound)
+    {
+        var totalIssues = Object.keys(this.issues).length;
+        var originalIssues = this.issues;
+
+        var foundIssues = {};
+        var falseIssues = {};
+        var missedIssues = {};
+
+        // Identify all issues from the original issues.
+        for (var tokenKey in originalIssues)
+        {
+            //Check if the same token present in issues found.
+            if (tokenKey in issuesFound)
+            {
+                // If issue's review matches with the challenge's review.
+                if (originalIssues[tokenKey].review === issuesFound[tokenKey].review)
+                {
+                    foundIssues[tokenKey] = originalIssues[tokenKey];
+                }
+
+                else
+                {
+                    falseIssues[tokenKey] = originalIssues[tokenKey];
+                }
+            }
+
+            else
+            {
+                missedIssues[tokenKey] = originalIssues[tokenKey];
+            }
+        }
+
+        //Get all false issues from user.
+        for (var tokenKey in issuesFound)
+        {
+              //Check if the same token present in issues found.
+            if (!(tokenKey in foundIssues || tokenKey in falseIssues || tokenKey in missedIssues))
+            {
+                falseIssues[tokenKey] = issuesFound[tokenKey];
+            }
+        }
+
+        console.log("foundIssues", foundIssues);
+        console.log("falseIssues", falseIssues);
+        console.log("missedIssues", missedIssues);
+
+        var foundIssuesCount = Object.keys(foundIssues).length;
+        var falseIssuesCount = Object.keys(falseIssues).length;
+
+
+        var score = (foundIssuesCount/totalIssues) * 100;
+        score -= falseIssuesCount * 5;
+        return score;
+    }
 }

@@ -38,13 +38,15 @@ class MessageHandler
 			SAVE_LOGS_FAILED:"save_logs_failed",
 
  			TEACHER_CREATE_CHALLENGE_SUCCESSFUL:"teacher_create_challenge_successful",
-			TEACHER_CREATE_CHALLENGE_FAILED:"teacher_create_challenge_failed"
+			TEACHER_CREATE_CHALLENGE_FAILED:"teacher_create_challenge_failed",
+
+			GET_CHALLENGE_SUCCESSFUL:"get_challenge_successful",
+			GET_CHALLENGE_FAILED:"get_challenge_failed"
 		};
 	}
 
 	handleMessage (message)
 	{
-
 		var msg = JSON.parse(message);
 		var type = msg.type;
 		var data = msg.data;
@@ -55,6 +57,8 @@ class MessageHandler
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
 		app.standards.update(data, type);
+		app.challenge.update(data, type);
+
 		app.tracker.trackServerMessages(data, type)
 	}
 }

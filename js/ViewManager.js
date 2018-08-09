@@ -20,7 +20,8 @@ class ViewManager
 			SEE_STANDARDS_STUDENT: "see-standards-student",
 			SEE_STANDARDS_TEACHER: "see-standards-teacher",
 			CODE_VIEW:"code-view",
-			CREATE_CHALLENGE:"create-challenge"
+			CREATE_CHALLENGE:"create-challenge",
+			CHALLENGE: "challenge"
 		}
 	}
 

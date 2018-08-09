@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="challenge.css">
+</head>
+
+<body>
+
+<div class="box-left" id="challenge-code-box">
+<div id="challenge-file-select">
+</div>
+<pre id="challenge-precode-area" class="line-numbers">
+<code id="challenge-code-review" class="language-cpp"></code>
+</pre>
+</div>
+
+<div class="box-right" id="challenge-comment-box">
+<div id="challenge-code-view-instructions">
+<p>Click a filename to read it.  Click a code element to create an issue.  Click that code element again to remove it.  Hovering over a sub-category will prompt the rule for it.</p>
+</div>
+    <div>
+      <label id="challenge-timer" class="challenge-timer">Time: 00:00</label>
+    </div>
+    <br>
+
+
+
+<table id="challenge-data-table">
+<tr>
+<th>Location</th>
+<th>Type</th>
+<th>Content</th>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<div id="challenge-submit-div">
+     <button id="challenge-submit" style="left: 37%; position: relative;">Submit Challenge</button>
+</div>
+
+</div>
+
+
+
+
+<!-- Side Modal with work to review -->
+<div id="challenge-code-side-modal" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" id="challenge-code-side-modal-close">&times;</a>
+
+
+    <fieldset class="code-review-sidenav-fieldset" id="challenge-code-sidenav-issue-category">
+        <legend class="code-review-sidenav-legend">Select the category of the issue</legend>
+        <div id="challenge-code-category-select-div">
+        </div>
+     </fieldset>
+
+    <fieldset class="code-review-sidenav-fieldset" id="challenge-code-sidenav-issue-subcategory">
+        <legend class="code-review-sidenav-legend">Select the sub-category of the issue</legend>
+        <div id="challenge-code-subcategory-select-div">
+        </div>
+     </fieldset>
+</div>
+</body>
+</html>

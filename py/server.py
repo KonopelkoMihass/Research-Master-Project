@@ -1,5 +1,6 @@
 import tornado
 import json
+import random
 
 from challenges_manager import ChallengesManager
 from database_manager import DatabaseManager
@@ -87,6 +88,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "create_challenge":
 			self.create_challenge(message_data)
 
+		elif message_type == "get_challenge":
+			self.get_challenge()
 
 
 
@@ -244,6 +247,27 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		challenge["issues"] = json.dumps(message_data["issues"])
 		message = challenges_manager.create_challenge(challenge)
 		self.send_message(message[0], message[1])
+
+	def get_challenge(self):
+		type = "get_challenge_successful"
+		challenge = {}
+
+		try:
+			challenges = database_manager.select_all_from_table("Challenges")
+			count = len(challenges)
+			index = random.randint(0, count-1)
+			challenge = challenges[index]
+			challenge["issues"] =  json.loads(challenge["issues"])
+
+		except:
+			type = "get_challenge_failed"
+
+		self.send_message(type, challenge)
+
+
+
+
+
 
 	def on_close(self):
 		print ("WebSocket closed")

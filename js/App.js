@@ -150,6 +150,11 @@ class App
 		var createChallengeView = new CreateChallengeView(createChallengeController);
 		this.viewManager.addView(createChallengeView);
 
+		var challengeController = new ChallengeController(this.challenge);
+		var challengeView = new ChallengeView(challengeController);
+		this.viewManager.addView(challengeView);
+
+
 
 		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
 
@@ -199,6 +204,12 @@ class App
 
 		// Student - Standards
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
+
+		// Student - Challenge
+		this.challenge.addObserver(challengeView, this.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL);
+
+
+
 	}
 
 	setupMenuPanel()
@@ -213,11 +224,18 @@ class App
 			}
 		});
 
+		app.uiFactory.assignFuncToButtonViaID("mps-challenges-button", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE)
+			{
+				app.challenge.getChallenge();
+			}
+		});
+
 		app.uiFactory.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
-				viewLabel.innerText = "Assignments";
+				document.getElementById("view-title").innerText = "Assignments";
 			}
 		});
 
@@ -270,7 +288,6 @@ class App
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.CREATE_CHALLENGE);
-				viewLabel.innerText = "Before it will be a file upload modal";
 			}
 		});
 
@@ -300,8 +317,6 @@ class App
     	this.audioManager.queueSound("space-ship-flight.wav");
 	}
 }
-
-
 
 getRandomAdjective = function () {
 	var result = Math.floor(Math.random() * 10);
@@ -347,19 +362,3 @@ setInterval(function()
 	app.tracker.sendAndClearLogs(false);
 	app.heartbeat()
 }, 20000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

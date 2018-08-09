@@ -166,8 +166,6 @@ class AssignmentsManager:
 				feedbacks = json.loads(submission["feedbacks"])
 				submission["feedbacks"] = feedbacks
 
-
-
 				for user in users:
 					if user["id"] == submission["user_id"]:
 						submission["user_data"] = user
