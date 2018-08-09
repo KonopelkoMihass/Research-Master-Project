@@ -252,15 +252,16 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		type = "get_challenge_successful"
 		challenge = {}
 
-		try:
-			challenges = database_manager.select_all_from_table("Challenges")
-			count = len(challenges)
-			index = random.randint(0, count-1)
-			challenge = challenges[index]
-			challenge["issues"] =  json.loads(challenge["issues"])
+		#try:
+		challenges = database_manager.select_all_from_table("Challenges")
+		count = len(challenges)
+		index = random.randint(0, count-1)
+		print("index challenge: ", index)
+		challenge = challenges[index]
+		challenge["issues"] =  json.loads(challenge["issues"])
 
-		except:
-			type = "get_challenge_failed"
+		#except:
+		#	type = "get_challenge_failed"
 
 		self.send_message(type, challenge)
 

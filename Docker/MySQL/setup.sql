@@ -77,3 +77,5 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Challenges` (
   `code` MEDIUMTEXT NOT NULL,
   `issues` MEDIUMTEXT,
   PRIMARY KEY (`id`));
+
+

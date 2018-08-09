@@ -227,23 +227,21 @@ class AssignmentsManager:
 
 		html_content = message_data["html_content"]
 		soup = BeautifulSoup(html_content, 'html.parser')
-		node_list = soup.find_all(["h1", "h2"])
+		node_list = soup.find_all(["h2", "h3"])
 
 		standards = []
 		standard_bit = {}
 
 		for n in node_list:
 			if n.get_text() == "":
-				continue
-
-			if n.name == "h1":
-				if skip_title_h1:
-					skip_title_h1 = False
-					continue
-				standard_bit["category"] = n.get_text().rstrip()
-				print("--", standard_bit["category"])
+				pass
+				#continue
 
 			if n.name == "h2":
+				standard_bit["category"] = n.get_text().rstrip()
+				print("--", standard_bit["category"], " [.._]", )
+
+			if n.name == "h3":
 				standard_bit["sub_category"] = n.get_text().rstrip()
 				print("----", standard_bit["sub_category"])
 				standard_bit["description"] = ""
