@@ -40,6 +40,18 @@ services:
     - ./MySQL:/docker-entrypoint-initdb.d
     - ./MySQL/data:/var/lib/mysql
 
+
+ unit-tests:
+   build:
+    context: ../
+    dockerfile: Docker/UnitTestsDockerfile
+   links:
+    - mihass-g-mysql:mihass-g-mysql
+   volumes:
+    - ..:/app
+   tty: true
+
+
 networks:
   mihass-g-net:
     driver: bridge
