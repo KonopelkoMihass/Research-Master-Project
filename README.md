@@ -1,53 +1,8 @@
-This is a gamified verison of Mihass Project a.k.a Ankylo
+This is a gamified verison of Mihass Project 
 
-It uses Docker to provide portability, so you do not need to have MySQL or Python to start it up.  First you need to build a Python Server from the root folder:
-
-$ docker build -t python-server -f Docker/BaseServerDockerfile .
-
-To deploy and launch this project, run following commands.
-
-$ cd Docker 
-$ docker-compose build 
-$ docker-compose up
-
-Then go to http://localhost/MihassGProject/ (if you use Docker for Windows/MacOS) or an IP stated when you start docker-toolbox.
-
-To stop docker:
-
-# cd Docker 
-# docker-compose stop
-
-
-Features Completed:
--Signin
--Signup
-
-
-To Do:
--Navigation Bar***
--Submit Assignment
-    -Selector***
-    -Submission Window (1)***
--Submit Review
-    -Select Mode*
-    -Review Mode (3 + spike)***
-
--Read Feedback**
--Review Selector**
--Space Game*
--View Review**
--Profile
-    -Skill Window
-    -Statistics
-
-
--Teacher System side
-    -Add New Standards**
-    -Add/Modify Assignment**
-    -Review Assignment*
-
-- Sample code
-//Create a modal
-var modalData = app.uiFactory.createModal("id", "title");
-document.body.appendChild(modalData.modal);
-modalData.modal.style.display = "block";
+There is how versioning is done for this project:
+-The Build system - each commit is assigned a build number.  Each commit is buildable and should compile and be deployed.
+-The Release system - this system encloses a list of builds to make a signifcant release.  Release versioning follows this structure: vX.Y.Z
+--X is a major release.  Difference between iterations of X is big enough to threat a newer X as a proper sequel to earlier X
+--Y is a feature release.  As a new feature is added, it incrememnts.  The feature should be of a release quality to increment Y.
+--Z is a test release.  It increments after each user test.
