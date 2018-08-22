@@ -6,6 +6,7 @@ from challenges_manager import ChallengesManager
 from database_manager import DatabaseManager
 from user_manager import UserManager
 from assignments_manager import AssignmentsManager
+from standards_manager import StandardsManager
 
 import planner
 
@@ -55,6 +56,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "signin":
 			self.signin(message_data)
 
+			self.send_message("get_standard_successful", standards_manager.get_standard("cpp-1"))
+			self.send_message("get_standard_successful", standards_manager.get_standard("js-1"))
+
+
+
+
+
 		elif message_type == "add_assignment":
 			self.add_assignment(message_data)
 
@@ -77,10 +85,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			self.submit_review(message_data)
 
 		elif message_type == "push_standard":
-			self.push_standard(message_data)
+			pass
+			#self.push_standard(message_data)
 
 		elif message_type == "get_standard":
-			self.get_standard()
+			pass
+			#self.get_standard()
 
 		elif message_type == "save_logs":
 			self.save_logs(message_data)
@@ -265,11 +275,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		self.send_message(type, challenge)
 
-
-
-
-
-
 	def on_close(self):
 		print ("WebSocket closed")
 		#Remove connection
@@ -291,7 +296,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		msg=json.dumps(msg)
 		self.write_message(msg)
 
-
+standards_manager = StandardsManager()
 database_manager = DatabaseManager()
 user_manager = UserManager(database_manager)
 assignments_manager = AssignmentsManager(database_manager)

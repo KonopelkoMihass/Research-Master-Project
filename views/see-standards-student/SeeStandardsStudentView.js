@@ -16,28 +16,22 @@ class SeeStandardsStudentView extends View
 		{
 			var table = document.getElementById("standards-st-table");
 
-			// trackServerMessages review section
 			var rowCount = table.rows.length;
 			while(--rowCount)
 			{
 				table.deleteRow(rowCount);
 			}
 
-			for (var key in model.standards)
+			for (var key in model.standardsURLs)
 			{
-				var substandard = model.standards[key];
+				var link = document.createElement("a");
+				link.setAttribute("href",  model.standardsURLs[key]);
+				var linkText = document.createTextNode(key);
+				link.appendChild(linkText);
 
-				for(var i =0; i< substandard.length; i++)
-				{
-					var row = table.insertRow(table.rows.length);
-					var cell0 = row.insertCell(0);
-					var cell1 = row.insertCell(1);
-					var cell2 = row.insertCell(2);
-
-					cell0.innerHTML = substandard[i].category;
-					cell1.innerHTML = substandard[i].subCategory;
-					cell2.innerHTML = substandard[i].description;
-				}
+				var row = table.insertRow(table.rows.length);
+				var cell = row.insertCell(0);
+				cell.appendChild(link);
 			}
 		}
 	}

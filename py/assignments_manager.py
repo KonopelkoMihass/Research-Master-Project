@@ -6,7 +6,6 @@ import random
 import json
 
 
-
 class AssignmentsManager:
 	def __init__(self, database_manager):
 		print("AssignmentsManager: __init__")
@@ -286,3 +285,44 @@ class AssignmentsManager:
 
 		message = [type, data]
 		return message
+
+
+
+
+	def get_standard_from_file(self, name, html):
+		soup = BeautifulSoup(html, 'html.parser')
+		node_list = soup.find_all(["h2", "h3"])
+
+		standards = []
+		standard_bit = {}
+
+		for n in node_list:
+			if n.get_text() == "":
+				pass
+
+			if n.name == "h2":
+				standard_bit["category"] = n.get_text().rstrip()
+				print("--", standard_bit["category"], " [.._]",)
+
+			if n.name == "h3":
+				standard_bit["sub_category"] = n.get_text().rstrip()
+				print("----", standard_bit["sub_category"])
+				standard_bit["description"] = ""
+
+				for elem in n.next_siblings:
+					print("[", elem.name, "]")
+					if elem.name == 'p' or elem.name == 'ul':
+						description = str(elem)
+						standard_bit["description"] += description
+					else:
+						category = standard_bit["category"]
+						standard_bit = {"category": category}
+						standards.append(standard_bit)
+						break
+
+
+		type = "get_standard_successful"
+		message = [type, standards]
+		return message
+
+

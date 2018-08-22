@@ -2,6 +2,7 @@ class Standards extends Model {
     constructor() {
         super();
         this.standards = {};
+        this.standardsURLs = [];
     }
 
 
@@ -19,17 +20,21 @@ class Standards extends Model {
             if ( messageType === app.net.messageHandler.types.GET_STANDARD_SUCCESSFUL)
             {
                 this.standards = {};
-                for (var i = 0; i < data.length; i++)
+                this.standardsURLs[data["name"]] = data["url"];
+
+                var stdFromServer = data["standard"];
+
+                for (var i = 0; i < stdFromServer.length; i++)
                 {
-                    if (data[i]["category"] in this.standards)
+                    if (stdFromServer[i]["category"] in this.standards)
                     {
-                        this.standards[data[i]["category"]].push(new Standard(data[i]));
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
                     }
 
                     else
                     {
-                        this.standards[data[i]["category"]] = [];
-                        this.standards[data[i]["category"]].push(new Standard(data[i]));
+                        this.standards[stdFromServer[i]["category"]] = [];
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
                     }
 
                 }
