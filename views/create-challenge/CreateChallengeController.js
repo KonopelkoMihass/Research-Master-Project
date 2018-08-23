@@ -57,7 +57,7 @@ class CreateChallengeController
 		var controller = this;
 
 		var modalBody = app.modalContentManager.getModalContent("submit-challenge-file");
-		var modalData = app.uiFactory.createModal("create-challenge", "Submit Challenge File", modalBody, true);
+		var modalData = app.utils.createModal("create-challenge", "Submit Challenge File", modalBody, true);
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
 
@@ -249,13 +249,11 @@ class CreateChallengeController
 
 	setupSideModal()
 	{
-		var that = this;
+		var controller = this;
 		if (this.setSideModal)
 		{
             var standards = app.standards.selectStandards(this.standardUsed);
-
             var categorySelectDiv = document.getElementById("create-challenge-code-category-select-div");
-            var subCategorySelectDiv = document.getElementById("create-challenge-code-subcategory-select-div");
 
             for (var key in standards) {
                 var categoryName = key;
@@ -266,47 +264,92 @@ class CreateChallengeController
                 categorySpan.innerHTML = categoryName;
                 categorySpan.className = "code-review-select-category-span";
 
-                categorySelectDiv.appendChild(categorySpan);
+                var subCategoryDiv = document.createElement("div");
+                subCategoryDiv.id = "create-challenge-code-standard-subcategory-div#" + categoryName;
+
+				categorySelectDiv.appendChild(categorySpan);
+                categorySelectDiv.appendChild(subCategoryDiv);
+
 
                 categorySpan.addEventListener("click", function ()
 				{
+					var localSubCategoryDiv = document.getElementById("create-challenge-code-standard-subcategory-div#" + this.id.split("#")[1]);
 					// clean sub category
-					subCategorySelectDiv.innerHTML = "";
 
-					//show it
-					document.getElementById("create-challenge-code-sidenav-issue-subcategory").style.display = "block";
-
-					if (that.categoryElemSelected !== "")
+					if (localSubCategoryDiv.innerHTML !== "")
 					{
-						that.categoryElemSelected.classList.remove("standard-bit-selected");
+						localSubCategoryDiv.innerHTML = "";
 					}
-					that.categoryElemSelected = this;
-					that.categoryElemSelected.classList.add("standard-bit-selected");
 
-                	var cat = this.id.split("#")[1];
-					var subcategories = standards[cat];
-					for (var i = 0; i < subcategories.length; i++)
+					else
 					{
-
-						var subcategorySpan = document.createElement("SPAN");
-						subcategorySpan.id = "create-challenge-code-category#" + subcategories[i].category +"#" +i;
-						subcategorySpan.innerHTML = subcategories[i].subCategory;
-						subcategorySpan.className = "code-review-select-subcategory-span";
-
-						app.uiFactory.insertTooltip(subcategorySpan, subcategories[i].description);
-
-						subcategorySpan.addEventListener("click", function ()
+						if (controller.categoryElemSelected !== "")
 						{
-							var lCategory =  this.id.split("#")[1];
-							var lSubCategory =  this.id.split("#")[2];
+							controller.categoryElemSelected.classList.remove("standard-bit-selected");
+						}
+						controller.categoryElemSelected = this;
+						controller.categoryElemSelected.classList.add("standard-bit-selected");
 
-							var resultStandard = app.standards.standards[lCategory][lSubCategory];
+						var cat = this.id.split("#")[1];
+						var subcategories = standards[cat];
 
-							that.closeSidenavAndSaveTheReview("issue", resultStandard)
-						});
+						for (var i = 0; i < subcategories.length; i++)
+						{
+							var spanContainer = document.createElement("SPAN");
+
+							var subcategorySpan = document.createElement("SPAN");
+							subcategorySpan.id = "create-challenge-code-category#" + subcategories[i].category +"#" +i;
+							subcategorySpan.innerHTML = subcategories[i].subCategory;
+							subcategorySpan.className = "code-review-select-subcategory-span";
+
+							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
+
+							var img = document.createElement("IMG");
+							img.src = "resources/images/search.png";
+							img.id = "create-challenge-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
+							img.className = "picture-button";
+							img.style.float = "right";
+
+							img.addEventListener("mouseover",function ()
+							{
+								var category = this.id.split("#")[1];
+								var idNum = this.id.split("#")[2];
+
+								var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
+
+								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+								tootlipElem.style.visibility = "visible";
+								tootlipElem.style.opacity= "1";
+
+							});
+							img.addEventListener("mouseleave",function ()
+							{
+								var category = this.id.split("#")[1];
+								var idNum = this.id.split("#")[2];
+
+								var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
+
+								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+								tootlipElem.style.visibility = "hidden";
+								tootlipElem.style.opacity= "0";
+							});
 
 
-						subCategorySelectDiv.appendChild(subcategorySpan)
+							subcategorySpan.addEventListener("click", function ()
+							{
+								var lCategory =  this.id.split("#")[1];
+								var lSubCategory =  this.id.split("#")[2];
+								var resultStandard = app.standards.standards[lCategory][lSubCategory];
+
+								controller.closeSidenavAndSaveTheReview("issue", resultStandard)
+								subCategoryDiv.innerHTML = "";
+							});
+
+							spanContainer.appendChild(subcategorySpan);
+							spanContainer.appendChild(img);
+
+							subCategoryDiv.appendChild(spanContainer)
+						}
 					}
                 });
             }
@@ -328,7 +371,7 @@ class CreateChallengeController
 	}
 
 	prepareCodeHTMLs() {
-		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, app.uiFactory.derivePrismLanguage(this.codingLanguageUsed));
+		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, app.utils.derivePrismLanguage(this.codingLanguageUsed));
 
 		// Now we insert it into a <code> area
 		document.getElementById("create-challenge-code-review").innerHTML = this.parsedCodeHTMLs["challenge"];
@@ -610,10 +653,6 @@ class CreateChallengeController
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("create-challenge-code-side-modal");
         sideModal.style.width = "0";
-
-		document.getElementById("create-challenge-code-subcategory-select-div").innerHTML = "";
-		document.getElementById("create-challenge-code-sidenav-issue-subcategory").style.display = "none";
-
 
 		if (this.categoryElemSelected !== "")
 		{

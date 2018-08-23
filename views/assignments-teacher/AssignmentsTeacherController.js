@@ -25,7 +25,7 @@ class AssignmentsTeacherController
 
 		// Init Modal
 		var modalBody = app.modalContentManager.getModalContent("add-assignment");
-		var modalData = app.uiFactory.createModal("add-assignment", "Add Assignment", modalBody, true);
+		var modalData = app.utils.createModal("add-assignment", "Add Assignment", modalBody, true);
 		modalData.modal.style.display = "block";
 
 		//Set minimum datetime and current datetime to now.
@@ -37,6 +37,7 @@ class AssignmentsTeacherController
 		document.getElementById("assignment-submission-deadline").value = today;
 		document.getElementById("assignment-review-deadline").min = today;
 		document.getElementById("assignment-review-deadline").value = today;
+
 
 		var submitBtn = modalData.submit;
 		submitBtn.addEventListener("click", function ()
@@ -54,7 +55,7 @@ class AssignmentsTeacherController
 		{
 			var option = document.createElement("option");
 			option.text = standards.standardsInfo[key]["name"];
-			option.value = standards.standardsInfo[key]["standard_id"];
+			option.value = key;
 			selectStandard.add(option);
 		}
 
@@ -71,23 +72,27 @@ class AssignmentsTeacherController
 		var reviewTillDate = document.getElementById("assignment-review-deadline").value.split('T')[0];
 		var reviewTillTime = document.getElementById("assignment-review-deadline").value.split('T')[1];
 
+
 		var totalColons = deadlineTime.split(":").length-1;
-		// Remove seconds
-		if (totalColons === 2)
-		{
+		if (totalColons === 2)	{
 			deadlineTime = deadlineTime.substring(0, deadlineTime.lastIndexOf(":"));
 		}
 
 		totalColons = reviewTillTime.split(":").length-1;
-		// Remove seconds
 		if (totalColons === 2) {
 			reviewTillTime = reviewTillTime.substring(0, reviewTillTime.lastIndexOf(":"));
 		}
 
+
 		var description = document.getElementById("assignment-description").value;
 		var reviewersAmount = document.getElementById("assignment-total-reviewers").value;
+		var selectStandard = document.getElementById("add-assignment-standards");
 
-		this.model.createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount);
+		var standardUsed = selectStandard.options[selectStandard.selectedIndex].value;
+		var codingLanguageUsed = standardUsed.split('-')[0];
+
+		this.model.createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description,
+			reviewersAmount, standardUsed, codingLanguageUsed);
 	}
 
 	deleteAssignment(id)

@@ -18,6 +18,17 @@ class Submissions extends Model {
 
     }
 
+    getReviewedSubmission()
+    {
+        for (var i = 0; i < this.submissions.length; i++)
+        {
+            if (this.submissions[i].id === this.submissionIDToCodeView )
+            {
+                return this.submissions[i];
+            }
+        }
+    }
+
     retrieveAssignmentNames(model)
     {
         for (var i = 0; i < model.assignments.length; i++)

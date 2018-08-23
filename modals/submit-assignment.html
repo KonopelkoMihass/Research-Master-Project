@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <div>
-  <div> <!--Description TEXTBOX-->
-   <p id="assignment-description">There will be the description data from the assignment</p>
-  </div>
 
-  <hr>
+  <fieldset>
+       <legend>Description</legend>
+   <p id="assignment-description"></p>
+  </fieldset>
 
-  <div> <!--DEADLINE DATE-->
-    <label id="assignment-deadline">Deadline: </label>
-  </div>
+  <fieldset>
+       <legend>Deadline</legend>
+    <label id="assignment-deadline"></label>
+  </fieldset>
 
-  <hr>
-
-  <div> <!--FILE UPLOAD BOX-->
+  <fieldset>
+       <legend>Upload File</legend><!--FILE UPLOAD BOX-->
     <form id="upload" action="submit-assignment.html" method="POST" enctype="multipart/form-data">
       <fieldset>
         <legend class="fileset-legend">File Upload</legend>
@@ -41,5 +41,5 @@
     </fieldset>
 
 
-  </div>
+  </fieldset>
 </div>

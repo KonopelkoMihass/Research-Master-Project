@@ -1,4 +1,4 @@
-class UIFactory
+class Utilities
 {
 	constructor()
 	{
@@ -96,6 +96,10 @@ class UIFactory
 		elementToInsertInto.appendChild(tooltipSpan);
 	}
 
+
+
+
+
 	assignFuncToButtonViaID(elementID, func)
 	{
         var elem = document.getElementById(elementID);
@@ -119,12 +123,9 @@ class UIFactory
 	}
 
 
-
-
-
-
-
-
-
-
+	readableDate(dateStr)
+	{
+		var date = new Date(dateStr);
+		return date.toDateString();
+	}
 }

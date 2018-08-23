@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Assignments` (
   `reviewers_amount` INT NOT NULL,
   `status` VARCHAR(32) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
-
+  `standard_used` VARCHAR(32) NOT NULL,
+  `language` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Assignments` (`name` ASC);

@@ -43,6 +43,15 @@ class StandardsManager:
             print("Finished downloading", key )
 
 
+
+    def download_standards_from_drive(self, socket):
+        for key, value in self.standards_ids.items():
+            self.download_standard( key, value, "text/html")
+            socket.send_message("get_standard_successful", self.get_standard(key))
+            print("Finished downloading", key )
+
+
+
     def download_standard(self, key, file_id,  mime_type):
         file = self.service.files().get(fileId=file_id,fields='name').execute()
 
@@ -59,7 +68,6 @@ class StandardsManager:
 
         self.standards[key] = self.parse_standard_from_html(key, html)
         self.standards_names[key] = file.get('name')
-
 
 
     def parse_standard_from_html(self, key, html):

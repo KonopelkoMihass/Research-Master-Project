@@ -6,6 +6,18 @@ class Assignments extends Model
         this.assignments = [];
     }
 
+    getById(id)
+    {
+        for (var i = 0; i < this.assignments.length; i++)
+        {
+            if (this.assignments[i].id === id )
+            {
+                return this.assignments[i];
+            }
+        }
+    }
+
+
 
     update(data, messageType)
     {
@@ -27,7 +39,8 @@ class Assignments extends Model
         this.notify(messageType);
     }
 
-    createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount)
+    createAssignment(name, deadlineTime, deadlineDate,reviewTillTime, reviewTillDate,  description, reviewersAmount,
+                      standardUsed, codingLanguageUsed)
     {
         var data = {};
         data.name = name;
@@ -38,6 +51,8 @@ class Assignments extends Model
         data.review_till_time = reviewTillTime;
         data.reviewers_amount = reviewersAmount;
         data.status = "normal";
+        data.standard_used = standardUsed;
+        data.language = codingLanguageUsed;
 
 
         app.net.sendMessage("add_assignment", data);

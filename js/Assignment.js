@@ -4,13 +4,15 @@ class Assignment
     {
         this.name = data.name;
         this.deadlineTime = data.deadline_time;
-        this.deadlineDate = data.deadline_date;
+        this.deadlineDate = app.utils.readableDate(data.deadline_date);
         this.description = data.description;
         this.id = data.id;
 
-        this.reviewTillDate = data.review_till_date;
+        this.reviewTillDate = app.utils.readableDate(data.review_till_date);
         this.reviewTillTime = data.review_till_time;
         this.reviewersAmounts = data.reviewers_amount;
         this.status = data.status;
+        this.standardUsed  = data.standard_used;
+        this.language  = data.language;
     }
 }

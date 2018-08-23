@@ -1,3 +1,25 @@
+/******************************************************/
+/****************Essential Styles**********************/
+/******************************************************/
+
+@import url("https://fonts.googleapis.com/css?family=Jua");
+
+body
+{
+    background-color: #55c77c;
+}
+
+body, div, button, hr, input, fieldset, legend, li, table, th, td, tr, a, p{
+    font-family: 'Jua', sans-serif;
+    color: #edf5e1;
+    border-color:  #05386b;
+}
+
+div button {
+     background-color: #05386b;
+}
+
+
 .error-text{
     color: red;
     font-weight: bold;
@@ -10,32 +32,98 @@ hr {
     margin-left: 1px;
     margin-right: 1px;
     border-width: 1px;
+    color: #edf5e1;
 }
 
 input
 {
 	border-width: 2px;
+    background-color: #05386b;
+}
+
+fieldset {
+    border-color: #edf5e1;
+    border-width: 2px;
 }
 
 legend
 {
     font-weight: bold;
-	color: #333;
+	color: #edf5e1;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #379683;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #387461;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1e5348;
+}
+
+.codebox-style
+{
+    background-color: white;
+    #font-family: monospace;
+    #color: black;
+}
+
+
+
+
+
+
+
+
+
 
 /******************************************************/
 /****************MENU TAB PANEL************************/
 /******************************************************/
 .menu-panel
 {
-	border: 1px solid;
-    font-size: 0;
-    margin: 0 auto;
-	position: sticky;
-	text-align: center;
-    width: 80%;
+    list-style-type: none;
+    margin: -8px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #379683;
+
+	#border: 1px solid;
+    #font-size: 0;
+    #margin: 0 auto;
+	#position: sticky;
+	#text-align: center;
+    #width: 80%;
 }
 
+li
+{
+    float: left;
+}
+
+.menu-button
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu-button:hover {
+    background-color: #8EE4AF;
+}
 
 
 
@@ -51,6 +139,9 @@ legend
 }
 
 .tooltip .tooltiptext {
+    top: 100%;
+    left: 0%;
+
     visibility: hidden;
     width: 97%;
     background-color: #d7d7d7;
@@ -60,8 +151,7 @@ legend
     padding: 5px 10px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 0%;
+
     margin-left: 0px;
     opacity: 0;
     transition: opacity .3s;
@@ -80,7 +170,7 @@ legend
 }
 
 .tooltip:hover .tooltiptext {
-  	transition-delay: 1s;
+  	transition-delay: .2s;
     visibility: visible;
     opacity: 1;
 }
@@ -103,7 +193,9 @@ table th, td {
     word-break:break-all;
 }
 
-table tr:hover {background-color:#f5f5f5;}
+table tr:hover {
+    background-color:#8EE4AF;
+}
 
 
 .view-name-box
@@ -205,6 +297,203 @@ button
 button:hover
 {
 	background-color: gray;
-    color: white;
+    color: #8EE4AF;
     font-weight: bold;
 }
+
+
+/******************************************************/
+/***********CODE VIEWS COMMON ELEMENT CLASSES**********/
+/******************************************************/
+.selected
+{
+    outline:3px solid red;
+}
+
+.reviewed
+{
+    outline:4px dashed orange;
+}
+
+.comments-table {
+
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.comments-table th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align:top;
+    word-break:break-all;
+}
+
+.comments-table tr:hover {background-color:#f5f5f5;}
+
+.submit-review
+{
+    position:absolute;
+    bottom: 0;
+    left:40%;
+}
+
+/* The side navigation menu */
+.sidenav {
+    top: 13%;
+    height: 60%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    background-color: grey;
+    overflow-x: hidden;
+    padding-top: 70px;
+    transition: 0.3s;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 14px 8px 8px 90px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #ffffff;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    left: -65px;
+    font-size: 36px;
+    margin-right: 50px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.code-review-sidenav-legend
+{
+    font-weight: bold;
+	color: rgb(255, 255, 255);
+    font-size: calc(16px + 0.5vw);
+    text-align: left;
+    border-color: #ffffff;
+    border-style: solid;
+	border-width: 2px;
+    padding: 4px 4px;
+}
+
+.code-review-sidenav-fieldset
+{
+    border-color: #ffffff;
+	border-width: 2px;
+}
+
+.code-review-select-category-span
+{
+    border-color: #ffffff;
+    border-style: solid;
+	border-width: 2px;
+    font-weight: bold;
+	color: rgb(255, 255, 255);
+
+    font-size: calc(13px + 0.5vw);
+    text-align: left;
+
+    width:90%;
+    margin:1.5% 2%;
+    padding: 2px 10px;
+
+    float:left;
+}
+
+.code-review-select-category-span:hover
+{
+	color: rgb(255, 151, 54);
+    border-color: rgb(255, 151, 54);
+    border-width: 3px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.code-review-select-subcategory-span
+{
+    border-color: #ffffff;
+    border-style: solid;
+	border-width: 2px;
+    font-weight: bold;
+	color: rgb(255, 255, 255);
+    font-size: calc(13px + 0.5vw);
+    text-align: left;
+    width:70%;
+    margin:1.5% 2%;
+    padding: 2px 10px;
+    float:right;
+}
+
+.code-review-select-subcategory-span:hover
+{
+	color: rgb(255, 32, 59);
+    border-color:  rgb(255, 32, 59);
+    border-width: 3px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.standard-bit-selected
+{
+    border-style: solid;
+    border-width: 3px;
+}
+
+.file-selected{
+    background-color: #546E7A;
+    color: white;
+}
+
+.challenge-timer{
+    font-style: italic;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

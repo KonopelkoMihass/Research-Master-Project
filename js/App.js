@@ -24,7 +24,7 @@ class App
 		this.viewManager= new ViewManager();
 		this.templateManager = new TemplateManager();
 		this.modalContentManager = new ModalContentManager();
-		this.uiFactory = new UIFactory();
+		this.utils = new Utilities();
 		this.tracker =  new Tracker(this.net);
 
 		//load views
@@ -216,7 +216,7 @@ class App
 	{
 		var viewLabel = document.getElementById("view-title");
 
-		app.uiFactory.assignFuncToButtonViaID("mps-profile-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-profile-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
@@ -224,14 +224,14 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-challenges-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE)
 			{
 				app.challenge.getChallenge();
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-assignments-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
@@ -239,7 +239,7 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-standards-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
@@ -247,7 +247,7 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-reviews-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-reviews-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PERFORM_REVIEW_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
@@ -255,10 +255,10 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
+		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
 
 
-		app.uiFactory.assignFuncToButtonViaID("mps-feedback-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-feedback-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
@@ -266,7 +266,7 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-submissions-button", function() {
+		app.utils.assignFuncToButtonViaID("mps-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
@@ -276,7 +276,7 @@ class App
 
 
 
-		app.uiFactory.assignFuncToButtonViaID("mpt-assignments-button", function() {
+		app.utils.assignFuncToButtonViaID("mpt-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
@@ -284,14 +284,14 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mpt-challenges-button", function() {
+		app.utils.assignFuncToButtonViaID("mpt-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.CREATE_CHALLENGE);
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mpt-standards-button", function() {
+		app.utils.assignFuncToButtonViaID("mpt-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_TEACHER);
@@ -299,7 +299,7 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mpt-submissions-button", function() {
+		app.utils.assignFuncToButtonViaID("mpt-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER);
@@ -307,7 +307,7 @@ class App
 			}
 		});
 
-		app.uiFactory.assignFuncToButtonViaID("mps-signout-button",function(){app.user.signout();});
+		app.utils.assignFuncToButtonViaID("mps-signout-button",function(){app.user.signout();});
 	}
 
 	loadResources()
@@ -319,41 +319,15 @@ class App
 }
 
 getRandomAdjective = function () {
-	var result = Math.floor(Math.random() * 10);
+	var adjectives = ["attractive","bald","beautiful","chubby","clean","dazzling","elegant","fancy","fit","flabby","glamorous",
+		"gorgeous","handsome","long","magnificent","muscular","plain","plump","quaint","scruffy","shapely","short","skinny",
+		"stocky","unsightly","gigantic","epic","cunning","floaty", "flying","tasty","sleepy","sneaky","spontaneous","poisonous",
+		"venomous","alive","careful","clever","dead","easy","famous","gifted","hallowed","helpful","important","inexpensive",
+		"mealy","mushy","odd","poor","powerful","rich","shy","tender","vast","ashy","black","blue",
+		"gray","green","icy","orange","purple","red","white","yellow"];
 
-	switch (result){
-		case 0:
-			return "Gigantic ";
-			break;
-		case 1:
-			return "Epic ";
-			break;
-		case 2:
-			return "Cunning ";
-			break;
-		case 3:
-			return "Flying ";
-			break;
-		case 4:
-			return "Tasty ";
-			break;
-		case 5:
-			return "Poisonous ";
-			break;
-		case 6:
-			return "Sleepy ";
-			break;
-		case 7:
-			return "Spontaneous ";
-			break;
-		case 8:
-			return "Sneaky ";
-			break;
-		case 9:
-			return "Tiny ";
-			break;
-	}
-	return "Tired ";
+	var result = Math.floor(Math.random() * adjectives.length);
+	return adjectives[result].charAt(0).toUpperCase() + adjectives[result].slice(1) + " ";
 };
 
 

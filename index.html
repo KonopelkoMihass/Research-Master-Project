@@ -27,7 +27,7 @@
     <script src = "js/Net.js"></script>
 
     <!--Other-->
-    <script src = "js/UIFactory.js"></script>
+    <script src = "js/Utilities.js"></script>
     <script src = "js/Assignment.js"></script>
     <script src = "js/Submission.js"></script>
     <script src = "js/Standard.js"></script>
@@ -113,26 +113,28 @@
 
 
     <div id="menupanel-student" style="display: none">
-      <div class="menu-panel">
-        <button id="mps-profile-button">Your Profile</button>
-        <button id="mps-challenges-button">Challenges</button>
-        <button id="mps-assignments-button">Assignments</button>
-        <button id="mps-submissions-button">Work Submitted</button>
-        <button id="mps-standards-button">Standards</button>
-        <button id="mps-reviews-button">Reviews To Do</button>
-        <button id="mps-feedback-button">Feedback</button>
-        <button id="mps-signout-button">Sign out</button>
-      </div>
+
+      <ul class="menu-panel">
+        <li><a class="menu-button" id="mps-profile-button">Your Profile</a></li>
+        <li><a class="menu-button" id="mps-challenges-button">Challenges</a></li>
+        <li><a class="menu-button" id="mps-assignments-button">Assignments</a></li>
+        <li><a class="menu-button" id="mps-submissions-button">Work Submitted</a></li>
+        <li><a class="menu-button" id="mps-standards-button">Standards</a></li>
+        <li><a class="menu-button" id="mps-reviews-button">Reviews To Do</a></li>
+        <li><a class="menu-button" id="mps-feedback-button">Feedback</a></li>
+        <li><a class="menu-button" id="mps-signout-button">Sign out</a></li>
+      </ul>
+
     </div>
 
     <div id="menupanel-teacher" style="display: none">
-      <div class="menu-panel">
-        <button id="mpt-assignments-button">Assignments</button>
-        <button id="mpt-challenges-button">Create challenge</button>
-        <button id="mpt-standards-button">Standards</button>
-        <button id="mpt-submissions-button">Submissions</button>
-         <button id="mpt-signout-button">Sign out</button>
-      </div>
+       <ul class="menu-panel">
+        <li><a class="menu-button" id="mpt-assignments-button">Assignments</a></li>
+        <li><a class="menu-button" id="mpt-challenges-button">Create challenge</a></li>
+        <li><a class="menu-button" id="mpt-standards-button">Standards</a></li>
+        <li><a class="menu-button" id="mpt-submissions-button">Submissions</a></li>
+         <li><a class="menu-button" id="mpt-signout-button">Sign out</a></li>
+      </ul>
     </div>
 
   </body>

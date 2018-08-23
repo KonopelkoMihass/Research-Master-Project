@@ -29,7 +29,7 @@ class CodeViewController
 
 	setupSideModal()
 	{
-		var that = this;
+		var controller = this;
 		if (this.setSideModal)
 		{
             // The choice buttons
@@ -47,14 +47,14 @@ class CodeViewController
 			document.getElementById("submit-comment").addEventListener("click", function () {
 				var comment = document.getElementById("code-review-sidenav-comment-textbox").value;
 				document.getElementById("code-review-sidenav-comment-textbox").value = "";
-				that.closeSidenavAndSaveTheReview("comment", comment)
+				controller.closeSidenavAndSaveTheReview("comment", comment)
             });
 
+            var standards = app.standards.selectStandards( app.assignments.getById(this.model.getReviewedSubmission().assignmentID).standardUsed);
 
-            var standards = app.standards.standards;
+
 
             var categorySelectDiv = document.getElementById("code-review-category-select-div");
-            var subCategorySelectDiv = document.getElementById("code-review-subcategory-select-div");
 
             for (var key in standards) {
                 var categoryName = key;
@@ -65,45 +65,93 @@ class CodeViewController
                 categorySpan.innerHTML = categoryName;
                 categorySpan.className = "code-review-select-category-span";
 
-                categorySelectDiv.appendChild(categorySpan);
+                var subCategoryDiv = document.createElement("div");
+                subCategoryDiv.id = "code-review-select-subcategory-div#" + categoryName;
+
+
+				categorySelectDiv.appendChild(categorySpan);
+                categorySelectDiv.appendChild(subCategoryDiv);
 
                 categorySpan.addEventListener("click", function ()
 				{
+					var localSubCategoryDiv = document.getElementById("code-review-select-subcategory-div#" + this.id.split("#")[1]);
 					// clean sub category
-					subCategorySelectDiv.innerHTML = "";
 
-					//show it
-					document.getElementById("code-review-sidenav-issue-subcategory").style.display = "block";
-
-					if (that.categoryElemSelected !== "")
+					if (localSubCategoryDiv.innerHTML !== "")
 					{
-						that.categoryElemSelected.classList.remove("standard-bit-selected");
+						localSubCategoryDiv.innerHTML = "";
 					}
-					that.categoryElemSelected = this;
-					that.categoryElemSelected.classList.add("standard-bit-selected");
 
-                	var cat = this.id.split("#")[1];
-					var subcategories = standards[cat];
-					for (var i = 0; i < subcategories.length; i++)
+					else
 					{
-						var subcategorySpan = document.createElement("SPAN");
-						subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
-						subcategorySpan.innerHTML = subcategories[i].subCategory;
-						subcategorySpan.className = "code-review-select-subcategory-span";
-
-						app.uiFactory.insertTooltip(subcategorySpan, subcategories[i].description);
-
-						subcategorySpan.addEventListener("click", function ()
+						if (controller.categoryElemSelected !== "")
 						{
-							var lCategory =  this.id.split("#")[1];
-							var lSubCategory =  this.id.split("#")[2];
+							controller.categoryElemSelected.classList.remove("standard-bit-selected");
+						}
+						controller.categoryElemSelected = this;
+						controller.categoryElemSelected.classList.add("standard-bit-selected");
 
-							var resultStandard = app.standards.standards[lCategory][lSubCategory];
+						var cat = this.id.split("#")[1];
+						var subcategories = standards[cat];
 
-							that.closeSidenavAndSaveTheReview("issue", resultStandard)
-						});
+						for (var i = 0; i < subcategories.length; i++)
+						{
+							var spanContainer = document.createElement("SPAN");
 
-						subCategorySelectDiv.appendChild(subcategorySpan)
+							var subcategorySpan = document.createElement("SPAN");
+							subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
+							subcategorySpan.innerHTML = subcategories[i].subCategory;
+							subcategorySpan.className = "code-review-select-subcategory-span";
+
+							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
+
+							var img = document.createElement("IMG");
+							img.src = "resources/images/search.png";
+							img.id = "code-review-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
+							img.className = "picture-button";
+							img.style.float = "right";
+
+							img.addEventListener("mouseover",function ()
+							{
+								var category = this.id.split("#")[1];
+								var idNum = this.id.split("#")[2];
+
+								var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
+
+								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+								tootlipElem.style.visibility = "visible";
+								tootlipElem.style.opacity= "1";
+
+							});
+							img.addEventListener("mouseleave",function ()
+							{
+								var category = this.id.split("#")[1];
+								var idNum = this.id.split("#")[2];
+
+								var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
+
+								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+								tootlipElem.style.visibility = "hidden";
+								tootlipElem.style.opacity= "0";
+
+							});
+
+							subcategorySpan.addEventListener("click", function ()
+							{
+								var lCategory =  this.id.split("#")[1];
+								var lSubCategory =  this.id.split("#")[2];
+
+								var resultStandard = app.standards.standards[lCategory][lSubCategory];
+
+								controller.closeSidenavAndSaveTheReview("issue", resultStandard)
+								localSubCategoryDiv.innerHTML = "";
+							});
+
+							spanContainer.appendChild(subcategorySpan);
+							spanContainer.appendChild(img);
+
+							localSubCategoryDiv.appendChild(spanContainer);
+						}
 					}
                 })
             }
@@ -545,9 +593,6 @@ class CodeViewController
 
 
 		document.getElementById("code-review-sidenav-issue-category").style.display = "none";
-
-		document.getElementById("code-review-subcategory-select-div").innerHTML = "";
-		document.getElementById("code-review-sidenav-issue-subcategory").style.display = "none";
 
 
 		if (this.categoryElemSelected !== "")

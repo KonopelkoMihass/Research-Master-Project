@@ -49,7 +49,7 @@ class Tracker
                     if(docBodyIn[i].id !== "")
                     {
                         //console.log("TRACK -> ", docBodyIn[i].id);
-                        app.uiFactory.assignFuncToButtonViaID(docBodyIn[i].id, function(){tracker.track(this)} );
+                        app.utils.assignFuncToButtonViaID(docBodyIn[i].id, function(){tracker.track(this)} );
                     }
                 }
                 catch (e) {}

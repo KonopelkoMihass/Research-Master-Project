@@ -19,7 +19,7 @@ class AssignmentsStudentController
 		var controller = this;
 
 		var modalBody = app.modalContentManager.getModalContent("submit-assignment");
-		var modalData = app.uiFactory.createModal("add-assignment", "Submit Assignment", modalBody, true);
+		var modalData = app.utils.createModal("add-assignment", "Submit Assignment", modalBody, true);
 		modalData.modal.style.display = "block";
 
 		// Find assignment
@@ -32,12 +32,12 @@ class AssignmentsStudentController
 			}
 		}
 
-		// Description in modal.
-		document.getElementById("assignment-description").innerText = "Description: " + assignment.description;
-		document.getElementById("assignment-deadline").innerHTML = "Deadline: " + assignment.deadlineDate + " " + assignment.deadlineTime;
+
+		document.getElementById("assignment-description").innerText =  assignment.description;
+		document.getElementById("assignment-deadline").innerHTML = assignment.deadlineDate + " at " + assignment.deadlineTime;
 
 		// Adds logic to the filedrop area.
-		this.prepareFiledropArea();
+		this.prepareFiledropArea(assignment);
 
 		var submitBtn = modalData.submit;
 		submitBtn.addEventListener("click", function ()
@@ -104,13 +104,21 @@ class AssignmentsStudentController
 	}
 
 
-	prepareFiledropArea()
+	prepareFiledropArea(assignment)
 	{
 		var controller = this;
 
 		var fileselect = document.getElementById("file-select");
 		var	filedrag = document.getElementById("file-drag");
 		var submitbutton = document.getElementById("submit-button");
+
+
+		var type = assignment.language.toUpperCase();
+		if (type === "CPP") {
+				type = "CPP or *.H"
+		}
+		document.getElementById("file-drag").innerHTML = "drop *." + type + " code file here";
+
 
 		var fileDragHover = function(e) {
 			e.stopPropagation();
@@ -130,7 +138,16 @@ class AssignmentsStudentController
 		// output file information
 		var parseFile = function parseFile(file) {
 			var fileFormat = file.name.split(".")[1];
-			if (fileFormat === "js" ) {
+
+			var checkFormat = fileFormat === assignment.language;
+
+			if (assignment.language === "cpp") {
+				checkFormat = fileFormat === "cpp" || fileFormat === "h"
+			}
+
+
+			if (checkFormat)
+			{
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					controller.uploadFile(file.name, reader.result);

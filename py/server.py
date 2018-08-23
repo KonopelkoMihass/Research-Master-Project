@@ -41,6 +41,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def open(self):
 		pass
+		#standards_manager.download_standards_from_drive(self)
 		print ("WebSocket opened")
 
 
@@ -55,11 +56,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		elif message_type == "signin":
 			self.signin(message_data)
-
 			self.send_message("get_standard_successful", standards_manager.get_standard("cpp-1"))
 			self.send_message("get_standard_successful", standards_manager.get_standard("js-1"))
-
-
 
 
 
