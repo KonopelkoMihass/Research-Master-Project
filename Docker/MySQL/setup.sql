@@ -76,6 +76,9 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Challenges` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` MEDIUMTEXT NOT NULL,
   `issues` MEDIUMTEXT,
+  `average_time_seconds` VARCHAR(6),
+  `standard` VARCHAR(64),
+  `language` VARCHAR(16),
   PRIMARY KEY (`id`));
 
 

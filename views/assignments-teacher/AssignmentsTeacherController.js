@@ -46,6 +46,18 @@ class AssignmentsTeacherController
 			parentNode.removeChild(modalData.modal);
         });
 
+		// fill the select box
+		var selectStandard = document.getElementById("add-assignment-standards");
+		var standards = app.standards;
+
+		for (var key in standards.standardsInfo)
+		{
+			var option = document.createElement("option");
+			option.text = standards.standardsInfo[key]["name"];
+			option.value = standards.standardsInfo[key]["standard_id"];
+			selectStandard.add(option);
+		}
+
 
 	}
 

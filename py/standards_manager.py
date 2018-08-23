@@ -98,6 +98,7 @@ class StandardsManager:
         data["standard"] = self.standards[name]
         data["url"] = self.google_path + self.standards_ids[name]
         data["name"] = self.standards_names[name]
+        data["standard_id"] = name
         return data
 
 

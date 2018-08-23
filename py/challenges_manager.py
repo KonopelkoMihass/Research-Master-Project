@@ -11,6 +11,7 @@ class ChallengesManager:
         print("create_challenge")
         type = "teacher_create_challenge_successful"
         data = {}
+        print(message_data)
 
         try:
             self.database_manager.insert_into_table("Challenges", message_data)

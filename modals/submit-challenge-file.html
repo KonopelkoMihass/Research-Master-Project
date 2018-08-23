@@ -5,13 +5,19 @@
   </div>
    <hr>
    <div> <!--FILE UPLOAD BOX-->
+   <fieldset>
+       <legend>Select Coding Standard</legend>
+        <select id="create-challenge-standards">
+              <option disabled selected value> -- select an option -- </option>
+        </select>
+   </fieldset>
     <form id="upload" action="submit-challenge-file.html" method="POST" enctype="multipart/form-data">
       <fieldset>
-        <legend class="filebox-legend">File Upload</legend>
+        <legend>File Upload</legend>
          <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
          <div>
           <input type="file" id="challenge-file-select" name="fileselect[]" style="display: none;" />
-          <div id="challenge-file-drag">drop JS code file here</div>
+          <div id="challenge-file-drag">Select the coding standard to use</div>
         </div>
          <div id="challenge-file-submit-button">
 	      <button type="submit">Upload File</button>
@@ -20,9 +26,12 @@
      </fieldset>
     </form>
     <fieldset>
-        <legend class="filebox-legend">File Uploaded</legend>
+        <legend>File Uploaded</legend>
         <div id="challenge-file-loaded">
          </div>
      </fieldset>
+
+
+
    </div>
 </div>

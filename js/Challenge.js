@@ -6,7 +6,12 @@ class Challenge extends Model
         this.code = "";
         this.issues = {};
         this.startTime = 0;
+
+        this.averageTimeSeconds = 0;
+        this.standard = "";
+        this.language = "";
     }
+
 
     addCodeContent(content)
     {
@@ -23,11 +28,23 @@ class Challenge extends Model
         this.issues = issues;
     }
 
+    storeParameters(minutes, seconds, standard, language)
+    {
+        this.averageTimeSeconds = parseInt(minutes)*60 + parseInt(seconds);
+        this.standard = standard;
+        this.language = language;
+    }
+
+
     submitChallenge()
     {
         var data = {};
         data.code = this.code;
         data.issues = this.issues;
+        data.average_time_seconds = this.averageTimeSeconds;
+        data.standard = this.standard;
+        data.language = this.language;
+
 
         app.net.sendMessage("create_challenge", data);
     }
@@ -48,6 +65,9 @@ class Challenge extends Model
              {
                  this.code = data.code;
                  this.issues = data.issues;
+                 this.averageTimeSeconds = data.average_time_seconds;
+                 this.standard = data.standard;
+                 this.language = data.language;
 
 				 app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
 				 document.getElementById("view-title").innerText = "Complete the challenge";
@@ -118,7 +138,7 @@ class Challenge extends Model
 
 
         var score = (foundIssuesCount/totalIssues) * 100;
-        score -= falseIssuesCount * 5;
+        score -= falseIssuesCount * 15;
         return score;
     }
 }

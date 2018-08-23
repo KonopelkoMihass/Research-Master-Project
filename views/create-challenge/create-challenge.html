@@ -21,22 +21,35 @@
 </div>
 
 
-
+  <fieldset>
+        <legend>Issues</legend>
 <table id="create-challenge-data-table">
 <tr>
 <th>Location</th>
 <th>Type</th>
 <th>Content</th>
 </tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
 </table>
-<div id="create-challenge-submit-div">
-     <button id="create-challenge-submit" style="left: 37%; position: relative;">Submit Challenge</button>
-</div>
+      <br>
+ </fieldset>
+    <fieldset>
+        <legend>Average Completion Time</legend>
+        <div id="create-challenge-time">
+            Minutes: <input type="number" id="create-challenge-time-minutes" min="0" max="59" value="0">
+            Seconds: <input type="number" id="create-challenge-time-seconds" min="1" max="59" value="30">
+         </div>
+     </fieldset>
+
+
+
+    <fieldset>
+        <legend>Submit the Challenge?</legend>
+        <div id="create-challenge-submit-div">
+             <button id="create-challenge-submit">YES</button>
+        </div>
+     </fieldset>
+
+
 
 </div>
 

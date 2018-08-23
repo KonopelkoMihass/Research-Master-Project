@@ -102,4 +102,29 @@ class UIFactory
         elem.addEventListener("click", func);
     }
 
+    derivePrismLanguage(language)
+	{
+		if (language === "cpp") {
+			return Prism.languages.cpp;
+		}
+		else if (language === "js") {
+			return Prism.languages.javascript;
+		}
+		else if (language === "css") {
+			return Prism.languages.css;
+		}
+		else if (language === "html") {
+			return Prism.languages.markup;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 }

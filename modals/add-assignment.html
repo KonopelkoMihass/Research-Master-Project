@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 
 <div>
-  <div> <!--NAME TEXTBOX-->
-    <label>Name</label>
-    <br>
+  <fieldset> <!--NAME TEXTBOX-->
+     <legend>Name</legend>
+
     <input type="textbox" id="assignment-name" placeholder="Assignment name">
-  </div>
+  </fieldset>
 
-  <div> <!--DEADLINE DATE-->
-    <label>Submission Deadline</label>
-    <br>
+  <fieldset> <!--DEADLINE DATE-->
+      <legend>Submission Deadline</legend>
     <input id="assignment-submission-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
-  </div>
+  </fieldset>
 
-   <div> <!--DEADLINE DATE-->
-    <label>Review Deadline</label>
-    <br>
+   <fieldset> <!--DEADLINE DATE-->
+       <legend>Review Deadline</legend>
     <input id="assignment-review-deadline" type="datetime-local" min="" max="2025-12-31T23:59">
-  </div>
+  </fieldset>
 
-  <div> <!--DESCRIPTION TEXTAREA-->
-    <label>Description</label>
-    <br>
+  <fieldset> <!--DESCRIPTION TEXTAREA-->
+      <legend>Description</legend>
     <textarea rows="15" cols="50" id="assignment-description" style="resize:none" placeholder="Insert description here!"></textarea>
-  </div>
+  </fieldset>
 
-   <div> <!--REVIEWER COUNT TEXTBOX-->
-    <label>Minimum reviewers per submission</label>
-    <br>
+   <fieldset> <!--REVIEWER COUNT TEXTBOX-->
+       <legend>Minimum reviewers per submission</legend>
+
     <input type="number" id="assignment-total-reviewers" min="1" value="1">
-  </div>
+  </fieldset>
+
+
+    <fieldset>
+       <legend>Select Coding Standard</legend>
+        <select id="add-assignment-standards">
+        </select>
+   </fieldset>
 
 
 </div>

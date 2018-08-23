@@ -22,7 +22,6 @@ class ChallengeController
 		this.minutes = 0;
 
 		this.timer = undefined;
-
 	}
 
 	setup()
@@ -35,7 +34,7 @@ class ChallengeController
 		var that = this;
 		if (this.setSideModal)
 		{
-            var standards = app.standards.standards;
+            var standards =  app.standards.selectStandards(this.model.standard);
 
             var categorySelectDiv = document.getElementById("challenge-code-category-select-div");
             var subCategorySelectDiv = document.getElementById("challenge-code-subcategory-select-div");
@@ -114,7 +113,7 @@ class ChallengeController
 
 	prepareCodeHTMLs() {
         // Get files and parse them into a highlighted HTML.  Then put them in a parsedCodeHTMLs.
-		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, Prism.languages.cpp);
+		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, app.uiFactory.derivePrismLanguage(this.model.language));
 
 		// Now we insert it into a <code> area
 		document.getElementById("challenge-code-review").innerHTML = this.parsedCodeHTMLs["challenge"];
@@ -142,10 +141,12 @@ class ChallengeController
 
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
+
 			controller.parsedCodeHTMLs = {};
 			var time = controller.stopTimer();
-			var score = controller.model.calculateScore(controller.issues);
+			var grade = controller.model.calculateScore(controller.issues);
 
+			//WORK MORE ON MODAL.
 
 			var modalBody = app.modalContentManager.getModalContent("challenge-end");
 			var modalData = app.uiFactory.createModal("challenge-end", "Challenge Score", modalBody, false);
@@ -162,9 +163,38 @@ class ChallengeController
 				});
 			}
 
-			document.getElementById("challenge-end-grade").innerText = "Grade: "+score+"%";
-			document.getElementById("challenge-end-time-taken").innerText = "Time Taken: "+time;
+			document.getElementById("challenge-end-grade").innerText = "Grade: "+grade+"%";
+			document.getElementById("challenge-end-time-taken").innerText = time;
+			document.getElementById("challenge-end-average-time").innerText = controller.stringifyAverageTime();
+
+			controller.saveChallengeResults(grade);
+			controller.issues = {};
+
 		});
+	}
+
+	stringifyAverageTime()
+	{
+		var timeInSeconds = this.model.averageTimeSeconds;
+		var minutesInt = ~~(timeInSeconds/60);
+		var secondsInt = (timeInSeconds%60);
+
+		var timeStr = "";
+
+		if (minutesInt < 10) {
+			timeStr = "0"+minutesInt + ":";
+		}
+		else {
+			timeStr = minutesInt + ":";
+		}
+
+		if (secondsInt < 10) {
+			timeStr += "0"+secondsInt;
+		}
+		else {
+			timeStr += secondsInt;
+		}
+		return timeStr;
 	}
 
 
@@ -470,7 +500,7 @@ class ChallengeController
 				controller.minutes++;
 				controller.seconds = 0;
 			}
-			document.getElementById("challenge-timer").innerText = "Time: " +
+			document.getElementById("challenge-timer").innerText =
 				(controller.minutes ? (controller.minutes > 9 ? controller.minutes : "0" + controller.minutes) : "00") +
 				":" +
 				(controller.seconds > 9 ? controller.seconds : "0" + controller.seconds);
@@ -486,11 +516,12 @@ class ChallengeController
 
 		this.seconds = 0;
 		this.minutes = 0;
-		document.getElementById("challenge-timer").innerText = "Time: 00:00";
+		document.getElementById("challenge-timer").innerText = "00:00";
 		return timeTaken;
 	}
 
-
-
-
+	saveChallengeResults(grade)
+	{
+		// WORK FROM HERE.
+	}
 }

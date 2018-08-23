@@ -22,11 +22,11 @@ class SeeStandardsStudentView extends View
 				table.deleteRow(rowCount);
 			}
 
-			for (var key in model.standardsURLs)
+			for (var key in model.standardsInfo)
 			{
 				var link = document.createElement("a");
-				link.setAttribute("href",  model.standardsURLs[key]);
-				var linkText = document.createTextNode(key);
+				link.setAttribute("href",  model.standardsInfo[key]["url"]);
+				var linkText = document.createTextNode(model.standardsInfo[key]["name"]);
 				link.appendChild(linkText);
 
 				var row = table.insertRow(table.rows.length);

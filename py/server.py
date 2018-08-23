@@ -252,10 +252,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		self.send_message(type, {})
 
 	def create_challenge(self, message_data):
-		challenge = {}
-		challenge["code"] = message_data["code"]
-		challenge["issues"] = json.dumps(message_data["issues"])
-		message = challenges_manager.create_challenge(challenge)
+		message_data["code"] = message_data["code"]
+		message_data["issues"] = json.dumps(message_data["issues"])
+		message = challenges_manager.create_challenge(message_data)
 		self.send_message(message[0], message[1])
 
 	def get_challenge(self):
@@ -269,6 +268,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		print("index challenge: ", index)
 		challenge = challenges[index]
 		challenge["issues"] =  json.loads(challenge["issues"])
+		print(challenge)
 
 		#except:
 		#	type = "get_challenge_failed"

@@ -17,12 +17,39 @@ class CreateChallengeController
 		this.allowSelection = true;
 
 		this.issues = {};
+		this.standardUsed = "";
+		this.codingLanguageUsed = "";
 	}
 
 	setup()
 	{
 		console.log(this.model);
 	}
+
+	correctTimeInput()
+	{
+		var minutesElem = document.getElementById("create-challenge-time-minutes");
+		var secondsElem = document.getElementById("create-challenge-time-seconds");
+
+		minutesElem.addEventListener("input", function(){
+			if (this.value > 60)
+			{
+        		this.value = 60;
+			}
+		});
+
+		secondsElem.addEventListener("input", function(){
+			if (this.value > 60) {
+				var overflow = ~~(this.value/ 60); // will return whole number.
+				minutesElem.value = parseInt(minutesElem.value) + parseInt(overflow);
+				if (minutesElem.value > 60) {
+					minutesElem.value = 60;
+					this.value = 0;
+				}
+        		this.value = this.value % 60;
+			}
+		});
+    }
 
 
 	createSubmitChallengeFileModal()
@@ -39,14 +66,40 @@ class CreateChallengeController
 			closes[i].addEventListener("click", function () {
 				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
 			});
-
 		}
 
 		// Adds logic to the filedrop area.
 		this.prepareFiledropArea();
 
+		// fill the select box
+		var selectStandard = document.getElementById("create-challenge-standards");
+
+		var standards = app.standards;
+		for (var key in standards.standardsInfo)
+		{
+			var option = document.createElement("option");
+			option.text = standards.standardsInfo[key]["name"] + " Coding Standard";
+			option.value = key;
+			selectStandard.add(option);
+		}
+
+		selectStandard.addEventListener("change", function()
+		{
+			var type = this.value.split('-')[0].toUpperCase();
+			if (type === "CPP") {
+				type = "CPP or *.H"
+			}
+
+			controller.standardUsed = this.value;
+			controller.codingLanguageUsed = this.value.split('-')[0];
+
+			document.getElementById("challenge-file-drag").innerHTML = "drop *." + type + " code file here";
+		});
+
 		var submitBtn = modalData.submit;
-		submitBtn.addEventListener("click", function () {
+
+		submitBtn.addEventListener("click", function ()
+		{
 			if (controller.model.code === "")
 			{
 				alert("You did not submit a file");
@@ -54,6 +107,9 @@ class CreateChallengeController
 			else
 			{
 				document.getElementById("view-title").innerText = "Create Challenge";
+
+				controller.correctTimeInput();
+				controller.setStandardAndLanguageUsed();
 				controller.cleanUp();
 				controller.prepareCodeHTMLs();
 				controller.setupSideModal();
@@ -64,6 +120,13 @@ class CreateChallengeController
 				parentNode.removeChild(modalData.modal);
 			}
         });
+	}
+
+	setStandardAndLanguageUsed()
+	{
+		var selectStandard = document.getElementById("create-challenge-standards");
+		this.standardUsed = selectStandard.options[selectStandard.selectedIndex].value;
+		this.codingLanguageUsed = this.standardUsed.split('-')[0];
 	}
 
 	prepareFiledropArea()
@@ -95,7 +158,14 @@ class CreateChallengeController
 		var parseFile = function parseFile(file)
 		{
 			var fileFormat = file.name.split(".")[1];
-			if (fileFormat === "js")
+			var checkFormat = fileFormat === controller.codingLanguageUsed;
+
+			if (controller.codingLanguageUsed === "cpp") {
+				checkFormat = fileFormat === "cpp" || fileFormat === "h"
+			}
+
+
+			if (checkFormat)
 			{
 				var reader = new FileReader();
 				reader.onload = function(e)
@@ -152,13 +222,18 @@ class CreateChallengeController
 			var fileDiv = document.createElement("div");
 			fileDiv.className = "file-uploaded-box";
 
-
 			var deleteSpan = document.createElement("SPAN");
 			deleteSpan.innerHTML = "&#10006;  ";
 			deleteSpan.id =  "delete-file#" + this.fileNameParsed;
 			deleteSpan.addEventListener("click", function()
 			{
 				controller.deleteFile(this.id.split("#")[1]);
+			});
+
+			// if a standard is changed - we drop the uploaded file
+			var selectStandard = document.getElementById("create-challenge-standards");
+			selectStandard.addEventListener("change", function() {
+				deleteSpan.click();
 			});
 
 			fileDiv.appendChild(deleteSpan);
@@ -172,14 +247,12 @@ class CreateChallengeController
 		}
 	}
 
-
-
 	setupSideModal()
 	{
 		var that = this;
 		if (this.setSideModal)
 		{
-            var standards = app.standards.standards;
+            var standards = app.standards.selectStandards(this.standardUsed);
 
             var categorySelectDiv = document.getElementById("create-challenge-code-category-select-div");
             var subCategorySelectDiv = document.getElementById("create-challenge-code-subcategory-select-div");
@@ -209,8 +282,6 @@ class CreateChallengeController
 					}
 					that.categoryElemSelected = this;
 					that.categoryElemSelected.classList.add("standard-bit-selected");
-
-
 
                 	var cat = this.id.split("#")[1];
 					var subcategories = standards[cat];
@@ -257,8 +328,7 @@ class CreateChallengeController
 	}
 
 	prepareCodeHTMLs() {
-        // Get files and parse them into a highlighted HTML.  Then put them in a parsedCodeHTMLs.
-		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, Prism.languages.cpp);
+		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, app.uiFactory.derivePrismLanguage(this.codingLanguageUsed));
 
 		// Now we insert it into a <code> area
 		document.getElementById("create-challenge-code-review").innerHTML = this.parsedCodeHTMLs["challenge"];
@@ -272,7 +342,7 @@ class CreateChallengeController
 
 	allowReview()
 	{
-		var that = this;
+		var controller = this;
 
 		document.getElementById("create-challenge-submit-div").style.display = "block";
 
@@ -283,19 +353,22 @@ class CreateChallengeController
 			oldEl.parentNode.replaceChild(newEl, oldEl);
 		};
 
-
 		document.getElementById("create-challenge-submit").addEventListener("click", function ()
 		{
-			that.parsedCodeHTMLs = {};
+			controller.parsedCodeHTMLs = {};
+			controller.model.storeIssues(controller.issues);
 
-			that.model.storeIssues(that.issues);
-			that.model.submitChallenge();
+			var minutes = document.getElementById("create-challenge-time-minutes").value;
+			var seconds = document.getElementById("create-challenge-time-seconds").value;
+
+			controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed);
+			controller.model.submitChallenge();
 
 			console.log("Challenge is the following");
 			console.log("Text");
-			console.log(that.model.code);
+			console.log(controller.model.code);
 			console.log("Issues");
-			console.log(that.issues);
+			console.log(controller.issues);
 
 			
 			app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
@@ -304,7 +377,6 @@ class CreateChallengeController
 		});
 	}
 
-
 	setReviewData(filename)
 	{
 		var reviewTable = document.getElementById("create-challenge-data-table");
@@ -312,6 +384,7 @@ class CreateChallengeController
 		while (--rowCount) {
 			reviewTable.deleteRow(rowCount);
 		}
+
 
 		var reviewDict = {};
 		if (this.allFilesReview[filename]) {
@@ -360,8 +433,6 @@ class CreateChallengeController
 			codeSpan.classList.add("selected");
 		}
 	}
-
-
 
 	tweakLineNumbers(filename, pressable)
 	{
@@ -557,8 +628,6 @@ class CreateChallengeController
 		document.getElementById(id).classList.remove("reviewed");
 		document.getElementById(id).classList.add("selected");
 
-
-
 		this.codeBitReviewed = "";
 		this.codeElementIdReviewed = "";
 
@@ -600,12 +669,4 @@ class CreateChallengeController
 
 		this.allowSelection = true;
 	}
-
-
-
-
-
-
-
-
 }
