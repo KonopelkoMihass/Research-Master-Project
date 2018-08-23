@@ -90,8 +90,8 @@ class UIFactory
 		elementToInsertInto.className += " tooltip";
 
 		var tooltipSpan = document.createElement("SPAN");
-		tooltipSpan.className = "tooltiptext";
 		tooltipSpan.innerHTML = tooltip;
+		tooltipSpan.className = "tooltiptext";
 
 		elementToInsertInto.appendChild(tooltipSpan);
 	}
