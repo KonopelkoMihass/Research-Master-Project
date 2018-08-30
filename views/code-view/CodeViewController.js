@@ -51,9 +51,6 @@ class CodeViewController
             });
 
             var standards = app.standards.selectStandards( app.assignments.getById(this.model.getReviewedSubmission().assignmentID).standardUsed);
-
-
-
             var categorySelectDiv = document.getElementById("code-review-category-select-div");
 
             for (var key in standards) {

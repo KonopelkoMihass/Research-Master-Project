@@ -59,8 +59,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			self.send_message("get_standard_successful", standards_manager.get_standard("cpp-1"))
 			self.send_message("get_standard_successful", standards_manager.get_standard("js-1"))
 
-
-
 		elif message_type == "add_assignment":
 			self.add_assignment(message_data)
 
@@ -97,8 +95,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			self.create_challenge(message_data)
 
 		elif message_type == "get_challenge":
-			self.get_challenge()
+			self.get_challenge(message_data)
 
+		elif message_type == "get_challenge_chain":
+			self.get_challenge_chain(message_data)
 
 
 
@@ -255,23 +255,21 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		message = challenges_manager.create_challenge(message_data)
 		self.send_message(message[0], message[1])
 
-	def get_challenge(self):
-		type = "get_challenge_successful"
-		challenge = {}
+	def get_challenge(self, message_data):
+		data = challenges_manager.get_challenge(message_data)
+		self.send_message(data[0], data[1])
 
-		#try:
-		challenges = database_manager.select_all_from_table("Challenges")
-		count = len(challenges)
-		index = random.randint(0, count-1)
-		print("index challenge: ", index)
-		challenge = challenges[index]
-		challenge["issues"] =  json.loads(challenge["issues"])
-		print(challenge)
 
-		#except:
-		#	type = "get_challenge_failed"
+	def get_challenge_chain(self, message_data):
+		data = challenges_manager.get_challenge_chain(message_data)
+		self.send_message(data[0], data[1])
 
-		self.send_message(type, challenge)
+
+
+
+
+
+
 
 	def on_close(self):
 		print ("WebSocket closed")

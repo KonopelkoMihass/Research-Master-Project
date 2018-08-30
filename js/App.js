@@ -227,7 +227,7 @@ class App
 		app.utils.assignFuncToButtonViaID("mps-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE)
 			{
-				app.challenge.getChallenge();
+				app.challenge.getChallengeChain();
 			}
 		});
 
@@ -326,7 +326,7 @@ getRandomAdjective = function () {
 		"mealy","mushy","odd","poor","powerful","rich","shy","tender","vast","ashy","black","blue",
 		"gray","green","icy","orange","purple","red","white","yellow"];
 
-	var result = Math.floor(Math.random() * adjectives.length);
+	var result = app.utils.getRandomInt(adjectives.length);
 	return adjectives[result].charAt(0).toUpperCase() + adjectives[result].slice(1) + " ";
 };
 

@@ -84,7 +84,6 @@ class Utilities
 		return elementDict;
 	}
 
-
 	insertTooltip(elementToInsertInto, tooltip)
 	{
 		elementToInsertInto.className += " tooltip";
@@ -92,13 +91,12 @@ class Utilities
 		var tooltipSpan = document.createElement("SPAN");
 		tooltipSpan.innerHTML = tooltip;
 		tooltipSpan.className = "tooltiptext";
+		tooltipSpan.style.visibility = "hidden";
+		tooltipSpan.style.opacity= "0";
+
 
 		elementToInsertInto.appendChild(tooltipSpan);
 	}
-
-
-
-
 
 	assignFuncToButtonViaID(elementID, func)
 	{
@@ -122,10 +120,16 @@ class Utilities
 		}
 	}
 
-
 	readableDate(dateStr)
 	{
 		var date = new Date(dateStr);
 		return date.toDateString();
 	}
+
+	getRandomInt(max)
+	{
+		  return Math.floor(Math.random() * Math.floor(max));
+	}
+
+
 }

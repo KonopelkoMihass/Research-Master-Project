@@ -276,6 +276,32 @@ class DatabaseManager:
 
 
 
+	def get_challenges_for_chain(self, language):
+		challenge_ids = []
 
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+		query = ("SELECT Challenges.id FROM Challenges WHERE "
+				 "Challenges.standard='"+language+"';")
 
+		cursor.execute(query)
+		challenge_ids = cursor.fetchall()
 
+		cursor.close()
+		connector.close()
+
+		return challenge_ids
+
+	def get_challenge(self, id):
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+		query = ("SELECT * FROM Challenges WHERE "
+				 "Challenges.id='"+str(id)+"';")
+
+		cursor.execute(query)
+		challenge = cursor.fetchall()[0]
+
+		cursor.close()
+		connector.close()
+
+		return challenge

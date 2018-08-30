@@ -41,7 +41,12 @@ class MessageHandler
 			TEACHER_CREATE_CHALLENGE_FAILED:"teacher_create_challenge_failed",
 
 			GET_CHALLENGE_SUCCESSFUL:"get_challenge_successful",
-			GET_CHALLENGE_FAILED:"get_challenge_failed"
+			GET_CHALLENGE_FAILED:"get_challenge_failed",
+
+			GET_CHALLENGE_CHAIN_SUCCESSFUL:"get_challenge_chain_successful",
+
+
+
 		};
 	}
 

@@ -16,7 +16,7 @@ class CreateChallengeController
 		this.fileNameParsed = "";
 		this.allowSelection = true;
 
-		this.issues = {};
+		this.issuesFound = {};
 		this.standardUsed = "";
 		this.codingLanguageUsed = "";
 	}
@@ -93,7 +93,7 @@ class CreateChallengeController
 			controller.standardUsed = this.value;
 			controller.codingLanguageUsed = this.value.split('-')[0];
 
-			document.getElementById("challenge-file-drag").innerHTML = "drop *." + type + " code file here";
+			document.getElementById("challenge-file-drag").innerHTML = "<br><br><br><br>drop *." + type + " code file here<br><br><br><br>";
 		});
 
 		var submitBtn = modalData.submit;
@@ -118,6 +118,10 @@ class CreateChallengeController
 
 				var parentNode = modalData.modal.parentNode;
 				parentNode.removeChild(modalData.modal);
+
+
+
+
 			}
         });
 	}
@@ -270,7 +274,6 @@ class CreateChallengeController
 				categorySelectDiv.appendChild(categorySpan);
                 categorySelectDiv.appendChild(subCategoryDiv);
 
-
                 categorySpan.addEventListener("click", function ()
 				{
 					var localSubCategoryDiv = document.getElementById("create-challenge-code-standard-subcategory-div#" + this.id.split("#")[1]);
@@ -348,7 +351,7 @@ class CreateChallengeController
 							spanContainer.appendChild(subcategorySpan);
 							spanContainer.appendChild(img);
 
-							subCategoryDiv.appendChild(spanContainer)
+							localSubCategoryDiv.appendChild(spanContainer)
 						}
 					}
                 });
@@ -399,7 +402,7 @@ class CreateChallengeController
 		document.getElementById("create-challenge-submit").addEventListener("click", function ()
 		{
 			controller.parsedCodeHTMLs = {};
-			controller.model.storeIssues(controller.issues);
+			controller.model.storeIssues(controller.issuesFound);
 
 			var minutes = document.getElementById("create-challenge-time-minutes").value;
 			var seconds = document.getElementById("create-challenge-time-seconds").value;
@@ -407,14 +410,19 @@ class CreateChallengeController
 			controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed);
 			controller.model.submitChallenge();
 
-			console.log("Challenge is the following");
-			console.log("Text");
-			console.log(controller.model.code);
-			console.log("Issues");
-			console.log(controller.issues);
-
-			
 			app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+
+
+			controller.issuesFound = {};
+			controller.standardUsed = "";
+			controller.codingLanguageUsed = "";
+
+			// Now we insert it into a <code> area
+			document.getElementById("create-challenge-code-review").innerHTML = "";
+
+
+
+
 
 			removeEventListener();
 		});
@@ -606,7 +614,7 @@ class CreateChallengeController
 
 	deleteCodeBit(id, filename)
 	{
-		delete this.issues[id];
+		delete this.issuesFound[id];
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
@@ -615,7 +623,7 @@ class CreateChallengeController
 
 	deleteLineBit(id, filename)
 	{
-		delete this.issues[id];
+		delete this.issuesFound[id];
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
@@ -682,7 +690,7 @@ class CreateChallengeController
 		}
 
 
-		this.issues[id] = codeBit;
+		this.issuesFound[id] = codeBit;
 
 		var reviewTable = document.getElementById("create-challenge-data-table");
 		var row = reviewTable.insertRow(-1);

@@ -152,7 +152,7 @@ class Tracker
             }
 
             app.net.sendMessage("save_logs", {"user_id":this.userID, "logs": this.logs});
-            console.log("logs", this.logs);
+            //console.log("logs", this.logs);
             this.logs = [];
         }
     }

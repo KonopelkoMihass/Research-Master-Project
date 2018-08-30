@@ -178,7 +178,7 @@ class EmailSystem:
 		msg = MIMEMultipart()
 		msg['From'] = self.EMAIL_ADDRESS
 		msg['To'] = student["email"]
-		msg['Subject'] = "Your Repo was reviewed.  Solve issues."
+		msg['Subject'] = "Your Repo was reviewed.  Solve issuesFound."
 		content = self.letter_redo.format( student["full_name"], pull_url)
 
 		msg.attach(MIMEText(content, 'html'))

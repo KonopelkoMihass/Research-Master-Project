@@ -75,28 +75,28 @@ class StandardsManager:
         node_list = soup.find_all(["h2", "h3"])
 
         standard = []
-        standard_bit = {}
-
         for n in node_list:
             if n.get_text() == "":
                 pass
 
             if n.name == "h2":
-                standard_bit["category"] = n.get_text().rstrip()
-
-            if n.name == "h3":
-                standard_bit["sub_category"] = n.get_text().rstrip()
-                standard_bit["description"] = ""
-
+                category = n.get_text().rstrip()
                 for elem in n.next_siblings:
-                    if elem.name == 'p' or elem.name == 'ul':
-                        description = str(elem)
-                        standard_bit["description"] += description
-                    else:
-                        category = standard_bit["category"]
-                        standard_bit = {"category": category}
+                    if elem.name == "h3":
+                        standard_bit = {}
+                        standard_bit["category"] = category
+                        standard_bit["sub_category"] = elem.get_text().rstrip()
+                        standard_bit["description"] = ""
                         standard_bit["name"] = key
+
+                        for sub_elem in elem.next_siblings:
+                            if sub_elem.name == 'p' or sub_elem.name == 'ul':
+                                description = str(sub_elem)
+                                standard_bit["description"] += description
+                            else:
+                                break
                         standard.append(standard_bit)
+                    if elem.name == "h2":
                         break
 
         return standard

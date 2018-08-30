@@ -16,7 +16,7 @@ class ChallengeController
 		this.fileNameParsed = "";
 		this.allowSelection = true;
 
-		this.issues = {};
+		this.issuesFound = {};
 
 		this.seconds = 0;
 		this.minutes = 0;
@@ -99,23 +99,21 @@ class ChallengeController
 								var idNum = this.id.split("#")[2];
 
 								var subCatSpan = document.getElementById("challenge-code-category#" + category + "#" + idNum);
-
 								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+
 								tootlipElem.style.visibility = "visible";
 								tootlipElem.style.opacity= "1";
 
 							});
+
 							img.addEventListener("mouseleave",function ()
 							{
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
-
 								var subCatSpan = document.getElementById("challenge-code-category#" + category + "#" + idNum);
-
 								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
 								tootlipElem.style.visibility = "hidden";
 								tootlipElem.style.opacity= "0";
-
 							});
 
 
@@ -133,7 +131,7 @@ class ChallengeController
 							spanContainer.appendChild(subcategorySpan);
 							spanContainer.appendChild(img);
 
-							subCategoryDiv.appendChild(spanContainer);
+							localSubCategoryDiv.appendChild(spanContainer);
 
 						}
 					}
@@ -176,47 +174,72 @@ class ChallengeController
 
 		document.getElementById("challenge-submit-div").style.display = "block";
 
-		var removeEventListener = function ()
-		{
-			var oldEl = document.getElementById("challenge-submit");
-			var newEl = oldEl.cloneNode(true);
-			oldEl.parentNode.replaceChild(newEl, oldEl);
-		};
-
-
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
+			controller.saveChallengeResults();
 
-			controller.parsedCodeHTMLs = {};
-			var time = controller.stopTimer();
-			var grade = controller.model.calculateScore(controller.issues);
-
-			//WORK MORE ON MODAL.
-
-			var modalBody = app.modalContentManager.getModalContent("challenge-end");
-			var modalData = app.utils.createModal("challenge-end", "Challenge Score", modalBody, false);
-			document.body.appendChild(modalData.modal);
-			modalData.modal.style.display = "block";
-
-			var closes = modalData.closes;
-			for (var i = 0; i < closes.length; i++)
-			{
-				closes[i].addEventListener("click", function ()
-				{
-					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
-					removeEventListener();
-				});
+			if (controller.model.lastChallenge) {
+				controller.showChallengeEndScreen();
 			}
+			else {
+				controller.model.getChallenge();
+			}
+			controller.issuesFound = {};
+			controller.standardUsed = "";
+			controller.codingLanguageUsed = "";
 
-			document.getElementById("challenge-end-grade").innerText = "Grade: "+grade+"%";
-			document.getElementById("challenge-end-time-taken").innerText = time;
-			document.getElementById("challenge-end-average-time").innerText = controller.stringifyAverageTime();
 
-			controller.saveChallengeResults(grade);
-			controller.issues = {};
-
+			controller.stopTimer();
 		});
 	}
+
+	saveChallengeResults()
+	{
+		var data = {};
+		data.time = 60 * this.minutes + this.seconds;
+		data.grade = this.model.calculateScore(this.issuesFound);
+		this.model.saveChallengeResults(data);
+
+		this.model.issues = {};
+	}
+
+
+
+	showChallengeEndScreen()
+	{
+		this.parsedCodeHTMLs = {};
+
+		var results = this.model.getOverallPerformance();
+
+
+
+		var modalBody = app.modalContentManager.getModalContent("challenge-end");
+		var modalData = app.utils.createModal("challenge-end", "Challenge Score", modalBody, false);
+
+		document.body.appendChild(modalData.modal);
+		modalData.modal.style.display = "block";
+		var closes = modalData.closes;
+		for (var i = 0; i < closes.length; i++)
+		{
+			closes[i].addEventListener("click", function ()
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
+				var oldEl = document.getElementById("challenge-submit");
+				var newEl = oldEl.cloneNode(true);
+				oldEl.parentNode.replaceChild(newEl, oldEl);
+			});
+		}
+
+		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
+		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
+
+
+		//document.getElementById("challenge-end-average-time").innerText = this.stringifyAverageTime();
+
+
+	}
+
+
 
 	stringifyAverageTime()
 	{
@@ -241,7 +264,6 @@ class ChallengeController
 		}
 		return timeStr;
 	}
-
 
 	setReviewData(filename)
 	{
@@ -298,8 +320,6 @@ class ChallengeController
 			codeSpan.classList.add("selected");
 		}
 	}
-
-
 
 	tweakLineNumbers(filename, pressable)
 	{
@@ -425,20 +445,17 @@ class ChallengeController
 
 	deleteCodeBit(id, filename)
 	{
-		delete this.issues[id];
+		delete this.issuesFound[id];
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
-
 
 	deleteLineBit(id, filename)
 	{
-		delete this.issues[id];
+		delete this.issuesFound[id];
 		var rowToDelete = document.getElementById(id + "-row");
 		rowToDelete.parentNode.removeChild(rowToDelete);
 	}
-
 
 	update()
 	{
@@ -464,7 +481,6 @@ class ChallengeController
 			}
         });
     }
-
 
 
 	closeSidenavAndSaveTheReview(type, content)
@@ -502,7 +518,7 @@ class ChallengeController
 		}
 
 
-		this.issues[id] = codeBit;
+		this.issuesFound[id] = codeBit;
 
 		var reviewTable = document.getElementById("challenge-data-table");
 		var row = reviewTable.insertRow(-1);
@@ -557,11 +573,9 @@ class ChallengeController
 		this.seconds = 0;
 		this.minutes = 0;
 		document.getElementById("challenge-timer").innerText = "00:00";
+
 		return timeTaken;
 	}
 
-	saveChallengeResults(grade)
-	{
-		// WORK FROM HERE.
-	}
+
 }

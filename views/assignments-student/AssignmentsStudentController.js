@@ -117,7 +117,7 @@ class AssignmentsStudentController
 		if (type === "CPP") {
 				type = "CPP or *.H"
 		}
-		document.getElementById("file-drag").innerHTML = "drop *." + type + " code file here";
+		document.getElementById("file-drag").innerHTML = "<br><br><br><br>drop *." + type + " code file here<br><br><br><br>";
 
 
 		var fileDragHover = function(e) {

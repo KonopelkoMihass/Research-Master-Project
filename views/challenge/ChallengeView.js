@@ -12,22 +12,22 @@ class ChallengeView extends View
 
 	onNotify (model, messageType)
 	{
-
+		if (messageType === "get_challenge_successful")
+		{
+			this.controller.cleanUp();
+			this.controller.prepareCodeHTMLs();
+			this.controller.setReviewData();
+			this.controller.setupSideModal();
+			this.controller.startTimer();
+		}
 	}
 
 
 	setupView()
 	{
-		this.controller.cleanUp();
-		this.controller.prepareCodeHTMLs();
-		this.controller.setupSideModal();
 		this.controller.allowReview();
-		this.controller.setReviewData();
 
-		this.controller.startTimer();
 	}
-
-
 
 
 	show()
