@@ -45,9 +45,7 @@ class CookieManager
 
     deleteCookie(cookieName)
     {
-        var date = new Date();
-        date.setTime(date.getTime() - (1000*60*60*24));
-        var expires = "expires=" + date.toUTCString();
+        var expires = "expires=Thu, 01 Jan 1970 00:00:01 GMT";
         window.document.cookie = cookieName + "=" + ";" + expires;
     }
 }

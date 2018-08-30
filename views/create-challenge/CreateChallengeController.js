@@ -118,10 +118,6 @@ class CreateChallengeController
 
 				var parentNode = modalData.modal.parentNode;
 				parentNode.removeChild(modalData.modal);
-
-
-
-
 			}
         });
 	}
@@ -258,6 +254,8 @@ class CreateChallengeController
 		{
             var standards = app.standards.selectStandards(this.standardUsed);
             var categorySelectDiv = document.getElementById("create-challenge-code-category-select-div");
+			categorySelectDiv.innerHTML = "";
+
 
             for (var key in standards) {
                 var categoryName = key;
@@ -416,6 +414,8 @@ class CreateChallengeController
 			controller.issuesFound = {};
 			controller.standardUsed = "";
 			controller.codingLanguageUsed = "";
+			controller.setSideModal = true;
+			controller.cleanUp();
 
 			// Now we insert it into a <code> area
 			document.getElementById("create-challenge-code-review").innerHTML = "";

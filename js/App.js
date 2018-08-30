@@ -255,8 +255,6 @@ class App
 			}
 		});
 
-		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
-
 
 		app.utils.assignFuncToButtonViaID("mps-feedback-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
@@ -307,6 +305,8 @@ class App
 			}
 		});
 
+
+		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
 		app.utils.assignFuncToButtonViaID("mps-signout-button",function(){app.user.signout();});
 	}
 

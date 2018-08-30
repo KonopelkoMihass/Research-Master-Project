@@ -173,7 +173,6 @@ class ChallengeController
 		var controller = this;
 
 		document.getElementById("challenge-submit-div").style.display = "block";
-
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
 			controller.saveChallengeResults();
@@ -210,7 +209,6 @@ class ChallengeController
 		this.parsedCodeHTMLs = {};
 
 		var results = this.model.getOverallPerformance();
-
 
 
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
