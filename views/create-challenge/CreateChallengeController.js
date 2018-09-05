@@ -306,13 +306,14 @@ class CreateChallengeController
 							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
 
 							var img = document.createElement("IMG");
-							img.src = "resources/images/search.png";
+							img.src = "resources/images/info.png";
 							img.id = "create-challenge-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
 
 							img.addEventListener("mouseover",function ()
 							{
+								this.style.filter = "invert(100%)";
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 
@@ -325,6 +326,7 @@ class CreateChallengeController
 							});
 							img.addEventListener("mouseleave",function ()
 							{
+								this.style.filter = "invert(0%)";
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 
@@ -583,10 +585,8 @@ class CreateChallengeController
 
 	tweakCodeBlock(filename, pressable)
 	{
-		var controller = this;
-
 		this.tweakLineNumbers(filename, pressable);
-		this.tweakTokens(filename, pressable);
+		//this.tweakTokens(filename, pressable);
 	}
 
 	addCodeBit(id, content, filename)
@@ -668,7 +668,6 @@ class CreateChallengeController
 			this.categoryElemSelected = "";
 		}
 
-
 		var codeBit = this.codeBitReviewed;
 		var id = this.codeElementIdReviewed;
 
@@ -699,20 +698,17 @@ class CreateChallengeController
 
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
-		var cell2 = row.insertCell(2);
-
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML = "Whole line " + codeBit.content;
+			cell0.innerHTML = "Line " + codeBit.content;
 		}
 		else
 		{
 			cell0.innerHTML = codeBit.content;
 		}
 
-		cell1.innerHTML = codeBit.review_type;
-		cell2.innerHTML = codeBit.review;
+		cell1.innerHTML = codeBit.review;
 
 		this.allowSelection = true;
 	}

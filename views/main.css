@@ -2,7 +2,7 @@
 /****************Essential Styles**********************/
 /******************************************************/
 
-@import url("https://fonts.googleapis.com/css?family=Jua");
+@import url("https://fonts.googleapis.com/css?family=Cherry+Cream+Soda");
 
 body
 {
@@ -10,8 +10,8 @@ body
 }
 
 body, div, button, hr, input, fieldset, legend, li, table, th, td, tr, a, p{
-    font-family: 'Jua', sans-serif;
-    color: #edf5e1;
+    font-family: 'Cherry Cream Soda', cursive;
+    color: #f7ffe9;
     border-color:  #05386b;
 }
 
@@ -239,7 +239,7 @@ table tr:hover {
 	margin: 2%;
 	padding: 1%;
 
-	width: 45%;
+	width: 55%;
     position: absolute;
     top: 13%;
     bottom: 15%;
@@ -258,7 +258,7 @@ table tr:hover {
 	border-width: 1px;
 	margin: 2%;
 	padding: 0;
-	width: 45%;
+	width: 35%;
     position: absolute;
     right: 0;
     top: 13%;

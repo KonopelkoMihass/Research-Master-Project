@@ -15,6 +15,8 @@ class Challenge extends Model
         this.challengeChain = [];
         this.challengeChainPerformance = [];
         this.lastChallenge = false;
+
+        this.categoryInternalisationScore = {};
     }
 
 
@@ -35,7 +37,7 @@ class Challenge extends Model
 
     saveChallengeResults(resutlDict)
     {
-        resutlDict.id = this.challengeChain[this.currentChallengeLink-1];
+        resutlDict.id = this.challengeChain[this.currentChallengeLink-1].id;
         this.challengeChainPerformance.push(resutlDict);
     }
 
@@ -123,6 +125,7 @@ class Challenge extends Model
 
             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_CHAIN_SUCCESSFUL)
             {
+                this.challengeChainPerformance = [];
                 this.challengeChain = data;
                 this.currentChallengeLink = 0;
                 this.lastChallenge = false;
@@ -138,6 +141,15 @@ class Challenge extends Model
         this.notify(messageType);
     }
 
+    scoreCategoryInternalisation(category, score)
+    {
+         //this.categoryInternalisationScore
+        if (!(category in this.categoryInternalisationScore))
+        {
+            this.categoryInternalisationScore[category] = 0;
+        }
+        this.categoryInternalisationScore[category] += score;
+    }
 
 
     calculateScore(issuesFound)
@@ -149,27 +161,36 @@ class Challenge extends Model
         var falseIssues = {};
         var missedIssues = {};
 
+
+
         // Identify all issuesFound from the original issuesFound.
         for (var tokenKey in originalIssues)
         {
+
+
             //Check if the same token present in issuesFound found.
             if (tokenKey in issuesFound)
             {
                 // If issue's review matches with the challenge's review.
                 if (originalIssues[tokenKey].review === issuesFound[tokenKey].review)
                 {
-                    foundIssues[tokenKey] = originalIssues[tokenKey];
+                    foundIssues[tokenKey] = issuesFound[tokenKey];
+                    this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], 1);
+
                 }
 
                 else
                 {
                     falseIssues[tokenKey] = originalIssues[tokenKey];
+                    this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], -1);
+
                 }
             }
 
             else
             {
                 missedIssues[tokenKey] = originalIssues[tokenKey];
+                this.scoreCategoryInternalisation( originalIssues[tokenKey].review.split("->")[0], -.5);
             }
         }
 
@@ -180,6 +201,7 @@ class Challenge extends Model
             if (!(tokenKey in foundIssues || tokenKey in falseIssues || tokenKey in missedIssues))
             {
                 falseIssues[tokenKey] = issuesFound[tokenKey];
+                this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], -1);
             }
         }
 
@@ -232,6 +254,34 @@ class Challenge extends Model
             }
         }
         data.gradeOverall /= perf.length;
+
+        data.categoryInterScore = "";
+        var cis = this.categoryInternalisationScore;
+
+        for (var cat in cis)
+        {
+            var str = cat + ": ";
+            var score = cis[cat];
+
+            if (score === 0)
+            {
+                str += "Did not improve<br>";
+                //str = str.fontcolor("yellow");
+            }
+            if (score > 0)
+            {
+                str += "Has improved by "+ score +" points<br>";
+                //str = str.fontcolor("green");
+            }
+            if (score < 0)
+            {
+                str += "Has worsened by "+ score +" points<br>";
+                //str = str.fontcolor("dark orange");
+            }
+
+             data.categoryInterScore += str;
+        }
+        this.categoryInternalisationScore = {};
 
         return data;
     }

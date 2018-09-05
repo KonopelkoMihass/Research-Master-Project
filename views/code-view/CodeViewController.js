@@ -103,13 +103,15 @@ class CodeViewController
 							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
 
 							var img = document.createElement("IMG");
-							img.src = "resources/images/search.png";
+							img.src = "resources/images/info.png";
 							img.id = "code-review-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
 
 							img.addEventListener("mouseover",function ()
 							{
+								this.style.filter = "invert(100%)";
+
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 
@@ -122,6 +124,7 @@ class CodeViewController
 							});
 							img.addEventListener("mouseleave",function ()
 							{
+								this.style.filter = "invert(0%)";
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 

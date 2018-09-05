@@ -88,13 +88,14 @@ class ChallengeController
 
 
 							var img = document.createElement("IMG");
-							img.src = "resources/images/search.png";
+							img.src = "resources/images/info.png";
 							img.id = "challenge-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
 
 							img.addEventListener("mouseover",function ()
 							{
+								this.style.filter = "invert(100%)";
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 
@@ -108,6 +109,7 @@ class ChallengeController
 
 							img.addEventListener("mouseleave",function ()
 							{
+								this.style.filter = "invert(0%)";
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 								var subCatSpan = document.getElementById("challenge-code-category#" + category + "#" + idNum);
@@ -167,7 +169,6 @@ class ChallengeController
 		this.tweakCodeBlock("challenge", true);
     }
 
-
 	allowReview()
 	{
 		var controller = this;
@@ -199,9 +200,13 @@ class ChallengeController
 		data.grade = this.model.calculateScore(this.issuesFound);
 		this.model.saveChallengeResults(data);
 
+		data.category_increase = {};
+
+
+
+
 		this.model.issues = {};
 	}
-
 
 
 	showChallengeEndScreen()
@@ -210,9 +215,9 @@ class ChallengeController
 
 		var results = this.model.getOverallPerformance();
 
-
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
 		var modalData = app.utils.createModal("challenge-end", "Challenge Score", modalBody, false);
+
 
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
@@ -230,13 +235,10 @@ class ChallengeController
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
-
-
-		//document.getElementById("challenge-end-average-time").innerText = this.stringifyAverageTime();
+		document.getElementById("challenge-end-category-internalisation").innerHTML = results.categoryInterScore;
 
 
 	}
-
 
 
 	stringifyAverageTime()
@@ -318,6 +320,7 @@ class ChallengeController
 			codeSpan.classList.add("selected");
 		}
 	}
+
 
 	tweakLineNumbers(filename, pressable)
 	{
@@ -417,7 +420,7 @@ class ChallengeController
 		var controller = this;
 
 		this.tweakLineNumbers(filename, pressable);
-		this.tweakTokens(filename, pressable);
+		//this.tweakTokens(filename, pressable);
 	}
 
 	addCodeBit(id, content, filename)
@@ -525,20 +528,17 @@ class ChallengeController
 
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
-		var cell2 = row.insertCell(2);
-
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML = "Whole line " + codeBit.content;
+			cell0.innerHTML = "Line " + codeBit.content;
 		}
 		else
 		{
 			cell0.innerHTML = codeBit.content;
 		}
 
-		cell1.innerHTML = codeBit.review_type;
-		cell2.innerHTML = codeBit.review;
+		cell1.innerHTML = codeBit.review;
 
 		this.allowSelection = true;
 	}
