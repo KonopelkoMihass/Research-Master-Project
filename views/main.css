@@ -6,12 +6,12 @@
 
 body
 {
-    background-color: #55c77c;
+    background-color: #031D44;
 }
 
 body, div, button, hr, input, fieldset, legend, li, table, th, td, tr, a, p{
     font-family: 'Cherry Cream Soda', cursive;
-    color: #f7ffe9;
+    color: #c7cfb9;
     border-color:  #05386b;
 }
 
@@ -32,7 +32,7 @@ hr {
     margin-left: 1px;
     margin-right: 1px;
     border-width: 1px;
-    color: #edf5e1;
+    color: #c7cfb9;
 }
 
 input
@@ -42,14 +42,14 @@ input
 }
 
 fieldset {
-    border-color: #edf5e1;
+    border-color: #c7cfb9;
     border-width: 2px;
 }
 
 legend
 {
     font-weight: bold;
-	color: #edf5e1;
+	color: #c7cfb9;
 }
 
 /* width */
@@ -59,22 +59,22 @@ legend
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #379683;
+    background: #ae5a48;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #387461;
+    background: #ae5a48;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #1e5348;
+    background: #ae5a48;
 }
 
 .codebox-style
 {
-    background-color: white;
+    background-color: #2d2d2d;
     #font-family: monospace;
     #color: black;
 }
@@ -97,7 +97,7 @@ legend
     margin: -8px;
     padding: 0;
     overflow: hidden;
-    background-color: #379683;
+    background-color: #BF6D47;
 
 	#border: 1px solid;
     #font-size: 0;
@@ -115,14 +115,15 @@ li
 .menu-button
 {
     display: block;
-    color: white;
+    color: #d5ddc7;
+    text-shadow: 0px 0px 30px #000000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 .menu-button:hover {
-    background-color: #8EE4AF;
+    background-color: #935437;
 }
 
 
@@ -194,7 +195,7 @@ table th, td {
 }
 
 table tr:hover {
-    background-color:#8EE4AF;
+    background-color:#935437;
 }
 
 
@@ -285,7 +286,7 @@ table tr:hover {
 
 button
 {
-	background-color: white;
+	background-color: #c7cfb9;
 	border: 1px solid;
 	box-shadow: 1px 1px black;
 	cursor: pointer;
@@ -297,7 +298,7 @@ button
 button:hover
 {
 	background-color: gray;
-    color: #8EE4AF;
+    color: #e99449;
     font-weight: bold;
 }
 
@@ -325,12 +326,12 @@ button:hover
 .comments-table th, td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #c7cfb9;
     vertical-align:top;
     word-break:break-all;
 }
 
-.comments-table tr:hover {background-color:#f5f5f5;}
+.comments-table tr:hover {background-color:#c7cfb9;}
 
 .submit-review
 {
@@ -341,13 +342,13 @@ button:hover
 
 /* The side navigation menu */
 .sidenav {
-    top: 13%;
-    height: 60%;
+    top: 16%;
+    height: 57%;
     width: 0;
     position: fixed;
     z-index: 10;
     right: 0;
-    background-color: grey;
+    background-color: #2d2d2d;
     overflow-x: hidden;
     padding-top: 70px;
     transition: 0.3s;
@@ -358,14 +359,14 @@ button:hover
     padding: 14px 8px 8px 90px;
     text-decoration: none;
     font-size: 25px;
-    color: #f1f1f1;
+    color: #c7cfb9;
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #ffffff;
+    color: #c7cfb9;
 }
 
 /* Position and style the close button (top right corner) */
@@ -386,10 +387,10 @@ button:hover
 .code-review-sidenav-legend
 {
     font-weight: bold;
-	color: rgb(255, 255, 255);
+	color: #c7cfb9;
     font-size: calc(16px + 0.5vw);
     text-align: left;
-    border-color: #ffffff;
+    border-color: #c7cfb9;
     border-style: solid;
 	border-width: 2px;
     padding: 4px 4px;
@@ -397,17 +398,17 @@ button:hover
 
 .code-review-sidenav-fieldset
 {
-    border-color: #ffffff;
+    border-color:#c7cfb9;
 	border-width: 2px;
 }
 
 .code-review-select-category-span
 {
-    border-color: #ffffff;
+    border-color: #c7cfb9;
     border-style: solid;
 	border-width: 2px;
     font-weight: bold;
-	color: rgb(255, 255, 255);
+	color: #c7cfb9;
 
     font-size: calc(13px + 0.5vw);
     text-align: left;
@@ -430,11 +431,11 @@ button:hover
 
 .code-review-select-subcategory-span
 {
-    border-color: #ffffff;
+    border-color:#c7cfb9;
     border-style: solid;
 	border-width: 2px;
     font-weight: bold;
-	color: rgb(255, 255, 255);
+	color: #c7cfb9;
     font-size: calc(13px + 0.5vw);
     text-align: left;
     width:70%;
@@ -459,8 +460,8 @@ button:hover
 }
 
 .file-selected{
-    background-color: #546E7A;
-    color: white;
+    background-color: #9ac7d5;
+    color: #c7cfb9;
 }
 
 .challenge-timer{

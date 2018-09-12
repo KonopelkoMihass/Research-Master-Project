@@ -4,6 +4,4 @@ int calculateAILevel(locationLvl, difficulty)
         // Aware of skills and resources player possesses.  Double stamina and not stun-able
         return AILevel.HighStrategicAndCheat;
     }
-    ...
-
 }

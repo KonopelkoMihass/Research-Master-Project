@@ -36,12 +36,12 @@
 
 .modal-header {
   padding: 20px 40px;
-  background: #379683;
+  background: #BF6D47;
   color: #ffffff;
 }
 
 .modal-body {
-  background: #55c77c;
+  background: #031D44;
   padding: 60px 40px;
 }
 
@@ -79,8 +79,8 @@
   left: 50%;
   padding: 20px 40px;
   background: transparent;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  color:  #c7cfb9;
+  border: 1px solid  #c7cfb9;
   text-decoration: none;
 }
 

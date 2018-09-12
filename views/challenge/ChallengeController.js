@@ -57,7 +57,6 @@ class ChallengeController
 				{
 					var localSubCategoryDiv = document.getElementById("challenge-code-standard-subcategory-div#" + this.id.split("#")[1]);
 					// clean sub category
-
 					if (localSubCategoryDiv.innerHTML !== "")
 					{
 						localSubCategoryDiv.innerHTML = "";
@@ -80,18 +79,20 @@ class ChallengeController
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
-							subcategorySpan.id = "challenge-code-category#" + subcategories[i].category +"#" +i;
-							subcategorySpan.innerHTML = subcategories[i].subCategory;
+							subcategorySpan.id = "challenge-code-category#" + subcategories[i].category +"#" + i;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
 							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
-
 
 							var img = document.createElement("IMG");
 							img.src = "resources/images/info.png";
 							img.id = "challenge-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
+
+							var label = document.createElement("LABEL");
+							label.id = "challenge-code-category#" + subcategories[i].category +"#" + i + "#label";
+							label.innerHTML = subcategories[i].number;
 
 							img.addEventListener("mouseover",function ()
 							{
@@ -123,13 +124,34 @@ class ChallengeController
 							{
 								var lCategory =  this.id.split("#")[1];
 								var lSubCategory =  this.id.split("#")[2];
-
 								var resultStandard = app.standards.standards[lCategory][lSubCategory];
 
 								controller.closeSidenavAndSaveTheReview("issue", resultStandard);
 								subCategoryDiv.innerHTML = "";
 							});
 
+
+
+							subcategorySpan.addEventListener("mouseover",function ()
+							{
+								var cat = this.id.split("#")[1];
+								var subCategoryIndex = this.id.split("#")[2];
+								var standard = standards[cat][subCategoryIndex];
+
+								document.getElementById("challenge-code-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.subCategory;
+							});
+
+							subcategorySpan.addEventListener("mouseleave",function ()
+							{
+								var cat = this.id.split("#")[1];
+								var subCategoryIndex = this.id.split("#")[2];
+								var standard = standards[cat][subCategoryIndex];
+
+								document.getElementById("challenge-code-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.number;
+							});
+
+
+							subcategorySpan.appendChild(label);
 							spanContainer.appendChild(subcategorySpan);
 							spanContainer.appendChild(img);
 
@@ -146,10 +168,23 @@ class ChallengeController
 
 	cleanUp()
 	{
+		this.stopTimer();
+		this.seconds = 0;
+		this.minutes = 0;
+		this.issuesFound = {};
+
 		this.parsedCodeHTMLs = {};
 		this.allFilesReview = {};
 		document.getElementById("challenge-file-select").innerHTML = "";
 		document.getElementById("challenge-code-review").innerHTML = "";
+
+
+
+
+
+
+
+
 
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
@@ -174,11 +209,18 @@ class ChallengeController
 		var controller = this;
 
 		document.getElementById("challenge-submit-div").style.display = "block";
+
+		var old_element = document.getElementById("challenge-submit");
+        var new_element = old_element.cloneNode(true);
+        old_element.parentNode.replaceChild(new_element, old_element);
+
+
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
 			controller.saveChallengeResults();
 
-			if (controller.model.lastChallenge) {
+			if (controller.model.lastChallenge)
+			{
 				controller.showChallengeEndScreen();
 			}
 			else {
@@ -196,15 +238,13 @@ class ChallengeController
 	saveChallengeResults()
 	{
 		var data = {};
+
 		data.time = 60 * this.minutes + this.seconds;
 		data.grade = this.model.calculateScore(this.issuesFound);
-		this.model.saveChallengeResults(data);
+
+		this.model.saveResults(data);
 
 		data.category_increase = {};
-
-
-
-
 		this.model.issues = {};
 	}
 
@@ -217,7 +257,6 @@ class ChallengeController
 
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
 		var modalData = app.utils.createModal("challenge-end", "Challenge Score", modalBody, false);
-
 
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
@@ -235,7 +274,7 @@ class ChallengeController
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
-		document.getElementById("challenge-end-category-internalisation").innerHTML = results.categoryInterScore;
+		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
 
 
 	}
@@ -355,84 +394,13 @@ class ChallengeController
 		}
 	}
 
-	tweakTokens(filename, pressable)
-	{
-		var controller = this;
 
-		// Tweak tokens
-		var tokens = document.getElementById("challenge-code-review").childNodes;
-		for (var i = 0; i < tokens.length; i++ )
-		{
-			var token = tokens[i];
-
-			// Line number span is also in there.  So to not affect it - we will check for a specific class name and skip it.
-			if (token.className === "line-numbers-rows")
-			{
-				continue;
-			}
-
-			// PrismJS puts unidentifiable things as pure text.  These text are often the variables,
-			// so I decided to turn them into span here.
-			if (token.nodeName === "#text")
-			{
-				var content = token.textContent;
-
-				if (content !== ""){
-					var span = document.createElement("SPAN");
-					span.className = "token";
-					span.innerText = "" + content + "";
-					document.getElementById("challenge-code-review").replaceChild(span, token);
-					token = span;
-				}
-			}
-
-			// Then I add ID for each span and a click event.
-			token.id = "reviewTokenID#" + i ;
-
-			token.addEventListener("click", function()
-			{
-				if (controller.allowSelection)
-				{
-					var wordNum = this.id.split("#")[1];
-					var content = this.textContent;
-
-					//Check if does not have a class "selected"
-					if ( !this.classList.contains("selected"))
-					{
-						this.className += " reviewed";
-						controller.addCodeBit(this.id, content, filename);
-						controller.allowSelection = false;
-					}
-
-					else
-					{
-						this.classList.remove("selected");
-						controller.deleteCodeBit(this.id, filename);
-					}
-				}
-			});
-
-		}
-	}
 
 	tweakCodeBlock(filename, pressable)
 	{
-		var controller = this;
-
 		this.tweakLineNumbers(filename, pressable);
-		//this.tweakTokens(filename, pressable);
 	}
 
-	addCodeBit(id, content, filename)
-	{
-		// Save it to review (for now.  Can be done after the review)
-		var codeBit = {};
-		codeBit.content = content;
-		codeBit.type = "token";
-
-		this.openSidenavAndConstructIssue(id,filename, codeBit);
-
-	}
 
 	addLineBit(id, filename)
 	{
@@ -444,12 +412,6 @@ class ChallengeController
 		this.openSidenavAndConstructIssue(id, filename, codeBit);
 	}
 
-	deleteCodeBit(id, filename)
-	{
-		delete this.issuesFound[id];
-		var rowToDelete = document.getElementById(id + "-row");
-		rowToDelete.parentNode.removeChild(rowToDelete);
-	}
 
 	deleteLineBit(id, filename)
 	{
@@ -510,7 +472,8 @@ class ChallengeController
 		codeBit.review_type = type.charAt(0).toUpperCase() + type.slice(1);
 		if (type === "issue")
 		{
-			codeBit.review = content.category + "->" + content.subCategory;
+			codeBit.review = content.number;
+			codeBit.standard = content;
 		}
 
 		else
@@ -574,6 +537,4 @@ class ChallengeController
 
 		return timeTaken;
 	}
-
-
 }

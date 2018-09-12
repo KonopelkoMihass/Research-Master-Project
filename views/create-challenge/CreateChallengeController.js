@@ -680,7 +680,8 @@ class CreateChallengeController
 		codeBit.review_type = type.charAt(0).toUpperCase() + type.slice(1);
 		if (type === "issue")
 		{
-			codeBit.review = content.category + "->" + content.subCategory;
+			codeBit.review = content.number;
+			codeBit.standard = content;
 		}
 
 		else

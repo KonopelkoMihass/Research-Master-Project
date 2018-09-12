@@ -1,4 +1,4 @@
 calculateAttack()
 {
-    return app.utils.random(this.minDamage,this.maxDamage,this.user.level,this.user.strength);
+    return app.random()+this.user.lvl-this.enemy.defence;
 }

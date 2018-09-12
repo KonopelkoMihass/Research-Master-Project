@@ -97,7 +97,6 @@ class CodeViewController
 
 							var subcategorySpan = document.createElement("SPAN");
 							subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
-							subcategorySpan.innerHTML = subcategories[i].subCategory;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
 							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
@@ -107,6 +106,11 @@ class CodeViewController
 							img.id = "code-review-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
+
+							var label = document.createElement("LABEL");
+							label.id = "code-review-category#" + subcategories[i].category +"#" + i + "#label";
+							label.innerHTML = subcategories[i].number;
+
 
 							img.addEventListener("mouseover",function ()
 							{
@@ -147,6 +151,26 @@ class CodeViewController
 								localSubCategoryDiv.innerHTML = "";
 							});
 
+
+							subcategorySpan.addEventListener("mouseover",function ()
+							{
+								var cat = this.id.split("#")[1];
+								var subCategoryIndex = this.id.split("#")[2];
+								var standard = standards[cat][subCategoryIndex];
+
+								document.getElementById("code-review-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.subCategory;
+							});
+
+							subcategorySpan.addEventListener("mouseleave",function ()
+							{
+								var cat = this.id.split("#")[1];
+								var subCategoryIndex = this.id.split("#")[2];
+								var standard = standards[cat][subCategoryIndex];
+
+								document.getElementById("code-review-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.number;
+							});
+
+							subcategorySpan.appendChild(label);
 							spanContainer.appendChild(subcategorySpan);
 							spanContainer.appendChild(img);
 
@@ -566,7 +590,7 @@ class CodeViewController
 		this.codeElementIdReviewed = id;
 
         var sideModal = document.getElementById("code-review-side-modal");
-        sideModal.style.width = "30%";
+        sideModal.style.width = "45%";
 
         // Make an X on a side view to close the side modal
         document.getElementById("code-review-side-modal-close").addEventListener("click", function () {

@@ -56,13 +56,13 @@ class Standards extends Model {
                 {
                     if (stdFromServer[i]["category"] in this.standards)
                     {
-                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i], i+1));
                     }
 
                     else
                     {
                         this.standards[stdFromServer[i]["category"]] = [];
-                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i], i+1));
                     }
 
                 }

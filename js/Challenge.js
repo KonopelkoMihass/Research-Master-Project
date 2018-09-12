@@ -16,8 +16,9 @@ class Challenge extends Model
         this.challengeChainPerformance = [];
         this.lastChallenge = false;
 
-        this.categoryInternalisationScore = {};
+        this.standardInternalisationScore = {};
     }
+
 
 
     getChallenge()
@@ -35,8 +36,8 @@ class Challenge extends Model
 
     }
 
-    saveChallengeResults(resutlDict)
-    {
+    saveResults(resutlDict)
+        {
         resutlDict.id = this.challengeChain[this.currentChallengeLink-1].id;
         this.challengeChainPerformance.push(resutlDict);
     }
@@ -116,11 +117,7 @@ class Challenge extends Model
                 this.standard = data.standard;
                 this.language = data.language;
 
-                //if (this.currentChallengeLink === 1)
-                //{
-                    //app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
-                  //  document.getElementById("view-title").innerText = "Complete the challenge";
-                //}
+
             }
 
             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_CHAIN_SUCCESSFUL)
@@ -141,18 +138,41 @@ class Challenge extends Model
         this.notify(messageType);
     }
 
-    scoreCategoryInternalisation(category, score)
+    scoreStandardInternalisation(std, score)
     {
+
          //this.categoryInternalisationScore
-        if (!(category in this.categoryInternalisationScore))
+        if (!(std.category in this.standardInternalisationScore))
         {
-            this.categoryInternalisationScore[category] = 0;
+            this.standardInternalisationScore[std.category] = [];
         }
-        this.categoryInternalisationScore[category] += score;
+
+
+        var catArr = this.standardInternalisationScore[std.category];
+        var stdPresent = false;
+        for (var i = 0; i < catArr.length; i++)
+        {
+            if (catArr[i].standard.subCategory === std.subCategory)
+            {
+                catArr[i].score +=score;
+                stdPresent = true;
+            }
+        }
+
+        if (!stdPresent)
+        {
+            var scoreData = {};
+            scoreData.standard = std;
+            scoreData.score = score;
+            this.standardInternalisationScore[std.category].push(scoreData);
+        }
+
+
+
     }
 
 
-    calculateScore(issuesFound)
+    calculateScore(usersIssues)
     {
         var totalIssues = Object.keys(this.issues).length;
         var originalIssues = this.issues;
@@ -161,47 +181,44 @@ class Challenge extends Model
         var falseIssues = {};
         var missedIssues = {};
 
+        // this.subCategoryInternalisationScore
 
 
         // Identify all issuesFound from the original issuesFound.
         for (var tokenKey in originalIssues)
         {
-
-
             //Check if the same token present in issuesFound found.
-            if (tokenKey in issuesFound)
+            if (tokenKey in usersIssues)
             {
                 // If issue's review matches with the challenge's review.
-                if (originalIssues[tokenKey].review === issuesFound[tokenKey].review)
+                if (originalIssues[tokenKey].review === usersIssues[tokenKey].review)
                 {
-                    foundIssues[tokenKey] = issuesFound[tokenKey];
-                    this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], 1);
-
+                    foundIssues[tokenKey] = usersIssues[tokenKey];
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, 1);
                 }
 
                 else
                 {
                     falseIssues[tokenKey] = originalIssues[tokenKey];
-                    this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], -1);
-
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -1);
                 }
             }
 
             else
             {
                 missedIssues[tokenKey] = originalIssues[tokenKey];
-                this.scoreCategoryInternalisation( originalIssues[tokenKey].review.split("->")[0], -.5);
+                this.scoreStandardInternalisation( originalIssues[tokenKey].standard, -.5);
             }
         }
 
         //Get all false issuesFound from user.
-        for (var tokenKey in issuesFound)
+        for (var tokenKey in usersIssues)
         {
               //Check if the same token present in issuesFound found.
             if (!(tokenKey in foundIssues || tokenKey in falseIssues || tokenKey in missedIssues))
             {
-                falseIssues[tokenKey] = issuesFound[tokenKey];
-                this.scoreCategoryInternalisation( issuesFound[tokenKey].review.split("->")[0], -1);
+                falseIssues[tokenKey] = usersIssues[tokenKey];
+                this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -1);
             }
         }
 
@@ -219,6 +236,7 @@ class Challenge extends Model
 
         return score;
     }
+
 
     getOverallPerformance()
     {
@@ -255,33 +273,95 @@ class Challenge extends Model
         }
         data.gradeOverall /= perf.length;
 
-        data.categoryInterScore = "";
-        var cis = this.categoryInternalisationScore;
+        data.standardInterScore = "";
 
-        for (var cat in cis)
+
+
+        // this.standardInternalisationScore[std.category][std.subCategory]
+
+        var sis = this.standardInternalisationScore;
+
+
+        for (var cat in sis)
         {
             var str = cat + ": ";
-            var score = cis[cat];
+            var str2 = "";
+            var score = 0;
+
+            sis[cat].sort(function(a,b) {
+                if (a.standard.number < b.standard.number) return -1;
+                if (a.standard.number > b.standard.number) return 1;
+                return 0;
+            });
+
+
+
+
+
+            for (var i = 0; i < sis[cat].length; i++)
+            {
+                score += sis[cat][i].score;
+                str2 += ("&nbsp;&nbsp;&nbsp;&nbsp;" + sis[cat][i].standard.number + ":"); //+ ": " + sis[cat][i].score + "<br>");
+
+                if (sis[cat][i].score > 0)
+                {
+                     str2 += ("&nbsp;&nbsp;+" + sis[cat][i].score);
+                }
+                else
+                {
+                    str2 += ("&nbsp;&nbsp;" + sis[cat][i].score);
+                }
+
+
+
+                if (Math.abs(sis[cat][i].score) === 1)
+                {
+                    str2 += " point<br>";
+                }
+                else{
+                    str2 += " points<br>";
+                }
+            }
+
 
             if (score === 0)
             {
                 str += "Did not improve<br>";
-                //str = str.fontcolor("yellow");
-            }
-            if (score > 0)
-            {
-                str += "Has improved by "+ score +" points<br>";
-                //str = str.fontcolor("green");
-            }
-            if (score < 0)
-            {
-                str += "Has worsened by "+ score +" points<br>";
-                //str = str.fontcolor("dark orange");
             }
 
-             data.categoryInterScore += str;
+            if (score > 0)
+            {
+                str += "Has improved by "+ score;
+            }
+            else if (score < 0)
+            {
+                str += "Has worsened by "+ Math.abs(score);
+            }
+
+            if (Math.abs(score) === 1)
+            {
+                str += " point<br>";
+            }
+            else
+            {
+                str += " points<br>";
+            }
+
+
+
+
+
+
+
+
+
+
+
+            str += str2;
+
+             data.standardInterScore += str;
         }
-        this.categoryInternalisationScore = {};
+        this.standardInternalisationScore = {};
 
         return data;
     }

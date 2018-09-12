@@ -1,4 +1,4 @@
-class Minotaurus
+class Minotaur
 {
 	constructor()
 	{
