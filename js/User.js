@@ -12,35 +12,39 @@ class User extends Model
         this.role = "";
         this.id = "";
         this.log = "";
+        this.gamified = "";
+        this.stdInternalisation = {};
     }
 
 
     update(data, messageType)
     {
-      if (data !== "" && !Number.isInteger(data))
-      {
-          if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL ||
-                messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
+        if (data !== "" && !Number.isInteger(data))
+        {
+
+            if ( messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
+            {
+                app.net.sendMessage("signin", data);
+            }
+
+            if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
             {
                 this.setData(data);
+
+
+
+
                 app.cookieManager.setCookie("SignInCR2",{email:data.email, password: data.password});
 
                 app.assignments.getAllAssignment();
                 app.standards.getStandards();
 
-                if (data.role === "student")
-                {
-                    app.submissions.getPersonalSubmissions(data.id);
-                }
-                else
-                {
-                    app.submissions.getAllSubmissions();
-                }
-
+                if (data.role === "student") app.submissions.getPersonalSubmissions(data.id);
+                else app.submissions.getAllSubmissions();
             }
-      }
+        }
 
-      this.notify(messageType);
+        this.notify(messageType);
     }
 
 
@@ -55,6 +59,7 @@ class User extends Model
         userData.noun = noun;
         userData.password = password;
         userData.role = "student";
+        userData.std_internalisation = {};
 
         app.net.sendMessage("signup", userData);
     }
@@ -83,5 +88,8 @@ class User extends Model
          this.noun =  data.noun;
          this.role = data.role;
          this.id = data.id;
+         this.gamified =  data.gamification;
+         this.stdInternalisation = data.std_internalisation;
     }
+
 }

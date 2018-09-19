@@ -53,7 +53,6 @@ class SignupController
 	{
 		// Clean values
 		document.getElementById("signup-email").value = "";
-		document.getElementById("signup-team-name").value = "";
 		document.getElementById("signup-name").value = "";
 		document.getElementById("signup-surname").value = "";
 		document.getElementById("signup-noun").value = "";

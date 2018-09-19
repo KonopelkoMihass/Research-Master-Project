@@ -11,18 +11,20 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `noun` VARCHAR(45) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `role` VARCHAR(32) NOT NULL,
+  `std_internalisation` MEDIUMTEXT,
+  `gamification` VARCHAR(1) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
 
 -- creating dummy teacher
 
-INSERT INTO ProjectOrganiser.Users (email, team_name, name, surname, noun, password, role)
-VALUES ('q','teacher','John','Doe','Potato','q','teacher'),
-  ('w','1','w','w','Bed','w','student'),
-  ('e','1','e','e','Chair','e','student'),
-  ('r','2','r','r','Pizza','r','student'),
-  ('t','2','t','t','Grass','t','student');
+INSERT INTO ProjectOrganiser.Users (email, team_name, name, surname, noun, password, role, std_internalisation, gamification)
+VALUES ('q','teacher','John','Doe','Potato','q','teacher', '{}', '0'),
+  ('w','1','w','w','Bed','w','student', '{}', 'y'),
+  ('e','1','e','e','Chair','e','student', '{}', 'y'),
+  ('r','2','r','r','Pizza','r','student', '{}', 'n'),
+  ('t','2','t','t','Grass','t','student', '{}', 'n');
 
 
 -- Table `ProjectOrganiser`.`Assignments`

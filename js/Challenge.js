@@ -50,7 +50,7 @@ class Challenge extends Model
         parameterPack.length = 4;
         var randLanguage = app.utils.getRandomInt(2);
         var keys = Object.keys(app.standards.standardsInfo);
-        parameterPack.language = keys[ keys.length * Math.random() << 0];
+        parameterPack.language = "js"; //keys[ keys.length * Math.random() << 0];
 
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
@@ -181,9 +181,6 @@ class Challenge extends Model
         var falseIssues = {};
         var missedIssues = {};
 
-        // this.subCategoryInternalisationScore
-
-
         // Identify all issuesFound from the original issuesFound.
         for (var tokenKey in originalIssues)
         {
@@ -233,7 +230,6 @@ class Challenge extends Model
             score = 0;
         }
 
-
         return score;
     }
 
@@ -274,19 +270,14 @@ class Challenge extends Model
         data.gradeOverall /= perf.length;
 
         data.standardInterScore = "";
-
-
-
-        // this.standardInternalisationScore[std.category][std.subCategory]
-
         var sis = this.standardInternalisationScore;
-
 
         for (var cat in sis)
         {
-            var str = cat + ": ";
-            var str2 = "";
-            var score = 0;
+            var categoryString = cat + ": ";
+            var subCategoryString = "";
+
+            var categoryScoreDelta = 0;
 
             sis[cat].sort(function(a,b) {
                 if (a.standard.number < b.standard.number) return -1;
@@ -294,77 +285,93 @@ class Challenge extends Model
                 return 0;
             });
 
+            for (var i = 0; i < sis[cat].length; i++) {
+                var subcat = sis[cat][i];
+                var userSTDSkill = app.standards.getSTDSubcategorySkill(this.language, cat, subcat.standard.subCategory);
 
+                var curSubCatLevelStr = "&nbsp;&nbsp;&nbsp;&nbsp;(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")";
 
+                categoryScoreDelta += subcat.score;
+                subCategoryString += ("&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.number + ":"); //+ ": " + sis[cat][i].score + "<br>");
 
-
-            for (var i = 0; i < sis[cat].length; i++)
-            {
-                score += sis[cat][i].score;
-                str2 += ("&nbsp;&nbsp;&nbsp;&nbsp;" + sis[cat][i].standard.number + ":"); //+ ": " + sis[cat][i].score + "<br>");
-
-                if (sis[cat][i].score > 0)
+                if (userSTDSkill.score === userSTDSkill.maxScore && subcat.score > -1)
                 {
-                     str2 += ("&nbsp;&nbsp;+" + sis[cat][i].score);
+                    subCategoryString += " Reached maximum";
                 }
+
                 else
                 {
-                    str2 += ("&nbsp;&nbsp;" + sis[cat][i].score);
+                    if (subcat.score > 0) subCategoryString += ("&nbsp;&nbsp;+" + subcat.score);
+                    else subCategoryString += ("&nbsp;&nbsp;" + subcat.score);
+
+                    if (Math.abs(subcat.score) === 1) subCategoryString += " point";
+                    else subCategoryString += " points";
                 }
 
-
-
-                if (Math.abs(sis[cat][i].score) === 1)
-                {
-                    str2 += " point<br>";
-                }
-                else{
-                    str2 += " points<br>";
-                }
+                subCategoryString += curSubCatLevelStr + "<br>";
             }
 
 
-            if (score === 0)
-            {
-                str += "Did not improve<br>";
-            }
+            if (categoryScoreDelta === 0) categoryString += "Did not improve";
 
-            if (score > 0)
-            {
-                str += "Has improved by "+ score;
-            }
-            else if (score < 0)
-            {
-                str += "Has worsened by "+ Math.abs(score);
-            }
+            else if (categoryScoreDelta > 0) categoryString += "Has improved by "+ categoryScoreDelta;
+            else if (categoryScoreDelta < 0) categoryString += "Has worsened by "+ Math.abs(categoryScoreDelta);
 
-            if (Math.abs(score) === 1)
-            {
-                str += " point<br>";
-            }
-            else
-            {
-                str += " points<br>";
-            }
+            if (Math.abs(categoryScoreDelta) === 1) categoryString += " point";
+            else categoryString += " points";
+
+
+             var curCatScoreData = app.standards.getCategoryScoreData(this.language, cat);
+
+            categoryString += "&nbsp;&nbsp;&nbsp;&nbsp;(" +curCatScoreData.score + "/" + curCatScoreData.maxScore + ")<br>";
 
 
 
-
-
-
-
-
-
-
-
-            str += str2;
-
-             data.standardInterScore += str;
+            categoryString += subCategoryString;
+            data.standardInterScore += categoryString;
         }
         this.standardInternalisationScore = {};
-
         return data;
     }
+
+    changeStdInternalisation()
+    {
+        app.standards.updateInternalisationSkillTree(this.standardInternalisationScore, this.language)
+    }
+
+
+    submitChallengeResults()
+    {
+        // save challenge performance
+
+
+
+
+
+
+
+
+
+
+
+
+
+       // var data = {};
+        // 2 distinct parts will be sent together, but handled separately.
+        //data.email = app.user.email;
+        //data.challenges_performance = this.challengeChainPerformance;
+        //data.standard_internalisation = this.standardInternalisationScore;
+
+        //app.net.sendMessage("upload_challenge_results", data);
+    }
+
+
+
+
+
+
+
+
 
 
 }

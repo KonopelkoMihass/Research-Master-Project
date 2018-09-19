@@ -47,6 +47,10 @@ class MessageHandler
 
 
 
+			//New - not used yet
+			UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL: "upload_challenge_results_successful",
+			FLIP_GAMIFICATION_AROUND_SUCCESSFUL: "flip_gamification_around_successful",
+			ENABLE_GAMIFICATION_SWITCH_SUCCESSFUL: "enable_gamification_switch_successful"
 		};
 	}
 
@@ -58,12 +62,11 @@ class MessageHandler
 
 		console.log("Message received:", type,"-", data);
 
-		app.user.update(data, type);
+        app.standards.update(data, type);
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
-		app.standards.update(data, type);
 		app.challenge.update(data, type);
-
-		app.tracker.trackServerMessages(data, type)
+		app.tracker.trackServerMessages(data, type);
+        app.user.update(data, type);
 	}
 }

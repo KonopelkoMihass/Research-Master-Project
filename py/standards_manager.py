@@ -26,8 +26,8 @@ SCOPES = ['https://www.googleapis.com/auth/drive']
 class StandardsManager:
     def __init__(self):
         self.standards_ids = {
-            "js-1": "1O9vsT2hlG12W5czOLZ0aD-Y2UgOUDJQljzUv0GuWFvs",
-            "cpp-1": "11quSKE8cKf2mD5rFFcWvZe0765mdH81iJ8eWwSXvXX8"
+            "js": "1O9vsT2hlG12W5czOLZ0aD-Y2UgOUDJQljzUv0GuWFvs",
+            "cpp": "11quSKE8cKf2mD5rFFcWvZe0765mdH81iJ8eWwSXvXX8"
         }
 
         self.standards = {}

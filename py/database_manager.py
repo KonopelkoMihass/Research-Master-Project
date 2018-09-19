@@ -274,8 +274,6 @@ class DatabaseManager:
 		return logs
 
 
-
-
 	def get_challenges_for_chain(self, language):
 		challenge_ids = []
 
@@ -305,3 +303,18 @@ class DatabaseManager:
 		connector.close()
 
 		return challenge
+
+
+
+	def save_skills(self, data):
+		email = data["email"]
+		update_std_int = data["std_internalisation"]
+
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("UPDATE Users SET Users.std_internalisation = '" +update_std_int + "' WHERE Users.email='"+email+"'")
+		cursor.execute(query)
+		connector.commit()
+		cursor.close()
+		connector.close()

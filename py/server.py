@@ -56,8 +56,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		elif message_type == "signin":
 			self.signin(message_data)
-			self.send_message("get_standard_successful", standards_manager.get_standard("cpp-1"))
-			self.send_message("get_standard_successful", standards_manager.get_standard("js-1"))
+			self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
+			self.send_message("get_standard_successful", standards_manager.get_standard("js"))
 
 		elif message_type == "add_assignment":
 			self.add_assignment(message_data)
@@ -99,6 +99,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 		elif message_type == "get_challenge_chain":
 			self.get_challenge_chain(message_data)
+
+		elif message_type == "update_skills":
+			self.update_skills(message_data)
+
+
 
 
 
@@ -264,7 +269,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		data = challenges_manager.get_challenge_chain(message_data)
 		self.send_message(data[0], data[1])
 
+	def update_skills(self, message_data):
+		message_data["std_internalisation"] = json.dumps(message_data["std_internalisation"])
+		database_manager.save_skills(message_data)
 
+
+		#self.send_message(data[0], data[1])
+		pass
 
 
 

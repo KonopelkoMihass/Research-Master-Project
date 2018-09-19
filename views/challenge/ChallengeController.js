@@ -177,15 +177,6 @@ class ChallengeController
 		this.allFilesReview = {};
 		document.getElementById("challenge-file-select").innerHTML = "";
 		document.getElementById("challenge-code-review").innerHTML = "";
-
-
-
-
-
-
-
-
-
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
@@ -223,7 +214,8 @@ class ChallengeController
 			{
 				controller.showChallengeEndScreen();
 			}
-			else {
+			else
+			{
 				controller.model.getChallenge();
 			}
 			controller.issuesFound = {};
@@ -243,8 +235,6 @@ class ChallengeController
 		data.grade = this.model.calculateScore(this.issuesFound);
 
 		this.model.saveResults(data);
-
-		data.category_increase = {};
 		this.model.issues = {};
 	}
 
@@ -253,10 +243,16 @@ class ChallengeController
 	{
 		this.parsedCodeHTMLs = {};
 
+		this.model.changeStdInternalisation();
+		//this.model.submitChallengeResults();
+
+
+
+
 		var results = this.model.getOverallPerformance();
 
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
-		var modalData = app.utils.createModal("challenge-end", "Challenge Score", modalBody, false);
+		var modalData = app.utils.createModal("challenge-end", "Challenge Results", modalBody, false);
 
 		document.body.appendChild(modalData.modal);
 		modalData.modal.style.display = "block";
@@ -269,14 +265,15 @@ class ChallengeController
 				var oldEl = document.getElementById("challenge-submit");
 				var newEl = oldEl.cloneNode(true);
 				oldEl.parentNode.replaceChild(newEl, oldEl);
+
+
+
 			});
 		}
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
 		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
-
-
 	}
 
 
