@@ -16,12 +16,14 @@ class ChallengeController
 		this.fileNameParsed = "";
 		this.allowSelection = true;
 
+
 		this.issuesFound = {};
 
 		this.seconds = 0;
 		this.minutes = 0;
 
 		this.timer = undefined;
+		this.displayPostChallengeScreen = false;
 	}
 
 	setup()
@@ -92,7 +94,7 @@ class ChallengeController
 
 							var label = document.createElement("LABEL");
 							label.id = "challenge-code-category#" + subcategories[i].category +"#" + i + "#label";
-							label.innerHTML = subcategories[i].number;
+							label.innerHTML = "[" + subcategories[i].number + "] - " +  subcategories[i].subCategory;
 
 							img.addEventListener("mouseover",function ()
 							{
@@ -130,27 +132,6 @@ class ChallengeController
 								subCategoryDiv.innerHTML = "";
 							});
 
-
-
-							subcategorySpan.addEventListener("mouseover",function ()
-							{
-								var cat = this.id.split("#")[1];
-								var subCategoryIndex = this.id.split("#")[2];
-								var standard = standards[cat][subCategoryIndex];
-
-								document.getElementById("challenge-code-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.subCategory;
-							});
-
-							subcategorySpan.addEventListener("mouseleave",function ()
-							{
-								var cat = this.id.split("#")[1];
-								var subCategoryIndex = this.id.split("#")[2];
-								var standard = standards[cat][subCategoryIndex];
-
-								document.getElementById("challenge-code-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.number;
-							});
-
-
 							subcategorySpan.appendChild(label);
 							spanContainer.appendChild(subcategorySpan);
 							spanContainer.appendChild(img);
@@ -182,7 +163,8 @@ class ChallengeController
 		document.getElementById("challenge-submit-div").style.display = "block";
 	}
 
-	prepareCodeHTMLs() {
+	prepareCodeHTMLs()
+	{
         // Get files and parse them into a highlighted HTML.  Then put them in a parsedCodeHTMLs.
 		this.parsedCodeHTMLs["challenge"] = Prism.highlight(this.model.code, app.utils.derivePrismLanguage(this.model.language));
 
@@ -208,24 +190,99 @@ class ChallengeController
 
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
-			controller.saveChallengeResults();
-
-			if (controller.model.lastChallenge)
+			if (controller.displayPostChallengeScreen === false)
 			{
-				controller.showChallengeEndScreen();
+				controller.displayPostChallengeResult();
+				controller.saveChallengeResults();
+				controller.stopTimer();
+				controller.displayPostChallengeScreen = true;
+
+
+
 			}
 			else
 			{
-				controller.model.getChallenge();
+				if (controller.model.lastChallenge)
+				{
+					controller.showChallengeEndScreen();
+				}
+				else
+				{
+					controller.model.getChallenge();
+				}
+				controller.issuesFound = {};
+				controller.standardUsed = "";
+				controller.codingLanguageUsed = "";
+
+				controller.displayPostChallengeScreen = false;
 			}
-			controller.issuesFound = {};
-			controller.standardUsed = "";
-			controller.codingLanguageUsed = "";
-
-
-			controller.stopTimer();
 		});
 	}
+
+	displayPostChallengeResult()
+	{
+		var issueTable = document.getElementById("challenge-data-table");
+		var challengeIssues = Object.assign ({},this.model.issues);
+
+		//cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
+		for (var i = 1, row; row = issueTable.rows[i]; i++)
+		{
+			var answerCell = row.cells[2];
+			var line = answerCell.id.split('#')[1];
+			var answer = answerCell.id.split('#')[2];
+
+			//Find that there is an error on this line
+			var foundIssue = false;
+			for (var j in challengeIssues)
+			{
+				if (challengeIssues[j].content == line)
+				{
+					if (challengeIssues[j].review == answer)
+					{
+						answerCell.innerHTML = "&#10004;";
+						foundIssue = true;
+					}
+				}
+			}
+
+			if (foundIssue)
+			{
+				var key = "codeLineID#"+line;
+				delete challengeIssues[key];
+			}
+			else
+			{
+				answerCell.innerHTML = "X";
+			}
+		}
+
+		if (Object.keys(challengeIssues).length > 0)
+		{
+			var headlineRow = issueTable.insertRow(-1);
+			headlineRow.insertCell(0);
+			var c1 = headlineRow.insertCell(1);
+			c1.innerHTML = "Issues you missed";
+			headlineRow.insertCell(2);
+
+			for (var j in challengeIssues)
+			{
+				var std = challengeIssues.standard;
+
+				var row = issueTable.insertRow(-1);
+				var cell0 = row.insertCell(0);
+				var cell1 = row.insertCell(1);
+				var cell2 = row.insertCell(2);
+
+				cell0.innerHTML = challengeIssues[j].content;
+				cell1.innerHTML = "[" + std.number + "] - " + std.category + "\n" + std.subCategory;
+				cell2.innerHTML = "&#9673;";
+				cell2.style.textAlign="center";
+			}
+		}
+	}
+
+
+
 
 	saveChallengeResults()
 	{
@@ -355,6 +412,10 @@ class ChallengeController
 			var codeSpan = document.getElementById(id);
 			codeSpan.classList.add("selected");
 		}
+
+
+		document.getElementById("challenge-done").innerText =  this.model.currentChallengeLink + "/" +  this.model.totalChallenges;
+
 	}
 
 
@@ -371,26 +432,25 @@ class ChallengeController
 
 			codeElement.addEventListener("click", function ()
 			{
+				if (controller.allowSelection === true)
+				{
+					//Check if it is already has a class "selected"
+					if (!this.classList.contains("selected")) {
+						this.className += " reviewed";
+						controller.addLineBit(this.id, filename);
+						controller.allowSelection = false;
+					}
 
-				var lineNum = this.id.split("#")[1];
-
-				//Check if it is already has a class "selected"
-				if (!this.classList.contains("selected")) {
-					this.className += " reviewed";
-					controller.addLineBit(this.id, filename);
-					controller.allowSelection = false;
-				}
-
-				else {
-					this.classList.remove("selected");
-					controller.deleteLineBit(this.id, filename);
+					else {
+						this.classList.remove("selected");
+						controller.deleteLineBit(this.id, filename);
+					}
 				}
 
 			});
 
 		}
 	}
-
 
 
 	tweakCodeBlock(filename, pressable)
@@ -424,7 +484,7 @@ class ChallengeController
 
 	openSidenavAndConstructIssue(id, filename, codeBit)
 	{
-		var that = this;
+		var controller = this;
 		this.codeBitReviewed = codeBit;
 		this.codeElementIdReviewed = id;
 
@@ -434,10 +494,10 @@ class ChallengeController
         // Make an X on a side view to close the side modal
         document.getElementById("challenge-code-side-modal-close").addEventListener("click", function () {
             sideModal.style.width = "0px";
-            if (that.codeElementIdReviewed !== "")
+            if (controller.codeElementIdReviewed !== "")
             {
 				document.getElementById(id).classList.remove("reviewed");
-				that.allowSelection = true;
+				controller.allowSelection = true;
 			}
         });
     }
@@ -488,17 +548,19 @@ class ChallengeController
 
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML = "Line " + codeBit.content;
-		}
-		else
-		{
-			cell0.innerHTML = codeBit.content;
+			cell0.innerHTML =  codeBit.content;
 		}
 
-		cell1.innerHTML = codeBit.review;
+		cell1.innerHTML = "[" + content.number + "] - " + content.category + "\n" + content.subCategory;
+
+		cell2.innerHTML = "?";
+		cell2.style.textAlign="center";
+		cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
+
 
 		this.allowSelection = true;
 	}

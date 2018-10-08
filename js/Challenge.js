@@ -12,6 +12,7 @@ class Challenge extends Model
         this.language = "";
 
         this.currentChallengeLink = 0;
+        this.totalChallenges = 0;
         this.challengeChain = [];
         this.challengeChainPerformance = [];
         this.lastChallenge = false;
@@ -37,7 +38,7 @@ class Challenge extends Model
     }
 
     saveResults(resutlDict)
-        {
+    {
         resutlDict.id = this.challengeChain[this.currentChallengeLink-1].id;
         this.challengeChainPerformance.push(resutlDict);
     }
@@ -126,6 +127,9 @@ class Challenge extends Model
                 this.challengeChain = data;
                 this.currentChallengeLink = 0;
                 this.lastChallenge = false;
+                this.totalChallenges = data.length;
+
+
                 this.getChallenge();
 
                 app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
@@ -140,13 +144,11 @@ class Challenge extends Model
 
     scoreStandardInternalisation(std, score)
     {
-
          //this.categoryInternalisationScore
         if (!(std.category in this.standardInternalisationScore))
         {
             this.standardInternalisationScore[std.category] = [];
         }
-
 
         var catArr = this.standardInternalisationScore[std.category];
         var stdPresent = false;
@@ -166,9 +168,6 @@ class Challenge extends Model
             scoreData.score = score;
             this.standardInternalisationScore[std.category].push(scoreData);
         }
-
-
-
     }
 
 
@@ -343,18 +342,6 @@ class Challenge extends Model
     submitChallengeResults()
     {
         // save challenge performance
-
-
-
-
-
-
-
-
-
-
-
-
 
        // var data = {};
         // 2 distinct parts will be sent together, but handled separately.

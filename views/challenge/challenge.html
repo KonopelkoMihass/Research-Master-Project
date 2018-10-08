@@ -17,21 +17,29 @@
 <div class="box-right" id="challenge-comment-box">
 
 
-   <fieldset>
+<fieldset>
+    <legend>Your Time</legend>
+    <label id="challenge-timer" class="challenge-timer">00:00</label>
+</fieldset>
+
+<fieldset>
+    <legend>Challenge</legend>
+    <label id="challenge-done" class="challenge-done">0/0</label>
+</fieldset>
+
+
+<fieldset>
     <legend>Issues</legend>
-<table id="challenge-data-table">
-<tr>
-<th>Location</th>
-<th style= "width: 70%;" >Issue</th>
-</tr>
-</table>
+    <table id="challenge-data-table">
+        <tr>
+            <th>Line</th>
+            <th style= "width: 65%;" >Issue</th>
+            <th>Correct</th>
+        </tr>
+    </table>
     <br>
 </fieldset>
 
-    <fieldset>
-        <legend>Your Time</legend>
-      <label id="challenge-timer" class="challenge-timer">00:00</label>
-    </fieldset>
 
 
 
@@ -40,12 +48,12 @@
 
 
 
- <fieldset>
-     <legend>Submit</legend>
+<fieldset>
+<legend>Submit</legend>
 <div id="challenge-submit-div">
-     <button id="challenge-submit">YES</button>
+<button id="challenge-submit">YES</button>
 </div>
-     </fieldset>
+</fieldset>
 </div>
 
 
@@ -53,12 +61,12 @@
 
 <!-- Side Modal with work to review -->
 <div id="challenge-code-side-modal" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" id="challenge-code-side-modal-close">&times;</a>
-    <fieldset class="code-review-sidenav-fieldset" id="challenge-code-sidenav-issue-category">
-        <legend class="code-review-sidenav-legend">Select the category of the issue</legend>
-        <div id="challenge-code-category-select-div">
-        </div>
-     </fieldset>
+<a href="javascript:void(0)" class="closebtn" id="challenge-code-side-modal-close">&times;</a>
+<fieldset class="code-review-sidenav-fieldset" id="challenge-code-sidenav-issue-category">
+<legend class="code-review-sidenav-legend">Select the category of the issue</legend>
+<div id="challenge-code-category-select-div">
+</div>
+</fieldset>
 </div>
 </body>
 </html>
