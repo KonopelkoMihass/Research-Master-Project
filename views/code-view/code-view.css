@@ -1,62 +1,8 @@
-#code-review-sidenav-choice-left
-{
-    border-color: #ffffff;
-    border-style: dashed;
-	border-width: 2px;
-    font-weight: bold;
-	color: rgb(255, 255, 255);
-    font-size: calc(16px + 0.5vw);
-    text-align: center;
 
-    width:40%;
-    margin:2.5% 2%;
-    padding: 4px 4px;
-    left:3%;
-    float:left;
-}
-
-#code-review-sidenav-choice-left:hover
-{
-	color: rgb(11, 147, 255);
-    border-color: rgb(11, 147, 255);
-    border-style: solid;
-    cursor: pointer;
-}
-
-#code-review-sidenav-choice-right
-{
-    border-color: #ffffff;
-    border-style: solid;
-	border-width: 2px;
-    font-weight: bold;
-	color: rgb(255, 255, 255);
-    font-size: calc(16px + 0.5vw);
-    text-align: center;
-
-    width:40%;
-    margin:2.5% 2%;
-    padding: 4px 4px;
-    right:3%;
-    float:right;
-}
-
-#code-review-sidenav-choice-right:hover
-{
-	color: rgb(255, 151, 54);
-    border-color: rgb(255, 151, 54);
-        border-width: 3px;
-    border-style: solid;
-    cursor: pointer;
-}
-
-#code-review-sidenav-comment
-{
-    display: none;
-}
 
 #code-review-sidenav-issue-category
 {
-    display: none;
+
 }
 
 #code-review-sidenav-issue-subcategory

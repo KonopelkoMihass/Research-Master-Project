@@ -16,6 +16,8 @@ class SigninView extends View
 		if(messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
 		{
 			var menuPanel = 0;
+			app.setupMenuPanel();
+
 
 			if(model.role === "student")
 			{
@@ -28,7 +30,6 @@ class SigninView extends View
 				menuPanel = document.getElementById("menupanel-teacher");
 				document.getElementById("mpt-assignments-button").click();
 			}
-
 
 			menuPanel.style.display = "block";
 			var viewNameBox = document.getElementsByClassName("view-name-box")[0];

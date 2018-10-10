@@ -12,7 +12,7 @@ class User extends Model
         this.role = "";
         this.id = "";
         this.log = "";
-        this.gamified = "";
+        this.gamified = false;
         this.stdInternalisation = {};
     }
 
@@ -30,16 +30,15 @@ class User extends Model
             if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
             {
                 this.setData(data);
-
-
-
-
                 app.cookieManager.setCookie("SignInCR2",{email:data.email, password: data.password});
-
                 app.assignments.getAllAssignment();
                 app.standards.getStandards();
 
-                if (data.role === "student") app.submissions.getPersonalSubmissions(data.id);
+                if (data.role === "student")
+                {
+                    app.submissions.getPersonalSubmissions(data.id);
+                    console.log("is gamified: " + this.gamified );
+                }
                 else app.submissions.getAllSubmissions();
             }
         }
@@ -88,7 +87,7 @@ class User extends Model
          this.noun =  data.noun;
          this.role = data.role;
          this.id = data.id;
-         this.gamified =  data.gamification;
+         this.gamified =  data.gamification === "y";
          this.stdInternalisation = data.std_internalisation;
     }
 

@@ -67,7 +67,7 @@ class App
 		this.urlChecker.setHost(location.hostname, 80);
 
 		this.setupViews();
-		this.setupMenuPanel();
+
 
 		this.trySignInImmediately();
 	}
@@ -163,6 +163,7 @@ class App
 		this.user.addObserver(signinView, this.net.messageHandler.types.SIGN_IN_FAILED);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
+		this.user.addObserver(profileView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 
 
 		// Teacher - Assignment
@@ -207,29 +208,40 @@ class App
 
 		// Student - Challenge
 		this.challenge.addObserver(challengeView, this.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL);
-
-
-
 	}
 
 	setupMenuPanel()
 	{
 		var viewLabel = document.getElementById("view-title");
+		var gamified = app.user.gamified;
 
-		app.utils.assignFuncToButtonViaID("mps-profile-button", function() {
-			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE)
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
-				viewLabel.innerText = "Your Profile";
-			}
-		});
+		if (gamified)
+		{
+            app.utils.assignFuncToButtonViaID("mps-profile-button", function () {
+                if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE) {
+                    app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+                    viewLabel.innerText = "Your Profile";
+                }
+            });
+        }
+        else
+		{
+			document.getElementById("mps-profile-button").style.display = 'none';
+			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
+			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
+		}
 
-		app.utils.assignFuncToButtonViaID("mps-challenges-button", function() {
-			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE)
-			{
-				app.challenge.getChallengeChain();
-			}
-		});
+    		app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {
+                if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
+                    app.challenge.getChallengeChain("cpp");
+                }
+            });
+
+            app.utils.assignFuncToButtonViaID("mps-challenges-js-button", function () {
+                if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
+                    app.challenge.getChallengeChain("js");
+                }
+            });
 
 		app.utils.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)

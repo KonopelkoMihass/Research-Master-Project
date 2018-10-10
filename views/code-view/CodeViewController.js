@@ -32,28 +32,11 @@ class CodeViewController
 		var controller = this;
 		if (this.setSideModal)
 		{
-            // The choice buttons
-            document.getElementById("code-review-sidenav-choice-left").addEventListener("click", function () {
-                document.getElementById("code-review-sidenav-comment").style.display = "block";
-                document.getElementById("code-review-sidenav-issue-category").style.display = "none";
-            });
-
-            document.getElementById("code-review-sidenav-choice-right").addEventListener("click", function () {
-                document.getElementById("code-review-sidenav-issue-category").style.display = "block";
-                document.getElementById("code-review-sidenav-comment").style.display = "none";
-            });
-
-
-			document.getElementById("submit-comment").addEventListener("click", function () {
-				var comment = document.getElementById("code-review-sidenav-comment-textbox").value;
-				document.getElementById("code-review-sidenav-comment-textbox").value = "";
-				controller.closeSidenavAndSaveTheReview("comment", comment)
-            });
-
             var standards = app.standards.selectStandards( app.assignments.getById(this.model.getReviewedSubmission().assignmentID).standardUsed);
             var categorySelectDiv = document.getElementById("code-review-category-select-div");
 
-            for (var key in standards) {
+            for (var key in standards)
+            {
                 var categoryName = key;
 
                 //create a span to insert into div
@@ -109,19 +92,18 @@ class CodeViewController
 
 							var label = document.createElement("LABEL");
 							label.id = "code-review-category#" + subcategories[i].category +"#" + i + "#label";
-							label.innerHTML = subcategories[i].number;
+							label.innerHTML = "[" + subcategories[i].number + "] - " +  subcategories[i].subCategory;
 
 
 							img.addEventListener("mouseover",function ()
 							{
 								this.style.filter = "invert(100%)";
-
 								var category = this.id.split("#")[1];
 								var idNum = this.id.split("#")[2];
 
 								var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
-
 								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+
 								tootlipElem.style.visibility = "visible";
 								tootlipElem.style.opacity= "1";
 
@@ -152,23 +134,7 @@ class CodeViewController
 							});
 
 
-							subcategorySpan.addEventListener("mouseover",function ()
-							{
-								var cat = this.id.split("#")[1];
-								var subCategoryIndex = this.id.split("#")[2];
-								var standard = standards[cat][subCategoryIndex];
 
-								document.getElementById("code-review-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.subCategory;
-							});
-
-							subcategorySpan.addEventListener("mouseleave",function ()
-							{
-								var cat = this.id.split("#")[1];
-								var subCategoryIndex = this.id.split("#")[2];
-								var standard = standards[cat][subCategoryIndex];
-
-								document.getElementById("code-review-category#" + cat +"#" + subCategoryIndex + "#label").innerText = standard.number;
-							});
 
 							subcategorySpan.appendChild(label);
 							spanContainer.appendChild(subcategorySpan);
@@ -336,7 +302,7 @@ class CodeViewController
 				}
 				else
 				{
-					app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+					app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
 				}
 
 				removeEventListener();

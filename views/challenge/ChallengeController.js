@@ -16,7 +16,6 @@ class ChallengeController
 		this.fileNameParsed = "";
 		this.allowSelection = true;
 
-
 		this.issuesFound = {};
 
 		this.seconds = 0;
@@ -161,6 +160,7 @@ class ChallengeController
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
+		if(!app.user.gamified) document.getElementById("challenge-legend").innerText = "Training";
 	}
 
 	prepareCodeHTMLs()
@@ -187,7 +187,6 @@ class ChallengeController
         var new_element = old_element.cloneNode(true);
         old_element.parentNode.replaceChild(new_element, old_element);
 
-
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
 			if (controller.displayPostChallengeScreen === false)
@@ -196,9 +195,6 @@ class ChallengeController
 				controller.saveChallengeResults();
 				controller.stopTimer();
 				controller.displayPostChallengeScreen = true;
-
-
-
 			}
 			else
 			{
@@ -266,7 +262,7 @@ class ChallengeController
 
 			for (var j in challengeIssues)
 			{
-				var std = challengeIssues.standard;
+				var std = challengeIssues[j].standard;
 
 				var row = issueTable.insertRow(-1);
 				var cell0 = row.insertCell(0);
@@ -281,9 +277,6 @@ class ChallengeController
 		}
 	}
 
-
-
-
 	saveChallengeResults()
 	{
 		var data = {};
@@ -295,16 +288,12 @@ class ChallengeController
 		this.model.issues = {};
 	}
 
-
 	showChallengeEndScreen()
 	{
 		this.parsedCodeHTMLs = {};
 
 		this.model.changeStdInternalisation();
 		//this.model.submitChallengeResults();
-
-
-
 
 		var results = this.model.getOverallPerformance();
 
@@ -330,9 +319,9 @@ class ChallengeController
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
+		if(!app.user.gamified) document.getElementById("std-internalisation").style.display = "none";
 		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
 	}
-
 
 	stringifyAverageTime()
 	{
@@ -435,21 +424,40 @@ class ChallengeController
 				if (controller.allowSelection === true)
 				{
 					//Check if it is already has a class "selected"
-					if (!this.classList.contains("selected")) {
+					if (!this.classList.contains("selected") && !controller.checkIssueQuantityLimit())
+					{
 						this.className += " reviewed";
 						controller.addLineBit(this.id, filename);
 						controller.allowSelection = false;
 					}
 
-					else {
+					else
+					{
 						this.classList.remove("selected");
 						controller.deleteLineBit(this.id, filename);
+						controller.updateIssueCountLabel();
 					}
 				}
 
 			});
 
 		}
+	}
+
+	updateIssueCountLabel()
+	{
+		var totalIssuesLabel = document.getElementById("total-issues");
+		var totalIssuesFound = Object.keys(this.issuesFound).length;
+		var totalIssuesPresent = Object.keys(this.model.issues).length;
+
+		totalIssuesLabel.innerHTML = totalIssuesFound + "/" + totalIssuesPresent;
+	}
+
+	checkIssueQuantityLimit()
+	{
+		var totalIssuesFound = Object.keys(this.issuesFound).length;
+		var totalIssuesPresent = Object.keys(this.model.issues).length;
+		return totalIssuesPresent === totalIssuesFound;
 	}
 
 
@@ -509,7 +517,6 @@ class ChallengeController
 		var sideModal = document.getElementById("challenge-code-side-modal");
         sideModal.style.width = "0";
 
-
 		if (this.categoryElemSelected !== "")
 		{
 			this.categoryElemSelected.classList.remove("standard-bit-selected");
@@ -561,6 +568,7 @@ class ChallengeController
 		cell2.style.textAlign="center";
 		cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
 
+		this.updateIssueCountLabel();
 
 		this.allowSelection = true;
 	}

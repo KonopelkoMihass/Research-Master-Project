@@ -75,18 +75,15 @@ class FeedbackView extends View
 
 	createReviewSelectModal(subIndex, assignmentName)
 	{
-		var that = this;
+		var controller = this;
 
 		var modalBody = app.modalContentManager.getModalContent("select-review-student");
 		var modalData = app.utils.createModal("select-review-student", assignmentName + " - Select Feedback to View", modalBody, false);
 
-		var modalSpaceGame = app.modalContentManager.getModalContent("rocket-game");
-		var modalSpaceGameData = app.utils.createModal("select-review-student", "Rocket Test", modalSpaceGame, false);
-
 		var submission = app.submissions.submissions[subIndex];
 
 		var currentFeedbacksIDs = [];
-		for (var i = 0;i< submission.feedbacks.length; i++)
+		for (var i = 0; i < submission.feedbacks.length; i++)
 		{
 			if (submission.feedbacks[i].iteration_submitted === submission.iteration)
 			{
@@ -95,7 +92,8 @@ class FeedbackView extends View
 				var foundUser = false;
 				for (var j = 0; j< currentFeedbacksIDs.length; j++)
 				{
-					if (currentFeedbacksIDs[j].reviewer_id === feedback.reviewer_id && currentFeedbacksIDs[j].iteration_submitted === feedback.iteration_submitted)
+					if (currentFeedbacksIDs[j].reviewer_id === feedback.reviewer_id &&
+						currentFeedbacksIDs[j].iteration_submitted === feedback.iteration_submitted)
 					{
                         foundUser = true;
                         break;
@@ -111,8 +109,6 @@ class FeedbackView extends View
 				}
 			}
 		}
-
-
 
 		var reviewDiv = document.getElementById("select-review-students-buttons");
 
@@ -139,7 +135,6 @@ class FeedbackView extends View
 				var parentNode = modalData.modal.parentNode;
 				parentNode.removeChild(modalData.modal);
 
-				modalSpaceGameData.modal.style.display = "block";
 
 				app.submissions.codeViewState = "Comments";
 				app.submissions.reviewerIDToCodeView = parseInt(this.id.split('#')[2]);
@@ -148,7 +143,14 @@ class FeedbackView extends View
 
 				var feedback = submission.feedbacks[app.submissions.feedbackIndexToReview];
 
-				that.setupRocketGame(modalSpaceGameData, feedback);
+				 if (app.user.gamified)
+				 {
+				 	var modalSpaceGame = app.modalContentManager.getModalContent("rocket-game");
+					var modalSpaceGameData = app.utils.createModal("select-review-student", "Rocket Test", modalSpaceGame, false);
+					modalSpaceGameData.modal.style.display = "block";
+				 	controller.setupRocketGame(modalSpaceGameData, feedback);
+				 }
+				 else app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
 			});
 
 			reviewDiv.appendChild(reviewBtn);
@@ -207,7 +209,7 @@ class FeedbackView extends View
 
 	startCountdown(shipFate, issues, closeButtons, whoReviewed)
 	{
-		var that = this;
+		var controller = this;
 		var messageLog = document.getElementById("messages-window");
 
 		var prestartMessage = document.createElement("LABEL");
@@ -231,25 +233,22 @@ class FeedbackView extends View
 				messageLog.appendChild( document.createElement("BR"));
 				messageLog.appendChild(countMessage);
 
-
 				timeLeft--;
-
 
 				if (timeLeft === 5){
 					app.audioManager.playSound("space-ship-flight.wav", 1);
 				}
 
-
 				if (timeLeft === -1)
 				{
 					clearInterval(timer);
-					that.rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
+					controller.rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
                 }
-
 			}, 1000);
 
 			// Clicking close buttons should bring to the code view
-		 for (var i = 0; i <closeButtons.length;i++){
+		 for (var i = 0; i <closeButtons.length;i++)
+		 {
 			closeButtons[i].addEventListener("click", function ()
 			{
 				app.viewManager.goToView(app.viewManager.VIEW.CODE_VIEW);
@@ -263,7 +262,7 @@ class FeedbackView extends View
 
 	rocketFlight(shipFate,issues, messageLog, closeButtons, whoReviewed)
 	{
-		var that = this;
+		var controller = this;
 		var rocket = document.getElementById("spaceship-span");
 		var rocketSprite = document.getElementById("rocket-image");
 

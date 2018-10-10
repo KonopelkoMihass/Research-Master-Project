@@ -43,16 +43,13 @@ class Challenge extends Model
         this.challengeChainPerformance.push(resutlDict);
     }
 
-    getChallengeChain()
+    getChallengeChain(language)
     {
         var parameterPack = {};
 
         //Some variables to be later received as parameters
-        parameterPack.length = 4;
-        var randLanguage = app.utils.getRandomInt(2);
-        var keys = Object.keys(app.standards.standardsInfo);
-        parameterPack.language = "js"; //keys[ keys.length * Math.random() << 0];
-
+        parameterPack.length = 5;
+        parameterPack.language = language;
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
     }

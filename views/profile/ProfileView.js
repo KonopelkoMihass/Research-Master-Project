@@ -12,7 +12,10 @@ class ProfileView extends View
 
 	onNotify (model, messageType)
 	{
-
+		if (messageType === "signin_successful")
+		{
+			this.controller.setupSTDProgressSelector();
+		}
 	}
 
 

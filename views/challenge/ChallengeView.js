@@ -19,6 +19,7 @@ class ChallengeView extends View
 			this.controller.setReviewData();
 			this.controller.setupSideModal();
 			this.controller.startTimer();
+			this.controller.updateIssueCountLabel();
 		}
 	}
 
