@@ -339,14 +339,12 @@ class Challenge extends Model
     submitChallengeResults()
     {
         // save challenge performance
+        var data = {};
 
-       // var data = {};
-        // 2 distinct parts will be sent together, but handled separately.
-        //data.email = app.user.email;
-        //data.challenges_performance = this.challengeChainPerformance;
-        //data.standard_internalisation = this.standardInternalisationScore;
+        data.email = app.user.email;
+        data.challenges_performance = this.challengeChainPerformance;
 
-        //app.net.sendMessage("upload_challenge_results", data);
+        app.net.sendMessage("upload_challenge_results", data);
     }
 
 

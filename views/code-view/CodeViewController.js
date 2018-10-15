@@ -385,7 +385,7 @@ class CodeViewController
 			{
 				codeElement.addEventListener("click", function ()
 				{
-					if (controller.allowSelection)
+					if (controller.allowSelection == true)
 					{
 						var lineNum = this.id.split("#")[1];
 
@@ -394,11 +394,6 @@ class CodeViewController
 							this.className += " reviewed";
 							controller.addLineBit(this.id, filename);
 							controller.allowSelection = false;
-						}
-
-						else {
-							this.classList.remove("selected");
-							controller.deleteLineBit(this.id, filename);
 						}
 					}
 				});
@@ -444,7 +439,7 @@ class CodeViewController
 			{
 				token.addEventListener("click", function()
 				{
-					if (controller.allowSelection)
+					if (controller.allowSelection == true)
 					{
 						var wordNum = this.id.split("#")[1];
 						var content = this.textContent;
@@ -455,12 +450,6 @@ class CodeViewController
 							this.className += " reviewed";
 							controller.addCodeBit(this.id, content, filename);
 							controller.allowSelection = false;
-						}
-
-						else
-						{
-							this.classList.remove("selected");
-							controller.deleteCodeBit(this.id, filename);
 						}
 					}
 				});
@@ -575,15 +564,12 @@ class CodeViewController
 
 	closeSidenavAndSaveTheReview(type, content)
 	{
+		var controller = this;
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("code-review-side-modal");
         sideModal.style.width = "0";
 
-
-
-
-		document.getElementById("code-review-sidenav-issue-category").style.display = "none";
-
+		//document.getElementById("code-review-sidenav-issue-category").style.display = "none";
 
 		if (this.categoryElemSelected !== "")
 		{
@@ -623,22 +609,58 @@ class CodeViewController
 
 		row.id = id + "-row";
 
+
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
+		var cell3 = row.insertCell(3);
+
+
+		var img = document.createElement("IMG");
+		img.src = "resources/images/trash-button.png";
+		img.id = "issue-delete-button--" + id;
+		img.style.width = "50%";
+		img.addEventListener("mouseover", function()
+		{
+			this.style.filter = "invert(100%)";
+		});
+		img.addEventListener("mouseleave", function()
+		{
+			this.style.filter = "invert(0%)";
+		});
+
+		img.addEventListener("click", function()
+		{
+			var id = this.id.split('--')[1];
+
+			document.getElementById(id).classList.remove("selected");
+
+			if (id.includes("reviewLine") )
+			{
+				controller.deleteLineBit(id);
+			}
+			else
+			{
+				controller.deleteCodeBit((id));
+			}
+
+		});
+		cell0.appendChild(img);
 
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML = "Whole line " + codeBit.content;
+			cell1.innerHTML = "Whole line " + codeBit.content;
 		}
 		else
 		{
-			cell0.innerHTML = codeBit.content;
+			cell1.innerHTML = codeBit.content;
 		}
 
-		cell1.innerHTML = codeBit.review_type;
-		cell2.innerHTML = codeBit.review;
+		cell2.innerHTML = codeBit.review_type;
+		cell3.innerHTML = codeBit.review;
+
+
 
 		this.allowSelection = true;
 	}

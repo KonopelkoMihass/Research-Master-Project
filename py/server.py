@@ -103,6 +103,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "update_skills":
 			self.update_skills(message_data)
 
+		elif message_type == "upload_challenge_results":
+			self.upload_challenge_results(message_data)
+
+
 
 
 
@@ -271,12 +275,20 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 	def update_skills(self, message_data):
 		message_data["std_internalisation"] = json.dumps(message_data["std_internalisation"])
-		database_manager.save_skills(message_data)
+		result =  "upload_challenge_results_successful"
+		try:
+			database_manager.save_skills(message_data)
+		except:
+			result = "upload_challenge_results_failed"
 
-
-		#self.send_message(data[0], data[1])
+		self.send_message(result, {})
 		pass
 
+
+
+	def upload_challenge_results(self, message_data):
+		# DO SAVING OF THE CHALLENGE PERFORMANCE.
+		pass
 
 
 

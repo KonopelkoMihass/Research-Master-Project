@@ -16,6 +16,28 @@ class User extends Model
         this.stdInternalisation = {};
     }
 
+    calculateLevel(stdName)
+    {
+        if (this.stdInternalisation.hasOwnProperty(stdName))
+        {
+            var std = this.stdInternalisation[stdName];
+            var level = 1;
+
+            for (var key in std)
+            {
+                for (var i = 0; i < std[key].subcategories.length; i++)
+                {
+                    if (std[key].subcategories[i].score >= 7)
+                    {
+                        level++;
+                    }
+                }
+            }
+            return level;
+        }
+        return "Complete first challenges to get a level."
+    }
+
 
     update(data, messageType)
     {
@@ -90,5 +112,4 @@ class User extends Model
          this.gamified =  data.gamification === "y";
          this.stdInternalisation = data.std_internalisation;
     }
-
 }

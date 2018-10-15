@@ -200,6 +200,10 @@ class ChallengeController
 			{
 				if (controller.model.lastChallenge)
 				{
+					/// TEMPORARY
+
+
+					///
 					controller.showChallengeEndScreen();
 				}
 				else
@@ -223,7 +227,7 @@ class ChallengeController
 		//cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
 		for (var i = 1, row; row = issueTable.rows[i]; i++)
 		{
-			var answerCell = row.cells[2];
+			var answerCell = row.cells[3];
 			var line = answerCell.id.split('#')[1];
 			var answer = answerCell.id.split('#')[2];
 
@@ -254,11 +258,12 @@ class ChallengeController
 
 		if (Object.keys(challengeIssues).length > 0)
 		{
+
 			var headlineRow = issueTable.insertRow(-1);
 			headlineRow.insertCell(0);
-			var c1 = headlineRow.insertCell(1);
+			headlineRow.insertCell(1);
+			var c1 = headlineRow.insertCell(2);
 			c1.innerHTML = "Issues you missed";
-			headlineRow.insertCell(2);
 
 			for (var j in challengeIssues)
 			{
@@ -268,11 +273,12 @@ class ChallengeController
 				var cell0 = row.insertCell(0);
 				var cell1 = row.insertCell(1);
 				var cell2 = row.insertCell(2);
+				var cell3 = row.insertCell(3);
 
-				cell0.innerHTML = challengeIssues[j].content;
-				cell1.innerHTML = "[" + std.number + "] - " + std.category + "\n" + std.subCategory;
-				cell2.innerHTML = "&#9673;";
-				cell2.style.textAlign="center";
+				cell1.innerHTML = challengeIssues[j].content;
+				cell2.innerHTML = "[" + std.number + "] - " + std.category + "\n" + std.subCategory;
+				cell3.innerHTML = "&#9673;";
+				cell3.style.textAlign="center";
 			}
 		}
 	}
@@ -293,7 +299,7 @@ class ChallengeController
 		this.parsedCodeHTMLs = {};
 
 		this.model.changeStdInternalisation();
-		//this.model.submitChallengeResults();
+		this.model.submitChallengeResults();
 
 		var results = this.model.getOverallPerformance();
 
@@ -430,13 +436,6 @@ class ChallengeController
 						controller.addLineBit(this.id, filename);
 						controller.allowSelection = false;
 					}
-
-					else
-					{
-						this.classList.remove("selected");
-						controller.deleteLineBit(this.id, filename);
-						controller.updateIssueCountLabel();
-					}
 				}
 
 			});
@@ -510,9 +509,10 @@ class ChallengeController
         });
     }
 
-
 	closeSidenavAndSaveTheReview(type, content)
 	{
+		var controller = this;
+
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("challenge-code-side-modal");
         sideModal.style.width = "0";
@@ -553,20 +553,45 @@ class ChallengeController
 
 		row.id = id + "-row";
 
+
 		var cell0 = row.insertCell(0);
+		var img = document.createElement("IMG");
+		img.src = "resources/images/trash-button.png";
+		img.id = "issue-delete-button--" + id;
+		img.style.width = "100%";
+		img.addEventListener("mouseover", function()
+		{
+			this.style.filter = "invert(100%)";
+		});
+		img.addEventListener("mouseleave", function()
+		{
+			this.style.filter = "invert(0%)";
+		});
+
+		img.addEventListener("click", function()
+		{
+			var id = this.id.split('--')[1];
+			controller.deleteLineBit(id);
+			document.getElementById(id).classList.remove("selected");
+		});
+		cell0.appendChild(img);
+
+
 		var cell1 = row.insertCell(1);
 		var cell2 = row.insertCell(2);
+		var cell3 = row.insertCell(3);
+
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML =  codeBit.content;
+			cell1.innerHTML =  codeBit.content;
 		}
 
-		cell1.innerHTML = "[" + content.number + "] - " + content.category + "\n" + content.subCategory;
+		cell2.innerHTML = "[" + content.number + "] - " + content.category + "\n" + content.subCategory;
 
-		cell2.innerHTML = "?";
-		cell2.style.textAlign="center";
-		cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
+		cell3.innerHTML = "?";
+		cell3.style.textAlign="center";
+		cell3.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
 
 		this.updateIssueCountLabel();
 

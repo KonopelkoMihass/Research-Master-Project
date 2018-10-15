@@ -15,7 +15,7 @@ class ProfileController
 	{
 		var controller = this;
 		var stdSelectorDiv = document.getElementById("profile-std-selector");
-
+		stdSelectorDiv.innerHTML = "";
 
 		var userStds = this.model.stdInternalisation;
 		var hasStds = false;
@@ -24,8 +24,12 @@ class ProfileController
 		{
 			var button = document.createElement("BUTTON");
 			button.id = "profile-std-button#" + k;
-			button.innerText = k;
+
+			var stdScoreData = app.standards.getStandardIternalisationLevel(k);
+
+			button.innerText = "[" +stdScoreData[0] + "/" + stdScoreData[1] +"] " +  k;
 			button.addEventListener("click", function () {
+				document.getElementById("profile-std-internalization-progress").innerHTML = "";
 				controller.displaySTDProgress(this.id.split("#")[1]);
             });
 			stdSelectorDiv.appendChild(button);
@@ -41,18 +45,41 @@ class ProfileController
 
 	displaySTDProgress(standardName)
 	{
+		document.getElementById("profile-std-internalisation-level-div").style.display = "block";
+		var stdLevel =  document.getElementById("profile-std-internalisation-level-label");
 		var stdProgressDiv = document.getElementById("profile-std-internalization-progress");
 		var std = this.model.stdInternalisation[standardName];
 
+		stdLevel.innerHTML = this.model.calculateLevel(standardName);
 
-
-		for (var catKey in std)
+		var sortedKeys = [];
+		var stopSorting = false;
+		var subcatNum = 1;
+		while (!stopSorting)
 		{
-			var category = std[catKey];
+			for (var catKey in std)
+			{
+				if (std[catKey].subcategories[0].number === subcatNum)
+				{
+					sortedKeys.push(catKey);
+					subcatNum += std[catKey].subcategories.length;
+					break;
+				}
+			}
+
+			if (Object.keys(std).length === sortedKeys.length)
+			{
+				stopSorting = true;
+			}
+		}
+
+		for (var c = 0; c < sortedKeys.length; c++)
+		{
+			var category = std[sortedKeys[c]];
 
 			var fieldset = document.createElement("FIELDSET");
 			var legend = document.createElement("LEGEND");
-			legend.innerHTML = "[" + category.score + "/" + category.maxScore + "] " +catKey;
+			legend.innerHTML = "[" + category.score + "/" + category.maxScore + "] " + sortedKeys[c];
 			fieldset.appendChild(legend);
 
 			for (var i = 0; i < category.subcategories.length; i++)
@@ -66,7 +93,6 @@ class ProfileController
 
 			stdProgressDiv.appendChild(fieldset);
 		}
-
 	}
 
 	update()

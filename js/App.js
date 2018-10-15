@@ -7,8 +7,34 @@ window.onbeforeunload = function()
 
 function main()
 {
+	generateLevelProgression(10, 100);
 	app = new App();
+
 }
+
+function generateLevelProgression(maxLevel, maxXP)
+{
+	var xp = 3;
+	for (var i = 2; i !== maxLevel; i++)
+	{
+		console.log(i + " " + xp);
+		xp *= maxXP / Math.log2(i/maxLevel) ;
+
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class App
@@ -165,6 +191,9 @@ class App
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 		this.user.addObserver(profileView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 
+		// Track standard loading
+		this.user.addObserver(profileView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
+
 
 		// Teacher - Assignment
 		this.assignments.addObserver(assignmentsTeacherView, this.net.messageHandler.types.TEACHER_ASSIGNMENTS_CREATION_SUCCESSFUL);
@@ -208,6 +237,7 @@ class App
 
 		// Student - Challenge
 		this.challenge.addObserver(challengeView, this.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL);
+		this.user.addObserver(profileView, this.net.messageHandler.types.UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL);
 	}
 
 	setupMenuPanel()

@@ -500,19 +500,21 @@ class CreateChallengeController
 
 			codeElement.addEventListener("click", function ()
 			{
+				if (controller.allowSelection === true)
+				{
+					var lineNum = this.id.split("#")[1];
 
-				var lineNum = this.id.split("#")[1];
+					//Check if it is already has a class "selected"
+					if (!this.classList.contains("selected")) {
+						this.className += " reviewed";
+						controller.addLineBit(this.id, filename);
+						controller.allowSelection = false;
+					}
 
-				//Check if it is already has a class "selected"
-				if (!this.classList.contains("selected")) {
-					this.className += " reviewed";
-					controller.addLineBit(this.id, filename);
-					controller.allowSelection = false;
-				}
-
-				else {
-					this.classList.remove("selected");
-					controller.deleteLineBit(this.id, filename);
+					else {
+						this.classList.remove("selected");
+						controller.deleteLineBit(this.id, filename);
+					}
 				}
 
 			});
@@ -559,7 +561,7 @@ class CreateChallengeController
 
 			token.addEventListener("click", function()
 			{
-				if (controller.allowSelection)
+				if (controller.allowSelection === true)
 				{
 					var wordNum = this.id.split("#")[1];
 					var content = this.textContent;
@@ -570,12 +572,6 @@ class CreateChallengeController
 						this.className += " reviewed";
 						controller.addCodeBit(this.id, content, filename);
 						controller.allowSelection = false;
-					}
-
-					else
-					{
-						this.classList.remove("selected");
-						controller.deleteCodeBit(this.id, filename);
 					}
 				}
 			});
@@ -658,6 +654,8 @@ class CreateChallengeController
 
 	closeSidenavAndSaveTheReview(type, content)
 	{
+		var controller = this;
+
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("create-challenge-code-side-modal");
         sideModal.style.width = "0";
@@ -697,19 +695,47 @@ class CreateChallengeController
 
 		row.id = id + "-row";
 
+
 		var cell0 = row.insertCell(0);
 		var cell1 = row.insertCell(1);
+		var cell2 = row.insertCell(2);
+
+
+
+		var img = document.createElement("IMG");
+		img.src = "resources/images/trash-button.png";
+		img.id = "issue-delete-button--" + id;
+		img.style.width = "100%";
+		img.addEventListener("mouseover", function()
+		{
+			this.style.filter = "invert(100%)";
+		});
+		img.addEventListener("mouseleave", function()
+		{
+			this.style.filter = "invert(0%)";
+		});
+
+		img.addEventListener("click", function()
+		{
+			var id = this.id.split('--')[1];
+			controller.deleteLineBit(id);
+			document.getElementById(id).classList.remove("selected");
+		});
+		cell0.appendChild(img);
+
+
+
 
 		if( codeBit.type === "line")
 		{
-			cell0.innerHTML = "Line " + codeBit.content;
+			cell1.innerHTML = "Line " + codeBit.content;
 		}
 		else
 		{
-			cell0.innerHTML = codeBit.content;
+			cell1.innerHTML = codeBit.content;
 		}
 
-		cell1.innerHTML = codeBit.review;
+		cell2.innerHTML = codeBit.review;
 
 		this.allowSelection = true;
 	}

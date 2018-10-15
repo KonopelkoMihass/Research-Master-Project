@@ -45,10 +45,11 @@ class MessageHandler
 
 			GET_CHALLENGE_CHAIN_SUCCESSFUL:"get_challenge_chain_successful",
 
+			UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL: "upload_challenge_results_successful",
 
 
 			//New - not used yet
-			UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL: "upload_challenge_results_successful",
+
 			FLIP_GAMIFICATION_AROUND_SUCCESSFUL: "flip_gamification_around_successful",
 			ENABLE_GAMIFICATION_SWITCH_SUCCESSFUL: "enable_gamification_switch_successful"
 		};

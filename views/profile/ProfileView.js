@@ -12,7 +12,8 @@ class ProfileView extends View
 
 	onNotify (model, messageType)
 	{
-		if (messageType === "signin_successful")
+		if (messageType === app.net.messageHandler.types.GET_STANDARD_SUCCESSFUL ||
+			messageType === app.net.messageHandler.types.UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL)
 		{
 			this.controller.setupSTDProgressSelector();
 		}

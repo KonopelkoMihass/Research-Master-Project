@@ -77,11 +77,26 @@ class Standards extends Model {
          app.net.sendMessage("get_standard", {});
     }
 
+    getStandardIternalisationLevel(language)
+    {
+        var userSTD = app.user.stdInternalisation[language];
+        var score = 0;
+        var maxScore = 0;
+
+
+        for (var cat in userSTD)
+        {
+            score += userSTD[cat].score;
+            maxScore +=  userSTD[cat].maxScore;
+        }
+        return [score, maxScore] ;
+    }
+
     updateInternalisationSkillTree(scores, language)
     {
         var userSTD = app.user.stdInternalisation;
 
-        if (Object.keys(userSTD).length === 0)
+        if (!userSTD.hasOwnProperty(language))
         {
             userSTD[language] = this.addInternalisationSkillTree(language);
         }
