@@ -106,6 +106,20 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 		elif message_type == "upload_challenge_results":
 			self.upload_challenge_results(message_data)
 
+		elif message_type == "get_students":
+			self.get_students()
+
+		elif message_type == "invert_systems":
+			self.invert_systems()
+
+		elif message_type == "enable_system_switch":
+			self.enable_system_switch()
+
+		elif message_type == "selected_system":
+			self.selected_system(message_data)
+
+
+
 
 
 
@@ -282,13 +296,80 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 			result = "upload_challenge_results_failed"
 
 		self.send_message(result, {})
-		pass
-
 
 
 	def upload_challenge_results(self, message_data):
 		# DO SAVING OF THE CHALLENGE PERFORMANCE.
 		pass
+
+
+	def get_students(self):
+		students = []
+		result = "get_students_successful"
+		try:
+			students = database_manager.get_students()
+			for student in students:
+				student["std_internalisation"] = json.loads(student["std_internalisation"])
+		except:
+			result = "get_students_failed"
+
+		self.send_message(result, students)
+
+
+	def invert_systems(self):
+		students = []
+		result = "invert_systems_successful"
+		try:
+			students = database_manager.invert_systems()
+			for student in students:
+				student["std_internalisation"] = json.loads(student["std_internalisation"])
+		except:
+			result = "invert_systems_failed"
+		self.send_message(result, students)
+
+		for k, item in connections.items():
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "student":
+				item["socket"].kick_from_website()
+
+
+	def enable_system_switch(self):
+		students = []
+		result = "enable_system_switch_successful"
+		try:
+			students = database_manager.enable_system_switch()
+			for student in students:
+				student["std_internalisation"] = json.loads(student["std_internalisation"])
+		except:
+			result = "enable_system_switch_failed"
+		self.send_message(result, students)
+		for k, item in connections.items():
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "student":
+				item["socket"].kick_from_website()
+
+
+	def selected_system(self, message_data):
+		database_manager.selected_system(message_data)
+		for k, item in connections.items():
+			item["socket"].get_assignments()
+			if item["user_data"]["role"] == "student":
+				item["socket"].kick_from_website()
+			elif item["user_data"]["role"] == "teacher":
+				item["socket"].get_students()
+
+
+
+
+
+
+
+
+	def kick_from_website(self):
+		self.send_message("kick_from_website", {})
+
+
+
 
 
 

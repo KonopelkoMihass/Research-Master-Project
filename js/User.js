@@ -12,7 +12,7 @@ class User extends Model
         this.role = "";
         this.id = "";
         this.log = "";
-        this.gamified = false;
+        this.gamified = "n";
         this.stdInternalisation = {};
     }
 
@@ -109,7 +109,18 @@ class User extends Model
          this.noun =  data.noun;
          this.role = data.role;
          this.id = data.id;
-         this.gamified =  data.gamification === "y";
+         this.gamified =  data.gamification;
          this.stdInternalisation = data.std_internalisation;
     }
+
+    sendSystemSelectionResult(choice)
+    {
+        var userData = {};
+        userData.email = this.email;
+        userData.choice = choice;
+
+        app.net.sendMessage("selected_system", userData);
+
+    }
+
 }

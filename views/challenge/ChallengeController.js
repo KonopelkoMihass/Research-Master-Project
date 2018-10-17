@@ -160,7 +160,7 @@ class ChallengeController
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
-		if(!app.user.gamified) document.getElementById("challenge-legend").innerText = "Training";
+		if(app.user.gamified === "n") document.getElementById("challenge-legend").innerText = "Training";
 	}
 
 	prepareCodeHTMLs()
@@ -195,15 +195,13 @@ class ChallengeController
 				controller.saveChallengeResults();
 				controller.stopTimer();
 				controller.displayPostChallengeScreen = true;
+
+				document.getElementById("challenge-submit-legend").innerText = "Continue?";
 			}
 			else
 			{
 				if (controller.model.lastChallenge)
 				{
-					/// TEMPORARY
-
-
-					///
 					controller.showChallengeEndScreen();
 				}
 				else
@@ -215,6 +213,7 @@ class ChallengeController
 				controller.codingLanguageUsed = "";
 
 				controller.displayPostChallengeScreen = false;
+				document.getElementById("challenge-submit-legend").innerText = "Submit and see results?";
 			}
 		});
 	}
@@ -325,7 +324,7 @@ class ChallengeController
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
-		if(!app.user.gamified) document.getElementById("std-internalisation").style.display = "none";
+		if(app.user.gamified === "n") document.getElementById("std-internalisation").style.display = "none";
 		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
 	}
 

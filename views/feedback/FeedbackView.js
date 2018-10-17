@@ -143,7 +143,7 @@ class FeedbackView extends View
 
 				var feedback = submission.feedbacks[app.submissions.feedbackIndexToReview];
 
-				 if (app.user.gamified)
+				 if (app.user.gamified === "y")
 				 {
 				 	var modalSpaceGame = app.modalContentManager.getModalContent("rocket-game");
 					var modalSpaceGameData = app.utils.createModal("select-review-student", "Rocket Test", modalSpaceGame, false);

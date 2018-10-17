@@ -1,22 +1,22 @@
 // temporarty func to generates enemy based 
 // on the asked tipe and level.  To be removed after 
-// passedVerification() is tested and integrated.
-function generateEnemy(level, tipe)
+// passedVerification(enemy) is tested and integrated.
+function GenerateEnemy(level, type)
 {
-	var enemy = app.factories.enemyFactory.generate(tipe, level);
-	if (passedVerification(enemy)
+	var enemy = app.factories.enemyFactory.generate(type, level);
+	if (passedVerification(enemy))
 	{
 	   return enemy;
 	}
 	else
 	{
-		return generateEnemy(level, tipe);
+		return generateEnemy(level, type);
 	}
 }
 
 // this function checks if the generated enemy 
 // is relatively balanced (not overkill or a wimp)
-function passedVerification(enemy)
+function PassedVerification(enemy)
 {
 	var result=false;
 	// internal logic...

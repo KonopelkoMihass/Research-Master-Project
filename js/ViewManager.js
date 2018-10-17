@@ -21,7 +21,9 @@ class ViewManager
 			SEE_STANDARDS_TEACHER: "see-standards-teacher",
 			CODE_VIEW:"code-view",
 			CREATE_CHALLENGE:"create-challenge",
-			CHALLENGE: "challenge"
+			CHALLENGE: "challenge",
+			MANAGE_SYSTEMS_TEACHER: "manage-systems-teacher",
+			STUDENT_SYSTEM_SELECT: "student-system-select"
 		}
 	}
 

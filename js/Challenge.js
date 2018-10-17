@@ -48,7 +48,7 @@ class Challenge extends Model
         var parameterPack = {};
 
         //Some variables to be later received as parameters
-        parameterPack.length = 5;
+        parameterPack.length = 2;
         parameterPack.language = language;
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
@@ -187,20 +187,20 @@ class Challenge extends Model
                 if (originalIssues[tokenKey].review === usersIssues[tokenKey].review)
                 {
                     foundIssues[tokenKey] = usersIssues[tokenKey];
-                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, 1);
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, 3);
                 }
 
                 else
                 {
                     falseIssues[tokenKey] = originalIssues[tokenKey];
-                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -1);
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -2);
                 }
             }
 
             else
             {
                 missedIssues[tokenKey] = originalIssues[tokenKey];
-                this.scoreStandardInternalisation( originalIssues[tokenKey].standard, -.5);
+                this.scoreStandardInternalisation( originalIssues[tokenKey].standard, -1);
             }
         }
 

@@ -47,11 +47,12 @@ class MessageHandler
 
 			UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL: "upload_challenge_results_successful",
 
+			GET_STUDENTS_SUCCESSFUL: "get_students_successful",
+			INVERT_SYSTEMS_SUCCESSFUL: "invert_systems_successful",
+			ENABLE_SYSTEM_SWITCH_SUCCESSFUL: "enable_system_switch_successful",
 
-			//New - not used yet
+			KICK_FROM_WEBSITE: "kick_from_website"
 
-			FLIP_GAMIFICATION_AROUND_SUCCESSFUL: "flip_gamification_around_successful",
-			ENABLE_GAMIFICATION_SWITCH_SUCCESSFUL: "enable_gamification_switch_successful"
 		};
 	}
 
@@ -69,5 +70,11 @@ class MessageHandler
 		app.challenge.update(data, type);
 		app.tracker.trackServerMessages(data, type);
         app.user.update(data, type);
+        app.students.update(data, type);
+
+        if (this.types.KICK_FROM_WEBSITE === type)
+        {
+        	document.location.reload();
+		}
 	}
 }

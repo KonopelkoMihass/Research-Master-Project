@@ -22,7 +22,8 @@ class AssignmentsStudentView extends View
 
 		// Update the table of assessments
 		if (messageType === app.net.messageHandler.types.GET_ASSIGNMENTS_SUCCESSFUL ||
-			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL  )
+			messageType === app.net.messageHandler.types.ASSIGNMENT_DELETE_SUCCESSFUL ||
+			messageType === app.net.messageHandler.types.ENABLE_SYSTEM_SWITCH_SUCCESSFUL)
 		{
 			// remove all data in there.
 			var rowCount = assignmentTable.rows.length;

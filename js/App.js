@@ -23,20 +23,6 @@ function generateLevelProgression(maxLevel, maxXP)
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class App
 {
  	constructor()
@@ -86,8 +72,9 @@ class App
 		this.submissions = new Submissions();
 		this.standards = new Standards();
 		this.challenge = new Challenge();
+		this.students = new Students();
 
-		this.net.setHost(location.hostname, 80); // replace with 80 when putting on gamecore
+		this.net.setHost(location.hostname, 80);
 		this.net.connect();
 
 		this.urlChecker.setHost(location.hostname, 80);
@@ -180,6 +167,14 @@ class App
 		var challengeView = new ChallengeView(challengeController);
 		this.viewManager.addView(challengeView);
 
+		var manageSystemsTeacherController = new ManageSystemsTeacherController(this.students);
+		var manageSystemsTeacherView = new ManageSystemsTeacherView(manageSystemsTeacherController);
+		this.viewManager.addView(manageSystemsTeacherView);
+
+		var studentSystemSelectController = new StudentSystemSelectController(this.user);
+		var studentSystemSelectView = new StudentSystemSelectView(studentSystemSelectController);
+		this.viewManager.addView(studentSystemSelectView);
+
 
 
 		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
@@ -190,6 +185,8 @@ class App
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_SUCCESSFUL);
 		this.user.addObserver(signupView, this.net.messageHandler.types.SIGN_UP_FAILED);
 		this.user.addObserver(profileView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+		this.user.addObserver(studentSystemSelectView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
+
 
 		// Track standard loading
 		this.user.addObserver(profileView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
@@ -238,6 +235,16 @@ class App
 		// Student - Challenge
 		this.challenge.addObserver(challengeView, this.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL);
 		this.user.addObserver(profileView, this.net.messageHandler.types.UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL);
+
+		// Teacher - Students interactions
+		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.GET_STUDENTS_SUCCESSFUL);
+		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.INVERT_SYSTEMS_SUCCESSFUL);
+		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.ENABLE_SYSTEM_SWITCH_SUCCESSFUL);
+
+
+
+
+
 	}
 
 	setupMenuPanel()
@@ -245,7 +252,8 @@ class App
 		var viewLabel = document.getElementById("view-title");
 		var gamified = app.user.gamified;
 
-		if (gamified)
+
+		if (gamified === "y")
 		{
             app.utils.assignFuncToButtonViaID("mps-profile-button", function () {
                 if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE) {
@@ -254,24 +262,25 @@ class App
                 }
             });
         }
-        else
+        else if (gamified === "n")
 		{
 			document.getElementById("mps-profile-button").style.display = 'none';
 			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
 			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
 		}
 
-    		app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {
-                if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
-                    app.challenge.getChallengeChain("cpp");
-                }
-            });
 
-            app.utils.assignFuncToButtonViaID("mps-challenges-js-button", function () {
-                if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
-                    app.challenge.getChallengeChain("js");
-                }
-            });
+        app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {
+            if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
+                app.challenge.getChallengeChain("cpp");
+            }
+        });
+
+        app.utils.assignFuncToButtonViaID("mps-challenges-js-button", function () {
+            if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
+                app.challenge.getChallengeChain("js");
+            }
+        });
 
 		app.utils.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
@@ -316,6 +325,7 @@ class App
 
 
 
+
 		app.utils.assignFuncToButtonViaID("mpt-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
 			{
@@ -338,6 +348,15 @@ class App
 				viewLabel.innerText = "Standards Available";
 			}
 		});
+
+		app.utils.assignFuncToButtonViaID("mpt-manage-systems-button", function() {
+			if (app.viewManager.currentView.title !== app.viewManager.VIEW.MANAGE_SYSTEMS_TEACHER)
+			{
+				app.viewManager.goToView(app.viewManager.VIEW.MANAGE_SYSTEMS_TEACHER);
+				viewLabel.innerText = "Manage Systems";
+			}
+		});
+
 
 		app.utils.assignFuncToButtonViaID("mpt-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)

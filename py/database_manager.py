@@ -304,8 +304,6 @@ class DatabaseManager:
 
 		return challenge
 
-
-
 	def save_skills(self, data):
 		email = data["email"]
 		update_std_int = data["std_internalisation"]
@@ -318,3 +316,77 @@ class DatabaseManager:
 		connector.commit()
 		cursor.close()
 		connector.close()
+
+	def get_students(self):
+		students = []
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("SELECT * FROM Users WHERE Users.role='student'")
+		cursor.execute(query)
+		students = cursor.fetchall()
+
+		cursor.close()
+		connector.close()
+		return students
+
+	def invert_systems(self):
+		students = []
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("UPDATE Users "
+				 "SET Users.gamification = IF(Users.gamification = 'r' , 'r', "
+				 "IF(Users.gamification = 'y' , 'n', 'y' )) WHERE Users.role='student'")
+		cursor.execute(query)
+		connector.commit()
+
+		query = ("SELECT * FROM Users WHERE Users.role='student'")
+		cursor.execute(query)
+		students = cursor.fetchall()
+		cursor.close()
+		connector.close()
+
+		return students
+
+
+	def enable_system_switch(self):
+		students = []
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("UPDATE Users SET Users.gamification = 'r'  WHERE Users.role='student'")
+		cursor.execute(query)
+		connector.commit()
+
+		query = ("SELECT * FROM Users WHERE Users.role='student'")
+		cursor.execute(query)
+		students = cursor.fetchall()
+
+		cursor.close()
+		connector.close()
+
+		return students
+
+	def selected_system(self, message_data):
+		email = message_data["email"]
+		choice = message_data["choice"]
+
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("UPDATE Users SET Users.gamification = '" + choice + "'  WHERE Users.email='" + email + "'")
+		cursor.execute(query)
+		connector.commit()
+
+		cursor.close()
+		connector.close()
+
+
+
+
+
+
+
+
+

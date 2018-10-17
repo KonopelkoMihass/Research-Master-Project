@@ -68,3 +68,16 @@
     text-align: left;
 }
 
+.code-view-tips
+{
+    position:absolute;
+    bottom:5%;
+
+    padding: 1px 10px;
+    font-weight: bold;
+    font-size: calc(8px + 0.5vw);
+    text-align: left;
+}
+
+
+

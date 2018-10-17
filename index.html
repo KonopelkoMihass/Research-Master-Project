@@ -17,6 +17,7 @@
     <script src = "js/Submissions.js"></script>
     <script src = "js/Standards.js"></script>
     <script src = "js/Challenge.js"></script>
+    <script src = "js/Students.js"></script>
 
     <!--View Base-->
     <script src = "js/View.js"></script>
@@ -79,6 +80,13 @@
     <script src = "views/challenge/ChallengeController.js"></script>
     <script src = "views/challenge/ChallengeView.js"></script>
 
+    <script src = "views/manage-systems-teacher/ManageSystemsTeacherController.js"></script>
+    <script src = "views/manage-systems-teacher/ManageSystemsTeacherView.js"></script>
+
+    <script src="views/student-system-select/StudentSystemSelectController.js"></script>
+    <script src="views/student-system-select/StudentSystemSelectView.js"></script>
+
+
     <!-- Additional Styles -->
     <link rel="stylesheet" href="modals/submit-assignment.css">
     <link rel="stylesheet" href="modals/submit-challenge-file.css">
@@ -98,6 +106,8 @@
     <link rel="stylesheet" href="views/code-view/code-view.css">
     <link rel="stylesheet" href="views/create-challenge/create-challenge.css">
     <link rel="stylesheet" href="views/challenge/challenge.css">
+    <link rel="stylesheet" href="views/manage-systems-teacher/manage-systems-teacher.css">
+    <link rel="stylesheet" href="views/student-system-select/student-system-select.css">
 
     <link rel="stylesheet" href="views/prism.css">
 
@@ -109,7 +119,6 @@
     <div class="view-name-box" style="display: none">
       <label id="view-title"> Title goes here</label>
     </div>
-
 
 
     <div id="menupanel-student" style="display: none">
@@ -134,7 +143,8 @@
         <li><a class="menu-button" id="mpt-challenges-button">Create challenge</a></li>
         <li><a class="menu-button" id="mpt-standards-button">Standards</a></li>
         <li><a class="menu-button" id="mpt-submissions-button">Submissions</a></li>
-         <li><a class="menu-button" id="mpt-signout-button">Sign out</a></li>
+        <li><a class="menu-button" id="mpt-manage-systems-button">Manage systems</a></li>
+        <li><a class="menu-button" id="mpt-signout-button">Sign out</a></li>
       </ul>
     </div>
 

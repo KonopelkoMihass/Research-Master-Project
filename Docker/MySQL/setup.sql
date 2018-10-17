@@ -24,7 +24,8 @@ VALUES ('q','teacher','John','Doe','Potato','q','teacher', '{}', '0'),
   ('w','1','w','w','Bed','w','student', '{}', 'y'),
   ('e','1','e','e','Chair','e','student', '{}', 'y'),
   ('r','2','r','r','Pizza','r','student', '{}', 'n'),
-  ('t','2','t','t','Grass','t','student', '{}', 'n');
+  ('t','2','t','t','Grass','t','student', '{}', 'n'),
+  ('p','3','p','tp','Hay','p','student', '{}', 'r');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
