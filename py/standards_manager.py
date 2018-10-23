@@ -24,7 +24,8 @@ except ImportError:
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 class StandardsManager:
-    def __init__(self):
+    def __init__(self, database_manager):
+        self.database_manager = database_manager
         self.standards_ids = {
             "js": "1O9vsT2hlG12W5czOLZ0aD-Y2UgOUDJQljzUv0GuWFvs",
             "cpp": "11quSKE8cKf2mD5rFFcWvZe0765mdH81iJ8eWwSXvXX8"
@@ -41,6 +42,11 @@ class StandardsManager:
         for key, value in self.standards_ids.items():
             self.download_standard( key, value, "text/html")
             print("Finished downloading", key )
+
+        self.database_manager.save_parsed_standards(self.standards)
+
+
+
 
 
 
@@ -88,6 +94,9 @@ class StandardsManager:
                         standard_bit["sub_category"] = elem.get_text().rstrip()
                         standard_bit["description"] = ""
                         standard_bit["name"] = key
+                        standard_bit["reward_score"] = 1
+                        standard_bit["penalty_score"] = 3
+                        standard_bit["enabled"] = "yes"
 
                         for sub_elem in elem.next_siblings:
                             if sub_elem.name == 'p' or sub_elem.name == 'ul':
@@ -99,16 +108,20 @@ class StandardsManager:
                     if elem.name == "h2":
                         break
 
+
+
         return standard
 
     def get_standard(self, name):
+
         data = {}
-        data["standard"] = self.standards[name]
+        data["standard"] = self.database_manager.get_standards(name)
         data["url"] = self.google_path + self.standards_ids[name]
         data["name"] = self.standards_names[name]
         data["standard_id"] = name
         return data
 
 
-
+    def update_standards_configurations(self, data):
+        return self.database_manager.update_standards_configurations(data)
 

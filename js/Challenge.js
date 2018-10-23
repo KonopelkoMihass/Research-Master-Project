@@ -34,7 +34,7 @@ class Challenge extends Model
         {
              this.lastChallenge = true;
         }
-
+        app.tracker.saveForLogs("challenge started", this.currentChallengeLink);
     }
 
     saveResults(resutlDict)
@@ -48,7 +48,7 @@ class Challenge extends Model
         var parameterPack = {};
 
         //Some variables to be later received as parameters
-        parameterPack.length = 2;
+        parameterPack.length = 5;
         parameterPack.language = language;
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
@@ -131,6 +131,7 @@ class Challenge extends Model
 
                 app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
                 document.getElementById("view-title").innerText = "Complete the challenge";
+                app.tracker.saveForLogs("challenge chain started", "");
             }
 
 
@@ -187,20 +188,20 @@ class Challenge extends Model
                 if (originalIssues[tokenKey].review === usersIssues[tokenKey].review)
                 {
                     foundIssues[tokenKey] = usersIssues[tokenKey];
-                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, 3);
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, usersIssues[tokenKey].standard.rewardScore);
                 }
 
                 else
                 {
                     falseIssues[tokenKey] = originalIssues[tokenKey];
-                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -2);
+                    this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -usersIssues[tokenKey].standard.penaltyScore);
                 }
             }
 
             else
             {
                 missedIssues[tokenKey] = originalIssues[tokenKey];
-                this.scoreStandardInternalisation( originalIssues[tokenKey].standard, -1);
+                this.scoreStandardInternalisation( originalIssues[tokenKey].standard, -originalIssues[tokenKey].standard.penaltyScore / 2);
             }
         }
 
@@ -211,11 +212,11 @@ class Challenge extends Model
             if (!(tokenKey in foundIssues || tokenKey in falseIssues || tokenKey in missedIssues))
             {
                 falseIssues[tokenKey] = usersIssues[tokenKey];
-                this.scoreStandardInternalisation( usersIssues[tokenKey].standard, -1);
+                this.scoreStandardInternalisation( usersIssues[tokenKey].standard,  -usersIssues[tokenKey].standard.penaltyScore / 2);
             }
         }
 
-
+        var missedIssuesCount = Object.keys(missedIssues).length;
         var foundIssuesCount = Object.keys(foundIssues).length;
         var falseIssuesCount = Object.keys(falseIssues).length;
 
@@ -225,7 +226,6 @@ class Challenge extends Model
         {
             score = 0;
         }
-
         return score;
     }
 
@@ -327,6 +327,10 @@ class Challenge extends Model
             data.standardInterScore += categoryString;
         }
         this.standardInternalisationScore = {};
+
+        app.tracker.saveForLogs("challenge chain completed",
+			{"score": data.gradeOverall});
+
         return data;
     }
 

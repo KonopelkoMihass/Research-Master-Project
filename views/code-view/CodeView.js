@@ -12,6 +12,7 @@ class CodeView extends View
 
 	onNotify (model, messageType)
 	{
+
 	}
 
 	setupView()

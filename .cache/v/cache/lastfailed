@@ -1,3 +1,6 @@
 {
-  "tests/test_signin.py": true
+  "tests/test_signin.py": true,
+  "tests/test_signinup.py::TestSignin::test_a_signup": true,
+  "tests/test_signinup.py::TestSignin::test_b_singin": true,
+  "tests/test_signup.py::TestSignup::test_signup": true
 }

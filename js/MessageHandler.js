@@ -51,8 +51,9 @@ class MessageHandler
 			INVERT_SYSTEMS_SUCCESSFUL: "invert_systems_successful",
 			ENABLE_SYSTEM_SWITCH_SUCCESSFUL: "enable_system_switch_successful",
 
-			KICK_FROM_WEBSITE: "kick_from_website"
-
+			KICK_FROM_WEBSITE: "kick_from_website",
+			UPDATE_STANDARDS_CONFIG_SUCCESSFUL: "update_standards_configurations_successful",
+			UPDATE_STANDARDS_CONFIG_FAILED: "update_standards_configurations_failed",
 		};
 	}
 

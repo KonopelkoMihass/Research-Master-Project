@@ -58,14 +58,7 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Submissions` (
   PRIMARY KEY (`id`, `user_id`, `assignment_id`));
 
 -- Table `ProjectOrganiser`.`Standards`
-CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `category` VARCHAR(255),
-  `sub_category` VARCHAR(255),
-  `description` MEDIUMTEXT,
-  PRIMARY KEY (`id`));
 
-CREATE UNIQUE INDEX `deadline_date_UNIQUE` ON `ProjectOrganiser`.`Standards` (`category`, `sub_category` ASC);
 
 
 -- Table `ProjectOrganiser`.`Logs`
@@ -86,3 +79,13 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Challenges` (
   PRIMARY KEY (`id`));
 
 
+-- Table `ProjectOrganiser`.`Standards`
+CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
+  `category` VARCHAR(126) NOT NULL,
+  `sub_category` VARCHAR(126) NOT NULL,
+  `description` MEDIUMTEXT,
+  `name` VARCHAR(64) NOT NULL,
+  `reward_score` INT,
+  `penalty_score` INT,
+  `enabled` VARCHAR(16),
+  PRIMARY KEY (`category`, `sub_category`));

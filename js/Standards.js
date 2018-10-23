@@ -1,4 +1,5 @@
-class Standards extends Model {
+class Standards extends Model
+{
     constructor() {
         super();
         this.standards = {};
@@ -196,4 +197,39 @@ class Standards extends Model {
              }
          }
     }
+
+    saveStandardConfigurations()
+    {
+        var data = [];
+
+        for (var k in  this.standards)
+        {
+            var std = this.standards[k]
+            for (var i = 0; i < std.length; i++)
+            {
+                var config = {};
+                config.reward_score = std[i].rewardScore;
+                config.penalty_score = std[i].penaltyScore;
+                config.enabled = std[i].enabled;
+                config.category = std[i].category;
+                config.sub_category = std[i].subCategory;
+                config.description = std[i].description;
+                config.name = std[i].name;
+
+                data.push(config);
+            }
+        }
+
+        app.net.sendMessage("update_standards_configurations", data);
+    }
+
+    checkIfEnabled(standards)
+    {
+        for (var i = 0; i < standards.length; i++)
+        {
+           if(standards[i].enabled === "yes") return true;
+        }
+        return false;
+    }
+
 }

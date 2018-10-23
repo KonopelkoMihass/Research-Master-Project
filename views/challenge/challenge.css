@@ -70,8 +70,8 @@
 
 .code-view-tips
 {
-    position:absolute;
-    bottom:5%;
+    position:relative;
+    bottom:0%;
 
     padding: 1px 10px;
     font-weight: bold;

@@ -69,6 +69,18 @@ class Tracker
         this.logs.push(logEntry);
     }
 
+    saveForLogs(type, content)
+    {
+        var logEntry = {};
+        logEntry.side = "client";
+        logEntry.type = type;
+        logEntry.datetime = new Date();
+        logEntry.content = content;
+        this.logs.push(logEntry);
+
+    }
+
+
     trackServerMessages(data, messageType)
     {
         if (data !== "" && !Number.isInteger(data))

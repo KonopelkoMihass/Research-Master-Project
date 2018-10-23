@@ -24,7 +24,7 @@ class ChallengesManager:
         return message
 
     def get_challenge(self, message_data):
-        challenge_id = message_data["id"]
+        challenge_id = message_data
         type = "get_challenge_successful"
         challenge = {}
         challenge = self.database_manager.get_challenge(challenge_id)
@@ -36,10 +36,15 @@ class ChallengesManager:
 
     def get_challenge_chain(self, message_data):
         type = "get_challenge_chain_successful"
-        print("MD", message_data)
+
+
         chain_length = message_data["length"]
         chain_language =  message_data["language"]
+
+
         chain = self.database_manager.get_challenges_for_chain(chain_language)
+
+
 
         random.shuffle(chain)
         chain = chain[0:chain_length]

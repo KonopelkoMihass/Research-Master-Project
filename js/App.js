@@ -1,9 +1,5 @@
 var app;
 
-window.onbeforeunload = function()
-{
-	app.tracker.sendAndClearLogs(true);
-};
 
 function main()
 {
@@ -52,6 +48,13 @@ class App
 			app.templateManager.downloadAll(function()	{
 				app.modalContentManager.downloadAll(function () {
 					app.setup();
+
+					window.addEventListener('beforeunload', function() {
+						app.tracker.sendAndClearLogs(true);
+					});
+
+
+
 					app.tracker.updateTracks();
 		});});});
 	}
@@ -228,6 +231,7 @@ class App
 		// Teacher - Standards
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.PUSH_STANDARD_SUCCESSFUL);
 		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
+		this.standards.addObserver(seeStandardsTeacherView, this.net.messageHandler.types.UPDATE_STANDARDS_CONFIG_SUCCESSFUL);
 
 		// Student - Standards
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);

@@ -279,16 +279,75 @@ class DatabaseManager:
 
 		connector = self.cnxpool.get_connection()
 		cursor = connector.cursor(dictionary=True)
-		query = ("SELECT Challenges.id FROM Challenges WHERE "
+
+		#Get standards which are enabled
+		query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+
+		cursor.execute(query)
+		available_standards = cursor.fetchall()
+
+
+		query = ("SELECT Challenges.id, Challenges.issues FROM Challenges WHERE "
 				 "Challenges.standard='"+language+"';")
 
 		cursor.execute(query)
-		challenge_ids = cursor.fetchall()
-
+		challenges = cursor.fetchall()
 		cursor.close()
 		connector.close()
 
+		challenge_ids = []
+
+		# For each challenge
+		for chal in challenges:
+			include_in_challenge_chain = True
+			chal["issues"] = json.loads(chal["issues"])
+
+			# For each std within issue
+			for key in chal["issues"]:
+				standard_in_issue = chal["issues"][key]["standard"]
+				issue_std_is_enabled = False
+
+				for avail_std in available_standards:
+					print (standard_in_issue)
+
+					if avail_std["sub_category"] == standard_in_issue["subCategory"]:
+						issue_std_is_enabled = True
+
+				if issue_std_is_enabled == False:
+					include_in_challenge_chain = False
+
+			if include_in_challenge_chain == True:
+				challenge_ids.append(chal["id"])
+
+
+
+
+
+		print(challenge_ids)
+
+		print ("DONDONDONDOJND")
+
+
+
+
+
+
+
+
+
+
+
 		return challenge_ids
+
+
+
+
+
+
+
+
+
+
 
 	def get_challenge(self, id):
 		connector = self.cnxpool.get_connection()
@@ -381,6 +440,76 @@ class DatabaseManager:
 
 		cursor.close()
 		connector.close()
+
+
+	def save_parsed_standards(self, standards):
+		try:
+			connector = self.cnxpool.get_connection()
+			cursor = connector.cursor(dictionary=True)
+
+			for lang in standards:
+				stds = standards[lang]
+				for s in stds:
+					#rint("What is s here: ", s)
+					placeholders = ", ".join(["%s"] * len(s))
+
+					stmt = "INSERT INTO `{table}` ({columns}) VALUES ({values});".format(
+						table="Standards",
+						columns=",".join(s.keys()),
+						values=placeholders
+					)
+
+					cursor.execute(stmt, list(s.values()))
+					connector.commit()
+
+		except:
+			print ("already parsed it")
+
+
+
+
+
+	def update_standards_configurations(self, standards):
+		result = "update_standards_configurations_successful"
+		#try:
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		for s in standards:
+			#rint("What is s here: ", s)
+			placeholders = ", ".join(["%s"] * len(s))
+
+			stmt = "REPLACE INTO `{table}` ({columns}) VALUES ({values});".format(
+				table="Standards",
+				columns=",".join(s.keys()),
+				values=placeholders
+			)
+
+			cursor.execute(stmt, list(s.values()))
+			connector.commit()
+		#except:
+		#	result = "update_standards_configurations_failed"
+
+		return result
+
+
+
+
+	def get_standards(self, name):
+		connector = self.cnxpool.get_connection()
+		cursor = connector.cursor(dictionary=True)
+
+		query = ("SELECT * FROM Standards WHERE Standards.name='"+ name +"'")
+		cursor.execute(query)
+		data =  cursor.fetchall()
+		cursor.close()
+		connector.close()
+		return data
+
+
+
+
+		pass
 
 
 

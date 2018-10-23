@@ -8,11 +8,16 @@ class SeeStandardsTeacherController
 
 	setup()
 	{
-		var that = this;
+		var controller = this;
 	}
 
 	update()
 	{
 
 	}
+
+	saveStandardConfigurations(){
+		this.model.saveStandardConfigurations();
+	}
+
 }

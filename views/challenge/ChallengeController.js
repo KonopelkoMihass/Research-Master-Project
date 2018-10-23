@@ -39,6 +39,8 @@ class ChallengeController
             var categorySelectDiv = document.getElementById("challenge-code-category-select-div");
 
             for (var key in standards) {
+
+            	if (!app.standards.checkIfEnabled(standards[key])) continue;
                 var categoryName = key;
 
                 //create a span to insert into div
@@ -77,6 +79,8 @@ class ChallengeController
 
 						for (var i = 0; i < subcategories.length; i++)
 						{
+							if (subcategories[i].enabled === "no") continue;
+
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
@@ -223,6 +227,11 @@ class ChallengeController
 		var issueTable = document.getElementById("challenge-data-table");
 		var challengeIssues = Object.assign ({},this.model.issues);
 
+		var correct = 0;
+		var wrong = 0;
+
+
+
 		//cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
 		for (var i = 1, row; row = issueTable.rows[i]; i++)
 		{
@@ -240,6 +249,7 @@ class ChallengeController
 					{
 						answerCell.innerHTML = "&#10004;";
 						foundIssue = true;
+
 					}
 				}
 			}
@@ -247,10 +257,12 @@ class ChallengeController
 			if (foundIssue)
 			{
 				var key = "codeLineID#"+line;
+				correct++;
 				delete challengeIssues[key];
 			}
 			else
 			{
+			    wrong++;
 				answerCell.innerHTML = "X";
 			}
 		}
@@ -280,6 +292,12 @@ class ChallengeController
 				cell3.style.textAlign="center";
 			}
 		}
+
+		var missedCount = Object.keys(challengeIssues).length - wrong;
+		app.tracker.saveForLogs("challenge completed",
+			{"missed": missedCount ,
+			 "correct": correct,
+			 "wrong": wrong,});
 	}
 
 	saveChallengeResults()
@@ -316,9 +334,6 @@ class ChallengeController
 				var oldEl = document.getElementById("challenge-submit");
 				var newEl = oldEl.cloneNode(true);
 				oldEl.parentNode.replaceChild(newEl, oldEl);
-
-
-
 			});
 		}
 
