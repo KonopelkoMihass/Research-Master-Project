@@ -74,52 +74,66 @@ class CodeViewController
 						var cat = this.id.split("#")[1];
 						var subcategories = standards[cat];
 
+						var getStdByNumber = function(subCategories, i)
+                        {
+                            for (var j = 0; j < subCategories.length; j++)
+                            {
+                                if (subCategories[j].number === i) return subCategories[j];
+                            }
+                        };
+
 						for (var i = 0; i < subcategories.length; i++)
 						{
+						    var subcategory = getStdByNumber(subcategories, i);
+
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
-							subcategorySpan.id = "code-review-category#" + subcategories[i].category +"#" +i;
+							subcategorySpan.id = "code-review-category#" + subcategory.category +"#" +i;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
-							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
+							app.utils.insertTooltip(subcategorySpan, subcategory.description);
 
 							var img = document.createElement("IMG");
 							img.src = "resources/images/info.png";
-							img.id = "code-review-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
+							img.id = "code-review-select-subcategory-tooltip#" + subcategory.category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
 
 							var label = document.createElement("LABEL");
-							label.id = "code-review-category#" + subcategories[i].category +"#" + i + "#label";
-							label.innerHTML = "[" + subcategories[i].number + "] - " +  subcategories[i].subCategory;
+							label.id = "code-review-category#" + subcategory.category +"#" + i + "#label";
+							label.innerHTML = subcategory.subCategory;
 
-
-							img.addEventListener("mouseover",function ()
+                            img.style.filter = "invert(0%)";
+							img.addEventListener("click",function ()
 							{
-								this.style.filter = "invert(100%)";
-								var category = this.id.split("#")[1];
-								var idNum = this.id.split("#")[2];
+							    if (this.style.filter === "invert(0%)")
+							    {
+							        app.tracker.saveForLogs("tooltip_click", {});
 
-								var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
-								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                                    this.style.filter = "invert(100%)";
+							    	var category = this.id.split("#")[1];
+							    	var idNum = this.id.split("#")[2];
 
-								tootlipElem.style.visibility = "visible";
-								tootlipElem.style.opacity= "1";
+							    	var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
+							    	var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
 
-							});
-							img.addEventListener("mouseleave",function ()
-							{
-								this.style.filter = "invert(0%)";
-								var category = this.id.split("#")[1];
-								var idNum = this.id.split("#")[2];
+							    	tootlipElem.style.visibility = "visible";
+							    	tootlipElem.style.opacity= "1";
+                                }
 
-								var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
+                                else
+                                {
+                                    this.style.filter = "invert(0%)";
+                                    var category = this.id.split("#")[1];
+                                    var idNum = this.id.split("#")[2];
 
-								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
-								tootlipElem.style.visibility = "hidden";
-								tootlipElem.style.opacity= "0";
+                                    var subCatSpan = document.getElementById("code-review-category#" + category + "#" + idNum);
 
+                                    var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                                    tootlipElem.style.visibility = "hidden";
+                                    tootlipElem.style.opacity= "0";
+                                }
 							});
 
 							subcategorySpan.addEventListener("click", function ()
@@ -127,9 +141,9 @@ class CodeViewController
 								var lCategory =  this.id.split("#")[1];
 								var lSubCategory =  this.id.split("#")[2];
 
-								var resultStandard = app.standards.standards[lCategory][lSubCategory];
+								var resultStandard = app.standards.getStandard(lCategory, lSubCategory);
 
-								controller.closeSidenavAndSaveTheReview("issue", resultStandard)
+								controller.closeSidenavAndSaveTheReview("issue", resultStandard);
 								localSubCategoryDiv.innerHTML = "";
 							});
 

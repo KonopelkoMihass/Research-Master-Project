@@ -236,6 +236,7 @@ class App
 		// Student - Standards
 		this.standards.addObserver(seeStandardsStudentView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
 
+
 		// Student - Challenge
 		this.challenge.addObserver(challengeView, this.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL);
 		this.user.addObserver(profileView, this.net.messageHandler.types.UPLOAD_CHALLENGE_RESULTS_SUCCESSFUL);
@@ -255,12 +256,14 @@ class App
 	{
 		var viewLabel = document.getElementById("view-title");
 		var gamified = app.user.gamified;
+		var challengeModeOnly = app.user.challengeModeOnly;
 
 
 		if (gamified === "y")
 		{
             app.utils.assignFuncToButtonViaID("mps-profile-button", function () {
                 if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE) {
+                    app.tracker.saveForLogs("profile_visit", {});
                     app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
                     viewLabel.innerText = "Your Profile";
                 }
@@ -272,6 +275,17 @@ class App
 			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
 			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
 		}
+
+
+		if (challengeModeOnly)
+		{
+		    document.getElementById("mps-assignments-button").style.display = 'none';
+		    document.getElementById("mps-reviews-button").style.display = 'none';
+		    document.getElementById("mps-feedback-button").style.display = 'none';
+		    document.getElementById("mps-submissions-button").style.display = 'none';
+        }
+
+
 
 
         app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {

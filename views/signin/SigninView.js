@@ -22,7 +22,7 @@ class SigninView extends View
 			if(model.role === "student")
 			{
 				menuPanel = document.getElementById("menupanel-student");
-				document.getElementById("mps-assignments-button").click();
+				document.getElementById("mps-standards-button").click();
 			}
 
 			else if (model.role === "teacher")

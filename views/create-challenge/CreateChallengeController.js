@@ -294,57 +294,73 @@ class CreateChallengeController
 						var cat = this.id.split("#")[1];
 						var subcategories = standards[cat];
 
+						var getStdByNumber = function(subCategories, i)
+                        {
+                            for (var j = 0; j < subCategories.length; j++)
+                            {
+                                if (subCategories[j].number === i) return subCategories[j];
+                            }
+                        };
+
+
 						for (var i = 0; i < subcategories.length; i++)
 						{
+						    var subcategory = getStdByNumber(subcategories, i);
+
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
-							subcategorySpan.id = "create-challenge-code-category#" + subcategories[i].category +"#" +i;
-							subcategorySpan.innerHTML = subcategories[i].subCategory;
+							subcategorySpan.id = "create-challenge-code-category#" + subcategory.category +"#" +i;
+							subcategorySpan.innerHTML = subcategory.subCategory;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
-							app.utils.insertTooltip(subcategorySpan, subcategories[i].description);
+							app.utils.insertTooltip(subcategorySpan, subcategory.description);
 
 							var img = document.createElement("IMG");
 							img.src = "resources/images/info.png";
-							img.id = "create-challenge-select-subcategory-tooltip#" + subcategories[i].category + "#" + i;
+							img.id = "create-challenge-select-subcategory-tooltip#" +subcategory.category + "#" + i;
 							img.className = "picture-button";
 							img.style.float = "right";
 
-							img.addEventListener("mouseover",function ()
+							img.style.filter = "invert(0%)";
+							img.addEventListener("click",function ()
 							{
-								this.style.filter = "invert(100%)";
-								var category = this.id.split("#")[1];
-								var idNum = this.id.split("#")[2];
+							    if (this.style.filter === "invert(0%)")
+							    {
+							        app.tracker.saveForLogs("tooltip_click", {});
 
-								var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
+							       	this.style.filter = "invert(100%)";
+                                    var category = this.id.split("#")[1];
+                                    var idNum = this.id.split("#")[2];
 
-								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
-								tootlipElem.style.visibility = "visible";
-								tootlipElem.style.opacity= "1";
+                                    var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
 
+                                    var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                                    tootlipElem.style.visibility = "visible";
+                                    tootlipElem.style.opacity= "1";
+                                }
+
+                                else
+                                {
+      		                        this.style.filter = "invert(0%)";
+                                    var category = this.id.split("#")[1];
+                                    var idNum = this.id.split("#")[2];
+
+                                    var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
+
+                                    var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                                    tootlipElem.style.visibility = "hidden";
+                                    tootlipElem.style.opacity= "0";
+                                }
 							});
-							img.addEventListener("mouseleave",function ()
-							{
-								this.style.filter = "invert(0%)";
-								var category = this.id.split("#")[1];
-								var idNum = this.id.split("#")[2];
-
-								var subCatSpan = document.getElementById("create-challenge-code-category#" + category + "#" + idNum);
-
-								var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
-								tootlipElem.style.visibility = "hidden";
-								tootlipElem.style.opacity= "0";
-							});
-
 
 							subcategorySpan.addEventListener("click", function ()
 							{
 								var lCategory =  this.id.split("#")[1];
 								var lSubCategory =  this.id.split("#")[2];
-								var resultStandard = app.standards.standards[lCategory][lSubCategory];
+								var resultStandard = app.standards.getStandard(lCategory, lSubCategory);
 
-								controller.closeSidenavAndSaveTheReview("issue", resultStandard)
+								controller.closeSidenavAndSaveTheReview("issue", resultStandard);
 								subCategoryDiv.innerHTML = "";
 							});
 

@@ -13,19 +13,28 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `role` VARCHAR(32) NOT NULL,
   `std_internalisation` MEDIUMTEXT,
   `gamification` VARCHAR(1) NOT NULL,
+
+  `got_instruction_emails` VARCHAR(255),
+  `std_internalisation_changes` MEDIUMTEXT,
+  `focus` MEDIUMTEXT,
+  `challenge_mode_only` VARCHAR(1) NOT NULL,
+
+
+
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
 
 -- creating dummy teacher
 
-INSERT INTO ProjectOrganiser.Users (email, team_name, name, surname, noun, password, role, std_internalisation, gamification)
-VALUES ('q','teacher','John','Doe','Potato','q','teacher', '{}', '0'),
-  ('w','1','w','w','Bed','w','student', '{}', 'y'),
-  ('e','1','e','e','Chair','e','student', '{}', 'y'),
-  ('r','2','r','r','Pizza','r','student', '{}', 'n'),
-  ('t','2','t','t','Grass','t','student', '{}', 'n'),
-  ('p','3','p','tp','Hay','p','student', '{}', 'r');
+INSERT INTO ProjectOrganiser.Users (email, team_name, name, surname, noun, password, role, std_internalisation,
+                                    gamification, `challenge_mode_only`, got_instruction_emails, std_internalisation_changes, focus )
+VALUES ('q','teacher','John','Doe','Potato','q','teacher', '{}', '0', 'y', '{}', '{}', '{}'),
+  ('w','1','w','w','Bed','w','student', '{}', 'y', 'y', '{}', '{}', '{}'),
+  ('e','1','e','e','Chair','e','student', '{}', 'y', 'y', '{}', '{}', '{}'),
+  ('r','2','r','r','Pizza','r','student', '{}', 'n', 'y', '{}', '{}', '{}'),
+  ('t','2','t','t','Grass','t','student', '{}', 'n', 'y', '{}', '{}', '{}'),
+  ('p','3','p','tp','Hay','p','student', '{}', 'r', 'y', '{}', '{}', '{}');
 
 
 -- Table `ProjectOrganiser`.`Assignments`
@@ -88,4 +97,5 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
   `reward_score` INT,
   `penalty_score` INT,
   `enabled` VARCHAR(16),
+  `id` INT,
   PRIMARY KEY (`category`, `sub_category`));

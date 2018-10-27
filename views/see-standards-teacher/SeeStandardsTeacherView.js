@@ -120,6 +120,10 @@ class SeeStandardsTeacherView extends View
 			cell4.id = "see-standards-table-collapsed#" + cat + "#no";
 			cell4.innerHTML = "&#43;";
 			cell4.style.cursor = "pointer";
+
+
+
+
 			cell4.addEventListener("click",function ()
 			{
 				var categoryName = this.id.split("#")[1];
@@ -148,9 +152,18 @@ class SeeStandardsTeacherView extends View
 		var view = this;
 		var table = document.getElementById("see-standard-teacher-table");
 
+
+		var getStdByNumber = function(subCategories, i)
+        {
+            for (var j = 0; j < subCategories.length; j++)
+            {
+                if (subCategories[j].number === i) return subCategories[j];
+            }
+        };
+
 		for (var i = 0; i < subCategories.length; i++)
 		{
-			var subCat = subCategories[i];
+			var subCat = getStdByNumber(subCategories, i);
 
 			var row = table.insertRow(rowIndex + 1 + i);
 			row.setAttribute("name", "see-standards-substandards#" + subCat.category);
@@ -166,6 +179,7 @@ class SeeStandardsTeacherView extends View
 
 			cell0.innerHTML = enabled === "yes" ? "&#10004;" : "&#10005;";
 			cell0.style.cursor = "pointer";
+			row.style.backgroundColor = enabled === "yes" ? "" : "#2d2d2d;";
 
 			cell0.addEventListener("click",function ()
 			{
@@ -177,11 +191,15 @@ class SeeStandardsTeacherView extends View
 				{
 					state = "yes";
 					this.innerHTML = "&#10004;";
+					this.parentNode.style.backgroundColor = "";
+
 				}
 				else
 				{
 					state = "no";
 					this.innerHTML = "&#10005;";
+                    this.parentNode.style.backgroundColor = "#2d2d2d";
+
 				}
 				this.id = "see-standards-table-enabled#" + category + "#" + name + "#" + state;
 
@@ -189,7 +207,7 @@ class SeeStandardsTeacherView extends View
             });
 
 			//Name
-			cell1.innerText = "----" + subCat.subCategory;
+			cell1.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;" + subCat.subCategory;
 
 			// Reward Score
 			var rewardInput = this.createNumberInput("see-standards-reward-score#" +subCat.category + "#" + subCat.subCategory, subCat.rewardScore);

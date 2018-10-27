@@ -13,7 +13,13 @@ class User extends Model
         this.id = "";
         this.log = "";
         this.gamified = "n";
+
         this.stdInternalisation = {};
+
+        this.challengeModeOnly = true;
+        this.gotInstructionEmails = {};
+        this.stdInternalisationChanges = {};
+        this.focus = {};
     }
 
     calculateLevel(stdName)
@@ -81,6 +87,12 @@ class User extends Model
         userData.password = password;
         userData.role = "student";
         userData.std_internalisation = {};
+        userData.got_instruction_emails = {};
+        userData.std_internalisation_changes = {};
+        userData.focus = {};
+        userData.challenge_mode_only = "y";
+
+
 
         app.net.sendMessage("signup", userData);
     }
@@ -96,22 +108,30 @@ class User extends Model
 
     signout()
     {
+
         app.cookieManager.deleteCookie("SignInCR2");
         document.location.reload();
     }
 
 
-    setData(data)
-    {
-         this.email = data.email;
-         this.name =  data.name;
-         this.surname =  data.surname;
-         this.noun =  data.noun;
-         this.role = data.role;
-         this.id = data.id;
-         this.gamified =  data.gamification;
-         this.stdInternalisation = data.std_internalisation;
+    setData(data) {
+        this.email = data.email;
+        this.name = data.name;
+        this.surname = data.surname;
+        this.noun = data.noun;
+        this.role = data.role;
+        this.id = data.id;
+        this.gamified = data.gamification;
+        this.stdInternalisation = data.std_internalisation;
+
+        this.challengeModeOnly = data.challenge_mode_only === "y" ? true : false;
+        this.gotInstructionEmails = data.got_instruction_emails;
+        this.stdInternalisationChanges = data.std_internalisation_changes;
+        this.focus = data.focus;
+
     }
+
+
 
     sendSystemSelectionResult(choice)
     {

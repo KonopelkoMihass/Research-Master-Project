@@ -44,7 +44,10 @@ class Standards extends Model
         {
             if ( messageType === app.net.messageHandler.types.GET_STANDARD_SUCCESSFUL)
             {
+
                 this.standardsInfo[data["standard_id"]] = {};
+
+
 
                 this.standardsInfo[data["standard_id"]]["name"] = data["name"];
                 this.standardsInfo[data["standard_id"]]["url"] = data["url"];
@@ -56,13 +59,13 @@ class Standards extends Model
                 {
                     if (stdFromServer[i]["category"] in this.standards)
                     {
-                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i], i+1));
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
                     }
 
                     else
                     {
                         this.standards[stdFromServer[i]["category"]] = [];
-                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i], i+1));
+                        this.standards[stdFromServer[i]["category"]].push(new Standard(stdFromServer[i]));
                     }
 
                 }
@@ -97,6 +100,7 @@ class Standards extends Model
     {
         var userSTD = app.user.stdInternalisation;
 
+
         if (!userSTD.hasOwnProperty(language))
         {
             userSTD[language] = this.addInternalisationSkillTree(language);
@@ -130,6 +134,9 @@ class Standards extends Model
 
                 userSubcat.score += (score - overflow);
                 userSTDIntCategory.score += (score - overflow);
+                this.recordTheStdInternalisationChange(cat, userSubcat.name, userSubcat.score);
+
+
             }
         }
 
@@ -137,9 +144,37 @@ class Standards extends Model
         var data = {};
         data.email = app.user.email;
         data.std_internalisation = userSTD;
+        data.std_internalisation_changes = app.user.stdInternalisationChanges;
 
         app.net.sendMessage("update_skills", data);
     }
+
+
+    recordTheStdInternalisationChange(cat, subcat, currentScore)
+    {
+        var stdInternalisationChanges = app.user.stdInternalisationChanges;
+        var key = cat + "->" + subcat;
+
+        var date = new Date();
+        var pack =
+            {
+                date: date,
+                score: currentScore
+            };
+
+        if (!stdInternalisationChanges.hasOwnProperty(key))
+        {
+            stdInternalisationChanges[key] = [];
+        }
+        stdInternalisationChanges[key].push(pack);
+        app.user.stdInternalisationChanges = stdInternalisationChanges;
+    }
+
+
+
+
+
+
 
     addInternalisationSkillTree(language)
     {
@@ -204,7 +239,7 @@ class Standards extends Model
 
         for (var k in  this.standards)
         {
-            var std = this.standards[k]
+            var std = this.standards[k];
             for (var i = 0; i < std.length; i++)
             {
                 var config = {};
@@ -214,6 +249,7 @@ class Standards extends Model
                 config.category = std[i].category;
                 config.sub_category = std[i].subCategory;
                 config.description = std[i].description;
+                config.id = std[i].number;
                 config.name = std[i].name;
 
                 data.push(config);
@@ -230,6 +266,15 @@ class Standards extends Model
            if(standards[i].enabled === "yes") return true;
         }
         return false;
+    }
+
+    getStandard(categoryName, number)
+    {
+        var subCategories = this.standards[categoryName];
+         for (var j = 0; j < subCategories.length; j++)
+         {
+             if (subCategories[j].number == number) return subCategories[j];
+         }
     }
 
 }

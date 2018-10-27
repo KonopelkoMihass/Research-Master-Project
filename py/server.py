@@ -7,6 +7,8 @@ from database_manager import DatabaseManager
 from user_manager import UserManager
 from assignments_manager import AssignmentsManager
 from standards_manager import StandardsManager
+from email_system import EmailSystem
+
 
 import planner
 import os
@@ -123,7 +125,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "update_standards_configurations":
             self.update_standards_configurations(message_data)
 
-
+        elif message_type == "challenge_mode_switch":
+            self.challenge_mode_switch(message_data)
 
 
 
@@ -299,19 +302,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 log = "["+date+"] [" + side + "] "
                 log += "User entered the site\n"
 
-
-
             if type == "leaving the site":
                 log = "[" + date + "] [" + side + "] "
                 log += "User left the site\n"
-
-
 
             if type == "challenge chain completed":
                 content =  line["content"]
                 log = "[" + date + "] [" + side + "] "
                 log += "User completed chain challenge: Total Score - " + str(content["score"]) + "\n"
-
 
             if type == "challenge chain started":
                 log = "[" + date + "] [" + side + "] "
@@ -329,35 +327,22 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 log += "Found - " + str(content["correct"]) + "\n"
                 log += "Mistakes - " + str(content["wrong"]) + "\n"
 
+            if type == "tooltip_click":
+                log = "[" + date + "] [" + side + "] "
+                log += "User clicked a tooltip\n"
+
+            if type == "profile_visit":
+                log = "[" + date + "] [" + side + "] "
+                log += "User visited profile page\n"
+
+
+
+
             fh.write(log)
 
 
         print("done")
         fh.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #database_manager.replace_into_table("Logs", message_data)
-        #print("Updated logs Successfully")
-        #except:
-        #type = "save_logs_failed"
-        #print("Updated logs Failed")
 
         self.send_message(type, {})
 
@@ -378,6 +363,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def update_skills(self, message_data):
         message_data["std_internalisation"] = json.dumps(message_data["std_internalisation"])
+        message_data["std_internalisation_changes"] = json.dumps(message_data["std_internalisation_changes"])
         result =  "upload_challenge_results_successful"
         try:
             database_manager.save_skills(message_data)
@@ -450,8 +436,20 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def update_standards_configurations(self, message_data):
         result = standards_manager.update_standards_configurations(message_data)
         self.send_message(result, {})
+        for k, item in connections.items():
+            item["socket"].get_assignments()
+            if item["user_data"]["role"] == "student":
+                item["socket"].kick_from_website()
 
 
+    def challenge_mode_switch(self, message):
+        result = database_manager.challenge_mode_switch(message)
+        print(result)
+        self.send_message(result, {})
+        for k, item in connections.items():
+            item["socket"].get_assignments()
+            if item["user_data"]["role"] == "student":
+                item["socket"].kick_from_website()
 
 
 
@@ -489,10 +487,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 database_manager = DatabaseManager()
+email_system = EmailSystem()
 standards_manager = StandardsManager(database_manager)
-user_manager = UserManager(database_manager)
+user_manager = UserManager(database_manager, email_system)
 assignments_manager = AssignmentsManager(database_manager)
 challenges_manager = ChallengesManager(database_manager)
+
 
 
 settings = {

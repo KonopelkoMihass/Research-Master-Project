@@ -148,11 +148,11 @@ li
 }
 
 .tooltip .tooltiptext {
-    top: 100%;
-    left: 0%;
-
+    top: 125%;
+    left: -33%;
     visibility: hidden;
-    width: 97%;
+    width: 130%;
+
     background-color: #d7d7d7;
     color: #fff;
     text-align: left;

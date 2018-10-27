@@ -1,8 +1,8 @@
 class Standard
 {
-    constructor(data, number)
+    constructor(data)
     {
-        this.number = number;
+        this.number = data.id;
         this.category = data.category;
         this.subCategory = data.sub_category;
         this.description = data.description;

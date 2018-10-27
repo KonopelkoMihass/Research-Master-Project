@@ -80,6 +80,7 @@ class StandardsManager:
         soup = BeautifulSoup(html, 'html.parser')
         node_list = soup.find_all(["h2", "h3"])
 
+        count = 0
         standard = []
         for n in node_list:
             if n.get_text() == "":
@@ -89,6 +90,7 @@ class StandardsManager:
                 category = n.get_text().rstrip()
                 for elem in n.next_siblings:
                     if elem.name == "h3":
+                        print(category, " - ", elem.get_text().rstrip() )
                         standard_bit = {}
                         standard_bit["category"] = category
                         standard_bit["sub_category"] = elem.get_text().rstrip()
@@ -97,6 +99,8 @@ class StandardsManager:
                         standard_bit["reward_score"] = 1
                         standard_bit["penalty_score"] = 3
                         standard_bit["enabled"] = "yes"
+                        standard_bit["id"] = count
+                        count+=1
 
                         for sub_elem in elem.next_siblings:
                             if sub_elem.name == 'p' or sub_elem.name == 'ul':
@@ -107,9 +111,6 @@ class StandardsManager:
                         standard.append(standard_bit)
                     if elem.name == "h2":
                         break
-
-
-
         return standard
 
     def get_standard(self, name):

@@ -288,7 +288,7 @@ class Challenge extends Model
                 var curSubCatLevelStr = "&nbsp;&nbsp;&nbsp;&nbsp;(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")";
 
                 categoryScoreDelta += subcat.score;
-                subCategoryString += ("&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.number + ":"); //+ ": " + sis[cat][i].score + "<br>");
+                subCategoryString += ("&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.subCategory + ":"); //+ ": " + sis[cat][i].score + "<br>");
 
                 if (userSTDSkill.score === userSTDSkill.maxScore && subcat.score > -1)
                 {
