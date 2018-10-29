@@ -26,8 +26,9 @@ class Challenge extends Model
     {
         this.code = "";
         this.issues = {};
+        var dataToSend = this.challengeChain[this.currentChallengeLink];
 
-        app.net.sendMessage("get_challenge", this.challengeChain[this.currentChallengeLink]);
+        app.net.sendMessage("get_challenge", dataToSend);
         this.currentChallengeLink++;
 
         if (this.currentChallengeLink === this.challengeChain.length)
@@ -48,8 +49,10 @@ class Challenge extends Model
         var parameterPack = {};
 
         //Some variables to be later received as parameters
-        parameterPack.length = 5;
+        parameterPack.length = 4;
         parameterPack.language = language;
+        parameterPack.focus = app.user.focus;
+        parameterPack.gamified = app.user.gamified;
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
     }
@@ -350,14 +353,4 @@ class Challenge extends Model
 
         app.net.sendMessage("upload_challenge_results", data);
     }
-
-
-
-
-
-
-
-
-
-
 }

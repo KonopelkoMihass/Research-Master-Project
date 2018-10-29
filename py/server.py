@@ -48,6 +48,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def on_message(self, message):
+        #try:
         #convert message into a dictionary
         message = json.loads(message)
         message_type = message["type"]
@@ -58,8 +59,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "signin":
             self.signin(message_data)
-
-
             self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
             self.send_message("get_standard_successful", standards_manager.get_standard("js"))
 
@@ -127,6 +126,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "challenge_mode_switch":
             self.challenge_mode_switch(message_data)
+
+        elif message_type == "focus_change":
+            self.focus_change(message_data)
+        #except:
+         #   print("Error")
+         #   print("Message", message)
+         #   print("Type", message["type"])
+        #    print("Data", message["data"])
 
 
 
@@ -451,11 +458,24 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             if item["user_data"]["role"] == "student":
                 item["socket"].kick_from_website()
 
+    def focus_change(self, message_data):
+        message_data["focus"] = json.dumps(message_data["focus"])
+        result =  "focus_change_successful"
+        try:
+            database_manager.change_focus(message_data)
+        except:
+            result = "focus_change_failed"
+
+        self.send_message(result, {})
+
 
 
 
     def kick_from_website(self):
         self.send_message("kick_from_website", {})
+
+
+
 
 
 

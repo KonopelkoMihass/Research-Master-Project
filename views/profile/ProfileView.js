@@ -22,7 +22,7 @@ class ProfileView extends View
 
 	show()
 	{
-
+        this.controller.setupSTDProgressSelector();
 
 
 

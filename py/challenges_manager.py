@@ -6,6 +6,7 @@ class ChallengesManager:
     def __init__(self,database_manager):
         print("ChallengeManager: __init__")
         self.database_manager = database_manager
+        self.focus_threshold = 8 # focus ignored above the value here
 
     def create_challenge(self, message_data):
         print("create_challenge")
@@ -37,21 +38,33 @@ class ChallengesManager:
     def get_challenge_chain(self, message_data):
         type = "get_challenge_chain_successful"
 
-
         chain_length = message_data["length"]
         chain_language =  message_data["language"]
+        chain_focus = message_data["focus"]
+
+        gamified = message_data["gamified"]
+
+        not_use_focus = random.randint(0,10)
+        if (not_use_focus > self.focus_threshold and gamified == "n") or not chain_focus:
+            chain_focus = 0
+
+        #test
+        f_y = 0
+        f_n = 0
+        r = 0
+        for i in range(0, 1000):
+            r = random.randint(0,10)
+            if r > self.focus_threshold:
+                f_n += 1
+            else:
+                f_y += 1
+        print("F_Y: ", f_y, "F_N: ", f_n)
+        #test
 
 
-        chain = self.database_manager.get_challenges_for_chain(chain_language)
-
-
+        chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus )
 
         random.shuffle(chain)
         chain = chain[0:chain_length]
-
-        test = self.database_manager.select_all_from_table("Challenges")
-        for i in range(len(test)):
-            print(test[i]["code"], test[i]["issues"])
-
 
         return [type, chain]

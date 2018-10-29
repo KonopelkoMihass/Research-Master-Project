@@ -274,14 +274,22 @@ class DatabaseManager:
         return logs
 
 
-    def get_challenges_for_chain(self, language):
+    def get_challenges_for_chain(self, language, focus):
         challenge_ids = []
 
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        #Get standards which are enabled
-        query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+        query = ""
+
+        #Get standards which are enabled and focus is empty.
+        if focus == 0:
+            query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+            print("FOCUS IGNORED")
+        else:
+            query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus["category"] +"' AND Standards.sub_category='" + focus["subCategory"] +"';")
+            print("FOCUS ONLY")
+
 
         cursor.execute(query)
         available_standards = cursor.fetchall()
@@ -308,8 +316,6 @@ class DatabaseManager:
                 issue_std_is_enabled = False
 
                 for avail_std in available_standards:
-                    print (standard_in_issue)
-
                     if avail_std["sub_category"] == standard_in_issue["subCategory"]:
                         issue_std_is_enabled = True
 
@@ -320,7 +326,7 @@ class DatabaseManager:
                 challenge_ids.append(chal["id"])
 
 
-        print(challenge_ids)
+        print("GOT HERE", challenge_ids)
         return challenge_ids
 
 
@@ -553,7 +559,18 @@ class DatabaseManager:
 
 
 
+    def change_focus(self, data):
+        email = data["email"]
+        focus = data["focus"]
 
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+
+        query = ("UPDATE Users SET Users.focus = '" +focus + "' WHERE Users.email='"+email+"'")
+        cursor.execute(query)
+        connector.commit()
+        cursor.close()
+        connector.close()
 
 
 

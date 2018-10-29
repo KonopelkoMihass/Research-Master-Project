@@ -38,15 +38,44 @@ class SeeStandardsTeacherView extends View
 		{
 			alert("Configurations were successfully saved.");
 		}
-
 	}
+
+
+	sortCategories(standards)
+    {
+        var stdNumber = 0;
+        var sortedKeys = [];
+        var totalCategories = Object.keys(standards).length;
+
+        while(true){
+            for (var key in standards) {
+                for (var i = 0; i < standards[key].length; i++) {
+                    if (stdNumber == standards[key][i].number)
+                    {
+                        sortedKeys.push(key);
+                        stdNumber += standards[key].length;
+                    }
+                }
+            }
+            if (Object.keys(sortedKeys).length === totalCategories)
+            {
+                break;
+            }
+        }
+
+        return sortedKeys;
+    }
+
+
+
+
 
 	setupStandardView(stdName, info)
 	{
 		var view = this;
 		var linkDiv = document.getElementById("std-doc-link");
 		var table = document.getElementById("see-standard-teacher-table");
-		var standards = this.controller.model.standards;
+		var standards = this.controller.model.selectStandards(stdName);
 
 		// remove all data in there.
 		var rowCount = table.rows.length;
@@ -61,8 +90,12 @@ class SeeStandardsTeacherView extends View
 		link.appendChild(document.createTextNode(info.name));
 		linkDiv.appendChild(link);
 
-		for (var cat in standards)
-		{
+
+		var sortedKeys = this.sortCategories(standards);
+
+
+		for (var k = 0; k < sortedKeys.length; k++) {
+		    var cat = sortedKeys[k];
 			var category = standards[cat];
 
 			// Check that this category has sub standards related to this coding standard
@@ -134,7 +167,7 @@ class SeeStandardsTeacherView extends View
 				{
 					this.id = "see-standards-table-collapsed#" + categoryName + "#yes";
 					this.innerHTML = "&#8722;";
-					view.addSubcategoryRows(rowNumber, view.controller.model.standards[categoryName]);
+					view.addSubcategoryRows(rowNumber, standards[categoryName]);
 
 				}
 				else
@@ -155,9 +188,19 @@ class SeeStandardsTeacherView extends View
 
 		var getStdByNumber = function(subCategories, i)
         {
+            var startValue = 99999;
+
             for (var j = 0; j < subCategories.length; j++)
             {
-                if (subCategories[j].number === i) return subCategories[j];
+                var num = subCategories[j].number;
+                num < startValue ? startValue = num : startValue = startValue;
+            }
+
+
+
+            for (var j = 0; j < subCategories.length; j++)
+            {
+                if (subCategories[j].number === startValue + i) return subCategories[j];
             }
         };
 

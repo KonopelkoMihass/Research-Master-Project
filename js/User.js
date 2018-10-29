@@ -143,4 +143,13 @@ class User extends Model
 
     }
 
+    saveFocusChange()
+    {
+        var userData = {};
+        userData.email = this.email;
+        userData.focus = this.focus;
+
+        app.net.sendMessage("focus_change", userData);
+    }
+
 }

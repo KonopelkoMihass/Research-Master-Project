@@ -96,10 +96,11 @@ class Standards extends Model
         return [score, maxScore] ;
     }
 
+
+
     updateInternalisationSkillTree(scores, language)
     {
         var userSTD = app.user.stdInternalisation;
-
 
         if (!userSTD.hasOwnProperty(language))
         {
@@ -150,29 +151,6 @@ class Standards extends Model
     }
 
 
-    recordTheStdInternalisationChange(cat, subcat, currentScore)
-    {
-        var stdInternalisationChanges = app.user.stdInternalisationChanges;
-        var key = cat + "->" + subcat;
-
-        var date = new Date();
-        var pack =
-            {
-                date: date,
-                score: currentScore
-            };
-
-        if (!stdInternalisationChanges.hasOwnProperty(key))
-        {
-            stdInternalisationChanges[key] = [];
-        }
-        stdInternalisationChanges[key].push(pack);
-        app.user.stdInternalisationChanges = stdInternalisationChanges;
-    }
-
-
-
-
 
 
 
@@ -208,6 +186,37 @@ class Standards extends Model
         }
         return stdSkills;
     }
+
+
+
+
+
+
+
+
+
+    recordTheStdInternalisationChange(cat, subcat, currentScore)
+    {
+        var stdInternalisationChanges = app.user.stdInternalisationChanges;
+        var key = cat + "->" + subcat;
+
+        var date = new Date();
+        var pack =
+            {
+                date: date,
+                score: currentScore
+            };
+
+        if (!stdInternalisationChanges.hasOwnProperty(key))
+        {
+            stdInternalisationChanges[key] = [];
+        }
+        stdInternalisationChanges[key].push(pack);
+        app.user.stdInternalisationChanges = stdInternalisationChanges;
+    }
+
+
+
 
     getCategoryScoreData(language, category)
     {
@@ -276,5 +285,132 @@ class Standards extends Model
              if (subCategories[j].number == number) return subCategories[j];
          }
     }
+
+
+
+    getOverallStandardProgression(name)
+    {
+        var std = this.selectStandards(name);
+        var userStdInter = app.user.stdInternalisation[name];
+        var enabledStandards = [];
+
+        var userCurrentScore = {total:0};
+        var userCurrentMax = {total:0};
+
+
+
+        for (var k in std)
+        {
+            userCurrentScore[k] = 0;
+            userCurrentMax[k] = 0;
+
+            enabledStandards = [];
+            for (var i = 0; i < std[k].length; i++)
+            {
+                var stdbit = std[k][i];
+                if (stdbit.enabled === "yes")
+                {
+                    enabledStandards.push(stdbit);
+
+                    userCurrentMax[k] += 10;
+                    userCurrentMax["total"] += 10;
+                }
+            }
+
+            for (var i = 0; i < enabledStandards.length; i++)
+            {
+                var stdEnabledBit = enabledStandards[i];
+
+                for(var j = 0; j < userStdInter[k].subcategories.length; j++)
+                {
+                    var studentInterStd = userStdInter[k].subcategories[j];
+
+                    if (stdEnabledBit.subCategory ===  studentInterStd.name)
+                    {
+
+                        userCurrentScore[k] += studentInterStd.score;
+                        userCurrentScore["total"] += studentInterStd.score;
+
+                    }
+                }
+            }
+        }
+
+        return {score: userCurrentScore, max: userCurrentMax };
+    }
+
+    isCategoryUnlockedForUser(name, categoryName)
+    {
+         var std = this.selectStandards(name);
+         var category = std[categoryName];
+
+         for (var i = 0; i < category.length; i++)
+         {
+             if (category[i].enabled === "yes") return true;
+         }
+         return false;
+    }
+
+    isSubcategoryUnlocked(name, categoryName, num)
+    {
+        var std = this.selectStandards(name);
+        var category = std[categoryName];
+
+         for (var i = 0; i < category.length; i++)
+         {
+             if (category[i].enabled === "yes")
+             {
+                  if (category[i].number === num)
+                  {
+                    //  alert ("Show subcategory: " + category[i].subCategory);
+                      return true;
+                  }
+             }
+
+
+         }
+         return false;
+
+    }
+
+    getSubcategoryForProfileFix(name, categoryName, num)
+    {
+        var std = this.selectStandards(name);
+        var category = std[categoryName];
+
+         for (var i = 0; i < category.length; i++)
+         {
+             if (category[i].enabled === "yes")
+             {
+                  if (category[i].number === num)
+                  {
+                      return category[i].subCategory;
+                  }
+             }
+         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

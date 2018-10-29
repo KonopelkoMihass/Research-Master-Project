@@ -247,6 +247,33 @@ class CreateChallengeController
 		}
 	}
 
+
+	sortCategories(standards)
+    {
+        var stdNumber = 0;
+        var sortedKeys = [];
+        var totalCategories = Object.keys(standards).length;
+
+        while(true){
+            for (var key in standards) {
+                for (var i = 0; i < standards[key].length; i++) {
+                    if (stdNumber == standards[key][i].number)
+                    {
+                        sortedKeys.push(key);
+                        stdNumber += standards[key].length;
+                    }
+                }
+            }
+            if (Object.keys(sortedKeys).length === totalCategories)
+            {
+                break;
+            }
+        }
+
+        return sortedKeys;
+    }
+
+
 	setupSideModal()
 	{
 		var controller = this;
@@ -257,8 +284,11 @@ class CreateChallengeController
 			categorySelectDiv.innerHTML = "";
 
 
-            for (var key in standards) {
-                var categoryName = key;
+            var sortedKeys = this.sortCategories(standards);
+
+
+            for (var k = 0; k < sortedKeys.length; k++) {
+                var categoryName = sortedKeys[k];
 
                 //create a span to insert into div
                 var categorySpan = document.createElement("SPAN");
@@ -296,9 +326,19 @@ class CreateChallengeController
 
 						var getStdByNumber = function(subCategories, i)
                         {
+                            var startValue = 99999;
+
                             for (var j = 0; j < subCategories.length; j++)
                             {
-                                if (subCategories[j].number === i) return subCategories[j];
+                                var num = subCategories[j].number;
+                                num < startValue ? startValue = num : startValue = startValue;
+                            }
+
+
+
+                            for (var j = 0; j < subCategories.length; j++)
+                            {
+                                if (subCategories[j].number === startValue + i) return subCategories[j];
                             }
                         };
 
@@ -310,7 +350,7 @@ class CreateChallengeController
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
-							subcategorySpan.id = "create-challenge-code-category#" + subcategory.category +"#" +i;
+							subcategorySpan.id = "create-challenge-code-category#" + subcategory.category +"#" + subcategory.number;
 							subcategorySpan.innerHTML = subcategory.subCategory;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
@@ -318,7 +358,7 @@ class CreateChallengeController
 
 							var img = document.createElement("IMG");
 							img.src = "resources/images/info.png";
-							img.id = "create-challenge-select-subcategory-tooltip#" +subcategory.category + "#" + i;
+							img.id = "create-challenge-select-subcategory-tooltip#" +subcategory.category + "#" + subcategory.number;
 							img.className = "picture-button";
 							img.style.float = "right";
 
@@ -751,7 +791,7 @@ class CreateChallengeController
 			cell1.innerHTML = codeBit.content;
 		}
 
-		cell2.innerHTML = codeBit.review;
+		cell2.innerHTML = content.category + "-" + content.subCategory;
 
 		this.allowSelection = true;
 	}

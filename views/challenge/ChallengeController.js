@@ -23,12 +23,39 @@ class ChallengeController
 
 		this.timer = undefined;
 		this.displayPostChallengeScreen = false;
+
+		this.altered = false;
 	}
 
 	setup()
 	{
 		console.log(this.model);
 	}
+
+	sortCategories(standards)
+    {
+        var stdNumber = 0;
+        var sortedKeys = [];
+        var totalCategories = Object.keys(standards).length;
+
+        while(true){
+            for (var key in standards) {
+                for (var i = 0; i < standards[key].length; i++) {
+                    if (stdNumber == standards[key][i].number)
+                    {
+                        sortedKeys.push(key);
+                        stdNumber += standards[key].length;
+                    }
+                }
+            }
+            if (Object.keys(sortedKeys).length === totalCategories)
+            {
+                break;
+            }
+        }
+
+        return sortedKeys;
+    }
 
 	setupSideModal()
 	{
@@ -38,7 +65,12 @@ class ChallengeController
             var standards =  app.standards.selectStandards(this.model.standard);
             var categorySelectDiv = document.getElementById("challenge-code-category-select-div");
 
-            for (var key in standards) {
+
+            var sortedKeys = this.sortCategories(standards);
+
+            for (var k = 0; k < sortedKeys.length; k++)
+            {
+                var key = sortedKeys[k];
 
             	if (!app.standards.checkIfEnabled(standards[key])) continue;
                 var categoryName = key;
@@ -77,11 +109,19 @@ class ChallengeController
 						var cat = this.id.split("#")[1];
 						var subcategories = standards[cat];
 
-						var getStdByNumber = function(subCategories, i)
+					    var getStdByNumber = function(subCategories, i)
                         {
+                            var startValue = 99999;
+
                             for (var j = 0; j < subCategories.length; j++)
                             {
-                                if (subCategories[j].number === i) return subCategories[j];
+                                var num = subCategories[j].number;
+                                num < startValue ? startValue = num : startValue = startValue;
+                            }
+
+                            for (var j = 0; j < subCategories.length; j++)
+                            {
+                                if (subCategories[j].number === startValue + i) return subCategories[j];
                             }
                         };
 
@@ -97,19 +137,19 @@ class ChallengeController
 							var spanContainer = document.createElement("SPAN");
 
 							var subcategorySpan = document.createElement("SPAN");
-							subcategorySpan.id = "challenge-code-category#" + subcategory.category +"#" + i;
+							subcategorySpan.id = "challenge-code-category#" + subcategory.category +"#" + subcategory.number;
 							subcategorySpan.className = "code-review-select-subcategory-span";
 
 							app.utils.insertTooltip(subcategorySpan, subcategory.description);
 
 							var img = document.createElement("IMG");
 							img.src = "resources/images/info.png";
-							img.id = "challenge-select-subcategory-tooltip#" + subcategory.category + "#" + i;
+							img.id = "challenge-select-subcategory-tooltip#" + subcategory.category + "#" + subcategory.number;
 							img.className = "picture-button";
 							img.style.float = "right";
 
 							var label = document.createElement("LABEL");
-							label.id = "challenge-code-category#" + subcategory.category +"#" + i + "#label";
+							label.id = "challenge-code-category#" + subcategory.category +"#" + subcategory.number + "#label";
 							label.innerHTML = subcategory.subCategory;
 
 							img.style.filter = "invert(0%)";
@@ -181,7 +221,7 @@ class ChallengeController
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
-		if(app.user.gamified === "n") document.getElementById("challenge-legend").innerText = "Training";
+		if(!this.altered) document.getElementById("challenge-legend").innerText = "Training";
 	}
 
 	prepareCodeHTMLs()
@@ -247,9 +287,6 @@ class ChallengeController
 		var correct = 0;
 		var wrong = 0;
 
-
-
-		//cell2.id = "challenge-review-answer#" + codeBit.content  + "#" + content.number;
 		for (var i = 1, row; row = issueTable.rows[i]; i++)
 		{
 			var answerCell = row.cells[3];
@@ -326,6 +363,15 @@ class ChallengeController
 
 		this.model.saveResults(data);
 		this.model.issues = {};
+
+
+		// Calculating score
+        var num = this.model.currentChallengeLink;
+
+        var state = "" + Math.ceil(data.grade / 10);
+
+		// Update the bar.
+		app.utils.fillTheChallengeBar(state, num);
 	}
 
 	showChallengeEndScreen()
@@ -357,7 +403,7 @@ class ChallengeController
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
 
-		if(app.user.gamified === "n") document.getElementById("std-internalisation").style.display = "none";
+		if(!this.altered) document.getElementById("std-internalisation").style.display = "none";
 
 		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
 	}
@@ -662,4 +708,16 @@ class ChallengeController
 
 		return timeTaken;
 	}
+
+
+	alterView()
+    {
+        document.getElementById("challenge-done").style.display="none";
+        document.getElementById("challenge-chain-done-progress").innerHTML = "";
+        this.altered = true;
+
+        for( var i = 0; i < this.model.totalChallenges; i++)
+            app.utils.addChallengeProgressBar( i + 1);
+
+    }
 }

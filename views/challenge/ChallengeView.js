@@ -28,6 +28,8 @@ class ChallengeView extends View
 	{
 		this.controller.allowReview();
 
+		if (app.user.gamified === "y") this.controller.alterView();
+
 	}
 
 

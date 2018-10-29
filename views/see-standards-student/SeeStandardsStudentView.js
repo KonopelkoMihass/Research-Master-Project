@@ -33,6 +33,10 @@ class SeeStandardsStudentView extends View
 				var cell = row.insertCell(0);
 				cell.appendChild(link);
 			}
+
+
+			//app.utils.generateProgressBar(document.getElementById("std-student-box"), "testytest");
+
 		}
 	}
 
