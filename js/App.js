@@ -342,6 +342,11 @@ class App
 		});
 
 
+		app.utils.assignFuncToButtonViaID("mps-discord-button", function() {
+			location.href = "https://discord.gg/e8qvZDj";
+		});
+
+
 
 
 		app.utils.assignFuncToButtonViaID("mpt-assignments-button", function() {

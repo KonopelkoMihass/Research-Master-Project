@@ -33,17 +33,11 @@ class MessageHandler {
 
 		if (type === app.net.messageHandler.types_.GET_USER_DATA) {
 			app.viewManager.goToView("signin");   
-		}
-		
-		if (type === app.net.messageHandler.types_.SIGN_UP_SUCCESSFUL) {
+		} if (type === app.net.messageHandler.types_.SIGN_UP_SUCCESSFUL) {
 			app.viewManager.goToView(app.viewManager.VIEW.TITLE_SCREEN);   
-		}
-
-		if (type === app.net.messageHandler.types_.SIGN_IN_SUCCESSFUL) {
+		} if (type === app.net.messageHandler.types_.SIGN_IN_SUCCESSFUL) {
 			app.viewManager.goToView(app.viewManager.VIEW.TITLE_SCREEN);  			      
-		}
-		
-		if (type === app.net.messageHandler.types_.SIGNIN_FAILED) {
+		} if (type === app.net.messageHandler.types_.SIGNIN_FAILED) {
 			alert("You entered wrong credentials");	  
 		}
 	}	

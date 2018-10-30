@@ -1,25 +1,32 @@
-// File: audio_manager_base.js
+// File: audio_manager.js
 /* Line Length ruler.
 ----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
          10        20        30        40        50        60        70        80        90        100
 */
 class AudioManager {
-  constructor() {
-		this.audioBuffers=[];
-		this.audioContext={};
-		this.cache={};
-		this.downloadQueue=[];
-		this.errorCount = 0;
-		this.playingSounds={};  // Sounds that are currently playing
-		this.resourcePath = "resources/audio/";
-		this.successCount = 0;
+	constructor() {
+		/** @private @let {!AudioBuffers} */
+		this.audioBuffers_ = [];
+		/** @private @let {!AudioContext} */
+		this.audioContext_ = {};
+		/** @private @let {!Cache} */
+		this.cache_ = {};
+		/** @private @let {!DownloadQueue} */
+		this.downloadQueue_ = [];
+		/** @private @let {!ErrorCount} */
+		this.errorCount_ = 0;
+		/** @private @let {!PlayingSounds} */
+		this.playingSounds_ = {};  // Sounds that are currently playing
+		/** @private @const {!ResourcePath} */
+		this.resourcePath_ = "resources/audio/";
+		/** @private @let {!SuccessCount} */
+		this.successCount_ = 0;
     
 		try {
 			// Fix up for prefixing (don't have to write "webkit" all the time)
 			window.AudioContext = window.AudioContext||window.webkitAudioContext;
-			this.audioContext = new AudioContext();
-		}
-		catch(e) {
+			this.audioContext_ = new AudioContext();
+		} catch(e) {
 			alert('Web Audio API is not supported in this browser');
 		}  
   }
@@ -30,33 +37,33 @@ class AudioManager {
    * @param downloadCallback - function to call.
    */
   loadSoundFile(filename, downloadCallback) {
-	var that = this;
-	var url =  this.resourcePath+filename;
-	
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', url, true);
-	xhr.responseType = 'arraybuffer';
- 
-	xhr.onload = function(e) {
-		//buffer containing sound returned by xhr
-		var arrayBuffer=this.response;
-		that.audioContext.decodeAudioData(arrayBuffer, function(buffer) {
-			// associate the audio buffer with the sound name so can use the 
-			// decoded audio later.
-			that.audioBuffers[filename]=buffer;
-			console.log("Sound was loaded.");
-			that.successCount++;
-			if (that.isDone()) {
-				downloadCallback();
-			}
-		}, function(e) {
-			that.errorCount++;
-			if (that.isDone()) {
-				downloadCallback();
-			}
-			console.log('Error decoding file', e);
-			});
-			
+		let that = this;
+		let url = this.resourcePath_ + filename;
+		
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.responseType = 'arraybuffer';
+	 
+		xhr.onload = function(e) {
+			//buffer containing sound returned by xhr
+			let arrayBuffer = this.response;
+			that.audioContext_.decodeAudioData(arrayBuffer, function(buffer) {
+				// associate the audio buffer with the sound name so can use the 
+				// decoded audio later.
+				that.audioBuffers_[filename] = buffer;
+				console.log("Sound was loaded.");
+				that.successCount_++;
+				if (that.isDone()) {
+					downloadCallback();
+				}
+			}, function(e) {
+				that.errorCount_++;
+				if (that.isDone()) {
+					downloadCallback();
+				}
+				console.log('Error decoding file', e);
+				});
+		}
     //send the xhr request to download the sound file
     xhr.send();
   }
@@ -67,11 +74,11 @@ class AudioManager {
 	 * when the sound finishes}
 	 */
 	playPlaylist(playList, callback) {
-		var that = this; 
-		var sounds = [];
-		var currentSound = 0;
+		let that = this; 
+		let sounds = [];
+		let currentSound = 0;
 
-		for (var [key, value] of playList) {
+		for (let [key, value] of playList) {
 			console.log(key + " = " + value);
 			sounds.push(key);
 		}      
@@ -85,8 +92,7 @@ class AudioManager {
 				if(elementToDisplay != undefined) {
 					app.viewManager.showElement(elementToDisplay);
 				}
-			}
-			else {
+			} else {
 				if(callback != undefined) {
 					callback();
 				}
@@ -107,7 +113,7 @@ class AudioManager {
 	 */
 	playSound(filename, startTime, duration) {
 			// No callback
-			var callback = null;
+			let callback = null;
 			this.playSnippet(filename, null, startTime, duration);
 	};
 
@@ -119,21 +125,21 @@ class AudioManager {
 	 * @param duration - for how long it plays a sound.
 	 */
 	playSnippet(filename, callback, startTime, duration) {
-		if (this.audioBuffers[filename] == undefined) {
+		if (this.audioBuffers_[filename] == undefined) {
 			return;
 		}
 
 		// Retrieve the buffer we stored earlier
-		var audioBuffer = this.audioBuffers[filename];
+		let audioBuffer = this.audioBuffers_[filename];
 
 		// Create a buffer source - used to play once and then 
 		// a new one must be made
-		var source = this.audioContext.createBufferSource();
+		let source = this.audioContext_.createBufferSource();
 		source.buffer = audioBuffer;
 		source.loop = false;
 
 		// Connect to your speakers
-		source.connect(this.audioContext.destination);
+		source.connect(this.audioContext_.destination);
 	
 		if(callback != undefined) {
 			source.onended = callback;
@@ -142,16 +148,13 @@ class AudioManager {
 		if(startTime != undefined){
 			if(duration != undefined) {
 				source.start(0, startTime, duration);
-			}
-			else{
+			}	else {
 				source.start(0, startTime);
 			}
-		}
-
-		else {
+		}	else {
 			source.start(0); // Play immideately.
 		}
-		this.playingSounds[name]=source;
+		this.playingSounds_[name]=source;
 	}
 
 	/**
@@ -159,11 +162,10 @@ class AudioManager {
 	 * @param filename - a name and an extension of the sound to stop.
 	 */
 	stopPlayingSound(filename) {
-		if (!this.playingSounds[name]) {
+		if (!this.playingSounds_[name]) {
 			return;
-		}
-		else {
-			this.playingSounds[name].stop(0);
+		} else {
+			this.playingSounds_[name].stop(0);
 		}
 	}
 
@@ -175,10 +177,10 @@ class AudioManager {
 	playEmptySound() {
 		// Create empty buffer
 		// https://paulbakaus.com/tutorials/html5/web-audio-on-ios/
-		var buffer = this.audioContext.createBuffer(1, 1, 22050);
-		var source = this.audioContext.createBufferSource();
+		let buffer = this.audioContext_.createBuffer(1, 1, 22050);
+		let source = this.audioContext_.createBufferSource();
 		source.buffer = buffer;
-		source.connect(this.audioContext.destination);
+		source.connect(this.audioContext_.destination);
 
 		// play the file
 		source.start(0);
@@ -189,7 +191,7 @@ class AudioManager {
 	 * @param soundName - name and extension of a file to load.
 	 */
 	queueSound(soundName) {
-		this.downloadQueue.push(soundName);
+		this.downloadQueue_.push(soundName);
 	};
 
 	/**
@@ -197,8 +199,8 @@ class AudioManager {
 	 * @param downloadCallback - a function to call once download is complete.
 	 */
 	downloadAll(downloadCallback) {
-		for (var i=0; i<this.downloadQueue.length; i++) {
-			this.loadSoundFile(this.downloadQueue[i], downloadCallback);
+		for (let i = 0; i < this.downloadQueue_.length; i++) {
+			this.loadSoundFile(this.downloadQueue_[i], downloadCallback);
 		}
 	}
 
@@ -214,9 +216,9 @@ class AudioManager {
 	 */
 	isDone() {
 		console.log("AudioManager success count " 
-			+ this.successCount + " / " 
-			+ this.downloadQueue.length + ' errors: '
-			+ this.errorCount);
-		return (this.downloadQueue.length == this.successCount + this.errorCount);
+			+ this.successCount_ + " / " 
+			+ this.downloadQueue_.length + ' errors: '
+			+ this.errorCount_);
+		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);
 	} 
 }

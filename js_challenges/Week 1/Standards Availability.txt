@@ -1,0 +1,8 @@
+Week 1:
+
+Day 1:	
+
+* Source file basics
+	* File Name
+* Formatting
+	* All Braces
