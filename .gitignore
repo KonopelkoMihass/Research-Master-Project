@@ -2,6 +2,7 @@
 __pycache__
 log.txt
 Docker/MySQL/data
+py/logs
 
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
