@@ -22,23 +22,20 @@ class View {
 	 /** Setups the HTML related to this view. **/
 	setup() {
 		//add root element for this view
-		if (this.title_ === undefined) {
-			console.error("Trying to use a view that doesn't exist. " 
-				+ "Check the this.title_ in your views exist in ViewManager.VIEW");
-		} else {
-			this.root = document.getElementById(this.title_);
-		}
-
+		if (this.title_ === undefined) console.error("Trying to use " 
+			+ "a view that doesn't exist.");
+		else this.root = document.getElementById(this.title);
+		
 		//hide the view initially
 		this.hide();
 
-		//initialised_
+		//initialised
 		this.initialised_ = true;
 	}
 
 	/**Called when switching to this view**/
 	show() {
-		//if the view hasn't been initialised_, call setup.
+		//if the view hasn't been initialised, call setup.
 		if (!this.initialised_) {
 			this.setup();
 		} else {

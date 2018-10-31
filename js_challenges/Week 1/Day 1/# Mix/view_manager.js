@@ -1,4 +1,4 @@
-// File: view_manager.js
+// File: view-manager.js
 /* Line Length ruler.
 ----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
          10        20        30        40        50        60        70        80        90        100
@@ -9,7 +9,7 @@
 */
 class ViewManager {
 	constructor() {
-		/** @private @let {!Views} */
+	/** @private @let {!Views} */
 		this.views_ = [];
 		/** @private @let {!CurrentView} */
 		this.currentView_ = undefined;
@@ -24,17 +24,15 @@ class ViewManager {
 			DIALOGUE_SCREEN: "dialogue-screen",
 			BATTLE_SCREEN: "battle-screen",
 			LOAD_GAME_SCREEN: "load-game-screen",
-			SAVE-GAME-SCREEN: "save-game-screen",
-			WORLD_view: "world-view",
+			SAVE_GAME_SCREEN: "save-game-screen",
+			WORLD_VIEW: "world-view",
 		}
 	}
 
 	/** Adds a view to its collection.
 	* @param {Object} view View object to be added.
 	*/
-	addView(view) {
-		this.views_.push(view);
-	}
+	addView(view) {	this.views_.push(view);	}
 
 	/** Looks for a view based on the provided title to switch to.
 	* Checks if a view has been found and does exist,
@@ -49,23 +47,23 @@ class ViewManager {
 		while (i < this.views_.length && !viewFound) {
 			if (this.views_[i].title === title) {
 				viewFound = true;
-				this.nextView = this.views_[i];
+				this.nextView_ = this.views_[i];
 			}
 			i++;
 		}
 
 		if (viewFound) {//check that the current view exists
 			if (this.currentView_ !== undefined) {//if it does, then hide it
-				console.log("Change view from: "+this.currentView_.title);
+				console.log("Change view from: " + this.currentView_.title);
 				this.currentView_.hide();
 			}
 
 			//update new current view and show it
-			this.currentView_ = this.nextView;
+			this.currentView_ = this.nextView_;
 			console.log("Change view to: " + this.currentView_.title);
 			this.currentView_.show();
-		} else {//warn that the view don't exist
+		}	
+		else //warn that the view don't exist
 			console.warn("View not found: " + title);
-		}
 	}
 }

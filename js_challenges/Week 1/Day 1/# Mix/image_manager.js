@@ -1,9 +1,8 @@
-// File: image_manager.js
+// File: imagemanager.js
 /* Line Length ruler.
 ----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
          10        20        30        40        50        60        70        80        90        100
 */
-
 
 /**
  * Stores all the assets needed for the game.
@@ -27,7 +26,7 @@ class ImageManager() {
 	 * @param filename - name and extension of an image,
 	 */
 	queueImage(filename) {
-		this.downloadQueue_.push(this.resourcePath_+filename);
+		this.downloadQueue.push(this.resourcePath_ + filename);
 	}
 
 
@@ -44,16 +43,11 @@ class ImageManager() {
 
 			img.addEventListener("load", function() {
 				that.successCount_ += 1;
-				if (that.isDone()) {
-					downloadCallback();
-				}
+				if (that.isDone()) downloadCallback();
 			}, false);
 
-
-			if (this.downloadQueue_.length === 0) {
-				downloadCallback();
-			}
-
+			if (this.downloadQueue_.length === 0) downloadCallback();
+			
 			img.addEventListener("error", function() {
 				that.errorCount_ += 1;
 				if (that.isDone()) {
@@ -78,7 +72,8 @@ class ImageManager() {
 			+ this.successCount_ + " / " 
 			+ this.downloadQueue_.length + ' errors: '
 			+ this.errorCount_);
-		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);
+		return (this.downloadQueue_.length == 
+			this.successCount_ + this.errorCount_);
 	}
 	
 	/**

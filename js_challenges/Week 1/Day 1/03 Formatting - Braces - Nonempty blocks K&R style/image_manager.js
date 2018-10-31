@@ -10,16 +10,16 @@
  */
 class ImageManager() {
 	constructor() {
-	   	/** @private @let {!Cache} */
-	    this.cache_ = {};
-			/** @private @let {!DpwnloadQueue} */
-	    this.downloadQueue_ = [];
-			/** @private @let {!ErrorCount} */
-	    this.errorCount_ = 0;		
-			/** @private @const {!ResourcePath} */
-	    this.resourcePath_ = "resources/images/";			
-		  /** @private @let {!SuccessCount} */
-	    this.successCount_ = 0;
+		/** @private @let {!Cache} */
+		this.cache_ = {};
+		/** @private @let {!DpwnloadQueue} */
+		this.downloadQueue_ = [];
+		/** @private @let {!ErrorCount} */
+		this.errorCount_ = 0;		
+		/** @private @const {!ResourcePath} */
+		this.resourcePath_ = "resources/images/";			
+		/** @private @let {!SuccessCount} */
+		this.successCount_ = 0;
 	}
 
 	/**
@@ -27,7 +27,7 @@ class ImageManager() {
 	 * @param filename - name and extension of an image,
 	 */
 	queueImage(filename) {
-		this.downloadQueue_.push(this.resourcePath_+filename);
+		this.downloadQueue_.push(this.resourcePath + filename);
 	}
 
 
@@ -44,13 +44,11 @@ class ImageManager() {
 
 			img.addEventListener("load", function() {
 				that.successCount_ += 1;
-				if (that.isDone()) {
-					downloadCallback();
-				}
+				if (that.isDone()) { downloadCallback(); } 
 			}, false);
 
 
-			if (this.downloadQueue_.length === 0) {
+			if (this.downloadQueue.length === 0) {
 				downloadCallback();
 			}
 
@@ -74,11 +72,7 @@ class ImageManager() {
 	 * all the images.
 	 */
 	isDone() {
-		console.log("ImageManager success count " 
-			+ this.successCount_ + " / " 
-			+ this.downloadQueue_.length + ' errors: '
-			+ this.errorCount_);
-		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);
+		// logic
 	}
 	
 	/**
@@ -87,6 +81,6 @@ class ImageManager() {
 	 * @returns {image} - the image file which can be used.
 	 */
 	getImage(filename) {
-		return this.cache_[filename];
+		// logic
 	}
 }

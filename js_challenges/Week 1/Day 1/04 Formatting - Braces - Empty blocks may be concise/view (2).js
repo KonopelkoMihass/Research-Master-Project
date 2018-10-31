@@ -19,37 +19,16 @@ class View {
 		this.title_ = title;
 	}
 
+	// Add code to it.
 	 /** Setups the HTML related to this view. **/
-	setup() {
-		//add root element for this view
-		if (this.title_ === undefined) {
-			console.error("Trying to use a view that doesn't exist. " 
-				+ "Check the this.title_ in your views exist in ViewManager.VIEW");
-		} else {
-			this.root = document.getElementById(this.title_);
-		}
+	setup() {}
 
-		//hide the view initially
-		this.hide();
-
-		//initialised_
-		this.initialised_ = true;
-	}
-
+	// Add code to it.
 	/**Called when switching to this view**/
-	show() {
-		//if the view hasn't been initialised_, call setup.
-		if (!this.initialised_) {
-			this.setup();
-		} else {
-			//unhide the elements of the scene
-			this.root.style.display = 'block';
-		}
-	}
-
+	show() {}
+	
+	// Add code to it.
 	/**Called when switching from this view**/
 	hide() {
-		//hide the elements of the view
-		this.root.style.display = 'none';
 	}
 }

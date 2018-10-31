@@ -1,4 +1,4 @@
-// File: view.js
+// File: View.js
 /* Line Length ruler.
 ----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
          10        20        30        40        50        60        70        80        90        100
@@ -23,8 +23,7 @@ class View {
 	setup() {
 		//add root element for this view
 		if (this.title_ === undefined) {
-			console.error("Trying to use a view that doesn't exist. " 
-				+ "Check the this.title_ in your views exist in ViewManager.VIEW");
+			console.error("Trying to use a view that doesn't exist");
 		} else {
 			this.root = document.getElementById(this.title_);
 		}
@@ -32,24 +31,17 @@ class View {
 		//hide the view initially
 		this.hide();
 
-		//initialised_
+		//initialised
 		this.initialised_ = true;
 	}
 
 	/**Called when switching to this view**/
-	show() {
-		//if the view hasn't been initialised_, call setup.
-		if (!this.initialised_) {
-			this.setup();
-		} else {
-			//unhide the elements of the scene
-			this.root.style.display = 'block';
-		}
+	show() 
+	{
+		if (!this.initialised_) this.setup();
+		else this.root.style.display = 'block';	
 	}
 
 	/**Called when switching from this view**/
-	hide() {
-		//hide the elements of the view
-		this.root.style.display = 'none';
-	}
+	hide() { this.root.style.display = 'none'; }
 }

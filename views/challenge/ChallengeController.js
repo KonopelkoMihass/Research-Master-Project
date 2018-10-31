@@ -221,7 +221,27 @@ class ChallengeController
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
-		if(!this.altered) document.getElementById("challenge-legend").innerText = "Training";
+
+		var tutButton = document.getElementById("challenge-tutorial-button");
+        var new_element = tutButton.cloneNode(true);
+        tutButton.parentNode.replaceChild(new_element, tutButton);
+
+		if(!this.altered)
+		{
+		    document.getElementById("challenge-legend").innerText = "Training";
+		    app.utils.assignFuncToButtonViaID("challenge-tutorial-button", function(){
+		        location.href = "https://www.youtube.com/watch?v=OCwu7C6kE2M";
+            });
+        }
+
+        else
+        {
+		     app.utils.assignFuncToButtonViaID("challenge-tutorial-button", function()
+            {
+			    location.href = "https://www.youtube.com/watch?v=OGdIyvn7bTY";
+            });
+        }
+
 	}
 
 	prepareCodeHTMLs()
