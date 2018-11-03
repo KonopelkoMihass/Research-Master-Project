@@ -85,3 +85,7 @@ Mistakes - 0
 [2018-10-30 23:36:37] [client] Challenge N1 started
 [2018-10-30 23:36:37] [client] User started a chain challenge
 [2018-10-30 23:36:38] [client] User left the site
+[2018-10-31 00:02:36] [client] User entered the site
+[2018-10-31 00:02:41] [client] Challenge N1 started
+[2018-10-31 00:02:41] [client] User started a chain challenge
+[2018-10-31 00:02:45] [client] User left the site
