@@ -48,7 +48,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def on_message(self, message):
-        #try:
         #convert message into a dictionary
         message = json.loads(message)
         message_type = message["type"]
@@ -129,11 +128,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "focus_change":
             self.focus_change(message_data)
-        #except:
-         #   print("Error")
-         #   print("Message", message)
-         #   print("Type", message["type"])
-        #    print("Data", message["data"])
+
+        #DEV METHOD
+        elif message_type == "poopoointhemoomoo":
+            challenges_manager.save_challenges_from_db_into_files()
+
+
 
 
 
@@ -476,14 +476,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 
-
-
-
-
-
-
-
-
     def on_close(self):
         print ("WebSocket closed")
         #Remove connection
@@ -537,3 +529,4 @@ if __name__ == '__main__':
 
     autoreload.start(ioloop)
     ioloop.start()
+
