@@ -1,0 +1,52 @@
+// File: audio_manager.js
+/* Line Length ruler.
+----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+         10        20        30        40        50        60        70        80        90        100
+*/
+
+/**
+ * Stores and manages all the audio needed for the game.
+ */
+class AudioManager {
+	constructor() {
+		// logic
+	}
+
+	/**
+	 * Load the sound file.
+	 * @param {string) filename Name to refer to sound.
+	 * @param {AudioManager~requestCallback} downloadCallback 
+	 * 		Function to call.
+	 */
+	loadSoundFile(filename, downloadCallback) {
+		let that = this;
+		let url = this.resourcePath+filename;
+		let xhr = new XMLHttpRequest();
+
+		xhr.open('GET', url, true);
+		xhr.responseType = 'arraybuffer';
+
+		xhr.onload = function(e) {
+			//buffer containing sound returned by xhr
+			let arrayBuffer = this.response;
+			that.audioContext_.decodeAudioData(arrayBuffer, function(buffer) {
+				// associate the audio buffer with the sound name so can use the 
+				// decoded audio later.
+				that.audioBuffers_[filename] = buffer;
+				console.log("Sound was loaded.");
+				that.successCount_++;
+				if (that.isDone()) { downloadCallback(); }
+			}, function(e) {
+				that.errorCount_++;
+				if (that.isDone()) { 
+					downloadCallback(); 
+				}
+				console.log('Error decoding file', e);
+			});
+		}
+		//send the xhr request to download the sound file
+		xhr.send();
+	}
+
+	// Rest of the file.
+}

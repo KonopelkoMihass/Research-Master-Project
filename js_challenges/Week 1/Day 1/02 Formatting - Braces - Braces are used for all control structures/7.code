@@ -1,0 +1,46 @@
+// File: audio_manager.js
+/* Line Length ruler.
+----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+         10        20        30        40        50        60        70        80        90        100
+*/
+
+/** Stores and manages all the audio needed for the game. */
+class AudioManager {
+	constructor() {
+		// logic
+	}
+
+	/**
+	 * Load the sound file.
+	 * @param {string) filename Name to refer to sound.
+	 * @param {AudioManager~requestCallback} downloadCallback 
+	 * 		Function to call.
+	 */
+	loadSoundFile(filename, downloadCallback) {
+		// logic
+	}
+  
+	/**
+	 * Plays a sound.  startTime is optional.
+	 * @param {string} filename Name of a sound and extension.
+	 * @param {number} startTime Time from where the sound is played.
+	 * @param {number} duration For how long it plays a sound.
+	 */
+	playSound(filename, startTime, duration) {
+		if (filename !== "") 
+			this.playSnippet(filename, null, startTime, duration);
+	};
+	
+	/**
+	 * Stops a sound.
+	 * @param {string} filename Name and an extension of the sound 
+	 *    to stop.
+	 */
+	stopPlayingSound(filename) {
+		if (!this.playingSounds_[name]) {
+			return;
+		} else this.playingSounds_[name].stop(0);
+	}
+	
+	// Rest of the file.
+}

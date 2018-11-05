@@ -50,10 +50,6 @@ class ChallengesManager:
                         self.challenge_directory + \
                         "/" + language + "/"
 
-
-
-
-
         ch = open(challenge_dir + id + self.code_format, 'r')
         return ch.read()
 
