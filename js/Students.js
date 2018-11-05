@@ -21,8 +21,14 @@ class Students extends Model
 
     enableSystemSwitch()
     {
-
          app.net.sendMessage("enable_system_switch", {});
+    }
+
+    getPerformanceData(email)
+    {
+        app.net.sendMessage("get_student_performance", {email: email});
+
+
     }
 
 

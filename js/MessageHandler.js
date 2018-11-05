@@ -54,6 +54,9 @@ class MessageHandler
 			KICK_FROM_WEBSITE: "kick_from_website",
 			UPDATE_STANDARDS_CONFIG_SUCCESSFUL: "update_standards_configurations_successful",
 			UPDATE_STANDARDS_CONFIG_FAILED: "update_standards_configurations_failed",
+
+            STUDENT_DATA_PROCESSED: "student_data_processed"
+
 		};
 	}
 
@@ -77,5 +80,22 @@ class MessageHandler
         {
         	document.location.reload();
 		}
+
+		if (this.types.STUDENT_DATA_PROCESSED === type)
+		{
+		    var name = data.name;
+		    var file = data.file;
+
+		    var element = document.createElement('a');
+		    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
+		    element.setAttribute('download', name);
+
+		    element.style.display = 'none';
+		    document.body.appendChild(element);
+
+		    element.click();
+
+		    document.body.removeChild(element);
+        }
 	}
 }

@@ -115,3 +115,51 @@ Missed - 3
 Found - 0
 Mistakes - 0
 [2018-11-03 20:43:30] [client] Challenge N2 started
+[2018-11-05 17:31:32] [client] User entered the site
+[2018-11-05 17:44:02] [client] User entered the site
+[2018-11-05 17:45:25] [client] User entered the site
+[2018-11-05 17:49:18] [client] User entered the site
+[2018-11-05 18:07:14] [client] User entered the site
+[2018-11-05 18:10:03] [client] User entered the site
+[2018-11-05 18:10:52] [client] User left the site
+[2018-11-05 18:11:01] [client] User entered the site
+[2018-11-05 18:58:01] [client] User entered the site
+[2018-11-05 19:23:14] [client] User entered the site
+[2018-11-05 19:25:06] [client] User entered the site
+[2018-11-05 19:29:08] [client] User entered the site
+[2018-11-05 19:29:17] [client] Challenge N1 started
+[2018-11-05 19:29:17] [client] User started a chain challenge
+[2018-11-05 19:29:27] [client] User completed challenge: 
+Missed - 0
+Found - 0
+Mistakes - 1
+[2018-11-05 19:29:29] [client] Challenge N2 started
+[2018-11-05 19:29:34] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-11-05 19:29:36] [client] Challenge N3 started
+[2018-11-05 19:30:20] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2018-11-05 19:30:23] [client] Challenge N4 started
+[2018-11-05 19:30:34] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-11-05 19:30:35] [client] User completed chain challenge: Total Score - 50
+[2018-11-05 19:37:26] [client] User entered the site
+[2018-11-05 19:39:24] [client] User visited profile page
+[2018-11-05 19:54:10] [client] User entered the site
+[2018-11-05 19:59:22] [client] User entered the site
+[2018-11-05 20:00:16] [client] User entered the site
+[2018-11-05 20:03:57] [client] User entered the site
+[2018-11-05 20:08:30] [client] User entered the site
+[2018-11-05 20:09:50] [client] User entered the site
+[2018-11-05 20:17:13] [client] User entered the site
+[2018-11-05 20:18:32] [client] User entered the site
+[2018-11-05 20:21:36] [client] User entered the site
+[2018-11-05 20:23:08] [client] User entered the site
+[2018-11-05 20:31:48] [client] User entered the site
+[2018-11-05 20:33:58] [client] User entered the site

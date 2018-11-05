@@ -37,11 +37,23 @@ class ManageSystemsTeacherView extends View
 			var row = table.insertRow(table.rows.length);
 
 			var cell0 = row.insertCell(0);
-			cell0.innerText = students[i].surname + " " + students[i].name;
-			var cell1 = row.insertCell(1);
-			cell1.innerText = students[i].noun;
+			var button = document.createElement("BUTTON");
+			button.innerText = "Get";
+			button.id = "manage-systems-get-performance#" + students[i].email;
+			button.addEventListener("click", function(){
+			    var email = this.id.split("#")[1];
+                app.students.getPerformanceData(email);
+            });
 
+			cell0.appendChild(button);
+
+
+			var cell1 = row.insertCell(1);
+			cell1.innerText = students[i].surname + " " + students[i].name;
 			var cell2 = row.insertCell(2);
+			cell2.innerText = students[i].noun;
+
+			var cell3 = row.insertCell(3);
 			var noLevel = true;
 			for (var name in students[i].std_internalisation)
 			{
@@ -60,26 +72,19 @@ class ManageSystemsTeacherView extends View
 					}
 				}
 
-				cell2.innerText += name + ": " + level + "\n" ;
+				cell3.innerText += name + ": " + level + "\n" ;
 			}
 
 			if (noLevel)
 			{
-				cell2.innerText = "No levels"
+				cell3.innerText = "No levels"
 			}
 
 
-			var cell3 = row.insertCell(3);
-			cell3.innerText = students[i].gamification === 'r' ? "Choose" :  students[i].gamification === 'y' ? "Yes" : "No" ;
+			var cell4 = row.insertCell(4);
+			cell4.innerText = students[i].gamification === 'r' ? "Choose" :  students[i].gamification === 'y' ? "Yes" : "No" ;
 		}
 	}
-
-
-
-
-
-
-
 
 
 	show()

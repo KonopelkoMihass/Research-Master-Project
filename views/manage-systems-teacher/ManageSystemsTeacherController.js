@@ -17,8 +17,6 @@ class ManageSystemsTeacherController
 			controller.model.enableSystemSwitch();
         });
 
-
-
 		var challengeOnlySwitchButton = document.getElementById("manage-systems-teacher-challenge-mode-only");
 		var challengeOnly = app.user.challengeModeOnly;
 

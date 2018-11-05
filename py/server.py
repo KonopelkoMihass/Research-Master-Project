@@ -129,6 +129,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "focus_change":
             self.focus_change(message_data)
 
+        elif message_type == "get_student_performance":
+            self.get_student_performance(message_data)
+
+
         #DEV METHOD
         elif message_type == "poopoointhemoomoo":
             challenges_manager.save_challenges_from_db_into_files()
@@ -467,6 +471,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             result = "focus_change_failed"
 
         self.send_message(result, {})
+
+
+    def get_student_performance(self, message_data):
+        file = user_manager.analyze_and_reform_student_data(message_data)
+
+        self.send_message("student_data_processed", file)
 
 
 
