@@ -26,7 +26,7 @@ class ViewManager {
 			LOAD_GAME_SCREEN: "load-game-screen",
 			SAVE-GAME-SCREEN: "save-game-screen",
 			WORLD_view: "world-view",
-		}
+		};
 	}
 
 	/** 
@@ -44,14 +44,10 @@ class ViewManager {
 	 * @param {string} title The title of a view to view.
 	 */
 	goToView(title) {
-		let viewFound = false;
-		let i = 0;
-
-		//find the view
+		let viewFound = false; let i = 0;
 		while (i < this.views_.length && !viewFound) {
 			if (this.views_[i].title === title) {
-				viewFound = true;
-				this.nextView = this.views_[i];
+				viewFound = true; this.nextView = this.views_[i];
 			}
 			i++;
 		}
