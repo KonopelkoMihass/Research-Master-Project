@@ -16,22 +16,10 @@ class NameGenerator {
 	 * @returns {string} The adjective.
 	 */
 	getRandomAdjective() {
-		const adjectives = [
-			"attractive",
-			"beautiful",
-			"clean",
-			"dazzling",
-			"elegant",
-			"fancy",
-			"glamorous",
-			"floaty", 
-			"flying",
-			"purple",
-			"red"
-		];
+		const adjectives = ["attractive", "beautiful", "clean", "dazzling", "elegant", "fancy"];
 	
-		const result = Math.floor(Math.random() * Math.floor(adjectives.length));
-		return adjectives[result].charAt(0).toUpperCase() + adjectives[result].slice(1);
+		const r = Math.floor(Math.random() * Math.floor(adjectives.length));
+		return adjectives[r].charAt(0).toUpperCase() + adjectives[r].slice(1);
 	}
 	
 	/**
@@ -41,21 +29,10 @@ class NameGenerator {
 	 * @returns {string} The name.
 	 */
 	getHumanName(includeOf, includeThe) {
-		const names = [
-			"John",
-			"Rafael",
-			"Darren",
-			"Sebastian",
-			"David",
-			"Brandon",
-			"Bart",
-			"Sasha", 
-			"Alex",
-			"Eric",
-		];
+		const names = ["John", "Rafael", "Eric", "Alex", "David", "Sasha"]; 
 	
-		const result = Math.floor(Math.random() * Math.floor(names.length));
-		let name = names[result].charAt(0).toUpperCase() + names[result].slice(1);
+		const r = Math.floor(Math.random() * Math.floor(names.length));
+		let name = names[r].charAt(0).toUpperCase() + names[r].slice(1);
 		
 		if (includeOf) {
 			name += " of";
