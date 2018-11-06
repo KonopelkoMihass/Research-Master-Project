@@ -258,6 +258,39 @@ class ChallengeController
 		this.tweakCodeBlock("challenge", true);
     }
 
+    markLinesPostChallenge()
+    {
+        /*var challengeIssues = this.model.issues;
+        var lineNumSpans = document.getElementsByName("lineNumSpan");
+    	for (var i = 0; i < lineNumSpans.length; i++ ) {
+		    var line = lineNumSpans[i];
+		    var id = line.id;
+
+		    // element id can be a key in challengeIssues
+            if (id in challengeIssues)
+            {
+                if (line.className === "")
+                    line.className = "missed";
+
+                else if (line.className === "selected")
+                {
+
+                }
+
+
+
+
+
+
+            }
+
+		    //codeElement.className = "";
+
+
+        }*/
+    }
+
+
 	allowReview()
 	{
 		var controller = this;
@@ -272,9 +305,22 @@ class ChallengeController
 		{
 			if (controller.displayPostChallengeScreen === false)
 			{
+			    controller.markLinesPostChallenge();
 				controller.displayPostChallengeResult();
 				controller.saveChallengeResults();
 				controller.stopTimer();
+
+				// disable delete buttons.
+                var issueDeleteButtons = document.getElementsByName("issue-delete-button");
+                var total = issueDeleteButtons.length;
+                for (var i = 0; i < total; i++) issueDeleteButtons[0].remove();
+
+
+
+
+
+
+
 				controller.displayPostChallengeScreen = true;
 
 				document.getElementById("challenge-submit-legend").innerText = "Continue?";
@@ -310,6 +356,7 @@ class ChallengeController
 		for (var i = 1, row; row = issueTable.rows[i]; i++)
 		{
 			var answerCell = row.cells[3];
+
 			var line = answerCell.id.split('#')[1];
 			var answer = answerCell.id.split('#')[2];
 
@@ -323,7 +370,7 @@ class ChallengeController
 					{
 						answerCell.innerHTML = "&#10004;";
 						foundIssue = true;
-
+						document.getElementById("codeLineID#"+line).className = "correct";
 					}
 				}
 			}
@@ -338,6 +385,7 @@ class ChallengeController
 			{
 			    wrong++;
 				answerCell.innerHTML = "X";
+                document.getElementById("codeLineID#"+line).className = "mistake";
 			}
 		}
 
@@ -364,6 +412,7 @@ class ChallengeController
 				cell2.innerHTML = std.category + "\n" + std.subCategory;
 				cell3.innerHTML = "&#9673;";
 				cell3.style.textAlign="center";
+				document.getElementById("codeLineID#"+challengeIssues[j].content).className = "missed";
 			}
 		}
 
@@ -657,6 +706,7 @@ class ChallengeController
 		var img = document.createElement("IMG");
 		img.src = "resources/images/trash-button.png";
 		img.id = "issue-delete-button--" + id;
+		img.name = "issue-delete-button";
 		img.style.width = "100%";
 		img.addEventListener("mouseover", function()
 		{

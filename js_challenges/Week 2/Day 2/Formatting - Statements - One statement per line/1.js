@@ -9,28 +9,7 @@
  */
 class AudioManager {
 	constructor() {
-		/** @private @let {!Array<!AudioBuffer>} */
-		this.audioBuffers_ = [];
-		/** @private @let {!Object<!AudioContext>} */
-		this.audioContext_ = {};
-		/** @private @let {!Array<!string>} */
-		this.downloadQueue_ = [];
-		/** @private @let {!number} */
-		this.errorCount_ = 0;
-		/** @private @let {!Object<!AudioBuffer|string>} */
-		this.playingSounds_ = {};  // Sounds that are currently playing
-		/** @private @const {!string} */
-		this.resourcePath_ = "resources/audio/";
-		/** @private @let {!number} */
-		this.successCount_ = 0;
-
-		try {
-			// Fix up for prefixing (don't have to write "webkit" all the time)
-			window.AudioContext = window.AudioContext||window.webkitAudioContext;
-			this.audioContext_ = new AudioContext();
-		} catch(e) {
-			alert('Web Audio API is not supported in this browser');
-		}  
+		// logic
 	}
 
 	// some code

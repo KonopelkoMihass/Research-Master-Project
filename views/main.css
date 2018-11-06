@@ -317,13 +317,30 @@ button:hover
 /******************************************************/
 .selected
 {
-    outline:3px solid red;
+    outline:3px solid #b3c7ff;
 }
 
 .reviewed
 {
-    outline:4px dashed orange;
+    outline:4px dashed #4a8c9a;
 }
+
+.correct
+{
+    outline:5px solid green;
+}
+
+.missed
+{
+    outline:5px solid #fffb3a;
+}
+
+.mistake
+{
+    outline:5px solid #ff0510;
+}
+
+
 
 .comments-table {
 

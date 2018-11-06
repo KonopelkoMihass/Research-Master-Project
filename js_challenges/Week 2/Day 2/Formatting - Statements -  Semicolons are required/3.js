@@ -10,7 +10,7 @@
 class ViewManager {
 	constructor() {
 		/** @private @let {!Array{View}} */
-		this.views_ = [];
+		this.views_ = []
 		/** @private @let {!View} */
 		this.currentView_ = undefined;
 		/** @private @const {!Object<string, string} */
@@ -44,25 +44,19 @@ class ViewManager {
 	 * @param {string} title The title of a view to view.
 	 */
 	goToView(title) {
-		let viewFound = false; let i = 0;
+		let viewFound = false;
+		let i = 0;
+
+		//find the view
 		while (i < this.views_.length && !viewFound) {
 			if (this.views_[i].title === title) {
-				viewFound = true; this.nextView = this.views_[i];
+				viewFound = true
+				this.nextView = this.views_[i];
 			}
 			i++;
 		}
-
-		if (viewFound) {//check that the current view exists
-			if (this.currentView_ !== undefined) {//if it does, then hide it
-				console.log("Change view from: " + this.currentView_.title);
-				this.currentView_.hide();
-			}
-			//update new current view and show it
-			this.currentView_ = this.nextView;
-			console.log("Change view to: " + this.currentView_.title);
-			this.currentView_.show();
-		} else {//warn that the view don't exist
-			console.warn("View not found: " + title);
-		}
+		
+		// more logic
+		
 	}
 }

@@ -25,7 +25,10 @@ class CookieManager
             if (checkedCookieName === cookieName)
             {
                 var stringifiedData = checkedCookieName = cookie.split("=")[1];
-                return JSON.parse(stringifiedData);
+                if (stringifiedData === "xxx")
+                    return {};
+                else
+                    return JSON.parse(stringifiedData);
             }
         }
 
@@ -45,6 +48,6 @@ class CookieManager
 
     deleteCookie(cookieName)
     {
-        window.document.cookie = cookieName + '=; Max-Age=-99999999;';
+        window.document.cookie = cookieName + '=xxx;';
     }
 }

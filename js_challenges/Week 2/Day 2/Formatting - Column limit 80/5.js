@@ -21,49 +21,7 @@ class ImageManager() {
 		this.successCount_ = 0;
 	}
 
-	/**
-	 * Will queue an item to load later.
-	 * @param {string} filename Name and extension of an image.
-	 */
-	queueImage(filename) {
-		this.downloadQueue_.push(this.resourcePath_+filename);
-	}
-
-
-	/**
-	 * Starts and does a download.
-	 * @param {ImageManager~requestCallback} downloadCallback  
-	 *    A function to call when all images are downloaded.
-	 */
-	downloadAll(downloadCallback) {
-		for (let i = 0; i < this.downloadQueue_.length; i++) {
-			let path = this.downloadQueue_[i];
-			let img = new Image();
-			let that = this;
-
-			img.addEventListener("load", function() {
-				that.successCount_ += 1;
-				if (that.isDone()) {
-					downloadCallback();
-				}
-			}, false);
-
-			if (this.downloadQueue_.length === 0) {
-				downloadCallback();
-			}
-
-			img.addEventListener("error", function() {
-				that.errorCount_ += 1;
-				if (that.isDone()) {
-					downloadCallback();
-				}
-			}, false);
-
-			img.src = path;
-			let name = path.slice((this.resourcePath_).length);
-			this.cache_[name] = img;
-		}
-	}
+	// code logic
 
 	/**
 	 * Tells whenever it is done loading stuff.
@@ -74,7 +32,7 @@ class ImageManager() {
 		let result = this.successCount_ + " / "  + this.downloadQueue_.length + 
 				' errors: ' + this.errorCount_
 		console.log("ImageManager success count " + result);
-		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);
+		return (this.downloadQueue_.length === (this.successCount_ + this.errorCount_));
 	}
 
 	/**
