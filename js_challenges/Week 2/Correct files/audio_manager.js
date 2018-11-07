@@ -121,7 +121,7 @@ class AudioManager {
 		}	else {
 			source.start(0); // Play immideately.
 		}
-		this.playingSounds_[name] = source;
+		this.playingSounds_[filename] = source;
 	}
 
 	/**
@@ -129,10 +129,10 @@ class AudioManager {
 	 * @param {string} filename Name and an extension of the sound to stop.
 	 */
 	stopPlayingSound(filename) {
-		if (!this.playingSounds_[name]) {
+		if (!this.playingSounds_[filename]) {
 			return;
 		} else {
-			this.playingSounds_[name].stop(0);
+			this.playingSounds_[filename].stop(0);
 		}
 	}
 

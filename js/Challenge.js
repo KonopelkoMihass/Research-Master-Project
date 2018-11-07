@@ -286,7 +286,7 @@ class Challenge extends Model
 
             for (var i = 0; i < sis[cat].length; i++) {
                 var subcat = sis[cat][i];
-                var userSTDSkill = app.standards.getSTDSubcategorySkill(this.language, cat, subcat.standard.subCategory);
+                var userSTDSkill = app.standards.getSTDSubcategorySkill(this.language, cat, subcat.standard.number);
 
                 var curSubCatLevelStr = "&nbsp;&nbsp;&nbsp;&nbsp;(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")";
 

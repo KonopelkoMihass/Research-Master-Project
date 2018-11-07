@@ -65,7 +65,7 @@ class NameGenerator {
 			name += " the";
 		}
 		
-		return name
+		return name;
 	}
 	
 	/**

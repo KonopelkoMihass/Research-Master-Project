@@ -228,14 +228,14 @@ class Standards extends Model
     }
 
 
-    getSTDSubcategorySkill(language, category, subcategory)
+    getSTDSubcategorySkill(language, category, number)
     {
          var userSTD = app.user.stdInternalisation[language];
          var cat = userSTD[category];
 
          for (var i = 0; i < cat.subcategories.length; i++)
          {
-             if (cat.subcategories[i].name === subcategory)
+             if (cat.subcategories[i].number == number)
              {
                 return cat.subcategories[i];
              }
