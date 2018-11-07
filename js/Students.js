@@ -7,10 +7,13 @@ class Students extends Model
         this.students = [];
     }
 
-    getStudents()
+    getStudents(email, password)
     {
+        var data = {};
+        data.email = email;
+        data.password = password;
 
-        app.net.sendMessage("get_students", {});
+        app.net.sendMessage("get_students", data);
     }
 
     invertSystems()
@@ -37,14 +40,16 @@ class Students extends Model
     {
          if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
          {
-             this.getStudents();
+             //if (app.user.role === "teacher")
+               // this.getStudents();
          }
 
          if (messageType === app.net.messageHandler.types.GET_STUDENTS_SUCCESSFUL ||
              messageType === app.net.messageHandler.types.INVERT_SYSTEMS_SUCCESSFUL ||
              messageType === app.net.messageHandler.types.ENABLE_SYSTEM_SWITCH_SUCCESSFUL)
          {
-             this.students = data;
+             //if (app.user.role === "teacher")
+                this.students = data;
          }
 
 

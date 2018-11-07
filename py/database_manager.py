@@ -75,6 +75,29 @@ class DatabaseManager:
         cursor.close()
         connector.close()
 
+    def check_if_teacher(self, message_data):
+        email = message_data["email"]
+        password = message_data["password"]
+
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+
+        stmt = "SELECT Users.role FROM Users WHERE Users.email='"+email+"' AND Users.password='" + password + "' LIMIT 1"
+
+        # print(stmt)
+        cursor.execute(stmt)
+        data = cursor.fetchall()
+        cursor.close()
+        connector.close()
+        print("TESTING IF TEACHER",data )
+
+        if data[0]["role"] == "teacher":
+             return True
+        else:
+            return False
+
+
+
 
     def select_all_from_table(self, table_name):
         connector = self.cnxpool.get_connection()

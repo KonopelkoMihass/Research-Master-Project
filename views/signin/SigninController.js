@@ -23,6 +23,7 @@ class SigninController
 		var email = document.getElementById("signin-email").value;
     	var password = document.getElementById("signin-password").value;
     	this.model.signin(email,password);
+    	app.students.getStudents(email,password)
 	}
 
 	showError(errMessage)

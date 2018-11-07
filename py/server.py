@@ -109,7 +109,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             self.upload_challenge_results(message_data)
 
         elif message_type == "get_students":
-            self.get_students()
+            self.get_students(message_data)
 
         elif message_type == "invert_systems":
             self.invert_systems()
@@ -389,13 +389,15 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         pass
 
 
-    def get_students(self):
+    def get_students(self, message_data):
         students = []
         result = "get_students_successful"
         try:
-            students = database_manager.get_students()
-            for student in students:
-                student["std_internalisation"] = json.loads(student["std_internalisation"])
+            if database_manager.check_if_teacher(message_data) is True:
+                students = database_manager.get_students()
+                for student in students:
+                    student["std_internalisation"] = json.loads(student["std_internalisation"])
+                    del student["password"]
         except:
             result = "get_students_failed"
 

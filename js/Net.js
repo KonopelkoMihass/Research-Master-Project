@@ -48,9 +48,7 @@ class Net
 		msg.type = type;
 
 		var m = JSON.stringify(msg);
-		console.log(m);
 		m = JSON.parse(m);
-		console.log(m);
 		this.ws.send(JSON.stringify(msg));
 	}
 

@@ -25,7 +25,6 @@ class App
  	{
 		this.net = new Net();
 		this.urlChecker = new URLChecker();
-		this.cookieManager = new CookieManager();
 
 		this.audioManager = new AudioManager();
 
@@ -83,32 +82,7 @@ class App
 		this.urlChecker.setHost(location.hostname, 80);
 
 		this.setupViews();
-
-
-		this.trySignInImmediately();
-	}
-
-	trySignInImmediately()
-	{
-		var signedInData = this.cookieManager.getCookie("SignInCR2");
-
-        if (Object.keys(signedInData).length === 0)
-        {
-            this.viewManager.goToView("signin");
-        }
-
-        else
-		{
-			var email = signedInData.email;
-			var password = signedInData.password;
-			setTimeout(function()
-			{
-				//needed as it sets a first view and a view manager as it is.
-				app.viewManager.goToView("signin");
-				app.user.signin(email, password);
-			}, 100);
-		}
-
+        this.viewManager.goToView("signin");
 	}
 
 

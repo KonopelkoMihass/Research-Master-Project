@@ -30,6 +30,7 @@ class UserManager:
             data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
             data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
             data["focus"] = json.loads(data["focus"])
+            del data["password"]
 
             users = self.database_manager.get_all_users()
             data["users"] = users
