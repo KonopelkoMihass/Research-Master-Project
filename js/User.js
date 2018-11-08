@@ -73,6 +73,16 @@ class User extends Model
         this.notify(messageType);
     }
 
+    changePassword(email, oldPassword, newPassword)
+    {
+        var data = {};
+        data.email = email;
+        data.old_pass = oldPassword;
+        data.new_pass = newPassword;
+
+        app.net.sendMessage("change_password", data);
+    }
+
 
     signup(email, teamName, name, surname, noun, password)
     {

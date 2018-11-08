@@ -57,6 +57,25 @@ class UserManager:
 
         return [message_type, data]
 
+    def change_password(self, data):
+        email = data["email"]
+        old_pass = data["old_pass"]
+        new_pass = data["new_pass"]
+
+        message_type = "change_password_successful"
+
+        try:
+            result = self.database_manager.change_password(email, old_pass, new_pass)
+            if result == False:
+                message_type = "change_password_failed"
+        except:
+            message_type = "change_password_failed"
+
+        return message_type
+
+
+
+
     def signup(self, message_data):
         """Returns message type : string"""
         data = {}
@@ -90,7 +109,7 @@ class UserManager:
             data = self.database_manager.get_user_info(message_data)
 
         except:
-        	message_type = "signup_failed"
+            message_type = "signup_failed"
 
         message = [message_type, data]
         return message

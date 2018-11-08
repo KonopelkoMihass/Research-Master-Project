@@ -132,6 +132,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "get_student_performance":
             self.get_student_performance(message_data)
 
+        elif message_type == "change_password":
+            self.change_password(message_data)
+
 
         #DEV METHOD
         elif message_type == "poopoointhemoomoo":
@@ -479,6 +482,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         file = user_manager.analyze_and_reform_student_data(message_data)
 
         self.send_message("student_data_processed", file)
+
+
+    def change_password(self, message_data):
+        message = user_manager.change_password(message_data)
+        self.send_message(message, {})
+
+
 
 
 

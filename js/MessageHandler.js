@@ -55,7 +55,10 @@ class MessageHandler
 			UPDATE_STANDARDS_CONFIG_SUCCESSFUL: "update_standards_configurations_successful",
 			UPDATE_STANDARDS_CONFIG_FAILED: "update_standards_configurations_failed",
 
-            STUDENT_DATA_PROCESSED: "student_data_processed"
+            STUDENT_DATA_PROCESSED: "student_data_processed",
+
+            CHANGE_PASSWORD_SUCCESSFUL: "change_password_successful",
+            CHANGE_PASSWORD_FAILED: "change_password_failed",
 
 		};
 	}

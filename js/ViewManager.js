@@ -23,7 +23,8 @@ class ViewManager
 			CREATE_CHALLENGE:"create-challenge",
 			CHALLENGE: "challenge",
 			MANAGE_SYSTEMS_TEACHER: "manage-systems-teacher",
-			STUDENT_SYSTEM_SELECT: "student-system-select"
+			STUDENT_SYSTEM_SELECT: "student-system-select",
+            CHANGE_PASSWORD:"change-password"
 		}
 	}
 

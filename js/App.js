@@ -152,6 +152,11 @@ class App
 		var studentSystemSelectView = new StudentSystemSelectView(studentSystemSelectController);
 		this.viewManager.addView(studentSystemSelectView);
 
+		var changePasswordController = new ChangePasswordController(this.user);
+		var changePasswordView = new ChangePasswordView(changePasswordController);
+		this.viewManager.addView(changePasswordView);
+
+
 
 
 		// KEEP ADDING OBSERVERS AS THEY ARE NEEDED
@@ -164,6 +169,8 @@ class App
 		this.user.addObserver(profileView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 		this.user.addObserver(studentSystemSelectView, this.net.messageHandler.types.SIGN_IN_SUCCESSFUL);
 
+		this.user.addObserver(changePasswordView, this.net.messageHandler.types.CHANGE_PASSWORD_SUCCESSFUL);
+		this.user.addObserver(changePasswordView, this.net.messageHandler.types.CHANGE_PASSWORD_FAILED);
 
 		// Track standard loading
 		this.user.addObserver(profileView, this.net.messageHandler.types.GET_STANDARD_SUCCESSFUL);
@@ -320,6 +327,10 @@ class App
 			location.href = "https://discord.gg/e8qvZDj";
 		});
 
+		app.utils.assignFuncToButtonViaID("mps-change-password-button" , function (){
+		    viewLabel.innerText = "Change the Password";
+		    app.viewManager.goToView(app.viewManager.VIEW.CHANGE_PASSWORD);
+        });
 
 
 
