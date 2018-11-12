@@ -13,7 +13,7 @@ class Net
 		this.host = ip;
 		this.port = port;
 
-		if (this.host === "192.168.99.100")
+		if (this.host === "192.168.99.100" || this.host === "localhost")
 		{
 			this.port = 8001;
 		}
