@@ -54,8 +54,6 @@
 			reader.onload = function(e)
 			{
 				filesParsed[file.name] = reader.result;
-
-				console.log (file.name, "was parsed successfully");
 			};
 
 			reader.readAsText(file);
