@@ -11,7 +11,6 @@ class AssignmentsStudentController
 	setup()
 	{
 		var controller = this;
-		console.log(this.model);
 	}
 
 	createSubmitAssignmentModal(id)

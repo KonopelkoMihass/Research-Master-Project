@@ -34,8 +34,6 @@ class ModalContentManager
 		var url = window.location.href+"/modals/"+contentName+".html";
 		var xhr = new XMLHttpRequest();
 
-		console.log("url: " + url);
-
 		xhr.onload = function()
 		{
 			var el = document.createElement( 'html' );
@@ -43,7 +41,6 @@ class ModalContentManager
 
 			//get body
 			el = el.getElementsByTagName("body")[0];
-			console.log("el: " + el);
 
 			//store the template
 			that.cache[contentName] = el;
@@ -77,7 +74,6 @@ class ModalContentManager
 	**/
 	isDone ()
 	{
-	    console.log("ModalContentManager success count " + this.successCount +" / "+ this.modals.length + ' errors: '+ this.errorCount);
 	    var result = (this.modals.length === this.successCount + this.errorCount);
 
 	    return result;
@@ -88,13 +84,9 @@ class ModalContentManager
 
 		var modalContent = this.cache[name];
 
-		if(modalContent === undefined)
+		if(modalContent !== undefined)
 		{
-			console.error(name, "modal content is not defined");
-		}
-		else
-		{
-			return modalContent.innerHTML;
+		    return modalContent.innerHTML;
 		}
 	}
 }

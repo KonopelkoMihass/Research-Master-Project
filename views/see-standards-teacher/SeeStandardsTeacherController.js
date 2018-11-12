@@ -8,7 +8,7 @@ class SeeStandardsTeacherController
 
 	setup()
 	{
-		var controller = this;
+
 	}
 
 	update()

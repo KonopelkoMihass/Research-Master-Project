@@ -9,7 +9,6 @@ class AssignmentsTeacherController
 	setup()
 	{
 		var controller = this;
-		console.log(this.model);
 
 		var addBtn = document.getElementById("add-assignment-button");
 		addBtn.addEventListener("click", function()

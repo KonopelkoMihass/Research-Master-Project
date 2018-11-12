@@ -4,11 +4,16 @@ import os
 import re
 
 
+
 class UserManager:
     def __init__(self, database_manager, email_system):
         print("UserManager: __init__")
         self.database_manager = database_manager
         self.email_system = email_system
+
+
+
+
 
     def signin(self, message_data):
         """Returns message type : string"""
@@ -16,10 +21,10 @@ class UserManager:
         message_type = "signin_failed"
         data = {}
 
-        try:
-            result = self.database_manager.check_password(message_data["email"], message_data["password"])
-        except:
-            message_type = "signin_failed"
+        #try:
+        result = self.database_manager.check_password(message_data["email"], message_data["password"])
+        #except:
+        #    message_type = "signin_failed"
 
         if result is True:
             message_type="signin_successful"
@@ -30,7 +35,7 @@ class UserManager:
             data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
             data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
             data["focus"] = json.loads(data["focus"])
-            del data["password"]
+            #del data["password"]
 
             users = self.database_manager.get_all_users()
             data["users"] = users
@@ -64,12 +69,12 @@ class UserManager:
 
         message_type = "change_password_successful"
 
-        try:
-            result = self.database_manager.change_password(email, old_pass, new_pass)
-            if result == False:
-                message_type = "change_password_failed"
-        except:
+        #try:
+        result = self.database_manager.change_password(email, old_pass, new_pass)
+        if result == False:
             message_type = "change_password_failed"
+        #except:
+         #   message_type = "change_password_failed"
 
         return message_type
 

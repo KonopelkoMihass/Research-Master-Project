@@ -8,8 +8,6 @@ class SeeStandardsStudentController
 
 	setup()
 	{
-		var that = this;
-		console.log(this.model);
 	}
 
 	update()

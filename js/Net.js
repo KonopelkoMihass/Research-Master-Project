@@ -37,7 +37,7 @@ class Net
 
 		this.ws.onclose = function()
 		{
-			console.log("ws closed");
+			console.alert("Websocket closed");
 		};
 	}
 

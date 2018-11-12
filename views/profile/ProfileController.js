@@ -8,7 +8,6 @@ class ProfileController
 
 	setup()
 	{
-		console.log(this.model);
 	}
 
 	setupSTDProgressSelector()

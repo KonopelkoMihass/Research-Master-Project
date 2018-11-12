@@ -28,9 +28,7 @@ class ChallengeController
 	}
 
 	setup()
-	{
-		console.log(this.model);
-	}
+	{ }
 
 	sortCategories(standards)
     {

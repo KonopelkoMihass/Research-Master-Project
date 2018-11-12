@@ -52,7 +52,6 @@ AudioManager.prototype.loadSoundFile = function (filename, downloadCallback) {
             if (that.isDone()) {
           	    downloadCallback();
             }
-            console.log('Error decoding file', e);
         });
     };
 
@@ -70,7 +69,6 @@ AudioManager.prototype.playPlaylist = function(playList, callback) {
     var currentSound = 0;
 
     for (var [key, value] of playList) {
-      console.log(key + " = " + value);
       sounds.push(key);
     }      
 
@@ -218,7 +216,6 @@ AudioManager.prototype.downloadAll = function(downloadCallback) {
  * all the sounds.
  */
 AudioManager.prototype.isDone = function() {
-    console.log("AudioManager success count " + this.successCount +" / "+ this.downloadQueue.length + ' errors: '+ this.errorCount);
     result= (this.downloadQueue.length == this.successCount + this.errorCount);
     return result;
 };

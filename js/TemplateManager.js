@@ -35,8 +35,6 @@ class TemplateManager
 		var url = window.location.href+"/views/"+templateName+"/"+templateName+".html";
 		var xhr = new XMLHttpRequest();
 
-		console.log("url: " + url);
-
 		xhr.onload = function()
 		{
 			var el = document.createElement( 'html' );
@@ -44,7 +42,6 @@ class TemplateManager
 
 			//get body
 			el = el.getElementsByTagName("body")[0];
-			console.log("el: " + el);
 
 			//store the template
 			that.cache[templateName] = el;
@@ -78,9 +75,7 @@ class TemplateManager
 	**/
 	isDone ()
 	{
-	    console.log("TemplateManager success count " + this.successCount +" / "+ this.downloadQueue.length + ' errors: '+ this.errorCount);
-	    var result= (this.downloadQueue.length == this.successCount + this.errorCount);
-
+	    var result = (this.downloadQueue.length == this.successCount + this.errorCount);
 	    return result;
 	}
 

@@ -8,8 +8,6 @@ class FeedbackController
 
 	setup()
 	{
-		var that = this;
-		console.log(this.model);
 	}
 
 	update()

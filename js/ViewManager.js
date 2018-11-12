@@ -56,19 +56,17 @@ class ViewManager
 		{
 			if(this.currentView!==undefined)
 			{
-				console.log("Change view from:", this.currentView.title);
 				this.currentView.hide();
 				app.tracker.trackViewChanges(viewManager.currentView.title, viewManager.nextView.title);
-				///app.tracker.updateTracks();
 			}
 
 			this.currentView = this.nextView;
-			console.log("Change view to:", this.currentView.title);
+
 			this.currentView.show();
 		}
 		else
 		{
-			console.log("View not found:", title);
+			//console.error("View not found:", title);
 		}
 	}
 }

@@ -69,8 +69,6 @@ class MessageHandler
 		var type = msg.type;
 		var data = msg.data;
 
-		console.log("Message received:", type,"-", data);
-
         app.standards.update(data, type);
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `surname` VARCHAR(45) NOT NULL,
   `team_name` VARCHAR(45) NOT NULL,
   `noun` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `password` VARCHAR(128) NOT NULL,
   `role` VARCHAR(32) NOT NULL,
   `std_internalisation` MEDIUMTEXT,
   `gamification` VARCHAR(1) NOT NULL,

@@ -3,6 +3,9 @@ import traceback
 import json
 from mysql.connector.pooling import MySQLConnectionPool
 from mysql.connector import errorcode
+from passlib.hash import sha256_crypt
+
+
 
 
 class DatabaseManager:
@@ -41,6 +44,10 @@ class DatabaseManager:
 
         placeholders = ", ".join(["%s"] * len(my_dict))
 
+        if teable_name == "Users":
+            my_dict["password"] = sha256_crypt.encrypt(my_dict["password"])
+
+
         stmt = "INSERT INTO `{table}` ({columns}) VALUES ({values});".format(
             table=table_name,
             columns=",".join(my_dict.keys()),
@@ -78,52 +85,64 @@ class DatabaseManager:
     def check_if_teacher(self, message_data):
         email = message_data["email"]
         password = message_data["password"]
+        result = False
+
 
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        stmt = "SELECT Users.role FROM Users WHERE Users.email='"+email+"' AND Users.password='" + password + "' LIMIT 1"
+        stmt = "SELECT * FROM Users WHERE Users.email='"+email+"' LIMIT 1"
 
-        # print(stmt)
         cursor.execute(stmt)
         data = cursor.fetchall()
         cursor.close()
         connector.close()
 
-        if data[0]["role"] == "teacher":
-             return True
+        if sha256_crypt.verify(password, data[0]["password"]):
+            if data[0]["role"] == "teacher":
+                print ("On check_if_teacher - ", data[0]["password"])
+                result = True
         else:
-            return False
+            if password == data[0]["password"]:
+                password = sha256_crypt.encrypt(password)
+                stmt = "UPDATE Users SET Users.password = '" + password + "' WHERE Users.email='" + email + "'"
+                cursor.execute(stmt)
+                connector.commit()
+                result = True
+
+        return result
+
+
+
+
 
     def change_password(self, email, old_pass, new_pass):
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        stmt = "SELECT Users.id FROM Users WHERE Users.email='" + email + "' AND Users.password='" + old_pass + "' LIMIT 1"
-
+        stmt = "SELECT * FROM Users WHERE Users.email='" + email + "' LIMIT 1"
         cursor.execute(stmt)
-        data = cursor.fetchall()
+        data = cursor.fetchall()[0]
 
-        if not data:
-            cursor.close()
-            connector.close()
-            return False
+        print ("On change_password - ", data["password"])
+
+        if "$5$rounds=" in data["password"]:
+            if sha256_crypt.verify(old_pass, data["password"]):
+                new_pass = sha256_crypt.encrypt(new_pass)
+            else:
+                return False
         else:
-            stmt = "UPDATE Users SET Users.password = '" + new_pass + "' WHERE Users.email='" + email + "'"
-            cursor.execute(stmt)
-            connector.commit()
-            cursor.close()
-            connector.close()
-            return True
+            if old_pass == data["password"]:
+                new_pass = sha256_crypt.encrypt(new_pass)
+            else:
+                return False
 
-
-
-
-
-
-
-
-
+        stmt = "UPDATE Users SET Users.password = '" + new_pass + "' WHERE Users.email='" + email + "'"
+        cursor.execute(stmt)
+        connector.commit()
+        cursor.close()
+        connector.close()
+        return True
 
 
 
@@ -135,7 +154,6 @@ class DatabaseManager:
 
         stmt = "SELECT * FROM `"+table_name+"`;"
 
-        #print(stmt)
         cursor.execute(stmt)
         data = cursor.fetchall()
         cursor.close()
@@ -153,7 +171,7 @@ class DatabaseManager:
         cursor = connector.cursor(dictionary=True)
 
         stmt = ("DELETE FROM Assignments WHERE Assignments.id="+ id +" LIMIT 1")
-        #print(stmt)
+
 
         cursor.execute(stmt)
 
@@ -164,35 +182,39 @@ class DatabaseManager:
 
     def delete_user(self, email):
         #Inserts a dictionary into table table_name
-        #print("delete user")
+
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
         stmt = ("DELETE FROM Users WHERE Users.email='"+email+"' LIMIT 1")
-        #print("stmt:")
-        #print(stmt)
+
         cursor.execute(stmt)
         connector.commit()
         cursor.close()
         connector.close()
 
     def check_password(self, email, password):
-        #return true if successful
-        #print("check_password")
         result = False
 
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        query = ("SELECT * FROM Users WHERE Users.email='"+email+"' AND Users.password='"+password+"'")
-        #print("query:")
-        #print(query)
+        query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
 
         cursor.execute(query)
-        cursor.fetchall()
+        data = cursor.fetchall()[0]
+        print ("On check_password - ", data["password"])
 
-        if cursor.rowcount == 1:
-            result = True
+        if "$5$rounds=" in data["password"]:
+            if sha256_crypt.verify(password, data["password"]):
+                result = True
+        else:
+            if password == data["password"]:
+                password = sha256_crypt.encrypt(password)
+                stmt = "UPDATE Users SET Users.password = '" + password + "' WHERE Users.email='" + email + "'"
+                cursor.execute(stmt)
+                connector.commit()
+                result = True
 
         cursor.close()
         connector.close()
@@ -210,8 +232,8 @@ class DatabaseManager:
         #print(query)
 
         cursor.execute(query)
-        datas = cursor.fetchall()
-        data = datas[0]
+        data = cursor.fetchall()[0]
+        del data["password"]
 
         cursor.close()
         connector.close()

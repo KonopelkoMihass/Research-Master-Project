@@ -64,7 +64,6 @@ class User extends Model
                 if (data.role === "student")
                 {
                     app.submissions.getPersonalSubmissions(data.id);
-                    console.log("is gamified: " + this.gamified );
                 }
                 else app.submissions.getAllSubmissions();
             }

@@ -23,7 +23,7 @@ class CreateChallengeController
 
 	setup()
 	{
-		console.log(this.model);
+
 	}
 
 	correctTimeInput()

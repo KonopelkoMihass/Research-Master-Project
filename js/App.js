@@ -3,20 +3,7 @@ var app;
 
 function main()
 {
-	generateLevelProgression(10, 100);
 	app = new App();
-
-}
-
-function generateLevelProgression(maxLevel, maxXP)
-{
-	var xp = 3;
-	for (var i = 2; i !== maxLevel; i++)
-	{
-		console.log(i + " " + xp);
-		xp *= maxXP / Math.log2(i/maxLevel) ;
-
-	}
 }
 
 class App
@@ -37,7 +24,6 @@ class App
 		//load views
 		for (var viewName in this.viewManager.VIEW)
 		{
-			console.log(this.viewManager.VIEW[viewName]);
 			this.templateManager.queueTemplate(this.viewManager.VIEW[viewName]);
 		}
 
