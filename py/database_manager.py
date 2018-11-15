@@ -44,7 +44,7 @@ class DatabaseManager:
 
         placeholders = ", ".join(["%s"] * len(my_dict))
 
-        if teable_name == "Users":
+        if table_name == "Users":
             my_dict["password"] = sha256_crypt.encrypt(my_dict["password"])
 
 

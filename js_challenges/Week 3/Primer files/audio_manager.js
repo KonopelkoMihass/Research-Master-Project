@@ -35,7 +35,7 @@ class AudioManager {
 
 	/**
 	 * Load the sound file.
-	 * @param {string) filename Name to refer to sound.
+	 * @param {string} filename Name to refer to sound.
 	 * @param {AudioManager~requestCallback} downloadCallback 
 	 * 		Function to call.
 	 */
@@ -180,7 +180,7 @@ class AudioManager {
 	 */
 	isDone() {
 		let result = this.successCount_ + " / "  + this.downloadQueue_.length + 
-				' errors: ' + this.errorCount_
+				' errors: ' + this.errorCount_;
 		
 		console.log("AudioManager success count " + result);
 		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);

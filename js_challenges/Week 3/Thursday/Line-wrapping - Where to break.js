@@ -7,35 +7,23 @@
 /**
  * Stores all the assets needed for the game.
  */
-class ImageManager() {
+class ImageManager {
 	constructor() {
-		// logic
+		// Some code logic.
 	}
 
-	/**
-	 * Will queue an item to load later.
-	 * @param {string} filename Name and extension of an image.
-	 */
-	queueImage(filename) {
-		// logic
-	}
-
-	/**
-	 * Starts and does a download.
-	 * @param {ImageManager~requestCallback} downloadCallback  
-	 *    A function to call when all images are downloaded. 
-	 */
-	downloadAll(downloadCallback) {
-		// logic
-	}
+	// More code.
 
 	/**
 	 * Tells whenever it is done loading stuff.
-	 * @returns {boolean} Whether or not the ImageManager has finished
+	 * @returns {boolean} - whether or not the ImageManager has finished
 	 *    downloading all the images.
 	 */
 	isDone() {
-		// logic
+		let result = this.successCount_ + " / "  + this.downloadQueue_.length 
+				+ ' errors: ' + this.errorCount_
+		console.log("ImageManager success count " + result);
+		return (this.downloadQueue_.length == this.successCount_ + this.errorCount_);
 	}
 
 	/**
@@ -44,6 +32,6 @@ class ImageManager() {
 	 * @returns {Image} The image file which can be used.
 	 */
 	getImage(filename) {
-		// logic
+		return this.cache_[filename];
 	}
 }

@@ -14,7 +14,7 @@ class AudioManager {
 
 	/**
 	 * Load the sound file.
-	 * @param {string) filename Name to refer to sound.
+	 * @param {string} filename Name to refer to sound.
 	 * @param {AudioManager~requestCallback} downloadCallback 
 	 *    Function to call.
 	 */

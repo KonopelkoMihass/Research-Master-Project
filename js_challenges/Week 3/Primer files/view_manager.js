@@ -24,8 +24,8 @@ class ViewManager {
 			DIALOGUE_SCREEN: "dialogue-screen",
 			BATTLE_SCREEN: "battle-screen",
 			LOAD_GAME_SCREEN: "load-game-screen",
-			SAVE-GAME-SCREEN: "save-game-screen",
-			WORLD_view: "world-view",
+			SAVE_GAME_SCREEN: "save-game-screen",
+			WORLD_VIEW: "world-view",
 		};
 	}
 

@@ -21,13 +21,13 @@ class ChallengesManager:
         data = {}
         print(message_data)
 
-        try:
-            self.database_manager.insert_into_table("Challenges", message_data)
-            self.save_challenges_from_db_into_files()
-            print("Added Challenge Successfully")
-        except:
-            type = "teacher_create_challenge_failed"
-            print("Added Challenge Failed")
+        #try:
+        self.database_manager.insert_into_table("Challenges", message_data)
+        self.save_challenges_from_db_into_files()
+        print("Added Challenge Successfully")
+        #except:
+            #type = "teacher_create_challenge_failed"
+           # print("Added Challenge Failed")
 
         message = [type, data]
         return message

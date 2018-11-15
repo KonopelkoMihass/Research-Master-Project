@@ -7,7 +7,7 @@
 /**
  * Stores all the assets needed for the game.
  */
-class ImageManager() {
+class ImageManager {
 	constructor() {
 		/** @private @let {!Object<string, !Image>} */
 		this.cache_ = {};
