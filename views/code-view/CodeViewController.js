@@ -141,7 +141,7 @@ class CodeViewController
 								var lCategory =  this.id.split("#")[1];
 								var lSubCategory =  this.id.split("#")[2];
 
-								var resultStandard = app.standards.getStandard(lCategory, lSubCategory);
+								var resultStandard = app.standards.getStandard(lCategory, lSubCategory, controller.fileOpened.split(".")[1]);
 
 								controller.closeSidenavAndSaveTheReview("issue", resultStandard);
 								localSubCategoryDiv.innerHTML = "";

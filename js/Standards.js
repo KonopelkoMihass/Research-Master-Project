@@ -277,9 +277,9 @@ class Standards extends Model
         return false;
     }
 
-    getStandard(categoryName, number)
+    getStandard(categoryName, number, language)
     {
-        let language = app.challenge.language;
+
         var subCategories = this.standards[categoryName];
          for (var j = 0; j < subCategories.length; j++)
          {

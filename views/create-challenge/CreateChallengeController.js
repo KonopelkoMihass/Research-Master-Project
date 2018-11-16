@@ -398,7 +398,7 @@ class CreateChallengeController
 							{
 								var lCategory =  this.id.split("#")[1];
 								var lSubCategory =  this.id.split("#")[2];
-								var resultStandard = app.standards.getStandard(lCategory, lSubCategory);
+								var resultStandard = app.standards.getStandard(lCategory, lSubCategory, controller.codingLanguageUsed);
 
 								controller.closeSidenavAndSaveTheReview("issue", resultStandard);
 								subCategoryDiv.innerHTML = "";
