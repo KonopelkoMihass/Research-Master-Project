@@ -14,6 +14,7 @@ body, div, button, hr, input, fieldset, legend, li, table, th, td, tr, a, p{
     font-size: 100%;
     color: #ffffff;
     border-color:  #9e9e9e;
+    word-break: keep-all;
 }
 
 div button {
@@ -200,7 +201,7 @@ table th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
     vertical-align: middle;
-    word-break:break-all;
+
 }
 
 table tr:hover {
@@ -354,7 +355,7 @@ button:hover
     text-align: left;
     border-bottom: 1px solid #c7cfb9;
     vertical-align:top;
-    word-break:break-all;
+
 }
 
 .comments-table tr:hover {background-color:#c7cfb9;}

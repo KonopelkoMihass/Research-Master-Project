@@ -279,10 +279,11 @@ class Standards extends Model
 
     getStandard(categoryName, number)
     {
+        let language = app.challenge.language;
         var subCategories = this.standards[categoryName];
          for (var j = 0; j < subCategories.length; j++)
          {
-             if (subCategories[j].number == number) return subCategories[j];
+             if (subCategories[j].number == number && subCategories[j].name === language) return subCategories[j];
          }
     }
 

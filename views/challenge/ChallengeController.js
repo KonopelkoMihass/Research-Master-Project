@@ -63,7 +63,6 @@ class ChallengeController
             var standards =  app.standards.selectStandards(this.model.standard);
             var categorySelectDiv = document.getElementById("challenge-code-category-select-div");
 
-
             var sortedKeys = this.sortCategories(standards);
 
             for (var k = 0; k < sortedKeys.length; k++)
