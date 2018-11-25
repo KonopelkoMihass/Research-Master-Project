@@ -161,9 +161,7 @@ class ProfileController
 
 				subcatFieldset.appendChild(focusButton);
 
-
-                if (focus.category === sortedKeys[c] && focus.subCategory === subcat.name)
-                {
+				if (focus[sortedKeys[c]+subcat.name]) {
                     focusButton.innerText = "Focused";
                     focusButton.style.backgroundColor = "#4a8c9a";
                 }
@@ -176,29 +174,36 @@ class ProfileController
 
                     var category = this.id.split("#")[1];
                     var subCategory = this.id.split("#")[2];
+                    var focusID = category + subCategory;
 
+
+                    // micro check which deletes obsolete keys if present
+                    delete focus["category"];
+                    delete focus["subCategory"];
 
                     if (text === "Focused")
                     {
                         this.innerText = "Focus?";
 				        this.style.backgroundColor = "#05386b";
-                        controller.model.focus = {};
+
+				        delete focus[focusID];
                     }
 
                     else
                     {
-                        if (Object.keys(controller.model.focus).length === 0)
+                        if (Object.keys(controller.model.focus).length < 4)
                         {
                             this.innerText = "Focused";
 				            this.style.backgroundColor = "#4a8c9a";
-				            controller.model.focus = { category:category, subCategory:subCategory};
+				            focus[focusID] = { category:category, subCategory:subCategory};
                         }
 
                         else
                         {
-                            alert("You can focus only on one thing at a time.  Disable your previous focus, then select this focus again.");
+                            alert("You can focus only on four things at a time.  Disable your previous focus, then select this focus again.");
                         }
                     }
+
                     controller.model.saveFocusChange();
                 });
 

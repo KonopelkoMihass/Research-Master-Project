@@ -44,11 +44,8 @@ class Standards extends Model
         {
             if ( messageType === app.net.messageHandler.types.GET_STANDARD_SUCCESSFUL)
             {
-
                 this.standardsInfo[data["standard_id"]] = {};
-
-
-
+                
                 this.standardsInfo[data["standard_id"]]["name"] = data["name"];
                 this.standardsInfo[data["standard_id"]]["url"] = data["url"];
 

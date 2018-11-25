@@ -354,20 +354,29 @@ class DatabaseManager:
 
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
-
+        available_standards = []
         query = ""
 
         #Get standards which are enabled and focus is empty.
         if focus == 0:
             query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+            cursor.execute(query)
+            available_standards = cursor.fetchall()
+
+
             print("FOCUS IGNORED")
         else:
-            query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus["category"] +"' AND Standards.sub_category='" + focus["subCategory"] +"';")
+            for key in focus:
+                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] +"';")
+                cursor.execute(query)
+                available_standards.extend(cursor.fetchall())
+
+
             print("FOCUS ONLY")
+            print(len(available_standards))
 
 
-        cursor.execute(query)
-        available_standards = cursor.fetchall()
+
 
 
         query = ("SELECT Challenges.id, Challenges.issues FROM Challenges WHERE "
@@ -390,8 +399,8 @@ class DatabaseManager:
                 standard_in_issue = chal["issues"][key]["standard"]
                 issue_std_is_enabled = False
 
-                for avail_std in available_standards:
-                    if avail_std["sub_category"] == standard_in_issue["subCategory"]:
+                for i in range(len(available_standards)):
+                    if available_standards[i]["sub_category"] == standard_in_issue["subCategory"]:
                         issue_std_is_enabled = True
 
                 if issue_std_is_enabled == False:
