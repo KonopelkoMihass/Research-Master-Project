@@ -11,7 +11,7 @@ services:
   networks:
    - "mihass-g-net"
   volumes:
-   - /front_end:/usr/local/apache2/htdocs/
+   - ../front_end:/usr/local/apache2/htdocs/
 
  mihass-g-server:
    build:
