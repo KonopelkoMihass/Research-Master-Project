@@ -178,6 +178,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             connections[message[1]["email"]] = 	connection
 
             print("Connections", connections)
+            self.send_message("signin_successful", message[1])
 
 
     def signin(self, message_data):

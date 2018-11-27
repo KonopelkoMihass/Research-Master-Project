@@ -21,11 +21,11 @@ class UserManager:
         message_type = "signin_failed"
         data = {}
 
-        try:
-            result = self.database_manager.check_password(message_data["email"], message_data["password"])
-        except:
-            message_type = "signin_failed"
-
+        #try:
+        result = self.database_manager.check_password(message_data["email"], message_data["password"])
+        #except:
+            #message_type = "signin_failed"
+        print ("RESULT ", result)
         if result is True:
             message_type="signin_successful"
 

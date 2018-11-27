@@ -43,12 +43,9 @@ class SignupController
                         this.cleanSignup();
                     }
                     else
-                        {
-                             this.showError("Please use an @itcarlow.ie email");
-                        }
-
-
-
+                    {
+                        this.showError("Please use an @itcarlow.ie email");
+                    }
 
                 }
 			}

@@ -47,14 +47,7 @@ class User extends Model
 
     update(data, messageType)
     {
-        if (data !== "" && !Number.isInteger(data))
-        {
-
-            if ( messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL)
-            {
-                app.net.sendMessage("signin", data);
-            }
-
+        if (data !== "" && !Number.isInteger(data)) {
             if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
             {
                 this.setData(data);
@@ -99,8 +92,6 @@ class User extends Model
         userData.std_internalisation_changes = {};
         userData.focus = {};
         userData.challenge_mode_only = "y";
-
-
 
         app.net.sendMessage("signup", userData);
     }
