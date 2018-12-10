@@ -16,8 +16,35 @@ class Challenge extends Model
         this.challengeChain = [];
         this.challengeChainPerformance = [];
         this.lastChallenge = false;
+        this.difficulty = "";
 
         this.standardInternalisationScore = {};
+    }
+
+    doesContainThisStandardCategory(category){
+
+        for (var codeline in this.issues)
+        {
+            var std = this.issues[codeline];
+            if (std.standard.category === category)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    doesContainThisStandardSubCategory(subcategoryNumber){
+        for (var codeline in this.issues)
+        {
+            var std = this.issues[codeline];
+            if (std.standard.number === subcategoryNumber)
+            {
+                 return true;
+            }
+        }
+        return false;
     }
 
 
@@ -53,6 +80,11 @@ class Challenge extends Model
         parameterPack.language = language;
         parameterPack.focus = app.user.focus;
         parameterPack.gamified = app.user.gamified;
+        parameterPack.std_internalisation = app.user.stdInternalisation[language];
+
+        if (parameterPack.std_internalisation == undefined){
+            parameterPack.std_internalisation = {};
+        }
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
     }
@@ -74,11 +106,12 @@ class Challenge extends Model
         this.issues = issues;
     }
 
-    storeParameters(minutes, seconds, standard, language)
+    storeParameters(minutes, seconds, standard, language, difficulty)
     {
         this.averageTimeSeconds = parseInt(minutes)*60 + parseInt(seconds);
         this.standard = standard;
         this.language = language;
+        this.difficulty = difficulty;
     }
 
 
@@ -90,6 +123,7 @@ class Challenge extends Model
         data.average_time_seconds = this.averageTimeSeconds;
         data.standard = this.standard;
         data.language = this.language;
+        data.difficulty =  this.difficulty;
 
         app.net.sendMessage("create_challenge", data);
 
@@ -98,6 +132,7 @@ class Challenge extends Model
         this.averageTimeSeconds = 0;
         this.standard = "";
         this.language = "";
+        this.difficulty = "";
     }
 
     update(data, messageType)

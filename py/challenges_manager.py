@@ -63,6 +63,7 @@ class ChallengesManager:
         chain_length = message_data["length"]
         chain_language =  message_data["language"]
         chain_focus = message_data["focus"]
+        chain_user_std_internalisation = message_data["std_internalisation"]
 
         gamified = message_data["gamified"]
 
@@ -70,7 +71,7 @@ class ChallengesManager:
         if (not_use_focus > self.focus_threshold and gamified == "n") or not chain_focus:
             chain_focus = 0
 
-        chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus)
+        chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus, chain_user_std_internalisation)
 
         random.shuffle(chain)
         chain = chain[0:chain_length]

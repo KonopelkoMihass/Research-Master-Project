@@ -19,11 +19,23 @@ class CreateChallengeController
 		this.issuesFound = {};
 		this.standardUsed = "";
 		this.codingLanguageUsed = "";
+
+		this.difficulty = "";
+		this.initDifficultyBox = false;
 	}
 
 	setup()
 	{
+	    if (!this.initDifficultyBox ){
+            var controller = this;
 
+            var selectDifficulty = document.getElementById("create-challenge-difficulty");
+            selectDifficulty.addEventListener("change", function()
+            {
+                controller.difficulty = this.value;
+            });
+            this.initDifficultyBox = true;
+	    }
 	}
 
 	correctTimeInput()
@@ -463,7 +475,7 @@ class CreateChallengeController
 			var minutes = document.getElementById("create-challenge-time-minutes").value;
 			var seconds = document.getElementById("create-challenge-time-seconds").value;
 
-			controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed);
+			controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed, controller.difficulty);
 			controller.model.submitChallenge();
 
 			app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
@@ -477,10 +489,6 @@ class CreateChallengeController
 
 			// Now we insert it into a <code> area
 			document.getElementById("create-challenge-code-review").innerHTML = "";
-
-
-
-
 
 			removeEventListener();
 		});

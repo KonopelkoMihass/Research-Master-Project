@@ -349,7 +349,7 @@ class DatabaseManager:
         return logs
 
 
-    def get_challenges_for_chain(self, language, focus):
+    def get_challenges_for_chain(self, language, focus, user_std_internalisation):
         challenge_ids = []
 
         connector = self.cnxpool.get_connection()
@@ -359,18 +359,15 @@ class DatabaseManager:
 
         #Get standards which are enabled and focus is empty.
         if focus == 0:
-            query = ("SELECT * FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
             cursor.execute(query)
             available_standards = cursor.fetchall()
-
-
             print("FOCUS IGNORED")
         else:
             for key in focus:
                 query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] +"';")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
-
 
             print("FOCUS ONLY")
             print(len(available_standards))
@@ -379,7 +376,7 @@ class DatabaseManager:
 
 
 
-        query = ("SELECT Challenges.id, Challenges.issues FROM Challenges WHERE "
+        query = ("SELECT Challenges.id, Challenges.issues, Challenges.difficulty FROM Challenges WHERE "
                  "Challenges.standard='"+language+"';")
 
         cursor.execute(query)
@@ -387,7 +384,7 @@ class DatabaseManager:
         cursor.close()
         connector.close()
 
-        challenge_ids = []
+        challenges_allowed_for_user = []
 
         # For each challenge
         for chal in challenges:
@@ -407,7 +404,36 @@ class DatabaseManager:
                     include_in_challenge_chain = False
 
             if include_in_challenge_chain == True:
-                challenge_ids.append(chal["id"])
+                challenges_allowed_for_user.append(chal)
+
+
+
+        challenge_ids = []
+        for chal in challenges_allowed_for_user:
+            proper_level = True
+
+            for key in chal["issues"]:
+                standard_in_issue = chal["issues"][key]["standard"]
+
+                user_std_score = 0
+
+                if len(user_std_internalisation) != 0:
+                    if standard_in_issue["category"] in user_std_internalisation:
+                        user_std_subcategories = user_std_internalisation[standard_in_issue["category"]]["subcategories"]
+                        print ("user_std_subcategories",user_std_subcategories)
+                        for subcat in user_std_subcategories:
+                            if subcat["number"] == standard_in_issue["number"]:
+                                user_std_score = subcat["score"]
+
+
+                if chal["difficulty"] == "hard" and user_std_score < 5:
+                    proper_level = False
+
+                if chal["difficulty"] == "easy" and user_std_score > 7 :
+                    proper_level = False
+
+                if proper_level == True:
+                    challenge_ids.append(chal["id"])
 
 
         print("GOT HERE", challenge_ids)

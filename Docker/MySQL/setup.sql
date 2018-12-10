@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Challenges` (
   `average_time_seconds` VARCHAR(6),
   `standard` VARCHAR(64),
   `language` VARCHAR(16),
+  `difficulty` VARCHAR(16),
   PRIMARY KEY (`id`));
 
 
