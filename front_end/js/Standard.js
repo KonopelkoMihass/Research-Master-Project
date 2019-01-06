@@ -11,6 +11,7 @@ class Standard
         this.rewardScore = data.reward_score;
         this.penaltyScore = data.penalty_score;
         this.enabled = data.enabled;
+        this.unlockedAtLevel = data.unlocked_at_level;
 
     }
 }

@@ -81,7 +81,7 @@ class AudioManager {
 		// No callback
 		let callback = null;
 		this.playSnippet(filename, null, startTime, duration);
-	};
+	}
 
 	/**
 	 * Plays sound if it has been loaded, otherwise does nothing.

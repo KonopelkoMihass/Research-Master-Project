@@ -20,13 +20,15 @@ class SeeStandardsTeacherView extends View
 			for (var key in model.standardsInfo)
 			{
 				var button = document.createElement("BUTTON");
+				selector.appendChild(button);
+
 				button.innerHTML = model.standardsInfo[key]["name"];
 				button.id = "see-standards-button#" + key;
 				button.addEventListener("click", function(){
 					var k = this.id.split("#")[1];
 					view.setupStandardView(k, model.standardsInfo[k]);
 				});
-				selector.appendChild(button);
+
 			}
 
 			app.utils.assignFuncToButtonViaID("see-standards-save-standard-configurations", function(){
@@ -75,6 +77,7 @@ class SeeStandardsTeacherView extends View
 		var view = this;
 		var linkDiv = document.getElementById("std-doc-link");
 		var table = document.getElementById("see-standard-teacher-table");
+
 		var standards = this.controller.model.selectStandards(stdName);
 
 		// remove all data in there.
@@ -116,7 +119,7 @@ class SeeStandardsTeacherView extends View
 			var cell2 = row.insertCell(2);
 			var cell3 = row.insertCell(3);
 			var cell4 = row.insertCell(4);
-
+			var cell5 = row.insertCell(5);
 
 			// "Enabled" Cell
 			cell0.id = "see-standards-table-enabled#" + cat + "#yes";
@@ -148,16 +151,12 @@ class SeeStandardsTeacherView extends View
 			//Name
 			cell1.innerText = "Category: " + cat;
 
-
 			// Collapse
-			cell4.id = "see-standards-table-collapsed#" + cat + "#no";
-			cell4.innerHTML = "&#43;";
-			cell4.style.cursor = "pointer";
+			cell5.id = "see-standards-table-collapsed#" + cat + "#no";
+			cell5.innerHTML = "&#43;";
+			cell5.style.cursor = "pointer";
 
-
-
-
-			cell4.addEventListener("click",function ()
+			cell5.addEventListener("click",function ()
 			{
 				var categoryName = this.id.split("#")[1];
 				var state = this.id.split("#")[2];
@@ -176,7 +175,25 @@ class SeeStandardsTeacherView extends View
 					this.innerHTML = "&#43;";
 					view.deleteSubcategoryRows(categoryName);
 				}
+
+
+				// colour all the necessary rows a darker tone if disabled.
+                var localTable = document.getElementById("see-standard-teacher-table");
+				for (var i = 0, row; row = localTable.rows[i]; i++) {
+				    var cell0 = row.cells[0];
+				    if (cell0.id.split('#')[3] === "no")
+				    {
+				        cell0.click();
+				        cell0.click();
+                    }
+
+                }
             });
+
+
+
+
+
 		}
 	}
 
@@ -215,14 +232,15 @@ class SeeStandardsTeacherView extends View
 			var cell2 = row.insertCell(2);
 			var cell3 = row.insertCell(3);
 			var cell4 = row.insertCell(4);
+			var cell5 = row.insertCell(5);
 
 			// "Enabled" Cell
 			var enabled = subCat.enabled;
 			cell0.id = "see-standards-table-enabled#" +subCat.category + "#"+ subCat.subCategory + "#" + enabled;
 
 			cell0.innerHTML = enabled === "yes" ? "&#10004;" : "&#10005;";
+			//row.style.backgroundColor = enabled === "yes" ? "" : "#2d2d2d;";
 			cell0.style.cursor = "pointer";
-			row.style.backgroundColor = enabled === "yes" ? "" : "#2d2d2d;";
 
 			cell0.addEventListener("click",function ()
 			{
@@ -253,7 +271,7 @@ class SeeStandardsTeacherView extends View
 			cell1.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;" + subCat.subCategory;
 
 			// Reward Score
-			var rewardInput = this.createNumberInput("see-standards-reward-score#" +subCat.category + "#" + subCat.subCategory, subCat.rewardScore);
+			var rewardInput = this.createNumberInput("see-standards-reward-score#" +subCat.category + "#" + subCat.subCategory, subCat.rewardScore, true);
 			cell2.appendChild(rewardInput);
 			rewardInput.addEventListener("change", function () {
 				var category = this.id.split("#")[1];
@@ -266,7 +284,7 @@ class SeeStandardsTeacherView extends View
             });
 
 			// Penalty Score
-			var penaltyInput = this.createNumberInput("see-standards-reward-score#" +subCat.category + "#" + subCat.subCategory, subCat.penaltyScore);
+			var penaltyInput = this.createNumberInput("see-standards-reward-score#" +subCat.category + "#" + subCat.subCategory, subCat.penaltyScore, true);
 			cell3.appendChild(penaltyInput);
 			penaltyInput.addEventListener("change", function () {
 				var category = this.id.split("#")[1];
@@ -277,6 +295,26 @@ class SeeStandardsTeacherView extends View
 					if (catList[i].subCategory === subCategory) catList[i].penaltyScore = this.value;
 				}
             });
+
+			cell4.style.cursor = "pointer";
+
+			// Leveling field
+            var levelInput = this.createNumberInput("see-standards-table-unlock-at-level#" + subCat.category + "#" + subCat.subCategory, subCat.unlockedAtLevel, false);
+            levelInput.addEventListener("change",function ()
+			{
+                var category = this.id.split("#")[1];
+				var subCategory = this.id.split("#")[2];
+				var catList = view.controller.model.standards[category];
+				for (var i = 0; i < catList.length; i++)
+				{
+					if (catList[i].subCategory === subCategory)
+					    catList[i].unlockedAtLevel = this.value;
+				}
+            });
+
+
+            cell4.appendChild(levelInput);
+
 
 
 
@@ -293,12 +331,16 @@ class SeeStandardsTeacherView extends View
 		}
 	}
 
-	createNumberInput(id, currentValue)
+	createNumberInput(id, currentValue, limitToFive)
 	{
 		var input = document.createElement("INPUT");
 		input.type = "number";
 		input.min = "1";
-		input.max = "5";
+        if (limitToFive)
+		    input.max = "5";
+        else
+            input.max = "99";
+
 		input.id = id;
 		input.value = currentValue;
 		return input;
@@ -335,6 +377,7 @@ class SeeStandardsTeacherView extends View
 
 		cell.id = "see-standards-table-enabled#" + category + "#" + result;
 		cell.innerHTML =  result === "either"  ?  " &#9673;" : result === "yes" ? "&#10004;" : "&#10005;" ;
+
 	}
 
 

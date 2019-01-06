@@ -223,6 +223,7 @@ class ChallengeController
 		this.allFilesReview = {};
 		document.getElementById("challenge-file-select").innerHTML = "";
 		document.getElementById("challenge-code-review").innerHTML = "";
+		document.getElementById("challenge-present-issues").innerHTML = "";
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-submit-div").style.display = "block";
@@ -261,6 +262,33 @@ class ChallengeController
 		Prism.highlightAllUnder(document.getElementById("challenge-precode-area"));
 		this.fileOpened = "challenge";
 		this.tweakCodeBlock("challenge", true);
+
+		// Display issue types present.
+        var divIssuePresents = document.getElementById("challenge-present-issues");
+        var issues = this.model.issues;
+
+        var issueTypesPresent = [];
+
+        for (var i in issues) {
+            issueTypesPresent.push(issues[i].standard.category + "->" + issues[i].standard.subCategory);
+        }
+
+        var getUnique = function (a) {
+            var seen = {};
+            return a.filter(function(item) {
+                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+            });
+        };
+
+        issueTypesPresent = getUnique(issueTypesPresent);
+        for (var i = 0; i < issueTypesPresent.length; i++) {
+            divIssuePresents.innerHTML += issueTypesPresent[i] + "\n";
+        }
+
+
+
+
+
     }
 
     markLinesPostChallenge()
@@ -319,12 +347,6 @@ class ChallengeController
                 var issueDeleteButtons = document.getElementsByName("issue-delete-button");
                 var total = issueDeleteButtons.length;
                 for (var i = 0; i < total; i++) issueDeleteButtons[0].remove();
-
-
-
-
-
-
 
 				controller.displayPostChallengeScreen = true;
 

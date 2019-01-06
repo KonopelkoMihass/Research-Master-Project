@@ -99,4 +99,5 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Standards` (
   `penalty_score` INT,
   `enabled` VARCHAR(16),
   `id` INT,
+  `unlocked_at_level` INT,
   PRIMARY KEY (`category`, `sub_category`));

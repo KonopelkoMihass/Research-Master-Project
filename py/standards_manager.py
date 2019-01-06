@@ -100,6 +100,7 @@ class StandardsManager:
                         standard_bit["penalty_score"] = 3
                         standard_bit["enabled"] = "yes"
                         standard_bit["id"] = count
+                        standard_bit["unlocked_at_level"] = 1
                         count+=1
 
                         for sub_elem in elem.next_siblings:

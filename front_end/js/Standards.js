@@ -251,6 +251,7 @@ class Standards extends Model
                 var config = {};
                 config.reward_score = std[i].rewardScore;
                 config.penalty_score = std[i].penaltyScore;
+                config.unlocked_at_level = std[i].unlockedAtLevel;
                 config.enabled = std[i].enabled;
                 config.category = std[i].category;
                 config.sub_category = std[i].subCategory;
@@ -337,7 +338,7 @@ class Standards extends Model
         return {score: userCurrentScore, max: userCurrentMax };
     }
 
-    isCategoryUnlockedForUser(name, categoryName)
+    isCategoryEnabled(name, categoryName)
     {
          var std = this.selectStandards(name);
          var category = std[categoryName];
@@ -349,7 +350,7 @@ class Standards extends Model
          return false;
     }
 
-    isSubcategoryUnlocked(name, categoryName, num)
+    isSubcategoryEnabled(name, categoryName, num)
     {
         var std = this.selectStandards(name);
         var category = std[categoryName];
@@ -368,7 +369,40 @@ class Standards extends Model
 
          }
          return false;
+    }
 
+    isLevelAllowToSeeThisSubcategory(name, categoryName, num, level)
+    {
+        var std = this.selectStandards(name);
+        var category = std[categoryName];
+
+         for (var i = 0; i < category.length; i++)
+         {
+             if (category[i].unlockedAtLevel <= level)
+             {
+                  if (category[i].number === num)
+                  {
+                      return true;
+                  }
+             }
+         }
+         return false;
+    }
+
+    getSubcategoryLevel(name, categoryName, num)
+    {
+        var std = this.selectStandards(name);
+        var category = std[categoryName];
+
+         for (var i = 0; i < category.length; i++)
+         {
+              if (category[i].number === num)
+              {
+                  return category[i].unlockedAtLevel;
+              }
+
+         }
+         return -1;
     }
 
     getSubcategoryForProfileFix(name, categoryName, num)

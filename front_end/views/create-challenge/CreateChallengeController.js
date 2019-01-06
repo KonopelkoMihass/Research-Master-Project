@@ -83,30 +83,7 @@ class CreateChallengeController
 		// Adds logic to the filedrop area.
 		this.prepareFiledropArea();
 
-		// fill the select box
-		var selectStandard = document.getElementById("create-challenge-standards");
-
-		var standards = app.standards;
-		for (var key in standards.standardsInfo)
-		{
-			var option = document.createElement("option");
-			option.text = standards.standardsInfo[key]["name"] + " Coding Standard";
-			option.value = key;
-			selectStandard.add(option);
-		}
-
-		selectStandard.addEventListener("change", function()
-		{
-			var type = this.value.split('-')[0].toUpperCase();
-			if (type === "CPP") {
-				type = "CPP or *.H"
-			}
-
-			controller.standardUsed = this.value;
-			controller.codingLanguageUsed = this.value.split('-')[0];
-
-			document.getElementById("challenge-file-drag").innerHTML = "<br><br><br><br>drop *." + type + " code file here<br><br><br><br>";
-		});
+		document.getElementById("challenge-file-drag").innerHTML = "<br><br><br><br>drop Javascript/C++ code file here<br><br><br><br>";
 
 		var submitBtn = modalData.submit;
 
@@ -121,7 +98,6 @@ class CreateChallengeController
 				document.getElementById("view-title").innerText = "Create Challenge";
 
 				controller.correctTimeInput();
-				controller.setStandardAndLanguageUsed();
 				controller.cleanUp();
 				controller.prepareCodeHTMLs();
 				controller.setupSideModal();
@@ -132,13 +108,6 @@ class CreateChallengeController
 				parentNode.removeChild(modalData.modal);
 			}
         });
-	}
-
-	setStandardAndLanguageUsed()
-	{
-		var selectStandard = document.getElementById("create-challenge-standards");
-		this.standardUsed = selectStandard.options[selectStandard.selectedIndex].value;
-		this.codingLanguageUsed = this.standardUsed.split('-')[0];
 	}
 
 	prepareFiledropArea()
@@ -170,26 +139,28 @@ class CreateChallengeController
 		var parseFile = function parseFile(file)
 		{
 			var fileFormat = file.name.split(".")[1];
-			var checkFormat = fileFormat === controller.codingLanguageUsed;
-
-			if (controller.codingLanguageUsed === "cpp") {
-				checkFormat = fileFormat === "cpp" || fileFormat === "h"
-			}
-
-
-			if (checkFormat)
+			if (fileFormat === "cpp" || fileFormat === "h" || fileFormat === "js")
 			{
-				var reader = new FileReader();
+			    if (fileFormat === "cpp" || fileFormat === "h") controller.codingLanguageUsed = "cpp";
+			    else  controller.codingLanguageUsed = "js";
+
+			    controller.standardUsed = controller.codingLanguageUsed;
+
+
+                var reader = new FileReader();
 				reader.onload = function(e)
 				{
 					controller.uploadFile(file.name, reader.result);
 				};
 				reader.readAsText(file);
 				document.getElementById("challenge-file-messages").innerHTML = ""
-			}
-			else {
-				document.getElementById("challenge-file-messages").innerHTML = "Failed to load file " + file.name + ".<br>"
-			}
+
+            }
+
+            else
+            {
+                document.getElementById("challenge-file-messages").innerHTML = "Failed to load file " + file.name + " [Unsupported format]<br>"
+            }
 		};
 
 

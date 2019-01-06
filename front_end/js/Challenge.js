@@ -81,6 +81,9 @@ class Challenge extends Model
         parameterPack.focus = app.user.focus;
         parameterPack.gamified = app.user.gamified;
         parameterPack.std_internalisation = app.user.stdInternalisation[language];
+        parameterPack.user_level = app.user.calculateLevel(language);
+        if (!Number.isInteger(parameterPack.user_level))
+            parameterPack.user_level = 1;
 
         if (parameterPack.std_internalisation == undefined){
             parameterPack.std_internalisation = {};

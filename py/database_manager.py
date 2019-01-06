@@ -349,7 +349,7 @@ class DatabaseManager:
         return logs
 
 
-    def get_challenges_for_chain(self, language, focus, user_std_internalisation):
+    def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level):
         challenge_ids = []
 
         connector = self.cnxpool.get_connection()
@@ -359,13 +359,13 @@ class DatabaseManager:
 
         #Get standards which are enabled and focus is empty.
         if focus == 0:
-            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language+"';")
+            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level="+ chain_user_level +";")
             cursor.execute(query)
             available_standards = cursor.fetchall()
             print("FOCUS IGNORED")
         else:
             for key in focus:
-                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] +"';")
+                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "' AND Standards.unlocked_at_level="+ chain_user_level +";")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
 

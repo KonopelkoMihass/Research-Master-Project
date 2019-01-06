@@ -20,45 +20,45 @@ class UserManager:
         result = False
         message_type = "signin_failed"
         data = {}
+        try:
+            result = self.database_manager.check_password(message_data["email"], message_data["password"])
 
-        #try:
-        result = self.database_manager.check_password(message_data["email"], message_data["password"])
-        #except:
-            #message_type = "signin_failed"
-        print ("RESULT ", result)
-        if result is True:
-            message_type="signin_successful"
+            print ("RESULT ", result)
+            if result is True:
+                message_type="signin_successful"
 
-            data = self.database_manager.get_user_info(message_data)
+                data = self.database_manager.get_user_info(message_data)
 
-            data["std_internalisation"] = json.loads(data["std_internalisation"])
-            data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
-            data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
-            data["focus"] = json.loads(data["focus"])
-            #del data["password"]
+                data["std_internalisation"] = json.loads(data["std_internalisation"])
+                data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
+                data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
+                data["focus"] = json.loads(data["focus"])
+                #del data["password"]
 
-            users = self.database_manager.get_all_users()
-            data["users"] = users
+                users = self.database_manager.get_all_users()
+                data["users"] = users
 
-            is_gamified = data["gamification"]
-            sent_instructions = data["got_instruction_emails"]
-            print ("INSTRUCTIONS", sent_instructions)
-            if is_gamified == "y":
-                if "sent_gamified" in sent_instructions:
-                    pass
-                else:
-                    data["got_instruction_emails"]["sent_gamified"] = "yes"
-                    self.email_system.send_gamification_email(data)
-                    self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
+                is_gamified = data["gamification"]
+                sent_instructions = data["got_instruction_emails"]
+                print ("INSTRUCTIONS", sent_instructions)
+                if is_gamified == "y":
+                    if "sent_gamified" in sent_instructions:
+                        pass
+                    else:
+                        data["got_instruction_emails"]["sent_gamified"] = "yes"
+                        self.email_system.send_gamification_email(data)
+                        self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
 
 
-            elif is_gamified == "n":
-                if "sent_non_gamified" in sent_instructions:
-                    pass
-                else:
-                    data["got_instruction_emails"]["sent_non_gamified"] = "yes"
-                    self.email_system.send_non_gamification_email(data)
-                    self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
+                elif is_gamified == "n":
+                    if "sent_non_gamified" in sent_instructions:
+                        pass
+                    else:
+                        data["got_instruction_emails"]["sent_non_gamified"] = "yes"
+                        self.email_system.send_non_gamification_email(data)
+                        self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
+        except:
+            print("signin fail")
 
         return [message_type, data]
 

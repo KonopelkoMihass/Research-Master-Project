@@ -65,7 +65,8 @@ class ProfileController
 		var stdProgressDiv = document.getElementById("profile-std-internalization-progress");
 		var std = this.model.stdInternalisation[standardName];
 
-		stdLevel.innerHTML = this.model.calculateLevel(standardName);
+		var userLevel = this.model.calculateLevel(standardName);
+		stdLevel.innerHTML = userLevel;
 
 		var sortedKeys = [];
 		var stopSorting = false;
@@ -80,8 +81,6 @@ class ProfileController
                 var num = subCategories[j].number;
                 num < startValue ? startValue = num : startValue = startValue;
             }
-
-
 
             for (var j = 0; j < subCategories.length; j++)
             {
@@ -117,7 +116,7 @@ class ProfileController
 		{
 			var category = std[sortedKeys[c]];
 
-			if (!app.standards.isCategoryUnlockedForUser(standardName, sortedKeys[c])) continue;
+			if (!app.standards.isCategoryEnabled(standardName, sortedKeys[c])) continue;
 
 
 			var fieldset = document.createElement("FIELDSET");
@@ -134,10 +133,13 @@ class ProfileController
 			for (var i = 0; i < category.subcategories.length; i++)
 			{
 				var subcat = getStdByNumber(category.subcategories, i);
-				if (!app.standards.isSubcategoryUnlocked(standardName, sortedKeys[c], subcat.number)) continue;
 
-				// HAck fix - for a weird reason, some characters in std internalised go corrupted.
-                var subcatName = app.standards.getSubcategoryForProfileFix(standardName, sortedKeys[c], subcat.number)
+				if (!app.standards.isSubcategoryEnabled(standardName, sortedKeys[c], subcat.number)) continue;
+
+
+
+				// Hack fix - for a weird reason, some characters in std internalised go corrupted.
+                var subcatName = app.standards.getSubcategoryForProfileFix(standardName, sortedKeys[c], subcat.number);
 
 
 
@@ -151,80 +153,69 @@ class ProfileController
 				label.innerHTML =  subcatName;
 				subcatFieldset.appendChild(label);
 
-				app.utils.generateSkillProgressBar(div, sortedKeys[c], i, subcat.maxScore, subcat.score );
 
+				if (app.standards.isLevelAllowToSeeThisSubcategory(standardName, sortedKeys[c], subcat.number, userLevel))
+				{
+				    app.utils.generateSkillProgressBar(div, sortedKeys[c], i, subcat.maxScore, subcat.score );
 
-				var focusButton = document.createElement("BUTTON");
-				focusButton.classList.add("profile-focus-button");
-				focusButton.innerText = "Focus?";
-				focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcat.name;
+				    var focusButton = document.createElement("BUTTON");
+                    focusButton.classList.add("profile-focus-button");
+                    focusButton.innerText = "Focus?";
+                    focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcat.name;
 
-				subcatFieldset.appendChild(focusButton);
+                    subcatFieldset.appendChild(focusButton);
 
-				if (focus[sortedKeys[c]+subcat.name]) {
-                    focusButton.innerText = "Focused";
-                    focusButton.style.backgroundColor = "#4a8c9a";
-                }
-
-
-
-				focusButton.addEventListener("click", function()
-                {
-                    var text = this.innerText;
-
-                    var category = this.id.split("#")[1];
-                    var subCategory = this.id.split("#")[2];
-                    var focusID = category + subCategory;
-
-
-                    // micro check which deletes obsolete keys if present
-                    delete focus["category"];
-                    delete focus["subCategory"];
-
-                    if (text === "Focused")
-                    {
-                        this.innerText = "Focus?";
-				        this.style.backgroundColor = "#05386b";
-
-				        delete focus[focusID];
+                    if (focus[sortedKeys[c]+subcat.name]) {
+                        focusButton.innerText = "Focused";
+                        focusButton.style.backgroundColor = "#4a8c9a";
                     }
 
-                    else
+
+
+                    focusButton.addEventListener("click", function()
                     {
-                        if (Object.keys(controller.model.focus).length < 4)
+                        var text = this.innerText;
+
+                        var category = this.id.split("#")[1];
+                        var subCategory = this.id.split("#")[2];
+                        var focusID = category + subCategory;
+
+
+                        // micro check which deletes obsolete keys if present
+                        delete focus["category"];
+                        delete focus["subCategory"];
+
+                        if (text === "Focused")
                         {
-                            this.innerText = "Focused";
-				            this.style.backgroundColor = "#4a8c9a";
-				            focus[focusID] = { category:category, subCategory:subCategory};
+                            this.innerText = "Focus?";
+                            this.style.backgroundColor = "#05386b";
+
+                            delete focus[focusID];
                         }
 
                         else
                         {
-                            alert("You can focus only on four things at a time.  Disable your previous focus, then select this focus again.");
+                            if (Object.keys(controller.model.focus).length < 4)
+                            {
+                                this.innerText = "Focused";
+                                this.style.backgroundColor = "#4a8c9a";
+                                focus[focusID] = { category:category, subCategory:subCategory};
+                            }
+
+                            else
+                            {
+                                alert("You can focus only on four things at a time.  Disable your previous focus, then select this focus again.");
+                            }
                         }
-                    }
 
-                    controller.model.saveFocusChange();
-                });
+                        controller.model.saveFocusChange();
+                    });
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                else {
+				    label.innerHTML = " [ Unlocked at Level " + app.standards.getSubcategoryLevel(standardName, sortedKeys[c], subcat.number) + " ]";
+                }
 			}
-
-
 		}
 	}
 
