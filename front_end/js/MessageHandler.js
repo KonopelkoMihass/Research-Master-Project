@@ -60,6 +60,9 @@ class MessageHandler
             CHANGE_PASSWORD_SUCCESSFUL: "change_password_successful",
             CHANGE_PASSWORD_FAILED: "change_password_failed",
 
+            GO_TO_GOOGLE_SHEET_SUCCESSFUL: "go_to_google_sheet_successful",
+            GO_TO_GOOGLE_SHEET_FAILED: "go_to_google_sheet_failed",
+
 		};
 	}
 

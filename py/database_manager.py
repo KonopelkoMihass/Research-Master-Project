@@ -352,6 +352,7 @@ class DatabaseManager:
     def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level):
         challenge_ids = []
 
+        print("Current level ", chain_user_level)
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
         available_standards = []
@@ -359,7 +360,7 @@ class DatabaseManager:
 
         #Get standards which are enabled and focus is empty.
         if focus == 0:
-            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level="+ chain_user_level +";")
+            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
             cursor.execute(query)
             available_standards = cursor.fetchall()
             print("FOCUS IGNORED")
@@ -370,7 +371,7 @@ class DatabaseManager:
                 available_standards.extend(cursor.fetchall())
 
             print("FOCUS ONLY")
-            print(len(available_standards))
+        print("Num of Available Standards: ", len(available_standards))
 
 
 
@@ -381,32 +382,37 @@ class DatabaseManager:
 
         cursor.execute(query)
         challenges = cursor.fetchall()
+        print ("Challenges available", len(challenges))
         cursor.close()
         connector.close()
 
         challenges_allowed_for_user = []
-
-        # For each challenge
         for chal in challenges:
             include_in_challenge_chain = True
             chal["issues"] = json.loads(chal["issues"])
 
             # For each std within issue
+            std_unlocked_for_issue = [False] * len(chal["issues"])
+            index = 0
             for key in chal["issues"]:
                 standard_in_issue = chal["issues"][key]["standard"]
-                issue_std_is_enabled = False
-
                 for i in range(len(available_standards)):
                     if available_standards[i]["sub_category"] == standard_in_issue["subCategory"]:
-                        issue_std_is_enabled = True
+                        std_unlocked_for_issue[index] = True
+                        continue
+                index += 1
 
-                if issue_std_is_enabled == False:
+            for i in range(0, len(std_unlocked_for_issue)):
+                if std_unlocked_for_issue[i] == False:
                     include_in_challenge_chain = False
+                    continue
 
-            if include_in_challenge_chain == True:
+            if include_in_challenge_chain:
                 challenges_allowed_for_user.append(chal)
 
 
+
+        print("Num of Available Challenges: ", len(challenges_allowed_for_user))
 
         challenge_ids = []
         for chal in challenges_allowed_for_user:
@@ -442,10 +448,27 @@ class DatabaseManager:
 
 
 
+    def wipe_challenge_table(self):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+        query = ("TRUNCATE TABLE Challenges;")
+        cursor.execute(query)
+        connector.commit()
+        cursor.close()
+        connector.close()
 
 
 
+    def parse_challenges_from_array(self, rows):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
 
+        query = 'INSERT into Challenges VALUES(%s, %s, %s, %s, %s, %s, %s)'
+
+        cursor.executemany(query, rows)
+        connector.commit()
+        cursor.close()
+        connector.close()
 
 
 
@@ -682,7 +705,75 @@ class DatabaseManager:
         cursor.close()
         connector.close()
 
+    def get_all_challenge_data(self):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor()
+
+        query = ("SELECT * FROM Challenges")
+        cursor.execute(query)
+        data = cursor.fetchall()
+        cursor.close()
+        connector.close()
+
+        for i in range(0, len(data)):
+            data[i] = list(data[i])
+
+
+            issue_text = ""
+            issues_dict = json.loads(data[i][2])
+
+            print ("TEST", data[i])
+
+            for key in issues_dict:
+                print (key)
+
+                line_num = key.split('#')[1]
+                category = issues_dict[key]["standard"]["category"]
+                sub_category = issues_dict[key]["standard"]["subCategory"]
+                issue_text += "At line " + str(line_num) + ": '" + category + "'->'" + sub_category + "'\n"
+
+            data[i].insert(2, issue_text)
+        return data
 
 
 
+    def get_last_challenge_inserted(self):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor()
+        query = "SELECT * FROM Challenges ORDER BY id DESC LIMIT 1"
+        cursor.execute(query)
 
+        data = cursor.fetchall()[0]
+        data = list(data)
+
+        issue_text = ""
+        issues_dict = json.loads(data[2])
+        for key in issues_dict:
+            print (key)
+
+            line_num = key.split('#')[1]
+            category = issues_dict[key]["standard"]["category"]
+            sub_category = issues_dict[key]["standard"]["subCategory"]
+            issue_text += "At line " + str(line_num) + ": '" + category + "'->'" + sub_category + "'\n"
+
+        data.insert(2, issue_text)
+
+        data = tuple(data)
+
+        cursor.close()
+        connector.close()
+        return data
+
+    def get_teachers_names(self):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+        query = "SELECT id, name, surname FROM Users WHERE role='teacher'"
+        cursor.execute(query)
+        return cursor.fetchall()
+
+    def get_teacher_email(self, id):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor()
+        query = "SELECT email FROM Users WHERE id=" +id + " LIMIT 1"
+        cursor.execute(query)
+        return cursor.fetchall()[0][0]

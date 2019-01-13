@@ -310,7 +310,8 @@ class App
 
 
 		app.utils.assignFuncToButtonViaID("mps-discord-button", function() {
-			location.href = "https://discord.gg/e8qvZDj";
+		    window.open('https://discord.gg/e8qvZDj', '_blank');
+			//location.href = "https://discord.gg/e8qvZDj";
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-change-password-button" , function (){
@@ -334,6 +335,70 @@ class App
 				app.viewManager.goToView(app.viewManager.VIEW.CREATE_CHALLENGE);
 			}
 		});
+
+
+		app.utils.assignFuncToButtonViaID("mpt-view-challenges-button", function() {
+		    var modalBody = app.modalContentManager.getModalContent("verify-user");
+            var modalData = app.utils.createModal("verify-user-modal-view-challenges", "Enter your credentials", modalBody, true);
+            document.body.appendChild(modalData.modal);
+            modalData.modal.style.display = "block";
+
+            var submitBtn = modalData.submit;
+
+		    submitBtn.addEventListener("click", function () {
+		        var email = document.getElementById("verify-use-email").value;
+                var password = document.getElementById("verify-use-password").value;
+
+                var data = {};
+                data = {email: email, password:password};
+
+                app.net.sendMessage("go_to_google_sheet", data);
+                var parentNode = modalData.modal.parentNode;
+				parentNode.removeChild(modalData.modal);
+            });
+		});
+
+
+
+		app.utils.assignFuncToButtonViaID("mpt-reload-challenges-button", function() {
+		    var modalBody = app.modalContentManager.getModalContent("verify-user");
+            var modalData = app.utils.createModal("verify-user-modal-reload-challenges", "Enter your credentials", modalBody, true);
+            document.body.appendChild(modalData.modal);
+            modalData.modal.style.display = "block";
+
+            var submitBtn = modalData.submit;
+
+		    submitBtn.addEventListener("click", function () {
+		        var email = document.getElementById("verify-use-email").value;
+                var password = document.getElementById("verify-use-password").value;
+
+                var data = {};
+                data = {email: email, password: password};
+
+                app.net.sendMessage("export_from_google_sheet", data);
+                var parentNode = modalData.modal.parentNode;
+				parentNode.removeChild(modalData.modal);
+            });
+		});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		app.utils.assignFuncToButtonViaID("mpt-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)

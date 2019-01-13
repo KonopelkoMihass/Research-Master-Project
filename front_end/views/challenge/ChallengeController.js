@@ -25,6 +25,8 @@ class ChallengeController
 		this.displayPostChallengeScreen = false;
 
 		this.altered = false;
+
+		this.finishedChallenge = false;
 	}
 
 	setup()
@@ -218,6 +220,7 @@ class ChallengeController
 		this.seconds = 0;
 		this.minutes = 0;
 		this.issuesFound = {};
+		this.finishedChallenge = false;
 
 		this.parsedCodeHTMLs = {};
 		this.allFilesReview = {};
@@ -231,6 +234,11 @@ class ChallengeController
 		var tutButton = document.getElementById("challenge-tutorial-button");
         var new_element = tutButton.cloneNode(true);
         tutButton.parentNode.replaceChild(new_element, tutButton);
+
+        var reportButton = document.getElementById("challenge-report-error");
+        new_element = reportButton.cloneNode(true);
+        reportButton.parentNode.replaceChild(new_element, reportButton);
+
 
 		if(!this.altered)
 		{
@@ -247,6 +255,78 @@ class ChallengeController
 			    location.href = "https://www.youtube.com/watch?v=OGdIyvn7bTY";
             });
         }
+
+        var controller = this;
+        app.utils.assignFuncToButtonViaID("challenge-report-error", function(){
+            if (controller.finishedChallenge){
+                var modalBody = app.modalContentManager.getModalContent("report-challenge-error");
+		        var modalData = app.utils.createModal("report-challenge-error", "Report an error", modalBody, true);
+
+                document.body.appendChild(modalData.modal);
+                modalData.modal.style.display = "block";
+                var closes = modalData.closes;
+                for (var i = 0; i < closes.length; i++) {
+                    closes[i].addEventListener("click", function () {
+                        var oldEl = document.getElementById("challenge-submit");
+                        var newEl = oldEl.cloneNode(true);
+                        oldEl.parentNode.replaceChild(newEl, oldEl);
+                    });
+                }
+
+                // fill the select box
+                var selectTeacher = document.getElementById("report-challenge-error-select-teacher");
+
+                var teachers = app.user.teachers;
+
+                for (var i = 0; i < teachers.length; i++)
+                {
+                    var option = document.createElement("option");
+                    option.text = teachers[i]["name"] + " " + teachers[i]["surname"];
+                    option.value = teachers[i]["id"];
+                    selectTeacher.add(option);
+                }
+
+                var submitBtn = modalData.submit;
+
+                submitBtn.addEventListener("click", function ()
+                {
+                    var teacherSelector = document.getElementById("report-challenge-error-select-teacher");
+
+                    var selectedTeacher = teacherSelector.options[teacherSelector.selectedIndex].value;
+                    var text = document.getElementById("report-challenge-error-textarea").value;
+
+                    var message = {};
+                    message.reporter_name = app.user.name;
+                    message.reporter_surname = app.user.surname;
+                    message.text = text;
+                    message.challenge_id = app.challenge.getChallengeId();
+                    message.teacher_id = selectedTeacher;
+
+
+                    app.net.sendMessage("report_error", message);
+                    var parentNode = modalData.modal.parentNode;
+			        parentNode.removeChild(modalData.modal);
+
+                });
+
+
+
+
+
+
+            }
+
+            else{
+                alert("Please complete the challenge, then report an error");
+            }
+
+        });
+
+
+
+
+
+
 
 	}
 
@@ -336,6 +416,7 @@ class ChallengeController
 
 		document.getElementById("challenge-submit").addEventListener("click", function ()
 		{
+		    controller.finishedChallenge = true;
 			if (controller.displayPostChallengeScreen === false)
 			{
 			    controller.markLinesPostChallenge();
@@ -602,7 +683,7 @@ class ChallengeController
 
 			codeElement.addEventListener("click", function ()
 			{
-				if (controller.allowSelection === true)
+				if (controller.allowSelection === true && controller.finishedChallenge === false)
 				{
 					//Check if it is already has a class "selected"
 					if (!this.classList.contains("selected") && !controller.checkIssueQuantityLimit())
@@ -612,7 +693,6 @@ class ChallengeController
 						controller.allowSelection = false;
 					}
 				}
-
 			});
 
 		}

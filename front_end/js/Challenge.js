@@ -21,6 +21,12 @@ class Challenge extends Model
         this.standardInternalisationScore = {};
     }
 
+    getChallengeId()
+    {
+        return this.challengeChain[this.currentChallengeLink-1];
+    }
+
+
     doesContainThisStandardCategory(category){
 
         for (var codeline in this.issues)
@@ -175,6 +181,10 @@ class Challenge extends Model
                 app.tracker.saveForLogs("challenge chain started", "");
             }
 
+            if (messageType === app.net.messageHandler.types.GO_TO_GOOGLE_SHEET_SUCCESSFUL){
+                window.open( data.link, '_blank');
+                //location.href = data.link;
+            }
 
         }
 

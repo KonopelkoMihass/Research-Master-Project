@@ -58,8 +58,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "signin":
             self.signin(message_data)
-            self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
-            self.send_message("get_standard_successful", standards_manager.get_standard("js"))
+
 
         elif message_type == "add_assignment":
             self.add_assignment(message_data)
@@ -135,10 +134,31 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "change_password":
             self.change_password(message_data)
 
+        elif message_type == "report_error":
+            self.report_error(message_data)
+
+
+
+        elif message_type == "go_to_google_sheet":
+            self.go_to_google_sheet(message_data)
+
+        elif message_type == "export_from_google_sheet":
+            self.export_from_google_sheet(message_data)
+
+
+
+
+
+
 
         #DEV METHOD
         elif message_type == "poopoointhemoomoo":
             challenges_manager.save_challenges_from_db_into_files()
+
+        elif message_type == "fromfakedreams":
+            challenges_manager.migrate_to_google_sheets()
+
+
 
 
 
@@ -186,6 +206,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.send_message(message[0], message[1])
 
         if message[0] =="signin_successful":
+            self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
+            self.send_message("get_standard_successful", standards_manager.get_standard("js"))
             #Save connection in there.
             ip_address = ""
 
@@ -488,6 +510,33 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def change_password(self, message_data):
         message = user_manager.change_password(message_data)
         self.send_message(message, {})
+
+    def go_to_google_sheet(self, message_data):
+        result = database_manager.check_if_teacher(message_data)
+        link = "https://docs.google.com/spreadsheets/d/1lMi8jbvtt3OCk6DnOqCxZZK1L3jVSSXI54b0OolBYcw/edit#gid=0"
+        if result == True:
+            self.send_message("go_to_google_sheet_successful", {"link":link})
+        else:
+            self.send_message("go_to_google_sheet_failed", {})
+
+    def export_from_google_sheet(self, message_data):
+        result = database_manager.check_if_teacher(message_data)
+        if result == True:
+            challenges_manager.export_from_google_sheet()
+            for k, item in connections.items():
+                item["socket"].get_assignments()
+                if item["user_data"]["role"] == "student":
+                    item["socket"].kick_from_website()
+
+
+    def report_error(self, data):
+        teacher_email = database_manager.get_teacher_email(data["teacher_id"])
+
+        email_system.send_error_report(teacher_email, data)
+
+
+
+
 
 
 

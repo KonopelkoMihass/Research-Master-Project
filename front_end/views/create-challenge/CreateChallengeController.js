@@ -213,11 +213,7 @@ class CreateChallengeController
 				controller.deleteFile(this.id.split("#")[1]);
 			});
 
-			// if a standard is changed - we drop the uploaded file
-			var selectStandard = document.getElementById("create-challenge-standards");
-			selectStandard.addEventListener("change", function() {
-				deleteSpan.click();
-			});
+
 
 			fileDiv.appendChild(deleteSpan);
 

@@ -20,6 +20,7 @@ class User extends Model
         this.gotInstructionEmails = {};
         this.stdInternalisationChanges = {};
         this.focus = {};
+        this.teachers = {};
     }
 
     calculateLevel(stdName)
@@ -126,6 +127,7 @@ class User extends Model
         this.gotInstructionEmails = data.got_instruction_emails;
         this.stdInternalisationChanges = data.std_internalisation_changes;
         this.focus = data.focus;
+        this.teachers = data.teachers;
 
     }
 
