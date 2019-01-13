@@ -742,8 +742,6 @@ class DatabaseManager:
         issue_text = ""
         issues_dict = json.loads(data[2])
         for key in issues_dict:
-            print (key)
-
             line_num = key.split('#')[1]
             category = issues_dict[key]["standard"]["category"]
             sub_category = issues_dict[key]["standard"]["subCategory"]

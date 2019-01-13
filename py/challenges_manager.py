@@ -107,15 +107,11 @@ class ChallengesManager:
             rows.pop(0)
             challenge_array = []
 
-
             for i in range(0, len(rows)):
                 if len(rows[i]) > 0:
                     rows[i].pop(2)
                     rows[i].pop(0)
                     challenge_array.append(rows[i])
-                    print("ROW TEST:", rows[i])
-
-
 
             for i in range(0, len(challenge_array)):
                 challenge_array[i].insert(0, i + 1 )
@@ -132,16 +128,16 @@ class ChallengesManager:
         db_challenges.insert(0, fields)
         data = {'values': db_challenges}
 
-        print ("Clear the spreadsheet")
+        print ("Clear the Google Sheet")
         range_all = '{0}!A1:Z'.format("Sheet1")
         body = {}
         self.service.spreadsheets().values().clear(spreadsheetId=SHEET_DB_ID, range=range_all, body=body).execute()
 
-        print ("Re insert the challenges into sheet")
-        print (data["values"])
+        print ("Re-insert the challenges into sheet")
         self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range='A1', body=data,
                                                     valueInputOption="RAW").execute()
 
+        print ("Challenges are on board!")
 
 
 
