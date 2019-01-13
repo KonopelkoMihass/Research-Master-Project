@@ -40,7 +40,7 @@ class ChallengesManager:
         credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes = SCOPES)
 
         self.service = discovery.build('sheets', 'v4', credentials=credentials)
-        #self.export_from_google_sheet()
+        self.export_from_google_sheet()
 
 
 
