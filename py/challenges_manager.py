@@ -90,21 +90,6 @@ class ChallengesManager:
             ch = open(challenges_dir + language_dir + str(rows[i][0]) + self.code_format, 'r')
             rows[i][1] = ch.read()
 
-            issue_text = ""
-            issues_dict = rows[i][2]
-            for key in issues_dict:
-                line_num = key.split('#')[1]
-                category = issues_dict[key]["standard"]["category"]
-                sub_category = issues_dict[key]["standard"]["subCategory"]
-                issue_text += "At line " + str(line_num) + ": '" + category + "'->'" + sub_category + "'\n"
-
-            rows[i].insert(2, issue_text)
-
-
-
-
-
-
         rows.insert(0, fields)
         data = {'values': rows}
         self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range='A1', body=data,
