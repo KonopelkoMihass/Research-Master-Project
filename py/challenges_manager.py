@@ -179,7 +179,7 @@ class ChallengesManager:
             chain_focus = 0
 
         chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus, chain_user_std_internalisation, chain_user_level)
-        print
+        print (chain)
 
         random.shuffle(chain)
         chain = chain[0:chain_length]
