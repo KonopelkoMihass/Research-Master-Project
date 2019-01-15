@@ -13,7 +13,7 @@ class EmailSystem:
 
     def __init__(self):
         print("EmailSystem: __init__")
-        self.email_server = 'http://149.153.5.22/'
+        self.email_server = '149.153.5.22'
         self.EMAIL_ADDRESS = 'c00157576@itcarlow.ie'
 
         self.letter_welcome_gamified = "Welcome, {0} {1}.br>This email will shortly explain to you what you should do in a step-to-step guide.<br>1) When you are in the system, press the Challenge button and complete one set of challenges.  Use this opportunity to explore how to work with it. <br>2) Upon completion of the challenge chain, you should visit the Profile Page and explore it's content.  There you can track your progress in learning the standards.<br>3) Well done!  Now you are ready to use it on daily basis for as long as you want to.  It will grow on weekly basis, adding new things to learn and challenges.<br><br>Good luck!"
