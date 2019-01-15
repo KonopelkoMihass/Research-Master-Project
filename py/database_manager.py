@@ -446,8 +446,6 @@ class DatabaseManager:
         return challenge_ids
 
 
-
-
     def wipe_challenge_table(self):
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
