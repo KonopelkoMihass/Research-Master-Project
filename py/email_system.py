@@ -80,20 +80,19 @@ class EmailSystem:
             data["challenge_id"],
             data["text"])
 
-        print("EMAIL:", teacher_email)
-        print("CONTENT:", content)
+
 
         msg.attach(MIMEText(content, 'html'))
 
-        try:
-            s = smtplib.SMTP(self.email_server)
-            s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
-            s.quit()
+        #try:
+        s = smtplib.SMTP(self.email_server)
+        s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
+        s.quit()
 
-        except IOError:
-            print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
-        except smtplib.SMTPConnectError:
-            print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
+        #except IOError:
+        #    print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
+        #except smtplib.SMTPConnectError:
+        #   print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
 
 
 
