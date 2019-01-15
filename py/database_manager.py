@@ -366,7 +366,7 @@ class DatabaseManager:
             print("FOCUS IGNORED")
         else:
             for key in focus:
-                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "' AND Standards.unlocked_at_level="+ chain_user_level +";")
+                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "';")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
 
