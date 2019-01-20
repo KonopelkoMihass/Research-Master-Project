@@ -18,6 +18,7 @@ class Challenge extends Model
         this.lastChallenge = false;
         this.difficulty = "";
 
+        this.challengeIssueInformation = [];
         this.standardInternalisationScore = {};
     }
 
@@ -69,6 +70,11 @@ class Challenge extends Model
              this.lastChallenge = true;
         }
         app.tracker.saveForLogs("challenge started", this.currentChallengeLink);
+
+
+
+
+
     }
 
     saveResults(resutlDict)
@@ -87,13 +93,23 @@ class Challenge extends Model
         parameterPack.focus = app.user.focus;
         parameterPack.gamified = app.user.gamified;
         parameterPack.std_internalisation = app.user.stdInternalisation[language];
+
         parameterPack.user_level = app.user.calculateLevel(language);
+
         if (!Number.isInteger(parameterPack.user_level))
             parameterPack.user_level = 1;
 
         if (parameterPack.std_internalisation == undefined){
             parameterPack.std_internalisation = {};
         }
+
+        var stdsToExam = app.user.standardsReadyForExam(language);
+        var isExamTime = stdsToExam.length ? true : false;
+
+        parameterPack.is_exam = isExamTime;
+        parameterPack.stds_to_exam = JSON.stringify(stdsToExam);
+
+
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
     }
@@ -156,6 +172,8 @@ class Challenge extends Model
 
             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL)
             {
+                this.challengeIssueInformation = [];
+
                 this.code = data.code;
                 this.issues = data.issues;
                 this.averageTimeSeconds = data.average_time_seconds;
@@ -163,6 +181,46 @@ class Challenge extends Model
                 this.language = data.language;
 
 
+                if (data.difficulty === "hard") this.difficulty = "exam";
+                else
+                {
+                    var familiarIssue = "";
+                    for (var key in this.issues)
+                    {
+                        var lvl = app.user.getSubcategoryLevel(
+                            this.language,
+                            this.issues[key].standard.category ,
+                            this.issues[key].standard.number);
+
+
+                        if (lvl >= 4 ) {
+                            familiarIssue = "You have seen it often to find on your own";
+                        }
+                        else {
+                            this.challengeIssueInformation.push(this.issues[key].standard.category + "->" + this.issues[key].standard.subCategory);
+                        }
+                    }
+
+                    // Remove duplicates.
+                    this.challengeIssueInformation = [...new Set(this.challengeIssueInformation)]
+
+
+                    // Add "FamiliarIssue" note if present
+                    if (familiarIssue !== ""){
+                        if (this.challengeIssueInformation.size > 0) {
+                            this.challengeIssueInformation.unshift(familiarIssue);
+                            this.difficulty = "mixed";
+                        }
+                        else {
+                            this.challengeIssueInformation.push(familiarIssue);
+                            this.difficulty = "hard";
+                        }
+                    }
+
+                    else {
+                         this.difficulty = "easy";
+                    }
+                }
             }
 
             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_CHAIN_SUCCESSFUL)

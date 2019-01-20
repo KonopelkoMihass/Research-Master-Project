@@ -33,7 +33,8 @@ class UserManager:
                 data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
                 data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
                 data["focus"] = json.loads(data["focus"])
-                #del data["password"]
+                data["teachers"] = self.database_manager.get_teachers_names()
+
 
                 users = self.database_manager.get_all_users()
                 data["users"] = users
@@ -58,7 +59,7 @@ class UserManager:
                         self.email_system.send_non_gamification_email(data)
                         self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
 
-                data["teachers"] = self.database_manager.get_teachers_names()
+
 
         except:
             print("signin fail")
@@ -122,8 +123,11 @@ class UserManager:
         message = [message_type, data]
         return message
 
+
+
     def save_standard_internalisation(self, email, std_int):
         pass
+
 
     def check_emails_to_send(self):
         pass
@@ -156,7 +160,6 @@ class UserManager:
         data["name"] = student_data["name"] + " " + student_data["surname"] + " Performance.txt"
 
         return data
-
 
 
 

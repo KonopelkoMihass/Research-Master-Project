@@ -34,7 +34,7 @@ VALUES ('c00157576@itcarlow.ie','teacher','Mihass','Konopelko','Potato','2202199
   ('e','1','e','e','Chair','e','student', '{}', 'y', 'y', '{}', '{}', '{}'),
   ('r','2','r','r','Pizza','r','student', '{}', 'n', 'y', '{}', '{}', '{}'),
   ('t','2','t','t','Grass','t','student', '{}', 'n', 'y', '{}', '{}', '{}'),
-  ('p','3','p','tp','Hay','p','student', '{}', 'r', 'y', '{}', '{}', '{}');
+  ('p','3','p','p','Hay','p','student', '{}', 'r', 'y', '{}', '{}', '{}');
 
 
 -- Table `ProjectOrganiser`.`Assignments`

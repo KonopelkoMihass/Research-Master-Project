@@ -62,10 +62,11 @@ class ChallengeController
 		var controller = this;
 
         var standards =  app.standards.selectStandards(this.model.standard);
+        var difficulty = this.model.difficulty;
+
+
         var categorySelectDiv = document.getElementById("challenge-code-category-select-div");
         categorySelectDiv.innerHTML = "";
-
-
 
         var sortedKeys = this.sortCategories(standards);
 
@@ -74,9 +75,17 @@ class ChallengeController
             var key = sortedKeys[k];
 
             if (!app.standards.checkIfEnabled(standards[key]) ) continue;
-            if (!this.model.doesContainThisStandardCategory(key)) continue;
 
+            if (difficulty === "easy") {
+                if (!this.model.doesContainThisStandardCategory(key)) continue;
+            }
 
+            else if (difficulty === "mixed" || difficulty === "hard"){
+                if (!app.user.isCategoryKnown(this.model.standard, key, true)) continue;
+            }
+
+            else if (difficulty === "exam")
+                if (!app.user.isCategoryKnown(this.model.standard, key, false)) continue;
 
             var categoryName = key;
 
@@ -103,8 +112,6 @@ class ChallengeController
 
                 else
                 {
-
-
                     if (controller.categoryElemSelected !== "")
                     {
                         controller.categoryElemSelected.classList.remove("standard-bit-selected");
@@ -116,21 +123,13 @@ class ChallengeController
                     var subcategories = standards[cat];
 
 
-
-
-
-                    var getStdByNumber = function(subCategories, i)
-                    {
+                    var getStdByNumber = function(subCategories, i) {
                         var startValue = 99999;
-
-                        for (var j = 0; j < subCategories.length; j++)
-                        {
+                        for (var j = 0; j < subCategories.length; j++) {
                             var num = subCategories[j].number;
                             num < startValue ? startValue = num : startValue = startValue;
                         }
-
-                        for (var j = 0; j < subCategories.length; j++)
-                        {
+                        for (var j = 0; j < subCategories.length; j++) {
                             if (subCategories[j].number === startValue + i) return subCategories[j];
                         }
                     };
@@ -141,7 +140,20 @@ class ChallengeController
                         var subcategory = getStdByNumber(subcategories, i);
 
                         if (subcategory.enabled === "no") continue;
-                        if (!controller.model.doesContainThisStandardSubCategory(subcategory.number)) continue;
+
+                        if (difficulty === "easy") {
+                            if (!controller.model.doesContainThisStandardSubCategory(subcategory.number)) continue;
+                        }
+
+                        else if (difficulty === "mixed" || difficulty === "hard")
+                        {
+                            if (!app.user.isSubcategoryKnown(subcategory.number, true)) continue;
+                        }
+
+                        else {
+                             if (!app.user.isSubcategoryKnown(subcategory.number, false)) continue;
+                        }
+
 
 
                         var spanContainer = document.createElement("SPAN");
@@ -224,12 +236,16 @@ class ChallengeController
 
 		this.parsedCodeHTMLs = {};
 		this.allFilesReview = {};
+
 		document.getElementById("challenge-file-select").innerHTML = "";
 		document.getElementById("challenge-code-review").innerHTML = "";
 		document.getElementById("challenge-present-issues").innerHTML = "";
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
+		document.getElementById("challenge-code-box").scrollTop = 0;
 		document.getElementById("challenge-submit-div").style.display = "block";
+
+
 
 		var tutButton = document.getElementById("challenge-tutorial-button");
         var new_element = tutButton.cloneNode(true);
@@ -345,25 +361,24 @@ class ChallengeController
 
 		// Display issue types present.
         var divIssuePresents = document.getElementById("challenge-present-issues");
-        var issues = this.model.issues;
 
-        var issueTypesPresent = [];
+        var difficulty = this.model.difficulty;
 
-        for (var i in issues) {
-            issueTypesPresent.push(issues[i].standard.category + "->" + issues[i].standard.subCategory);
+        if (difficulty !== "exam")
+        {
+            divIssuePresents.style.display = "block";
+            var issuesInfo = this.model.challengeIssueInformation;
+
+            for (var i in issuesInfo) {
+                divIssuePresents.innerHTML += issuesInfo[i] + "\n";
+            }
         }
 
-        var getUnique = function (a) {
-            var seen = {};
-            return a.filter(function(item) {
-                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-            });
-        };
-
-        issueTypesPresent = getUnique(issueTypesPresent);
-        for (var i = 0; i < issueTypesPresent.length; i++) {
-            divIssuePresents.innerHTML += issueTypesPresent[i] + "\n";
+        else {
+             divIssuePresents.innerHTML = "This is an exam.  Good luck!";
         }
+
+
 
 
 

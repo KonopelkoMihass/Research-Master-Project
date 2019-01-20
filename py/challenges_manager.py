@@ -160,9 +160,6 @@ class ChallengesManager:
 
 
 
-
-
-
     def get_challenge_chain(self, message_data):
         label = "get_challenge_chain_successful"
 
@@ -171,6 +168,8 @@ class ChallengesManager:
         chain_focus = message_data["focus"]
         chain_user_std_internalisation = message_data["std_internalisation"]
         chain_user_level = str(message_data["user_level"])
+        chain_is_exam = message_data["is_exam"]
+        chain_stds_to_exam = json.loads(message_data["stds_to_exam"])
 
         gamified = message_data["gamified"]
 
@@ -178,12 +177,13 @@ class ChallengesManager:
         if (not_use_focus > self.focus_threshold and gamified == "n") or not chain_focus:
             chain_focus = 0
 
-        chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus, chain_user_std_internalisation, chain_user_level)
-        print (chain)
+        chain = self.database_manager.get_challenges_for_chain(chain_language, chain_focus, chain_user_std_internalisation, chain_user_level, chain_is_exam, chain_stds_to_exam)
 
-        random.shuffle(chain)
-        chain = chain[0:chain_length]
 
+        if not chain_is_exam:
+            random.shuffle(chain)
+            chain = chain[0:chain_length]
+            print ("Final challenges = ", chain)
         return [label, chain]
 
 

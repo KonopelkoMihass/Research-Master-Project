@@ -93,6 +93,68 @@ class Standards extends Model
         return [score, maxScore] ;
     }
 
+     standardsReadyForExam(language)
+     {
+        var userSTD = app.user.stdInternalisation;
+        var stdsExamReadyIDs = [];
+
+        if (!userSTD.hasOwnProperty(language)) {
+            userSTD[language] = this.addInternalisationSkillTree(language);
+            return [];
+        }
+
+
+        var stdsReadyForExam = 0;
+        var stdsToLearn = 0;
+
+
+        for (var cat in userSTD[language]) {
+            var currentLevel =  app.user.calculateLevel(language);
+            var userSTDIntCategory = userSTD[language][cat];
+
+             for (var i = 0; i < userSTDIntCategory.subcategories.length; i++)
+             {
+                 var subCat = userSTDIntCategory.subcategories[i];
+
+                 var isAvailable =
+                     this.isLevelAllowToSeeThisSubcategory(language, cat, subCat.number, currentLevel);
+
+
+                 if (subCat.learnState === "Learning"  && subCat.score !== 0 && subCat.score !== 9 && isAvailable)
+                     stdsToLearn++;
+
+
+
+                 else if
+                    ((subCat.learnState === "Exam Ready" && isAvailable) ||
+                     (subCat.score === 9 && isAvailable)) {
+
+                     stdsReadyForExam++;
+                     stdsExamReadyIDs.push(subCat.number);
+                 }
+             }
+        }
+
+        const MAX_NUM_OF_EXAMS = 4;
+
+        // Case 1 - there are enough stds to start an exam.
+        if (stdsReadyForExam >= MAX_NUM_OF_EXAMS) return stdsExamReadyIDs;
+
+        // Case 2 - there are not enough stds to do exams HOWEVER there are at least one std to learn
+        else if (stdsReadyForExam < MAX_NUM_OF_EXAMS && stdsToLearn > 0) return [];
+
+        // Case 3 - there are not enough stds to do exams AND no stds to learn.
+        else return stdsExamReadyIDs;
+
+     }
+
+
+
+
+
+
+
+
 
 
     updateInternalisationSkillTree(scores, language)
@@ -113,7 +175,7 @@ class Standards extends Model
                 var score = parseInt(scores[cat][i].score);
                 var std = scores[cat][i].standard;
 
-                var userSubcat = "";
+                var userSubcat = {};
 
                 for (var j = 0; j < userSTDIntCategory.subcategories.length; j++)
                 {
@@ -130,8 +192,30 @@ class Standards extends Model
                     if (overflow > userSubcat.maxScore) overflow -= userSubcat.maxScore;
                 }
 
+                // add learnState key if not present.
+                if (!("learnState" in userSubcat)) userSubcat.learnState = "Learning";
+
                 userSubcat.score += (score - overflow);
                 userSTDIntCategory.score += (score - overflow);
+
+                // Manage standard internalisation states and where they can go.
+                //
+                // If score is 9 or above and state is learning - set score to 9 and state to "Exam Ready"
+                if (userSubcat.score >= 9 && userSubcat.learnState === "Learning") {
+                    userSubcat.learnState = "Exam Ready";
+                    if (userSubcat.score > 9) {
+                        userSubcat.score = 9;
+                        userSTDIntCategory.score--;
+                    }
+
+                }
+
+
+                else if (userSubcat.score < 9 && userSubcat.learnState === "Exam Ready") userSubcat.learnState = "Learning";
+                else if (userSubcat.score > 9 && userSubcat.learnState === "Exam Ready") userSubcat.learnState = "Mastered";
+                else if (userSubcat.score < 10 && userSubcat.learnState === "Mastered") userSubcat.learnState = "Learning";
+
+
                 this.recordTheStdInternalisationChange(cat, userSubcat.name, userSubcat.score);
 
 
@@ -175,6 +259,8 @@ class Standards extends Model
                     subcatSkill.name = subcat.subCategory;
                     subcatSkill.score = 0;
                     subcatSkill.maxScore = 10;
+                    subcatSkill.learnState = "Learning";
+
 
                     stdSkills[cat].subcategories.push(subcatSkill);
                     stdSkills[cat].maxScore += 10;
@@ -392,6 +478,8 @@ class Standards extends Model
     getSubcategoryLevel(name, categoryName, num)
     {
         var std = this.selectStandards(name);
+
+
         var category = std[categoryName];
 
          for (var i = 0; i < category.length; i++)

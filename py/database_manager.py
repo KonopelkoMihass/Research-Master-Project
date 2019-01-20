@@ -4,7 +4,7 @@ import json
 from mysql.connector.pooling import MySQLConnectionPool
 from mysql.connector import errorcode
 from passlib.hash import sha256_crypt
-
+import random
 
 
 
@@ -349,32 +349,75 @@ class DatabaseManager:
         return logs
 
 
-    def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level):
-        challenge_ids = []
+    def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level, chain_is_exam, chain_stds_to_exam):
 
-        print("Current level ", chain_user_level)
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
         available_standards = []
-        query = ""
 
         #Get standards which are enabled and focus is empty.
-        if focus == 0:
-            query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
+        if focus == 0 and chain_is_exam == False:
+            query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
             cursor.execute(query)
             available_standards = cursor.fetchall()
             print("FOCUS IGNORED")
+
+        elif chain_is_exam == True:
+            # query = 'INSERT into Challenges VALUES(%s, %s, %s, %s, %s, %s, %s)'
+            # cursor.executemany(query, rows)
+            for id in chain_stds_to_exam:
+                query = 'SELECT sub_category, id FROM Standards WHERE Standards.id=' + str(id) +';'
+                cursor.execute(query)
+                available_standards.append(cursor.fetchall()[0])
+
+            print ("EXAM: ", available_standards)
+            #Check how many there are.
+            STANDARD_AMOUNT_OF_EXAMS = 4
+            curr_amount = len(chain_stds_to_exam)
+            if curr_amount < STANDARD_AMOUNT_OF_EXAMS:
+                stds_to_get = STANDARD_AMOUNT_OF_EXAMS - curr_amount
+                stds_to_pick_from = []
+
+
+                for k, v in user_std_internalisation.items():
+                    for i in range(len(v["subcategories"])):
+                        subcat = v["subcategories"][i]
+                        if subcat["learnState"] == "Mastered":
+                            print( "SS ", subcat)
+                            std_dict = {}
+                            std_dict["id"] = subcat["number"]
+                            std_dict["sub_category"] = subcat["name"]
+
+                            stds_to_pick_from.append(std_dict)
+
+                random.shuffle(stds_to_pick_from)
+                for i in range(len(stds_to_pick_from)):
+                    if i < stds_to_get:
+                        available_standards.append(stds_to_pick_from[i])
+
+
+
+
+
+
+
+
+
+
+
+
+
+            print("EXAM TIME")
+
         else:
             for key in focus:
-                query = ("SELECT sub_category FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "';")
+                query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "';")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
-
             print("FOCUS ONLY")
+
+
         print("Num of Available Standards: ", len(available_standards))
-
-
-
 
 
         query = ("SELECT Challenges.id, Challenges.issues, Challenges.difficulty FROM Challenges WHERE "
@@ -382,22 +425,26 @@ class DatabaseManager:
 
         cursor.execute(query)
         challenges = cursor.fetchall()
-        print ("Challenges available", len(challenges))
         cursor.close()
         connector.close()
 
+        print ("Challenges available", len(challenges))
+
+
+        # Select the available to user standards
         challenges_allowed_for_user = []
+
         for chal in challenges:
             include_in_challenge_chain = True
             chal["issues"] = json.loads(chal["issues"])
-
-            # For each std within issue
             std_unlocked_for_issue = [False] * len(chal["issues"])
             index = 0
+
             for key in chal["issues"]:
                 standard_in_issue = chal["issues"][key]["standard"]
+
                 for i in range(len(available_standards)):
-                    if available_standards[i]["sub_category"] == standard_in_issue["subCategory"]:
+                    if available_standards[i]["id"] == standard_in_issue["number"]:
                         std_unlocked_for_issue[index] = True
                         continue
                 index += 1
@@ -415,34 +462,62 @@ class DatabaseManager:
         print("Num of Available Challenges: ", len(challenges_allowed_for_user))
 
         challenge_ids = []
-        for chal in challenges_allowed_for_user:
-            proper_level = True
 
-            for key in chal["issues"]:
-                standard_in_issue = chal["issues"][key]["standard"]
+        if chain_is_exam == False:
+            for chal in challenges_allowed_for_user:
+                for key in chal["issues"]:
+                    standard_in_issue = chal["issues"][key]["standard"]
 
-                user_std_score = 0
+                    user_std_score = 0
 
-                if len(user_std_internalisation) != 0:
-                    if standard_in_issue["category"] in user_std_internalisation:
-                        user_std_subcategories = user_std_internalisation[standard_in_issue["category"]]["subcategories"]
-                        print ("user_std_subcategories",user_std_subcategories)
-                        for subcat in user_std_subcategories:
-                            if subcat["number"] == standard_in_issue["number"]:
-                                user_std_score = subcat["score"]
+                    if len(user_std_internalisation) != 0:
+                        if standard_in_issue["category"] in user_std_internalisation:
+                            user_std_subcategories = user_std_internalisation[standard_in_issue["category"]]["subcategories"]
 
+                            for subcat in user_std_subcategories:
+                                if subcat["number"] == standard_in_issue["number"]:
+                                    user_std_score = subcat["score"]
 
-                if chal["difficulty"] == "hard" and user_std_score < 5:
-                    proper_level = False
+                    if chain_is_exam == False and chal["difficulty"] == "easy" and user_std_score < 9:
+                        challenge_ids.append(chal["id"])
 
-                if chal["difficulty"] == "easy" and user_std_score > 7 :
-                    proper_level = False
-
-                if proper_level == True:
-                    challenge_ids.append(chal["id"])
+            # remove possible duplications
+            challenge_ids = list(set(challenge_ids))
 
 
-        print("GOT HERE", challenge_ids)
+        else:
+            for i in range(len(available_standards)):
+
+                fitting_exams = []
+
+                for chal in challenges_allowed_for_user:
+                    fits_exam_purposes = True
+
+
+
+                    # If one issue does not fit the examed standard - eliminate
+                    for key in chal["issues"]:
+                        standard_in_issue = chal["issues"][key]["standard"]
+                        if standard_in_issue["number"] != available_standards[i]["id"]:
+                            fits_exam_purposes = False
+
+                    # If succeeded - see if it is hard enough. If it is - save it.
+                    if fits_exam_purposes == True:
+
+                        if chal["difficulty"] == "hard":
+                            fitting_exams.append(chal["id"])
+
+
+                # Once all challenges available - pick one.
+                random.shuffle(fitting_exams)
+                print ("selecting exam ", fitting_exams)
+
+                challenge_ids.append( fitting_exams[0])
+
+
+
+
+        print("Challenge Ids", challenge_ids)
         return challenge_ids
 
 
@@ -549,33 +624,6 @@ class DatabaseManager:
         connector.close()
 
         return students
-
-
-
-    def enable_system_switch(self, email, str_data):
-        students = []
-        connector = self.cnxpool.get_connection()
-        cursor = connector.cursor(dictionary=True)
-
-        query = ("UPDATE Users SET Users.got_instruction_emails = '"+str_data+"'  WHERE Users.email = '" + email + "'")
-        cursor.execute(query)
-        connector.commit()
-        cursor.close()
-        connector.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     def selected_system(self, message_data):

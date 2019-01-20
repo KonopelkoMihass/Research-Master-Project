@@ -23,6 +23,36 @@ class User extends Model
         this.teachers = {};
     }
 
+    getSubcategoryLevel(stdName, categoryName, num)
+    {
+        if (this.stdInternalisation.hasOwnProperty(stdName))
+        {
+            var std = this.stdInternalisation[stdName];
+
+            for (var i = 0; i < std[categoryName].subcategories.length; i++)
+            {
+                if (std[categoryName].subcategories[i].number === num)
+                {
+                    return std[categoryName].subcategories[i].score;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     calculateLevel(stdName)
     {
         if (this.stdInternalisation.hasOwnProperty(stdName))
@@ -34,7 +64,7 @@ class User extends Model
             {
                 for (var i = 0; i < std[key].subcategories.length; i++)
                 {
-                    if (std[key].subcategories[i].score >= 7)
+                    if (std[key].subcategories[i].score === 10)
                     {
                         level++;
                     }
@@ -131,7 +161,10 @@ class User extends Model
 
     }
 
-
+    standardsReadyForExam(language)
+    {
+        return app.standards.standardsReadyForExam(language);
+    }
 
     sendSystemSelectionResult(choice)
     {
@@ -152,4 +185,54 @@ class User extends Model
         app.net.sendMessage("focus_change", userData);
     }
 
+    isCategoryKnown(stdName, category, ignoreMastered)
+    {
+        if (this.stdInternalisation.hasOwnProperty(stdName))
+        {
+            var std = this.stdInternalisation[stdName];
+
+            for (var i = 0; i < std[category].subcategories.length; i++)
+            {
+                if (std[category].subcategories[i].score > 0 &&
+                    std[category].subcategories[i].score < 10 &&
+                    ignoreMastered)
+                {
+                    return true;
+                }
+
+                else if (std[category].subcategories[i].score > 0 &&
+                    !ignoreMastered)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    isSubcategoryKnown( stdNum, ignoreMasteres)
+    {
+        for (var name in this.stdInternalisation)
+        {
+
+            var std = this.stdInternalisation[name];
+            for (var key in std)
+            {
+                for (var i = 0; i < std[key].subcategories.length; i++)
+                {
+                    if (std[key].subcategories[i].number === stdNum)
+                    {
+                        var currentLevel =  this.calculateLevel(name);
+                        var isAvailable = app.standards.isLevelAllowToSeeThisSubcategory(name, key, stdNum, currentLevel);
+
+                        if (ignoreMasteres && std[key].subcategories[i].score < 10 && isAvailable)
+                            return true;
+                        else if (!ignoreMasteres && std[key].subcategories[i].score >= 9 && isAvailable)
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

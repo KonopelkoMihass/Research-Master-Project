@@ -448,14 +448,17 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def enable_system_switch(self):
+        print("enable_system_switch()")
         students = []
         result = "enable_system_switch_successful"
-        try:
-            students = database_manager.enable_system_switch()
-            for student in students:
+        #try:
+        students = database_manager.enable_system_switch()
+        for student in students:
+            if "std_internalisation" in student:
+                print ("derere")
                 student["std_internalisation"] = json.loads(student["std_internalisation"])
-        except:
-            result = "enable_system_switch_failed"
+
+
         self.send_message(result, students)
         for k, item in connections.items():
             item["socket"].get_assignments()
