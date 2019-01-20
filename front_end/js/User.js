@@ -82,6 +82,7 @@ class User extends Model
             if (messageType === app.net.messageHandler.types.SIGN_IN_SUCCESSFUL)
             {
                 this.setData(data);
+                app.standards.checkIfLearnStatesArePresent();
                 app.assignments.getAllAssignment();
                 app.standards.getStandards();
 
