@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `std_internalisation_changes` MEDIUMTEXT,
   `focus` MEDIUMTEXT,
   `challenge_mode_only` VARCHAR(1) NOT NULL,
+  `challenge_performance` MEDIUMTEXT,
 
 
 

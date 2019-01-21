@@ -349,8 +349,32 @@ class DatabaseManager:
         return logs
 
 
-    def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level, chain_is_exam, chain_stds_to_exam):
+    def record_challenge_performance(self, data):
+        user_email = data["email"]
+        challenges_performance = data["challenges_performance"]
+        past_performance = []
 
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+        query = ("SELECT challenge_performance FROM Users WHERE Users.email='" +user_email + "';")
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        if data[0]["challenge_performance"] != None:
+            past_performance = json.loads(data[0]["challenge_performance"])
+
+        past_performance.append(challenges_performance)
+
+        print ("PERFORMANCE BS ", past_performance)
+
+        query = ("UPDATE Users SET Users.challenge_performance = '" + json.dumps(past_performance) + "' WHERE Users.email='" + user_email + "';")
+        cursor.execute(query)
+        connector.commit()
+        pass
+
+
+
+    def get_challenges_for_chain(self, language, focus, user_std_internalisation, chain_user_level, chain_is_exam, chain_stds_to_exam):
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
         available_standards = []
@@ -394,19 +418,6 @@ class DatabaseManager:
                 for i in range(len(stds_to_pick_from)):
                     if i < stds_to_get:
                         available_standards.append(stds_to_pick_from[i])
-
-
-
-
-
-
-
-
-
-
-
-
-
             print("EXAM TIME")
 
         else:

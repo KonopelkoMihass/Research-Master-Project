@@ -23,7 +23,7 @@ class User extends Model
         this.teachers = {};
     }
 
-    getSubcategoryLevel(stdName, categoryName, num)
+    getSubcategoryScore(stdName, categoryName, num)
     {
         if (this.stdInternalisation.hasOwnProperty(stdName))
         {
@@ -39,6 +39,24 @@ class User extends Model
         }
 
         return 0;
+    }
+
+    getSubcategoryLearnState(stdName, categoryName, num)
+    {
+        if (this.stdInternalisation.hasOwnProperty(stdName))
+        {
+            var std = this.stdInternalisation[stdName];
+
+            for (var i = 0; i < std[categoryName].subcategories.length; i++)
+            {
+                if (std[categoryName].subcategories[i].number === num)
+                {
+                    return std[categoryName].subcategories[i].learnState;
+                }
+            }
+        }
+
+        return "ERROR";
     }
 
 

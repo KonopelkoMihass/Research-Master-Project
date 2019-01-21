@@ -235,7 +235,6 @@ class Standards extends Model
                         userSubcat.score = 9;
                         userSTDIntCategory.score--;
                     }
-
                 }
 
 
@@ -335,6 +334,17 @@ class Standards extends Model
         d.score = app.user.stdInternalisation[language][category].score;
         d.maxScore = app.user.stdInternalisation[language][category].maxScore;
 
+        var std = this.selectStandards(language);
+
+
+        for (var i = 0; i < std[category].length; i++)
+        {
+            if (std[category][i].enabled === "no"){
+                d.maxScore -= 10;
+            }
+        }
+
+
         return d;
     }
 
@@ -411,7 +421,6 @@ class Standards extends Model
         var userCurrentMax = {total:0};
 
 
-
         for (var k in std)
         {
             userCurrentScore[k] = 0;
@@ -438,7 +447,7 @@ class Standards extends Model
                 {
                     var studentInterStd = userStdInter[k].subcategories[j];
 
-                    if (stdEnabledBit.subCategory ===  studentInterStd.name)
+                    if (stdEnabledBit.number ===  studentInterStd.number)
                     {
 
                         userCurrentScore[k] += studentInterStd.score;

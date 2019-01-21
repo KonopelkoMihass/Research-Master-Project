@@ -411,6 +411,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def upload_challenge_results(self, message_data):
+        database_manager.record_challenge_performance(message_data)
+
+
+
+
         # DO SAVING OF THE CHALLENGE PERFORMANCE.
         pass
 

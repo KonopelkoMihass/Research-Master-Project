@@ -592,12 +592,16 @@ class ChallengeController
 			});
 		}
 
+
+
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
 
 		if(!this.altered) document.getElementById("std-internalisation").style.display = "none";
 
-		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterScore;
+		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterName;
+		document.getElementById("challenge-end-category-internalisation-score").innerHTML = results.standardInterScore;
+
 	}
 
 	stringifyAverageTime()
@@ -858,7 +862,7 @@ class ChallengeController
 			cell1.innerHTML =  codeBit.content;
 		}
 
-		cell2.innerHTML = content.category + "\n" + content.subCategory;
+		cell2.innerHTML = "[" + content.category + "]<br>" + content.subCategory;
 
 		cell3.innerHTML = "?";
 		cell3.style.textAlign="center";

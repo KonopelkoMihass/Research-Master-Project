@@ -62,14 +62,40 @@ class Challenge extends Model
         this.issues = {};
         var dataToSend = this.challengeChain[this.currentChallengeLink];
 
-        app.net.sendMessage("get_challenge", dataToSend);
-        this.currentChallengeLink++;
+        if (dataToSend === undefined) {
+            var scoreData = app.standards.getOverallStandardProgression(this.language);
+            var currentScorePack = scoreData.score;
+            var currentMaxPack = scoreData.max;
 
-        if (this.currentChallengeLink === this.challengeChain.length)
-        {
-             this.lastChallenge = true;
+            var percentage = Math.ceil((currentScorePack.total / currentMaxPack.total) * 100);
+            if (percentage === 100){
+                alert("You have mastered the standards!  Nothing to learn");
+            }
+            else {
+                alert("There appears to be some error... contact the research supervisor");
+            }
+
         }
-        app.tracker.saveForLogs("challenge started", this.currentChallengeLink);
+        else{
+            app.net.sendMessage("get_challenge", dataToSend);
+            this.currentChallengeLink++;
+
+            if (this.currentChallengeLink === this.challengeChain.length)
+            {
+                 this.lastChallenge = true;
+            }
+            app.tracker.saveForLogs("challenge started", this.currentChallengeLink);
+
+
+        }
+
+
+
+
+
+
+
+
 
 
 
@@ -79,7 +105,7 @@ class Challenge extends Model
 
     saveResults(resutlDict)
     {
-        resutlDict.id = this.challengeChain[this.currentChallengeLink-1].id;
+        resutlDict.id = this.challengeChain[this.currentChallengeLink-1];
         this.challengeChainPerformance.push(resutlDict);
     }
 
@@ -90,6 +116,7 @@ class Challenge extends Model
         //Some variables to be later received as parameters
         parameterPack.length = 4;
         parameterPack.language = language;
+        this.language = language;
         parameterPack.focus = app.user.focus;
         parameterPack.gamified = app.user.gamified;
         parameterPack.std_internalisation = app.user.stdInternalisation[language];
@@ -187,7 +214,7 @@ class Challenge extends Model
                     var familiarIssue = "";
                     for (var key in this.issues)
                     {
-                        var lvl = app.user.getSubcategoryLevel(
+                        var lvl = app.user.getSubcategoryScore(
                             this.language,
                             this.issues[key].standard.category ,
                             this.issues[key].standard.number);
@@ -264,6 +291,24 @@ class Challenge extends Model
             if (catArr[i].standard.subCategory === std.subCategory)
             {
                 catArr[i].score +=score;
+
+                var scoreBeforeChallenges = app.user.getSubcategoryScore(catArr[i].standard.name, catArr[i].standard.category, catArr[i].standard.number);
+
+                if (scoreBeforeChallenges + catArr[i].score > 10)
+                {
+                    catArr[i].score = 10 - scoreBeforeChallenges;
+
+                    if (app.user.getSubcategoryLearnState(catArr[i].standard.name, catArr[i].standard.category, catArr[i].standard.number) === "Learning")
+                    {
+                        catArr[i].score--;
+                    }
+
+                    if (app.user.getSubcategoryLearnState(catArr[i].standard.name, catArr[i].standard.category, catArr[i].standard.number) === "Exam Ready")
+                    {
+                        catArr[i].score = 1;
+                    }
+
+                }
                 stdPresent = true;
             }
         }
@@ -374,15 +419,18 @@ class Challenge extends Model
         }
         data.gradeOverall /= perf.length;
 
+        data.standardInterName = "";
         data.standardInterScore = "";
+
         var sis = this.standardInternalisationScore;
 
         for (var cat in sis)
         {
-            var categoryString = cat + ": ";
+            data.standardInterName += cat + ": <br>";
+            data.standardInterScore += "<br>";
+
             var subCategoryString = "";
 
-            var categoryScoreDelta = 0;
 
             sis[cat].sort(function(a,b) {
                 if (a.standard.number < b.standard.number) return -1;
@@ -391,49 +439,28 @@ class Challenge extends Model
             });
 
             for (var i = 0; i < sis[cat].length; i++) {
+
                 var subcat = sis[cat][i];
                 var userSTDSkill = app.standards.getSTDSubcategorySkill(this.language, cat, subcat.standard.number);
 
-                var curSubCatLevelStr = "&nbsp;&nbsp;&nbsp;&nbsp;(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")";
 
-                categoryScoreDelta += subcat.score;
-                subCategoryString += ("&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.subCategory + ":"); //+ ": " + sis[cat][i].score + "<br>");
-
-                if (userSTDSkill.score === userSTDSkill.maxScore && subcat.score > -1)
-                {
-                    subCategoryString += " Reached maximum";
+                if(subcat.score < 0)
+                    data.standardInterScore +=" [-" + subcat.score + "] ";
+                else {
+                    if (userSTDSkill.score !== 10)
+                        data.standardInterScore +=" [+" + subcat.score + "] ";
                 }
 
+
+                if (userSTDSkill.score !== 10)
+                    data.standardInterScore += "(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")<br>";
                 else
-                {
-                    if (subcat.score > 0) subCategoryString += ("&nbsp;&nbsp;+" + subcat.score);
-                    else subCategoryString += ("&nbsp;&nbsp;" + subcat.score);
+                    data.standardInterScore += "Mastered!<br>";
 
-                    if (Math.abs(subcat.score) === 1) subCategoryString += " point";
-                    else subCategoryString += " points";
-                }
 
-                subCategoryString += curSubCatLevelStr + "<br>";
+                data.standardInterName += "&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.subCategory + "<br>";
+
             }
-
-
-            if (categoryScoreDelta === 0) categoryString += "Did not improve";
-
-            else if (categoryScoreDelta > 0) categoryString += "Has improved by "+ categoryScoreDelta;
-            else if (categoryScoreDelta < 0) categoryString += "Has worsened by "+ Math.abs(categoryScoreDelta);
-
-            if (Math.abs(categoryScoreDelta) === 1) categoryString += " point";
-            else categoryString += " points";
-
-
-             var curCatScoreData = app.standards.getCategoryScoreData(this.language, cat);
-
-            categoryString += "&nbsp;&nbsp;&nbsp;&nbsp;(" +curCatScoreData.score + "/" + curCatScoreData.maxScore + ")<br>";
-
-
-
-            categoryString += subCategoryString;
-            data.standardInterScore += categoryString;
         }
         this.standardInternalisationScore = {};
 
