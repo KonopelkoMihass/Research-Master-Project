@@ -379,6 +379,7 @@ class DatabaseManager:
         cursor = connector.cursor(dictionary=True)
         available_standards = []
 
+
         #Get standards which are enabled and focus is empty.
         if focus == 0 and chain_is_exam == False:
             query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
@@ -490,6 +491,9 @@ class DatabaseManager:
                                     user_std_score = subcat["score"]
 
                     if chain_is_exam == False and chal["difficulty"] == "easy" and user_std_score < 9:
+                        challenge_ids.append(chal["id"])
+
+                    elif focus != 0 and user_std_score == 10 and chal["difficulty"] == "hard":
                         challenge_ids.append(chal["id"])
 
             # remove possible duplications

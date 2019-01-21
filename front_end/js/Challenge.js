@@ -69,7 +69,7 @@ class Challenge extends Model
 
             var percentage = Math.ceil((currentScorePack.total / currentMaxPack.total) * 100);
             if (percentage === 100){
-                alert("You have mastered the standards!  Nothing to learn");
+                alert("You have mastered the standards!  To practice specific standards, select them as \"Focus\" in profile.");
             }
             else {
                 alert("There appears to be some error... contact the research supervisor");
