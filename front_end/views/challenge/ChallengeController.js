@@ -324,12 +324,6 @@ class ChallengeController
 			        parentNode.removeChild(modalData.modal);
 
                 });
-
-
-
-
-
-
             }
 
             else{
@@ -377,46 +371,8 @@ class ChallengeController
         else {
              divIssuePresents.innerHTML = "This is an exam.  Good luck!";
         }
-
-
-
-
-
-
-
     }
 
-    markLinesPostChallenge()
-    {
-        /*var challengeIssues = this.model.issues;
-        var lineNumSpans = document.getElementsByName("lineNumSpan");
-    	for (var i = 0; i < lineNumSpans.length; i++ ) {
-		    var line = lineNumSpans[i];
-		    var id = line.id;
-
-		    // element id can be a key in challengeIssues
-            if (id in challengeIssues)
-            {
-                if (line.className === "")
-                    line.className = "missed";
-
-                else if (line.className === "selected")
-                {
-
-                }
-
-
-
-
-
-
-            }
-
-		    //codeElement.className = "";
-
-
-        }*/
-    }
 
 
 	allowReview()
@@ -434,7 +390,6 @@ class ChallengeController
 		    controller.finishedChallenge = true;
 			if (controller.displayPostChallengeScreen === false)
 			{
-			    controller.markLinesPostChallenge();
 				controller.displayPostChallengeResult();
 				controller.saveChallengeResults();
 				controller.stopTimer();
@@ -717,6 +672,8 @@ class ChallengeController
 		}
 	}
 
+
+
 	updateIssueCountLabel()
 	{
 		var totalIssuesLabel = document.getElementById("total-issues");
@@ -772,14 +729,21 @@ class ChallengeController
         var sideModal = document.getElementById("challenge-code-side-modal");
         sideModal.style.width = "45%";
 
+
         // Make an X on a side view to close the side modal
         document.getElementById("challenge-code-side-modal-close").addEventListener("click", function () {
             sideModal.style.width = "0px";
             if (controller.codeElementIdReviewed !== "")
             {
-				document.getElementById(id).classList.remove("reviewed");
+				document.getElementById(controller.codeElementIdReviewed).classList.remove("reviewed");
 				controller.allowSelection = true;
 			}
+
+			// clean event from the close button
+            var closeButton = document.getElementById("challenge-code-side-modal-close");
+            var new_element = closeButton.cloneNode(true);
+            closeButton.parentNode.replaceChild(new_element, closeButton);
+
         });
     }
 
@@ -790,6 +754,12 @@ class ChallengeController
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("challenge-code-side-modal");
         sideModal.style.width = "0";
+
+        // clean event from the close button
+        var closeButton = document.getElementById("challenge-code-side-modal-close");
+        var new_element = closeButton.cloneNode(true);
+        closeButton.parentNode.replaceChild(new_element, closeButton);
+
 
 		if (this.categoryElemSelected !== "")
 		{
