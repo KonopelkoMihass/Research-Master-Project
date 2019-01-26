@@ -15,7 +15,8 @@ class ModalContentManager
 			"submit-challenge-file",
 			"challenge-end",
             "verify-user",
-            "report-challenge-error"
+            "report-challenge-error",
+            "report-signin-error"
 		];
 	}
 

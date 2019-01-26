@@ -137,7 +137,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "report_error":
             self.report_error(message_data)
 
-
+        elif message_type == "signin_issue":
+            self.signin_issue(message_data)
 
         elif message_type == "go_to_google_sheet":
             self.go_to_google_sheet(message_data)
@@ -413,11 +414,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def upload_challenge_results(self, message_data):
         database_manager.record_challenge_performance(message_data)
 
+    def signin_issue(self, message_data):
+        email_system.send_signin_issue_report(message_data)
 
 
 
-        # DO SAVING OF THE CHALLENGE PERFORMANCE.
-        pass
 
 
     def get_students(self, message_data):

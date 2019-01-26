@@ -239,7 +239,7 @@ table tr:hover {
     left: 15%;
     right: 15%;
     top: 13%;
-    bottom: 15%;
+    bottom: 4%;
     overflow:scroll;
 }
 
@@ -254,7 +254,7 @@ table tr:hover {
 	width: 55%;
     position: absolute;
     top: 13%;
-    bottom: 15%;
+    bottom: 4%;
     overflow:scroll;
 }
 
@@ -274,7 +274,7 @@ table tr:hover {
     position: absolute;
     right: 0;
     top: 13%;
-    bottom: 15%;
+    bottom: 4%;
     overflow:scroll;
 }
 

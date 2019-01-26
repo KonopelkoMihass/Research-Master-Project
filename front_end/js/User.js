@@ -161,6 +161,15 @@ class User extends Model
         document.location.reload();
     }
 
+    reportSigninIssue(email, issue){
+        var data = {};
+        data.email = email;
+        data.issue = issue;
+
+
+        app.net.sendMessage("signin_issue", data);
+    }
+
 
     setData(data) {
         this.email = data.email;

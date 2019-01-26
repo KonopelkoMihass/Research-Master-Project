@@ -24,6 +24,40 @@ class EmailSystem:
 
         self.letter_challenge_error = "Hello, <br> The student named {0} {1} have found an error in the challenge.  There is the report: <br> Challenge ID: {2} <br> Message: {3}"
 
+        self.letter_signin_error = "Hello, <br> The student with email {0} reported a following issue when signing in: {1}"
+
+
+
+
+
+    def send_signin_issue_report(self, data):
+        msg = MIMEMultipart()
+        msg['From'] = self.EMAIL_ADDRESS
+        msg['To'] = "c00157576@itcarlow.ie"
+        msg['Subject'] = "Sign In Error Report"
+
+        content = self.letter_signin_error.format(
+            data["email"],
+            data["issue"])
+
+
+        print ("From:", msg['From'])
+        print ("To:", msg['To'])
+        print ("Subject:", msg['Subject'])
+        print ("content:", content)
+
+        msg.attach(MIMEText(content, 'html'))
+
+        try:
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
+            s.sendmail(self.EMAIL_ADDRESS, "c00157576@itcarlow.ie", msg.as_string())
+            s.quit()
+
+        except IOError:
+            print("Error sending 'send_signin_issue_report' email: Unable to send to c00157576@itcarlow.ie")
+        except smtplib.SMTPConnectError:
+           print("Error sending 'send_signin_issue_report' email: smtp exception c00157576@itcarlow.ie")
 
 
 
@@ -91,16 +125,16 @@ class EmailSystem:
 
         msg.attach(MIMEText(content, 'html'))
 
-        #try:
-        s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
-        s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
-        s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
-        s.quit()
+        try:
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
+            s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
+            s.quit()
 
-        #except IOError:
-        #    print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
-        #except smtplib.SMTPConnectError:
-        #   print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
+        except IOError:
+            print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
+        except smtplib.SMTPConnectError:
+           print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
 
 
 
