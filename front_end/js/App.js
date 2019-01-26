@@ -44,7 +44,6 @@ class App
 		});});});
 	}
 
-
 	heartbeat()
 	{
 		app.net.sendMessage("heartbeat", {});
@@ -69,6 +68,20 @@ class App
 
 		this.setupViews();
         this.viewManager.goToView("signin");
+
+
+        // Detects keypresses and tries to pass them to a current view
+        document.addEventListener("keydown", function (e) {
+            try {
+                app.viewManager.currentView.controller.onKeyPress(e.code);
+            } catch{
+
+            }
+
+
+        }, false);
+
+
 	}
 
 
@@ -311,7 +324,6 @@ class App
 
 		app.utils.assignFuncToButtonViaID("mps-discord-button", function() {
 		    window.open('https://discord.gg/e8qvZDj', '_blank');
-			//location.href = "https://discord.gg/e8qvZDj";
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-change-password-button" , function (){

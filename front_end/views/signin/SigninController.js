@@ -18,6 +18,16 @@ class SigninController
 		signupButton.addEventListener("click", function(){app.viewManager.goToView("signup");} );
 	}
 
+	onKeyPress(key){
+	    if (key === "Enter") {
+	        document.getElementById("signin-button").click();
+        }
+    }
+
+
+
+
+
 	signin(e)
 	{
 		var email = document.getElementById("signin-email").value;

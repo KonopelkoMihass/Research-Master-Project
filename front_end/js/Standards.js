@@ -154,31 +154,31 @@ class Standards extends Model
     checkIfLearnStatesArePresent()
     {
         var userSTD = app.user.stdInternalisation;
-
-        if (Object.keys(userSTD).length !== 0 )
-        {
-            for (var language in userSTD)
+        if (userSTD !== "{}"){
+            if (Object.keys(userSTD).length !== 0 )
             {
-                for (var catKey in userSTD[language])
+                for (var language in userSTD)
                 {
-                    var cat = userSTD[language][catKey];
-                    for (var j = 0; j < cat.subcategories.length; j++)
+                    for (var catKey in userSTD[language])
                     {
-                        var subcat = cat.subcategories[j];
-                        if (!subcat.hasOwnProperty("learnState"))
+                        var cat = userSTD[language][catKey];
+                        for (var j = 0; j < cat.subcategories.length; j++)
                         {
-                            subcat.learnState = "Learning";
-                            if (subcat.score >= 9 && subcat.learnState === "Learning") {
-                                subcat.learnState = "Exam Ready";
-                                subcat.score = 9;
+                            var subcat = cat.subcategories[j];
+                            if (!subcat.hasOwnProperty("learnState"))
+                            {
+                                subcat.learnState = "Learning";
+                                if (subcat.score >= 9 && subcat.learnState === "Learning") {
+                                    subcat.learnState = "Exam Ready";
+                                    subcat.score = 9;
+                                }
                             }
+                            else {continue;}
                         }
-                        else {continue;}
                     }
                 }
             }
         }
-
     }
 
 

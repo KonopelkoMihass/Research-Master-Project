@@ -27,7 +27,30 @@ class ChallengeController
 		this.altered = false;
 
 		this.finishedChallenge = false;
+		this.sideModalOpened = false;
 	}
+
+	onKeyPress(key){
+	    if (key === "Enter" && !this.sideModalOpened) {
+	        if (!this.model.lastChallenge){
+	            document.getElementById("challenge-submit").click();
+	        }
+	        else {
+	            if (!this.finishedChallenge || this.displayPostChallengeScreen){
+	                document.getElementById("challenge-submit").click();
+                }
+
+
+	            else {
+	                document.getElementsByName("challenge-end-close")[0].click();
+                }
+	        }
+        }
+
+
+    }
+
+
 
 	setup()
 	{ }
@@ -224,6 +247,155 @@ class ChallengeController
             });
         }
 
+
+        var searchFieldset = document.getElementById("challenge-code-sidenav-std-search");
+        var searchInput = document.getElementById("challenge-code-sidenav-std-search-input");
+        var searchResultsDiv = document.getElementById("challenge-code-sidenav-std-search-results");
+        var searchCommandDiv = document.getElementById("challenge-code-sidenav-std-search-command-div");
+
+        // Add search and wipe buttons
+        var imgSearch = document.createElement("IMG");
+        imgSearch.src = "resources/images/search.png";
+        imgSearch.id = "challenge-code-sidenav-std-search-button";
+        imgSearch.className = "picture-button";
+        imgSearch.style.float = "right";
+
+
+        var imgWipe = document.createElement("IMG");
+        imgWipe.src = "resources/images/trash-button.png";
+        imgWipe.id = "challenge-code-sidenav-std-search-wipe-button";
+        imgWipe.className = "picture-button";
+        imgWipe.style.float = "right";
+
+
+        imgSearch.style.filter = "invert(0%)";
+        imgSearch.addEventListener("click",function ()
+        {
+            searchResultsDiv.innerHTML = "";
+            var searchRequest = searchInput.value.toLowerCase();
+            var standards = app.standards.selectStandards(controller.model.standard);
+            var difficulty = controller.model.difficulty;
+            var userLevel = app.user.calculateLevel(controller.model.standard);
+
+            if (difficulty === "easy") {
+                alert ("You should be fine without using search... ");
+            } else {
+                // Gather all potential known standards.
+                var knownStandardsPool = [];
+                for (var k in standards){
+                    var cat = standards[k];
+                    for (var i = 0; i < cat.length; i++) {
+                        var subcat = cat[i];
+                        if (subcat.enabled === "yes"){
+                            if (subcat.unlockedAtLevel <= userLevel) {
+                                knownStandardsPool.push(subcat);
+                            }
+                        }
+                    }
+                }
+
+                var availableStandards = [];
+                var ignoreMastered = difficulty !== "exam";
+
+                for (var i = 0; i < knownStandardsPool.length; i++) {
+                    var std = knownStandardsPool[i];
+                    if (app.user.isSubcategoryKnown(std.number, ignoreMastered)) {
+                        availableStandards.push(std);
+                    }
+                }
+
+                var searchResults = [];
+                for (var i = 0; i < availableStandards.length; i++) {
+                    var std = availableStandards[i];
+                    var std_subcat_name = std.subCategory.toLowerCase();
+                    var std_cat_name = std.category.toLowerCase();
+
+                    if (std_subcat_name.indexOf(searchRequest) !== -1  || std_cat_name.indexOf(searchRequest) !== -1){
+                        searchResults.push(std);
+                    }
+                }
+
+                for (var i = 0; i < searchResults.length; i++){
+                    var subcategory = searchResults[i];
+
+                    var spanContainer = document.createElement("SPAN");
+                    var subcategorySpan = document.createElement("SPAN");
+                    subcategorySpan.id = "challenge-code-category#" + subcategory.category +"#" + subcategory.number;
+                    subcategorySpan.className = "code-review-select-subcategory-span";
+                    app.utils.insertTooltip(subcategorySpan, subcategory.description);
+                    var img = document.createElement("IMG");
+                    img.src = "resources/images/info.png";
+                    img.id = "challenge-select-subcategory-tooltip#" + subcategory.category + "#" + subcategory.number;
+                    img.className = "picture-button";
+                    img.style.float = "right";
+
+                    var label = document.createElement("LABEL");
+                    label.id = "challenge-code-category#" + subcategory.category +"#" + subcategory.number + "#label";
+                    label.innerHTML = subcategory.subCategory;
+
+                    img.style.filter = "invert(0%)";
+                    img.addEventListener("click",function ()
+                    {
+                        if (this.style.filter === "invert(0%)")
+                        {
+                            app.tracker.saveForLogs("tooltip_click", {});
+
+                            this.style.filter = "invert(100%)";
+                            var category = this.id.split("#")[1];
+                            var idNum = this.id.split("#")[2];
+
+                            var subCatSpan = document.getElementById("challenge-code-category#" + category + "#" + idNum);
+                            var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+
+                            tootlipElem.style.visibility = "visible";
+                            tootlipElem.style.opacity= "1";
+                        }
+
+                        else
+                        {
+                            this.style.filter = "invert(0%)";
+                            var category = this.id.split("#")[1];
+                            var idNum = this.id.split("#")[2];
+                            var subCatSpan = document.getElementById("challenge-code-category#" + category + "#" + idNum);
+                            var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                            tootlipElem.style.visibility = "hidden";
+                            tootlipElem.style.opacity= "0";
+                        }
+                    });
+
+                    subcategorySpan.addEventListener("click", function ()
+                    {
+                        var lCategory =  this.id.split("#")[1];
+                        var lSubCategory =  this.id.split("#")[2];
+                        var resultStandard = app.standards.getStandard(lCategory, lSubCategory, app.challenge.language);
+
+                        controller.closeSidenavAndSaveTheReview("issue", resultStandard);
+                        subCategoryDiv.innerHTML = "";
+                    });
+
+                    subcategorySpan.appendChild(label);
+                    spanContainer.appendChild(subcategorySpan);
+                    spanContainer.appendChild(img);
+
+             
+                    searchResultsDiv.appendChild(spanContainer);
+
+                }
+            }
+
+        });
+
+        imgWipe.style.filter = "invert(0%)";
+        imgWipe.addEventListener("click",function ()
+        {
+            searchResultsDiv.innerHTML = "";
+        });
+
+       searchCommandDiv.appendChild(imgSearch);
+       searchCommandDiv.appendChild(imgWipe);
+
+
+
 	}
 
 	cleanUp()
@@ -240,6 +412,7 @@ class ChallengeController
 		document.getElementById("challenge-file-select").innerHTML = "";
 		document.getElementById("challenge-code-review").innerHTML = "";
 		document.getElementById("challenge-present-issues").innerHTML = "";
+		document.getElementById("challenge-code-sidenav-std-search-command-div").innerHTML = "";
 		document.getElementById("challenge-code-box").classList.remove("box");
 		document.getElementById("challenge-code-box").classList.add("box-left");
 		document.getElementById("challenge-code-box").scrollTop = 0;
@@ -559,30 +732,6 @@ class ChallengeController
 
 	}
 
-	stringifyAverageTime()
-	{
-		var timeInSeconds = this.model.averageTimeSeconds;
-		var minutesInt = ~~(timeInSeconds/60);
-		var secondsInt = (timeInSeconds%60);
-
-		var timeStr = "";
-
-		if (minutesInt < 10) {
-			timeStr = "0"+minutesInt + ":";
-		}
-		else {
-			timeStr = minutesInt + ":";
-		}
-
-		if (secondsInt < 10) {
-			timeStr += "0"+secondsInt;
-		}
-		else {
-			timeStr += secondsInt;
-		}
-		return timeStr;
-	}
-
 	setReviewData(filename)
 	{
 		var reviewTable = document.getElementById("challenge-data-table");
@@ -659,6 +808,10 @@ class ChallengeController
 			{
 				if (controller.allowSelection === true && controller.finishedChallenge === false)
 				{
+
+
+
+
 					//Check if it is already has a class "selected"
 					if (!this.classList.contains("selected") && !controller.checkIssueQuantityLimit())
 					{
@@ -725,6 +878,7 @@ class ChallengeController
 		var controller = this;
 		this.codeBitReviewed = codeBit;
 		this.codeElementIdReviewed = id;
+		this.sideModalOpened = true;
 
         var sideModal = document.getElementById("challenge-code-side-modal");
         sideModal.style.width = "45%";
@@ -750,6 +904,7 @@ class ChallengeController
 	closeSidenavAndSaveTheReview(type, content)
 	{
 		var controller = this;
+		this.sideModalOpened = false;
 
 		// Close sidenav and return all in sidenav elements to its original state.
 		var sideModal = document.getElementById("challenge-code-side-modal");
