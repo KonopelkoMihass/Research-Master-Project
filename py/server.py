@@ -81,14 +81,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "submit_review":
             self.submit_review(message_data)
 
-        elif message_type == "push_standard":
-            pass
-        #self.push_standard(message_data)
-
-        elif message_type == "get_standard":
-            pass
-        #self.get_standard()
-
         elif message_type == "save_logs":
             self.save_logs(message_data)
 
@@ -168,6 +160,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def signup(self, message_data):
+        print ("server->signup")
         message= user_manager.signup(message_data)
         self.send_message(message[0], message[1])
 
@@ -203,10 +196,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def signin(self, message_data):
+        print ("server->signin")
         message = user_manager.signin(message_data)
         self.send_message(message[0], message[1])
 
         if message[0] =="signin_successful":
+            print ("Retrieving standards")
             self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
             self.send_message("get_standard_successful", standards_manager.get_standard("js"))
             #Save connection in there.
@@ -234,7 +229,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
             connections[message[1]["email"]] = 	connection
 
-            print("Connections", connections)
+
 
     def add_assignment(self, message_data):
         message = assignments_manager.add_assignment(message_data)

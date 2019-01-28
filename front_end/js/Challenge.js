@@ -18,7 +18,9 @@ class Challenge extends Model
         this.lastChallenge = false;
         this.difficulty = "";
 
-        this.challengeIssueInformation = [];
+        this.challengeIssueInformationName = [];
+        this.challengeIssueInformationDescription = [];
+
         this.standardInternalisationScore = {};
     }
 
@@ -199,7 +201,8 @@ class Challenge extends Model
 
             if (messageType === app.net.messageHandler.types.GET_CHALLENGE_SUCCESSFUL)
             {
-                this.challengeIssueInformation = [];
+                this.challengeIssueInformationName = [];
+                this.challengeIssueInformationDescription = [];
 
                 this.code = data.code;
                 this.issues = data.issues;
@@ -224,22 +227,26 @@ class Challenge extends Model
                             familiarIssue = "You have seen it often to find on your own";
                         }
                         else {
-                            this.challengeIssueInformation.push(this.issues[key].standard.category + "->" + this.issues[key].standard.subCategory);
+                            this.challengeIssueInformationName.push(this.issues[key].standard.category + "->" + this.issues[key].standard.subCategory);
+                            this.challengeIssueInformationDescription.push(this.issues[key].standard.description);
                         }
                     }
 
                     // Remove duplicates.
-                    this.challengeIssueInformation = [...new Set(this.challengeIssueInformation)]
+                    this.challengeIssueInformationName = [...new Set(this.challengeIssueInformationName)];
+                    this.challengeIssueInformationDescription = [...new Set(this.challengeIssueInformationDescription)];
 
 
                     // Add "FamiliarIssue" note if present
                     if (familiarIssue !== ""){
-                        if (this.challengeIssueInformation.size > 0) {
-                            this.challengeIssueInformation.unshift(familiarIssue);
+                        if (this.challengeIssueInformationName.size > 0) {
+                            this.challengeIssueInformationName.unshift(familiarIssue);
+                            this.challengeIssueInformationDescription.unshift(familiarIssue);
                             this.difficulty = "mixed";
                         }
                         else {
-                            this.challengeIssueInformation.push(familiarIssue);
+                            this.challengeIssueInformationName.push(familiarIssue);
+                            this.challengeIssueInformationDescription.push(familiarIssue);
                             this.difficulty = "hard";
                         }
                     }
@@ -404,7 +411,16 @@ class Challenge extends Model
             data.gradeOverall += perf[i].grade;
             data.timeOverall += perf[i].time;
             data.gradeCumulativeStr += " " + perf[i].grade;
-            data.timeCumulativeStr += " " + perf[i].time;
+
+
+
+            var challengeTimeMins = Math.floor(perf[i].time/60);
+            var challengeTimeSecs = perf[i].time%60;
+            if (challengeTimeMins!==0){
+                 data.timeCumulativeStr += " " + challengeTimeMins + "m ";
+            }
+             data.timeCumulativeStr += " " + challengeTimeSecs;
+
 
             if (i+1 < perf.length)
             {
@@ -466,6 +482,12 @@ class Challenge extends Model
 
         app.tracker.saveForLogs("challenge chain completed",
 			{"score": data.gradeOverall});
+
+
+        // Recalculate time
+        let timeOveralStr = "" + Math.floor(data.timeOverall/60) + "m ";
+        timeOveralStr += data.timeOverall%60 + "s";
+        data.timeOverall = timeOveralStr;
 
         return data;
     }

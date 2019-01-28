@@ -4,3 +4,49 @@
     right: 0px;
     float: right;
 }
+
+.profile-tooltip {
+    all: initial;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px  black;
+
+}
+
+
+
+.profile-tooltip .tooltiptext {
+    top: 125%;
+    left: 0%;
+    visibility: hidden;
+
+    background-color: #d7d7d7;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    margin-left: 0px;
+    opacity: 0;
+    transition: opacity .3s;
+    font-size: calc(8px + 0.5vw);
+
+}
+
+.profile-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.profile-tooltip:hover .tooltiptext {
+  	transition-delay: .2s;
+    visibility: visible;
+    opacity: 1;
+}

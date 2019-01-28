@@ -54,6 +54,52 @@ class ProfileController
 		{
 			stdSelectorDiv.innerText = "You have not participated in any challenges yet.  Complete a chain and come back.";
 		}
+
+		else {
+		    var focusInfoButton = document.createElement("BUTTON");
+
+		    focusInfoButton.innerText = "Help";
+		    focusInfoButton.style.cssFloat = "right";
+
+
+            // Add tooltip
+            stdSelectorDiv.className += " profile-tooltip";
+            var tooltipSpan = document.createElement("SPAN");
+            tooltipSpan.innerText =
+                "This is a profile page.  Click the standard button so you can learn about your progress in learning coding standards. There is a short FAQ:\n" +
+                "" +
+                "Level is your overall progress in that specific standard. Your level equals 1 + standard bits mastered.\n" +
+                "" +
+                "When you \"Focus\" on a selected standard, you will get challenges related to it 90% of the time.  You can select up to 4 standards to focus.\n" +
+                "You can enable/disable focus by pressing a button on the right of a standard bit.\n" +
+                "" +
+                "As you see - many of the standard bits can be unlocked once you level up.  To level up - master available standard bits by scoring 10/10 in them.";
+
+
+            tooltipSpan.className = "tooltiptext";
+            tooltipSpan.style.visibility = "hidden";
+            tooltipSpan.style.opacity= "0";
+
+            stdSelectorDiv.appendChild(tooltipSpan);
+
+            focusInfoButton.addEventListener("mouseover", function(){
+
+                var tootlipElem = stdSelectorDiv.getElementsByClassName("tooltiptext")[0];
+                tootlipElem.style.visibility = "visible";
+                tootlipElem.style.opacity= "1";
+            });
+
+            focusInfoButton.addEventListener("mouseout", function(){
+                var tootlipElem = stdSelectorDiv.getElementsByClassName("tooltiptext")[0];
+                tootlipElem.style.visibility = "hidden";
+                tootlipElem.style.opacity= "0";
+            });
+
+
+
+            stdSelectorDiv.appendChild(focusInfoButton);
+        }
+
 	}
 
 	displaySTDProgress(standardName, currentScorePack, currentMaxPack)
@@ -123,7 +169,6 @@ class ProfileController
 			var legend = document.createElement("LEGEND");
 
 			var percentage = Math.ceil((currentScorePack[sortedKeys[c]] / currentMaxPack[sortedKeys[c]]) * 100);
-			//button.innerText = "[ " + percentage + "% / 100% ] " +  stdName;
 
 
 			legend.innerHTML = "[ " + percentage + "% / 100% ] " + sortedKeys[c];

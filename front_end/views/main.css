@@ -457,6 +457,25 @@ button:hover
     cursor: pointer;
 }
 
+.code-review-subcategory-info-span
+{
+    border-color:#c7cfb9;
+    border-style: solid;
+	border-width: 2px;
+    font-weight: bold;
+	color: #c7cfb9;
+    font-size: calc(13px + 0.5vw);
+    text-align: left;
+    width: 70%;
+    margin:1.5% 2%;
+    padding: 2px 10px;
+    float:right;
+}
+
+
+
+
+
 .code-review-select-subcategory-span
 {
     border-color:#c7cfb9;

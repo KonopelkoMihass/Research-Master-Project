@@ -80,8 +80,7 @@ class ChallengeController
         return sortedKeys;
     }
 
-	setupSideModal()
-	{
+	setupSideModal() {
 		var controller = this;
 
         var standards =  app.standards.selectStandards(this.model.standard);
@@ -166,18 +165,11 @@ class ChallengeController
 
                         if (difficulty === "easy") {
                             if (!controller.model.doesContainThisStandardSubCategory(subcategory.number)) continue;
-                        }
-
-                        else if (difficulty === "mixed" || difficulty === "hard")
-                        {
+                        } else if (difficulty === "mixed" || difficulty === "hard"){
                             if (!app.user.isSubcategoryKnown(subcategory.number, true)) continue;
-                        }
-
-                        else {
+                        } else {
                              if (!app.user.isSubcategoryKnown(subcategory.number, false)) continue;
                         }
-
-
 
                         var spanContainer = document.createElement("SPAN");
 
@@ -534,10 +526,59 @@ class ChallengeController
         if (difficulty !== "exam")
         {
             divIssuePresents.style.display = "block";
-            var issuesInfo = this.model.challengeIssueInformation;
+            var issuesInfoName = this.model.challengeIssueInformationName;
+            var issuesInfoDescription = this.model.challengeIssueInformationDescription;
 
-            for (var i in issuesInfo) {
-                divIssuePresents.innerHTML += issuesInfo[i] + "\n";
+
+            for (var i in issuesInfoName) {
+
+                var spanContainer = document.createElement("SPAN");
+                var subcategorySpan = document.createElement("SPAN");
+                subcategorySpan.innerText = issuesInfoName[i];
+
+                subcategorySpan.id = "challenge-code-info#" + issuesInfoName[i];
+                subcategorySpan.className = "code-review-subcategory-info-span";
+
+                app.utils.insertTooltip(subcategorySpan, issuesInfoDescription[i]);
+
+                var img = document.createElement("IMG");
+                img.src = "resources/images/info.png";
+                img.id = "challenge-check-subcategory-tooltip#" + issuesInfoName[i];
+                img.className = "picture-button";
+                img.style.float = "left";
+
+                img.style.filter = "invert(0%)";
+                img.addEventListener("click",function () {
+                    if (this.style.filter === "invert(0%)") {
+                        app.tracker.saveForLogs("tooltip_click", {});
+                        this.style.filter = "invert(100%)";
+                        var stringID = this.id.split("#")[1];
+
+                        var subCatSpan = document.getElementById("challenge-code-info#" + stringID);
+                        var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                        tootlipElem.style.visibility = "visible";
+                        tootlipElem.style.opacity= "1";
+                    }
+
+                    else
+                    {
+                        this.style.filter = "invert(0%)";
+                        var stringID = this.id.split("#")[1];
+                        var subCatSpan = document.getElementById("challenge-code-info#" + stringID);
+                        var tootlipElem = subCatSpan.getElementsByClassName("tooltiptext")[0];
+                        tootlipElem.style.visibility = "hidden";
+                        tootlipElem.style.opacity= "0";
+                    }
+                });
+
+                spanContainer.appendChild(subcategorySpan);
+                spanContainer.appendChild(img);
+
+                divIssuePresents.appendChild(spanContainer);
+
+
+
+                //divIssuePresents.innerHTML += issuesInfo[i] + "\n";
             }
         }
 
@@ -574,7 +615,7 @@ class ChallengeController
 
 				controller.displayPostChallengeScreen = true;
 
-				document.getElementById("challenge-submit-legend").innerText = "Continue?";
+				document.getElementById("challenge-submit-legend").innerText = "Continue?\n[Enter]";
 			}
 			else
 			{
@@ -591,7 +632,7 @@ class ChallengeController
 				controller.codingLanguageUsed = "";
 
 				controller.displayPostChallengeScreen = false;
-				document.getElementById("challenge-submit-legend").innerText = "Submit and see results?";
+				document.getElementById("challenge-submit-legend").innerText = "Submit and see results?\n[Enter]";
 			}
 		});
 	}
@@ -723,7 +764,7 @@ class ChallengeController
 
 
 		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
-		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + "s " + results.timeCumulativeStr;
+		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + " " + results.timeCumulativeStr;
 
 		if(!this.altered) document.getElementById("std-internalisation").style.display = "none";
 
@@ -792,7 +833,6 @@ class ChallengeController
 
 	}
 
-
 	tweakLineNumbers(filename, pressable)
 	{
 		var controller = this;
@@ -825,8 +865,6 @@ class ChallengeController
 		}
 	}
 
-
-
 	updateIssueCountLabel()
 	{
 		var totalIssuesLabel = document.getElementById("total-issues");
@@ -843,12 +881,10 @@ class ChallengeController
 		return totalIssuesPresent === totalIssuesFound;
 	}
 
-
 	tweakCodeBlock(filename, pressable)
 	{
 		this.tweakLineNumbers(filename, pressable);
 	}
-
 
 	addLineBit(id, filename)
 	{
@@ -859,7 +895,6 @@ class ChallengeController
 
 		this.openSidenavAndConstructIssue(id, filename, codeBit);
 	}
-
 
 	deleteLineBit(id, filename)
 	{

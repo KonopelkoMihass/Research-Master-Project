@@ -17,13 +17,13 @@ class UserManager:
 
     def signin(self, message_data):
         """Returns message type : string"""
+
         result = False
         message_type = "signin_failed"
         data = {}
         try:
             result = self.database_manager.check_password(message_data["email"], message_data["password"])
 
-            print ("RESULT ", result)
             if result is True:
                 message_type="signin_successful"
 
@@ -41,14 +41,13 @@ class UserManager:
 
                 is_gamified = data["gamification"]
                 sent_instructions = data["got_instruction_emails"]
-                print ("INSTRUCTIONS", sent_instructions)
                 if is_gamified == "y":
                     if "sent_gamified" in sent_instructions:
                         pass
                     else:
                         data["got_instruction_emails"]["sent_gamified"] = "yes"
                         self.email_system.send_gamification_email(data)
-                        self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
+                        self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
 
 
                 elif is_gamified == "n":
@@ -57,7 +56,7 @@ class UserManager:
                     else:
                         data["got_instruction_emails"]["sent_non_gamified"] = "yes"
                         self.email_system.send_non_gamification_email(data)
-                        self.database_manager.enable_system_switch(data["email"], json.dumps(data["got_instruction_emails"]))
+                        self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
 
 
 

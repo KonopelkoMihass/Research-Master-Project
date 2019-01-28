@@ -100,7 +100,6 @@ class DatabaseManager:
 
         if sha256_crypt.verify(password, data[0]["password"]):
             if data[0]["role"] == "teacher":
-                print ("On check_if_teacher - ", data[0]["password"])
                 result = True
         else:
             if password == data[0]["password"]:
@@ -123,8 +122,6 @@ class DatabaseManager:
         stmt = "SELECT * FROM Users WHERE Users.email='" + email + "' LIMIT 1"
         cursor.execute(stmt)
         data = cursor.fetchall()[0]
-
-        print ("On change_password - ", data["password"])
 
         if "$5$rounds=" in data["password"]:
             if sha256_crypt.verify(old_pass, data["password"]):
@@ -163,8 +160,6 @@ class DatabaseManager:
 
 
     def delete_assignment(self, id):
-        #Inserts a dictionary into table table_name
-        #print("delete assignment")
         id = str(id)
 
         connector = self.cnxpool.get_connection()
@@ -203,7 +198,6 @@ class DatabaseManager:
 
         cursor.execute(query)
         data = cursor.fetchall()[0]
-        print ("On check_password - ", data["password"])
 
         if "$5$rounds=" in data["password"]:
             if sha256_crypt.verify(password, data["password"]):
@@ -370,7 +364,6 @@ class DatabaseManager:
         query = ("UPDATE Users SET Users.challenge_performance = '" + json.dumps(past_performance) + "' WHERE Users.email='" + user_email + "';")
         cursor.execute(query)
         connector.commit()
-        pass
 
 
 
@@ -532,6 +525,7 @@ class DatabaseManager:
 
 
 
+
         print("Challenge Ids", challenge_ids)
         return challenge_ids
 
@@ -640,6 +634,25 @@ class DatabaseManager:
 
         return students
 
+    def record_instruction_email_data(self, email, str_data):
+        students = []
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+
+        query = ("UPDATE Users SET Users.got_instruction_emails = '"+str_data+"'  WHERE Users.email = '" + email + "'")
+        cursor.execute(query)
+        connector.commit()
+        cursor.close()
+        connector.close()
+
+
+
+
+
+
+
+
+
 
     def selected_system(self, message_data):
         email = message_data["email"]
@@ -657,10 +670,9 @@ class DatabaseManager:
 
 
     def save_parsed_standards(self, standards):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
         try:
-            connector = self.cnxpool.get_connection()
-            cursor = connector.cursor(dictionary=True)
-
             for lang in standards:
                 stds = standards[lang]
                 for s in stds:
@@ -678,6 +690,9 @@ class DatabaseManager:
 
         except:
             print ("already parsed it")
+
+        cursor.close()
+        connector.close()
 
 
 
@@ -702,6 +717,10 @@ class DatabaseManager:
             connector.commit()
         #except:
         #	result = "update_standards_configurations_failed"
+
+        cursor.close()
+        connector.close()
+
 
         return result
 
@@ -821,11 +840,19 @@ class DatabaseManager:
         cursor = connector.cursor(dictionary=True)
         query = "SELECT id, name, surname FROM Users WHERE role='teacher'"
         cursor.execute(query)
-        return cursor.fetchall()
+        result = cursor.fetchall()
+        cursor.close()
+        connector.close()
+
+        return result
 
     def get_teacher_email(self, id):
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor()
         query = "SELECT email FROM Users WHERE id=" +id + " LIMIT 1"
         cursor.execute(query)
-        return cursor.fetchall()[0][0]
+        result = cursor.fetchall()[0][0]
+
+        cursor.close()
+        connector.close()
+        return result
