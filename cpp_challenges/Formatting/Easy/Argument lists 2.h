@@ -1,17 +1,3 @@
-// File: Projectile.cpp
-// Line Length ruler.
-//--|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
-//       10        20        30        40        50        60        70        80        90        100       110       120
-//
-
-/// <summary>
-/// @author John Ash
-/// @version 1.0
-/// 
-/// </summary>
-
-#include "Projectile.h"
-
 /// <summary>
 /// @brief Initialises various properties of the projectile.
 /// The projectile speed is set to it's maximum allowable speed.
@@ -20,22 +6,12 @@
 /// <param name="t_x">The x position of the projectile</param>
 /// <param name="t_x">The y position of the projectile</param>
 /// <param name="t_rotation">The rotation angle of the projectile in degrees</param>
-void Projectile::init(sf::Texture const & t_texture, 
-	                  double t_x, 
-	                  double t_y, 
-	                  double t_rotation)
+void Projectile::init(sf::Texture const & t_texture 
+	                  ,double t_x 
+	                  ,double t_y 
+	                  ,double t_rotation)
 {	
-	// Set texture
-	m_projectile.setTexture(t_texture);
-	m_projectile.setTextureRect(m_projectileRect);
-	
-	m_projectile.setOrigin( m_projectileRect.width / 2.0,
-							m_projectileRect.height / 2.0);
-						
-	m_projectile.setPosition(t_x, t_y);
-	
-	m_projectile.setRotation(t_rotation); 
-	m_speed = s_MAX_SPEED;
+	// Some inner logic
 }
 
 /// <summary>
@@ -49,10 +25,39 @@ void Projectile::init(sf::Texture const & t_texture,
 /// <param name="t_dt">The delta time</param>
 /// <param name="t_wallSprites">A reference to the container of wall sprites</param>
 /// <returns>True if this projectile is currently not in use (i.e. speed is zero).</returns>
-bool Projectile::update(double t_dt, std::vector<sf::Sprite> const &t_wallSprites)
+bool Projectile::update(double t_dt, 
+	                    std::vector<sf::Sprite> const &t_wallSprites)
 {
-	// Some inner logic.
-  
+	if (!inUse())
+	{
+		// If this projectile is not in use, there is no update routine to perform.
+		return false;
+	}
+	
+	sf::Vector2f position = m_projectile.getPosition();
+	
+	const float rotationRads = m_projectile.getRotation() * DEG_TO_RAD;
+
+	float newPosX = position.x + (std::cos(rotationRads) * m_speed) * (t_dt / 1000);
+	float newPosY = position.y + (std::sin(rotationRads) * m_speed) * (t_dt / 1000);
+	
+	m_projectile.setPosition(newPosX, newPosY);
+
+	if (!isOnScreen(newPos)) 
+	{
+		m_speed = 0;	
+	}
+	else 
+	{
+		// Still on-screen, have we collided with a wall?
+		for (sf::Sprite const & sprite : t_wallSprites)
+		{
+			// Checks if the projectile has collided with the current wall sprite.
+			if (CollisionDetector::collision(m_projectile, sprite)) 
+			{
+				m_speed = 0;
+			}
+		}		
+	}
 	return m_speed == s_MAX_SPEED;
 }
-

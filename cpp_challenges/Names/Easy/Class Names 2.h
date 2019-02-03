@@ -10,7 +10,7 @@ class sword
 	// Some inner logic.
 };
 
-class MagicalSword : protected sword
+class MagicalSword
 {
 
 };

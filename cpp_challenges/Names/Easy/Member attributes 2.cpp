@@ -1,14 +1,18 @@
-void remove_text_box(const std::string& _ID)
+// Some includes.
+
+class Projectile
 {
-    // Inner Logic.
-}
- 
-void setText(const std::string& ID, const std::string& Text)
-{
-   // Inner Logic.
-}
- 
-const std::string& get_text(const std::string& ID)
-{
-    // Inner Logic.
-}
+	
+	// Some inside class logic.
+
+private:
+	
+	/// Movement speed.
+	double m_SpeedMeters {0};
+
+	/// A sprite for the projectile.
+	sf::Sprite projectile;
+
+	/// The bounding rectangle for this projectile.
+	sf::IntRect m_projectileRect { 5, 178, 10, 6 };
+};

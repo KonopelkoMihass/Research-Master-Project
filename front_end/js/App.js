@@ -93,6 +93,7 @@ class App
             "<br>*There is a list of most important updates*" +
             "<br>-Better difficulty curve-" +
             "<br>-Support for C++ Challenges-" +
+            "<br>-(Part 1 out of 4)-" +
             "<br>-Many tiny enhancements-" +
             "<br>-Security-" +
             "<br>and" +
@@ -258,8 +259,8 @@ class App
 	{
 		var viewLabel = document.getElementById("view-title");
 		var gamified = app.user.gamified;
+		var team = app.user.teamName;
 		var challengeModeOnly = app.user.challengeModeOnly;
-
 
 		if (gamified === "y")
 		{
@@ -276,6 +277,7 @@ class App
 			document.getElementById("mps-profile-button").style.display = 'none';
 			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
 			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
+			 app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
 		}
 
 
@@ -285,6 +287,14 @@ class App
 		    document.getElementById("mps-reviews-button").style.display = 'none';
 		    document.getElementById("mps-feedback-button").style.display = 'none';
 		    document.getElementById("mps-submissions-button").style.display = 'none';
+        }
+
+        if (team === "y4") {
+		    document.getElementById("mps-challenges-js-button").style.display = 'none';
+        }
+
+        if (team === "y3") {
+		    document.getElementById("mps-challenges-cpp-button").style.display = 'none';
         }
 
 

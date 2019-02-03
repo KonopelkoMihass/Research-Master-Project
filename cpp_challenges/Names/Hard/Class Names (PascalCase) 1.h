@@ -10,8 +10,8 @@
 /// 
 /// </summary>
 
-
-#pragma once
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
 #include <SFML/Graphics.hpp>
 #include "ScreenSize.h"
 #include "MathUtility.h"
@@ -50,3 +50,4 @@ public:
 
 	// More content.
 };
+#endif // !PROJECTILE_H

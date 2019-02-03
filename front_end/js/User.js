@@ -13,6 +13,7 @@ class User extends Model
         this.id = "";
         this.log = "";
         this.gamified = "n";
+        this.team = "";
 
         this.stdInternalisation = {};
 
@@ -58,15 +59,6 @@ class User extends Model
 
         return "ERROR";
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -180,6 +172,7 @@ class User extends Model
         this.id = data.id;
         this.gamified = data.gamification;
         this.stdInternalisation = data.std_internalisation;
+        this.teamName = data.team_name;
 
         this.challengeModeOnly = data.challenge_mode_only === "y" ? true : false;
         this.gotInstructionEmails = data.got_instruction_emails;

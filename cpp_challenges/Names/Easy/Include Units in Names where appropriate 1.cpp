@@ -9,13 +9,7 @@ int main()
 	// Time spent in hours
 	float timeSpentHrs{0};
 
-
-	cout << "Enter distance walked: ";
-	cin >> walked;
-
-	cout << "Enter time spent: ";
-	cin >> timeSpentHrs;
-
-	cout << "You walked " << walked << " kilometers in "<< timeSpentHrs <<" hours" << endl;    
+	// Inner Logic.
+	
 	return 0;
 }

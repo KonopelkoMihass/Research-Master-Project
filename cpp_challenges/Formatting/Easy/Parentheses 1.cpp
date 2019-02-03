@@ -4,7 +4,7 @@ const double PI = 3.14159265359;
 double getCylinderTotalArea(double t_radius,
 							double t_height)
 {
-	double totalArea = 2 * PI * t_radius * H;
+	double totalArea = 2 * PI * t_radius * t_height;
 	return 2 * PI * t_radius * t_radius + totalArea;	
 }
 

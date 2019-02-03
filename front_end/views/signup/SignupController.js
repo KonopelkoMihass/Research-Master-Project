@@ -19,12 +19,14 @@ class SignupController
 	signup(e)
 	{
 		var email = document.getElementById("signup-email").value;
-		var teamName = "none";
 		var name = document.getElementById("signup-name").value;
     	var surname = document.getElementById("signup-surname").value;
 		var noun = document.getElementById("signup-noun").value;
 		var password = document.getElementById("signup-password").value;
 		var passwordConfirm = document.getElementById("signup-confirm-password").value;
+        var teamName = document.getElementById("signup-group").value;
+
+
 
 		if (email !== "" && teamName !== "" && name !== "" && surname !== "" && noun !== "" && password !== "" && passwordConfirm !== "")
 		{
@@ -37,16 +39,15 @@ class SignupController
 
                 else
                 {
-                    if (email.indexOf("@itcarlow.ie") !== -1)
+                    //if (email.indexOf("@itcarlow.ie") !== -1)
                     {
                         this.model.signup(email, teamName, name, surname, noun, password);
                         this.cleanSignup();
                     }
-                    else
-                    {
-                        this.showError("Please use an @itcarlow.ie email");
-                    }
-
+                   // else
+                    //{
+                    //    this.showError("Please use an @itcarlow.ie email");
+                   // }
                 }
 			}
 

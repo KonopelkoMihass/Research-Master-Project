@@ -10,7 +10,8 @@
 /// 
 /// </summary>
 
-#pragma once
+#ifndef PROJECTILE_POOL_H
+#define PROJECTILE_POOL_H
 #include <SFML/Graphics.hpp>
 #include <array>
 #include "Projectile.h"
@@ -67,3 +68,4 @@ private:
 	/// A flag indicating whether there are any projectiles available (initially they are).
 	bool m_poolFull { false };
 };
+#endif // !PROJECTILE_POOL_H

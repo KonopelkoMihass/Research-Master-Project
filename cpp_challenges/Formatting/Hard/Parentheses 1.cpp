@@ -6,35 +6,12 @@
 #include "Vector2.h"
 
 /// <summary>
-/// @author Pete Lowe
+/// @author Peter Kapusta
 /// @version 1.2
 /// 
 /// </summary>
 
-
-/// <summary>
-/// Get length of vector using sqrt of the sum of the squares
-/// </summary>
-/// <param name="t_vector">Input vector</param>
-/// <returns>Length</returns>
-float vectorLength(const sf::Vector2f t_vector)
-{
-	float sumOfSquares = (t_vector.x * t_vector.x ) + (t_vector.y * t_vector.y);
-	const float length = sqrt(sumOfSquares);
-	return length;
-}
-
-/// <summary>
-/// Return length squared may be smaller than length if
-///  less than one.
-/// </summary>
-/// <param name="t_vector">Input vector</param>
-/// <returns>Length squared</returns>
-float vectorLengthSquared(const sf::Vector2f t_vector)
-{
-	const float sumOfSquares = (t_vector.x * t_vector.x) + (t_vector.y * t_vector.y);	
-	return sumOfSquares;
-}
+// Few function skipped
 
 /// <summary>
 /// Return cross product of 2 vectors
@@ -58,9 +35,10 @@ float vectorCrossProduct(	const sf::Vector2f t_vectorA,
 float vectorDotProduct(	const sf::Vector2f t_vectorA, 
 												const sf::Vector2f t_vectorB)
 {
-	const float result = (t_vectorA.x * t_vectorB.x) + (t_vectorA.y * t_vectorB.y);
+	const float result = t_vectorA.x * t_vectorB.x + t_vectorA.y * t_vectorB.y;
 	return result;
 }
+
 
 /// <summary>
 /// Returns the angle between 2 vectors.
@@ -80,8 +58,8 @@ float vectorAngleBetween(	const sf::Vector2f t_vectorA,
 	{
 		cosine = -1.0f;
 	}
-	const float angleInRadians = std::acos(cosine);
-	const float  angleInDegrees = angleInRadians * (180.0f / PI);
+
+	const float angleInDegrees = std::acos(cosine) * 180.0f / PI;
 	return angleInDegrees;
 }
 
@@ -96,24 +74,9 @@ sf::Vector2f vectorRotateBy(const sf::Vector2f t_vector,
 {
 	const float cos = std::cos(t_angleRadians); 
 	const float sin = std::sin(t_angleRadians);
-	const float xComponent = (t_vector.x * cos) - (t_vector.y * sin);
-	const float yComponent = (t_vector.x * sin) + (t_vector.y * cos);
-	const sf::Vector2f result{ xComponent, yComponent };
-	return result;
+
+	return (sf::Vector2f((t_vector.x * cos) - (t_vector.y * sin), 
+											(t_vector.x * sin) + (t_vector.y * cos)));
 }
 
-/// <summary>
-/// Returns the unit vector.
-/// </summary>
-/// <param name="t_vector">Input vector</param>
-/// <returns>Unit vector</returns>
-sf::Vector2f vectorUnitVector(sf::Vector2f t_vector)
-{
-	sf::Vector2f result{0.0f, 0.0f};
-	const float lenght = vectorLength(t_vector);
-	if (lenght != 0.0f) 
-	{
-		result = sf::Vector2f{t_vector.x / lenght, t_vector.y / lenght};
-	}
-	return result;
-}
+

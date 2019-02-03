@@ -1,32 +1,32 @@
-// File: ProjectilePool.h
+// File: Position.h
 // Line Length ruler.
 //--|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 //       10        20        30        40        50        60        70        80        90        100       110       120
 //
 
 /// <summary>
-/// @author Ash Snow
+/// @author Ash Smith
 /// @version 1.0
 /// 
 /// </summary>
 
-#ifndef PROJECTILE_POOL_H
-#define PROJECTILE_POOL_H
+#ifndef POSITION_H
+#define POSITION_H
 
-#include <SFML/Graphics.hpp>
-#include <array>
-#include "Projectile.h"
-
-class projectilePool
+/// <summary>
+/// @brief A basic position struct.
+/// 
+/// Stores position on x, y, z axises.
+/// </summary>
+struct Position
 {
 public:
-
-	/// <summary>
-	/// @brief No-op default constructor
-	/// </summary>
-	projectilePool() = default;
-
-	// More content.
+	/// Position on X-axis.
+	double x;
+	/// Position on Y-axis.
+	double y;
+	/// Position on Z-axis.
+	double z;
 };
 
-#endif // !PROJECTILE_POOL_H
+#endif // !POSITION_H

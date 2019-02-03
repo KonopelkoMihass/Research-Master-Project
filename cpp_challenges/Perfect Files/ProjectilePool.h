@@ -11,11 +11,19 @@
 /// </summary>
 
 
-#pragma once
+#ifndef PROJECTILE_POOL_H
+#define PROJECTILE_POOL_H
 #include <SFML/Graphics.hpp>
 #include <array>
 #include "Projectile.h"
 
+/// <summary>
+/// @brief Implementation of Projectile Pool.
+/// 
+/// Manages projectiles in the game.  This class creates, updates 
+/// and renders the bullets, as well as removes them.  It can have 
+/// no more tha s_POOL_SIZE projectiles at a time.
+/// </summary>
 class ProjectilePool
 {
 public:
@@ -70,3 +78,5 @@ private:
 	/// A flag indicating whether there are any projectiles available (initially they are).
 	bool m_poolFull { false };
 };
+
+#endif // !PROJECTILE_POOL_H

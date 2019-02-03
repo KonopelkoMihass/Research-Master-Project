@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `ProjectOrganiser`.`Users` (
   `challenge_performance` MEDIUMTEXT,
 
 
-
   PRIMARY KEY (`id`));
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);

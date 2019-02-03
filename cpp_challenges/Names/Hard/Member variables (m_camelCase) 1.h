@@ -64,5 +64,4 @@ private:
 
 	/// The bounding rectangle for this projectile.
 	sf::IntRect projectileRect { 5, 178, 10, 6 };
-
 };
