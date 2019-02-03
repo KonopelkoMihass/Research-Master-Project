@@ -131,7 +131,7 @@ class FeedbackView extends View
 			reviewBtn.id = "select-review-student-feedback-row#" + submission.id + "#" + fbdata.reviewer_id + "#" + currentFeedbacksIDs[i];
 			reviewBtn.addEventListener("click", function ()
 			{
-				app.tracker.track(this);
+				app.annalist.track(this);
 				var parentNode = modalData.modal.parentNode;
 				parentNode.removeChild(modalData.modal);
 

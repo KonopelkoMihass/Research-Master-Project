@@ -346,7 +346,7 @@ class CreateChallengeController
 							{
 							    if (this.style.filter === "invert(0%)")
 							    {
-							        app.tracker.saveForLogs("tooltip_click", {});
+							        app.annalist.saveForLogs("tooltip_click", {});
 
 							       	this.style.filter = "invert(100%)";
                                     var category = this.id.split("#")[1];

@@ -61,7 +61,7 @@ class PerformReviewStudentView extends View
 						cell0.id = "see-assignment-submissions-student#" + assignments[i].id;
 						cell0.addEventListener("click", function ()
 						{
-							app.tracker.track(this);
+							app.annalist.track(this);
 							if (view.selectedSub !== "")
 							{
 								view.selectedSub.classList.remove("sub-selected");
@@ -111,7 +111,7 @@ class PerformReviewStudentView extends View
 				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submission.iteration;
 				cell0.addEventListener("click", function ()
 				{
-					app.tracker.track(this);
+					app.annalist.track(this);
 
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);

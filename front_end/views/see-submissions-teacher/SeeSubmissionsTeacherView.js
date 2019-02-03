@@ -33,7 +33,7 @@ class SeeSubmissionsTeacherView extends View
 				cell0.id = "see-submission-teacher#" + submissions[i].id + "#" + submissions[i].iteration;
 				cell0.addEventListener("click", function ()
 				{
-					app.tracker.track(this);
+					app.annalist.track(this);
 					app.submissions.codeViewState = "Review";
 					app.submissions.submissionIDToCodeView = parseInt(this.id.split('#')[1]);
 					app.submissions.reviewerIDToCodeView = app.user.id;
@@ -103,7 +103,7 @@ class SeeSubmissionsTeacherView extends View
 						cell0.innerHTML = assignments[i].name;
 						cell0.id = "see-assignment-submissions-teacher#" + assignments[i].id;
 						cell0.addEventListener("click", function () {
-							app.tracker.track(this);
+							app.annalist.track(this);
 							view.showSubmissions(parseInt(this.id.split("#")[1]));
 						});
 					}

@@ -58,7 +58,7 @@ class Utilities
 		if (includeSubmitButton)
 		{
 			modalBox.appendChild(submitBtn);
-			submitBtn.addEventListener("click", function(){app.tracker.trackModalDestruction(title)});
+			submitBtn.addEventListener("click", function(){app.annalist.trackModalDestruction(title)});
 		}
 
 		modalBox.appendChild(cancelBtn);
@@ -72,7 +72,7 @@ class Utilities
         for (var i = 0; i <closeButtons.length;i++){
 			closeButtons[i].addEventListener("click", function ()
 			{
-				app.tracker.trackModalDestruction(title);
+				app.annalist.trackModalDestruction(title);
 				var parentNode = modal.parentNode;
 				parentNode.removeChild(modal);
 			});
@@ -80,8 +80,8 @@ class Utilities
         elementDict.closes = closeButtons;
         document.body.appendChild(modal);
 
-		app.tracker.trackModalCreation(title);
-		app.tracker.updateTracks();
+		app.annalist.trackModalCreation(title);
+		app.annalist.updateTracks();
 
 		return elementDict;
 	}

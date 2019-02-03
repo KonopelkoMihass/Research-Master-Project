@@ -19,7 +19,7 @@ class App
 		this.templateManager = new TemplateManager();
 		this.modalContentManager = new ModalContentManager();
 		this.utils = new Utilities();
-		this.tracker =  new Tracker(this.net);
+		this.annalist =  new Annalist(this.net);
 
 		//load views
 		for (var viewName in this.viewManager.VIEW)
@@ -33,15 +33,25 @@ class App
 			app.templateManager.downloadAll(function()	{
 				app.modalContentManager.downloadAll(function () {
 					app.setup();
-
 					window.addEventListener('beforeunload', function() {
-						app.tracker.sendAndClearLogs(true);
+						app.annalist.sendAndClearLogs(true);
 					});
+					app.annalist.updateTracks();
 
-
-
-					app.tracker.updateTracks();
 		});});});
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 
 	heartbeat()
@@ -74,12 +84,24 @@ class App
         document.addEventListener("keydown", function (e) {
             try {
                 app.viewManager.currentView.controller.onKeyPress(e.code);
-            } catch{
+            } catch {
 
             }
-
-
         }, false);
+
+        var patchnote =
+            "<br>*There is a list of most important updates*" +
+            "<br>-Better difficulty curve-" +
+            "<br>-Support for C++ Challenges-" +
+            "<br>-Many tiny enhancements-" +
+            "<br>-Security-" +
+            "<br>and" +
+            "<br>-Enter Key for signin and submitting your work-";
+
+
+        var announcementDiv = document.getElementById("signin-announcement-content");
+        announcementDiv.innerHTML = patchnote;
+
 
 
 	}
@@ -243,7 +265,7 @@ class App
 		{
             app.utils.assignFuncToButtonViaID("mps-profile-button", function () {
                 if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE) {
-                    app.tracker.saveForLogs("profile_visit", {});
+                    app.annalist.saveForLogs("profile_visit", {});
                     app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
                     viewLabel.innerText = "Your Profile";
                 }
@@ -465,6 +487,6 @@ getRandomAdjective = function () {
 
 setInterval(function()
 {
-	app.tracker.sendAndClearLogs(false);
+	app.annalist.sendAndClearLogs(false);
 	app.heartbeat()
 }, 20000);

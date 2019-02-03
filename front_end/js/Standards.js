@@ -148,9 +148,6 @@ class Standards extends Model
 
      }
 
-
-
-
     checkIfLearnStatesArePresent()
     {
         var userSTD = app.user.stdInternalisation;
@@ -180,10 +177,6 @@ class Standards extends Model
             }
         }
     }
-
-
-
-
 
     updateInternalisationSkillTree(scores, language)
     {
@@ -258,10 +251,6 @@ class Standards extends Model
         app.net.sendMessage("update_skills", data);
     }
 
-
-
-
-
     addInternalisationSkillTree(language)
     {
         var stdSkills = {};
@@ -297,14 +286,6 @@ class Standards extends Model
         return stdSkills;
     }
 
-
-
-
-
-
-
-
-
     recordTheStdInternalisationChange(cat, subcat, currentScore)
     {
         var stdInternalisationChanges = app.user.stdInternalisationChanges;
@@ -324,9 +305,6 @@ class Standards extends Model
         stdInternalisationChanges[key].push(pack);
         app.user.stdInternalisationChanges = stdInternalisationChanges;
     }
-
-
-
 
     getCategoryScoreData(language, category)
     {
@@ -390,6 +368,7 @@ class Standards extends Model
         app.net.sendMessage("update_standards_configurations", data);
     }
 
+
     checkIfEnabled(standards)
     {
         for (var i = 0; i < standards.length; i++)
@@ -401,15 +380,12 @@ class Standards extends Model
 
     getStandard(categoryName, number, language)
     {
-
         var subCategories = this.standards[categoryName];
          for (var j = 0; j < subCategories.length; j++)
          {
              if (subCategories[j].number == number && subCategories[j].name === language) return subCategories[j];
          }
     }
-
-
 
     getOverallStandardProgression(name)
     {
@@ -545,6 +521,29 @@ class Standards extends Model
                   }
              }
          }
+    }
+
+    getSubcategoryLanguage(number) {
+        var userSTD = app.user.stdInternalisation;
+
+        for (var language in userSTD) {
+            for (var cat in userSTD[language]) {
+                var userSTDIntCategory = userSTD[language][cat];
+                for (var i = 0; i < userSTDIntCategory.subcategories.length; i++)
+                {
+                     var subCat = userSTDIntCategory.subcategories[i];
+
+                     if (subCat.number === number) {
+                         return language;
+                     }
+
+                     else {
+                         continue;
+                     }
+                }
+            }
+        }
+        return "error";
     }
 
 

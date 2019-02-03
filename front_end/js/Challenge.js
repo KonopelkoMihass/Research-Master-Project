@@ -86,7 +86,7 @@ class Challenge extends Model
             {
                  this.lastChallenge = true;
             }
-            app.tracker.saveForLogs("challenge started", this.currentChallengeLink);
+            app.annalist.saveForLogs("challenge started", this.currentChallengeLink);
 
 
         }
@@ -119,7 +119,16 @@ class Challenge extends Model
         parameterPack.length = 4;
         parameterPack.language = language;
         this.language = language;
-        parameterPack.focus = app.user.focus;
+
+        var allFocuses = app.user.focus;
+        var focusesForThisLanguage = [];
+        for (var i = 0; i < allFocuses.length; i++) {
+            if ( app.standards.getSubcategoryLanguage(allFocuses[i].language)  === language) {
+                focusesForThisLanguage.push(allFocuses[i]);
+            }
+        }
+
+        parameterPack.focus = focusesForThisLanguage;
         parameterPack.gamified = app.user.gamified;
         parameterPack.std_internalisation = app.user.stdInternalisation[language];
 
@@ -270,7 +279,7 @@ class Challenge extends Model
 
                 app.viewManager.goToView(app.viewManager.VIEW.CHALLENGE);
                 document.getElementById("view-title").innerText = "Complete the challenge";
-                app.tracker.saveForLogs("challenge chain started", "");
+                app.annalist.saveForLogs("challenge chain started", "");
             }
 
             if (messageType === app.net.messageHandler.types.GO_TO_GOOGLE_SHEET_SUCCESSFUL){
@@ -480,7 +489,7 @@ class Challenge extends Model
         }
         this.standardInternalisationScore = {};
 
-        app.tracker.saveForLogs("challenge chain completed",
+        app.annalist.saveForLogs("challenge chain completed",
 			{"score": data.gradeOverall});
 
 

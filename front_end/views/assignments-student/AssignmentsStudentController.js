@@ -87,7 +87,7 @@ class AssignmentsStudentController
 			deleteSpan.id =  "delete-file#" + key;
 			deleteSpan.addEventListener("click", function()
 			{
-				app.tracker.track(this);
+				app.annalist.track(this);
 				controller.deleteFile(this.id.split("#")[1]);
 			});
 

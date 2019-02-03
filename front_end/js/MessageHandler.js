@@ -76,7 +76,7 @@ class MessageHandler
 		app.assignments.update(data, type);
 		app.submissions.update(data, type);
 		app.challenge.update(data, type);
-		app.tracker.trackServerMessages(data, type);
+		app.annalist.trackServerMessages(data, type);
         app.user.update(data, type);
         app.students.update(data, type);
 

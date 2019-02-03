@@ -57,7 +57,7 @@ class ViewManager
 			if(this.currentView!==undefined)
 			{
 				this.currentView.hide();
-				app.tracker.trackViewChanges(viewManager.currentView.title, viewManager.nextView.title);
+				app.annalist.trackViewChanges(viewManager.currentView.title, viewManager.nextView.title);
 			}
 
 			this.currentView = this.nextView;

@@ -46,7 +46,7 @@ class AssignmentsTeacherView extends View
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
-					app.tracker.track(this);
+					app.annalist.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					view.controller.deleteAssignment(id);
 				});
@@ -93,7 +93,7 @@ class AssignmentsTeacherView extends View
 			img.className = "picture-button";
 			img.addEventListener("click", function()
 			{
-				app.tracker.track(this);
+				app.annalist.track(this);
 				view.controller.createAddAssignmentModal();
 			});
 			iconCell.appendChild(img);

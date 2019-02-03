@@ -65,7 +65,7 @@ class AssignmentsStudentView extends View
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
-					app.tracker.track(this);
+					app.annalist.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					that.controller.createSubmitAssignmentModal(id);
 				});
@@ -167,7 +167,7 @@ class AssignmentsStudentView extends View
 				img.className = "picture-button";
 				img.addEventListener("click", function()
 				{
-					app.tracker.track(this);
+					app.annalist.track(this);
 					var id = parseInt(this.id.split('##')[1]);
 					that.controller.createSubmitAssignmentModal(id);
 				});

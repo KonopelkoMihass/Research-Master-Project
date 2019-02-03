@@ -1,4 +1,4 @@
-class Tracker
+class Annalist
 {
     constructor(net)
     {

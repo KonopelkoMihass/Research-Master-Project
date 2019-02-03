@@ -181,12 +181,8 @@ class ProfileController
 
 				if (!app.standards.isSubcategoryEnabled(standardName, sortedKeys[c], subcat.number)) continue;
 
-
-
 				// Hack fix - for a weird reason, some characters in std internalised go corrupted.
                 var subcatName = app.standards.getSubcategoryForProfileFix(standardName, sortedKeys[c], subcat.number);
-
-
 
 				var subcatFieldset = document.createElement("FIELDSET");
 				fieldset.appendChild(subcatFieldset);
@@ -206,7 +202,7 @@ class ProfileController
 				    var focusButton = document.createElement("BUTTON");
                     focusButton.classList.add("profile-focus-button");
                     focusButton.innerText = "Focus?";
-                    focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcat.name;
+                    focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcat.name + "#" + subcat.number;
 
                     subcatFieldset.appendChild(focusButton);
 
@@ -223,6 +219,8 @@ class ProfileController
 
                         var category = this.id.split("#")[1];
                         var subCategory = this.id.split("#")[2];
+                        var number = this.id.split("#")[3];
+
                         var focusID = category + subCategory;
 
 
@@ -244,7 +242,12 @@ class ProfileController
                             {
                                 this.innerText = "Focused";
                                 this.style.backgroundColor = "#4a8c9a";
-                                focus[focusID] = { category:category, subCategory:subCategory};
+                                focus[focusID] = {
+                                    category:category,
+                                    subCategory:subCategory,
+                                    number:number,
+
+                                };
                             }
 
                             else
