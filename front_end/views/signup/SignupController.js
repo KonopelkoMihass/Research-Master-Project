@@ -39,15 +39,15 @@ class SignupController
 
                 else
                 {
-                    //if (email.indexOf("@itcarlow.ie") !== -1)
+                    if (email.indexOf("@itcarlow.ie") !== -1)
                     {
                         this.model.signup(email, teamName, name, surname, noun, password);
                         this.cleanSignup();
                     }
-                   // else
-                    //{
-                    //    this.showError("Please use an @itcarlow.ie email");
-                   // }
+                    else
+                    {
+                        this.showError("Please use an @itcarlow.ie email");
+                    }
                 }
 			}
 
