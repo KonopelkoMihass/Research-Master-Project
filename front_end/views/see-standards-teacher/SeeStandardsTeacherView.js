@@ -8,6 +8,8 @@ class SeeStandardsTeacherView extends View
 		this.title = app.viewManager.VIEW.SEE_STANDARDS_TEACHER;
 		this.controller = controller;
 		this.setup();
+
+		this.languageSelected = "";
 	}
 
 	onNotify (model, messageType)
@@ -15,8 +17,10 @@ class SeeStandardsTeacherView extends View
 		var view = this;
 		if ( messageType === app.net.messageHandler.types.GET_STANDARD_SUCCESSFUL)
 		{
+		    var controller = this;
 			var selector = document.getElementById("see-standards-selector");
 			selector.innerHTML = "";
+
 			for (var key in model.standardsInfo)
 			{
 				var button = document.createElement("BUTTON");
@@ -25,7 +29,8 @@ class SeeStandardsTeacherView extends View
 				button.innerHTML = model.standardsInfo[key]["name"];
 				button.id = "see-standards-button#" + key;
 				button.addEventListener("click", function(){
-					var k = this.id.split("#")[1];
+				    var k = this.id.split("#")[1];
+				    controller.languageSelected = k;
 					view.setupStandardView(k, model.standardsInfo[k]);
 				});
 
@@ -69,9 +74,6 @@ class SeeStandardsTeacherView extends View
     }
 
 
-
-
-
 	setupStandardView(stdName, info)
 	{
 		var view = this;
@@ -79,6 +81,7 @@ class SeeStandardsTeacherView extends View
 		var table = document.getElementById("see-standard-teacher-table");
 
 		var standards = this.controller.model.selectStandards(stdName);
+
 
 		// remove all data in there.
 		var rowCount = table.rows.length;
@@ -98,9 +101,8 @@ class SeeStandardsTeacherView extends View
 
 
 		for (var k = 0; k < sortedKeys.length; k++) {
-		    var cat = sortedKeys[k];
-			var category = standards[cat];
-
+		    var catName = sortedKeys[k];
+			var category = standards[catName];
 			// Check that this category has sub standards related to this coding standard
 			var hasSubStandardsNeeded = false;
 			for (var i = 0; i < category.length; i++)
@@ -122,7 +124,7 @@ class SeeStandardsTeacherView extends View
 			var cell5 = row.insertCell(5);
 
 			// "Enabled" Cell
-			cell0.id = "see-standards-table-enabled#" + cat + "#yes";
+			cell0.id = "see-standards-table-enabled#" + catName + "#yes";
 			cell0.style.cursor = "pointer";
 			cell0.addEventListener("click",function ()
 			{
@@ -145,14 +147,14 @@ class SeeStandardsTeacherView extends View
 
 
             });
-			view.resetStateForCategoryCell(cat);
+			view.resetStateForCategoryCell(catName);
 
 
-			//Name
-			cell1.innerText = "Category: " + cat;
+			// Name
+			cell1.innerText = "Category: " + catName;
 
 			// Collapse
-			cell5.id = "see-standards-table-collapsed#" + cat + "#no";
+			cell5.id = "see-standards-table-collapsed#" + catName + "#no";
 			cell5.innerHTML = "&#43;";
 			cell5.style.cursor = "pointer";
 
@@ -212,8 +214,6 @@ class SeeStandardsTeacherView extends View
                 var num = subCategories[j].number;
                 num < startValue ? startValue = num : startValue = startValue;
             }
-
-
 
             for (var j = 0; j < subCategories.length; j++)
             {
@@ -360,7 +360,9 @@ class SeeStandardsTeacherView extends View
 
 		for (var i = 0; i < catList.length; i++)
 		{
-			catList[i].enabled === "yes" ? enabled++ : disabled++;
+		    if(catList[i].name === this.languageSelected){
+			    catList[i].enabled === "yes"   ? enabled++ : disabled++;
+		    }
 		}
 
 		if (disabled > 0 && enabled > 0)
@@ -388,15 +390,18 @@ class SeeStandardsTeacherView extends View
 
 		for (var i = 0; i < catList.length; i++)
 		{
-			var oldState = catList[i].enabled;
-			catList[i].enabled = state;
+		    if (catList[i].name === this.languageSelected) {
 
-			var cell = document.getElementById("see-standards-table-enabled#" + category + "#"+ catList[i].subCategory + "#" + oldState);
-			if (cell !== null)
-			{
-				cell.id = "see-standards-table-enabled#" + category + "#" + catList[i].subCategory + "#" + state;
-				cell.innerHTML =  state === "either"  ?  " &#9673;" : state === "yes" ? "&#10004;" : "&#10005;" ;
-			}
+                var oldState = catList[i].enabled;
+                catList[i].enabled = state;
+
+                var cell = document.getElementById("see-standards-table-enabled#" + category + "#"+ catList[i].subCategory + "#" + oldState);
+                if (cell !== null)
+                {
+                    cell.id = "see-standards-table-enabled#" + category + "#" + catList[i].subCategory + "#" + state;
+                    cell.innerHTML =  state === "either"  ?  " &#9673;" : state === "yes" ? "&#10004;" : "&#10005;" ;
+                }
+		    }
 
 
 		}

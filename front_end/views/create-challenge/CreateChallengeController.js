@@ -436,28 +436,35 @@ class CreateChallengeController
 
 		document.getElementById("create-challenge-submit").addEventListener("click", function ()
 		{
-			controller.parsedCodeHTMLs = {};
-			controller.model.storeIssues(controller.issuesFound);
+		    if (controller.difficulty === ""){
+		        alert("Please select the difficulty of this challenge");
+            }
+            else {
+                controller.parsedCodeHTMLs = {};
+                controller.model.storeIssues(controller.issuesFound);
 
-			var minutes = document.getElementById("create-challenge-time-minutes").value;
-			var seconds = document.getElementById("create-challenge-time-seconds").value;
+                var minutes = document.getElementById("create-challenge-time-minutes").value;
+                var seconds = document.getElementById("create-challenge-time-seconds").value;
 
-			controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed, controller.difficulty);
-			controller.model.submitChallenge();
+                controller.model.storeParameters(minutes, seconds, controller.standardUsed, controller.codingLanguageUsed, controller.difficulty);
+                controller.model.submitChallenge();
 
-			app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
+                app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_TEACHER);
 
 
-			controller.issuesFound = {};
-			controller.standardUsed = "";
-			controller.codingLanguageUsed = "";
-			controller.setSideModal = true;
-			controller.cleanUp();
+                controller.issuesFound = {};
+                controller.standardUsed = "";
+                controller.codingLanguageUsed = "";
+                controller.setSideModal = true;
+                controller.cleanUp();
 
-			// Now we insert it into a <code> area
-			document.getElementById("create-challenge-code-review").innerHTML = "";
+                // Now we insert it into a <code> area
+                document.getElementById("create-challenge-code-review").innerHTML = "";
 
-			removeEventListener();
+                removeEventListener();
+            }
+
+
 		});
 	}
 

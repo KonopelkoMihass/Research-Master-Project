@@ -117,6 +117,7 @@ class ChallengesManager:
                 challenge_array[i].insert(0, i + 1 )
 
             print("retrieved challenges from the Google Sheets")
+            print("inserting ", len(challenge_array), " challenges")
             self.database_manager.parse_challenges_from_array(challenge_array)
             print("successfully saved them into local DB")
 

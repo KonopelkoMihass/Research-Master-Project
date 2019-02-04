@@ -545,9 +545,15 @@ class DatabaseManager:
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        query = 'INSERT into Challenges VALUES(%s, %s, %s, %s, %s, %s, %s)'
+        print ("TEST CHALLENGE DATA", len(rows[0]))
 
-        cursor.executemany(query, rows)
+        query = 'INSERT into Challenges VALUES(%s, %s, %s, %s, %s, %s, %s)'
+        for i in range(0,len(rows)):
+            print ("Challenge ", i ," Inserted")
+            cursor.execute(query, rows[i])
+
+
+
         connector.commit()
         cursor.close()
         connector.close()
@@ -670,15 +676,14 @@ class DatabaseManager:
 
 
     def save_parsed_standards(self, standards):
+        print("SAVING STDS")
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
-        try:
-            for lang in standards:
-                stds = standards[lang]
-                for s in stds:
-                    #rint("What is s here: ", s)
+        for lang in standards:
+            stds = standards[lang]
+            for s in stds:
+                try:
                     placeholders = ", ".join(["%s"] * len(s))
-
                     stmt = "INSERT INTO `{table}` ({columns}) VALUES ({values});".format(
                         table="Standards",
                         columns=",".join(s.keys()),
@@ -688,8 +693,8 @@ class DatabaseManager:
                     cursor.execute(stmt, list(s.values()))
                     connector.commit()
 
-        except:
-            print ("already parsed it")
+                except:
+                    pass
 
         cursor.close()
         connector.close()
