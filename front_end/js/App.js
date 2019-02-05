@@ -39,19 +39,6 @@ class App
 					app.annalist.updateTracks();
 
 		});});});
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 
 	heartbeat()
@@ -88,23 +75,6 @@ class App
 
             }
         }, false);
-
-        var patchnote =
-            "<br>*There is a list of most important updates*" +
-            "<br>-Better difficulty curve-" +
-            "<br>-Support for C++ Challenges-" +
-            "<br>-(Part 1 out of 4)-" +
-            "<br>-Many tiny enhancements-" +
-            "<br>-Security-" +
-            "<br>and" +
-            "<br>-Enter Key for signin and submitting your work-";
-
-
-        var announcementDiv = document.getElementById("signin-announcement-content");
-        announcementDiv.innerHTML = patchnote;
-
-
-
 	}
 
 

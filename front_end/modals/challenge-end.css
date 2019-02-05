@@ -1,0 +1,11 @@
+#std-internalisation-left {
+    float:left;
+    width:40%;
+    text-align: left;
+}
+
+#std-internalisation-right{
+    width:48%;
+    text-align: right;
+    float:right;
+}

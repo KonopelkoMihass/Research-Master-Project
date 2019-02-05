@@ -496,13 +496,6 @@ class ChallengeController
             }
 
         });
-
-
-
-
-
-
-
 	}
 
 	prepareCodeHTMLs()
@@ -739,38 +732,113 @@ class ChallengeController
 	{
 		this.parsedCodeHTMLs = {};
 
-		this.model.changeStdInternalisation();
-		this.model.submitChallengeResults();
+		var controller = this;
+		var modalBody = app.modalContentManager.getModalContent("challenge-end");
+		var modalData = app.utils.createModal("challenge-end", "Challenge Results", modalBody, false);
+        document.body.appendChild(modalData.modal);
 
 		var results = this.model.getOverallPerformance();
 
-		var modalBody = app.modalContentManager.getModalContent("challenge-end");
-		var modalData = app.utils.createModal("challenge-end", "Challenge Results", modalBody, false);
-
-		document.body.appendChild(modalData.modal);
-		modalData.modal.style.display = "block";
-		var closes = modalData.closes;
-		for (var i = 0; i < closes.length; i++)
-		{
-			closes[i].addEventListener("click", function ()
-			{
-				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
-				var oldEl = document.getElementById("challenge-submit");
-				var newEl = oldEl.cloneNode(true);
-				oldEl.parentNode.replaceChild(newEl, oldEl);
-			});
-		}
-
-
-
-		document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
+        // Display Grade and Time
+        document.getElementById("challenge-end-grade").innerText = "Grade: " + results.gradeOverall + "% " + results.gradeCumulativeStr;
 		document.getElementById("challenge-end-time-taken").innerText = "Time: " + results.timeOverall + " " + results.timeCumulativeStr;
 
+
+		modalData.modal.style.display = "block";
+		var closes = modalData.closes;
+		for (var i = 0; i < closes.length; i++) {
+			closes[i].addEventListener("click", function () {
+
+			    if (app.user.gamified === "y"){
+			         app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+
+			         try{
+			             document.getElementById("profile-std-button#"+controller.model.language).click();
+
+                     }
+			         catch{}
+
+                }
+                else
+                {
+                    app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+			    }
+
+
+
+
+			    var oldEl = document.getElementById("challenge-submit");
+				var newEl = oldEl.cloneNode(true);
+				oldEl.parentNode.replaceChild(newEl, oldEl);});}
+
 		if(!this.altered) document.getElementById("std-internalisation").style.display = "none";
+		else {
+		    var internFieldSpan = document.getElementById("std-internalisation-field");
+            var stdInternResultData = results.stdProgress;
 
-		document.getElementById("challenge-end-category-internalisation").innerHTML = results.standardInterName;
-		document.getElementById("challenge-end-category-internalisation-score").innerHTML = results.standardInterScore;
+            var barsAndNewScores = [];
 
+
+            var barNumbers=0;
+            for (var c in stdInternResultData)
+            {
+                var subCats = stdInternResultData[c];
+                internFieldSpan.innerHTML += "<label style='font-weight: bold'>" + c + "</label><br>";
+
+                for (var i = 0; i < subCats.length; i++, barNumbers++)
+                {
+                    var subCat = subCats[i];
+
+                    var spanContainer = document.createElement("SPAN");
+                    spanContainer.id = "std-internalisation-field-container-"+ subCat.number;
+
+                    var subcategorySpan = document.createElement("SPAN");
+                    subcategorySpan.id = "std-internalisation-field-category#" + subCat.category +"#" + subCat.number;
+                    subcategorySpan.innerHTML =  "&nbsp;&nbsp;&nbsp;" + subCat.subCategory;
+                    subcategorySpan.style.cssFloat = "left";
+                    spanContainer.appendChild(subcategorySpan);
+
+
+                    var barSpan = document.createElement("SPAN");
+                    barSpan.id = "progressBarSpan"+barNumbers;
+                    barSpan.style.cssFloat = "right";
+                    spanContainer.appendChild(barSpan);
+
+                    internFieldSpan.appendChild(spanContainer);
+
+                    app.utils.addSkillProgressionBar(barSpan.id, "bar"+barNumbers, subCat.currentScore.toString());
+                    internFieldSpan.appendChild(document.createElement("BR"));
+                    internFieldSpan.appendChild(document.createElement("BR"));
+
+                    var barNScore = {};
+                    barNScore.bar = {};
+                    barNScore.bar.id = "bar"+barNumbers;
+                    barNScore.bar.parent = barSpan.id;
+                    barNScore.score = subCat.newScore;
+                    barNScore.oldscore = subCat.currentScore;
+                    barsAndNewScores.push(barNScore);
+                }
+            }
+
+            var fillBarFun = function (barData) {
+                 app.utils.fillTheSkillProgressBar(
+                     barData.bar.parent,
+                     barData.bar.id,
+                     barData.score.toString(),
+                     barData.oldscore.toString());
+            };
+
+            for (var j = 0; j <barsAndNewScores.length;j++ )
+            {
+                var elem = barsAndNewScores[j];
+                setTimeout(fillBarFun.bind(null, elem), j*1000);
+            }
+		}
+
+		this.model.changeStdInternalisation();
+		this.model.submitChallengeResults();
+
+		this.model.standardInternalisationScore = {};
 	}
 
 	setReviewData(filename)

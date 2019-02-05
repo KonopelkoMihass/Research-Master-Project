@@ -87,22 +87,7 @@ class Challenge extends Model
                  this.lastChallenge = true;
             }
             app.annalist.saveForLogs("challenge started", this.currentChallengeLink);
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     saveResults(resutlDict)
@@ -415,13 +400,11 @@ class Challenge extends Model
         var perf = this.challengeChainPerformance;
         for (var i = 0; i < perf.length; i++)
         {
-            data.grades.push(perf[i].grade);
+            data.grades.push(Math.round(perf[i].grade));
             data.time.push(perf[i].time);
-            data.gradeOverall += perf[i].grade;
+            data.gradeOverall += Math.round(perf[i].grade);
             data.timeOverall += perf[i].time;
-            data.gradeCumulativeStr += " " + perf[i].grade;
-
-
+            data.gradeCumulativeStr += " " + (Math.round(perf[i].grade));
 
             var challengeTimeMins = Math.floor(perf[i].time/60);
             var challengeTimeSecs = perf[i].time%60;
@@ -442,20 +425,16 @@ class Challenge extends Model
                 data.timeCumulativeStr += "s )";
             }
         }
-        data.gradeOverall /= perf.length;
+        data.gradeOverall = (data.gradeOverall/perf.length).toFixed(0);
 
-        data.standardInterName = "";
-        data.standardInterScore = "";
 
+        // Store initial scores, new scores and std data
         var sis = this.standardInternalisationScore;
 
+        var stdData = {};
         for (var cat in sis)
         {
-            data.standardInterName += cat + ": <br>";
-            data.standardInterScore += "<br>";
-
-            var subCategoryString = "";
-
+            stdData[cat] = [];
 
             sis[cat].sort(function(a,b) {
                 if (a.standard.number < b.standard.number) return -1;
@@ -468,29 +447,31 @@ class Challenge extends Model
                 var subcat = sis[cat][i];
                 var userSTDSkill = app.standards.getSTDSubcategorySkill(this.language, cat, subcat.standard.number);
 
+                var stdSubcatData = {};
+                stdSubcatData.category = cat;
+                stdSubcatData.number = subcat.standard.number;
+                stdSubcatData.subCategory = subcat.standard.subCategory;
+                stdSubcatData.currentScore = Math.floor(userSTDSkill.score);
+
+                stdSubcatData.newScore = Math.floor(userSTDSkill.score + subcat.score);
+                if (stdSubcatData.newScore < 0 ){stdSubcatData.newScore = 0;}
+                else if (stdSubcatData.newScore > 10){ stdSubcatData.newScore = 10;}
+
+                stdSubcatData.scoreIncrement = subcat.score;
 
                 if(subcat.score < 0)
-                    data.standardInterScore +=" [-" + subcat.score + "] ";
-                else {
-                    if (userSTDSkill.score !== 10)
-                        data.standardInterScore +=" [+" + subcat.score + "] ";
-                }
+                    stdSubcatData.scoreIncrementSign = "-";
+                else if (userSTDSkill.score !== 10)
+                    stdSubcatData.scoreIncrementSign ="+";
 
-
-                if (userSTDSkill.score !== 10)
-                    data.standardInterScore += "(" + userSTDSkill.score + "/" + userSTDSkill.maxScore + ")<br>";
-                else
-                    data.standardInterScore += "Mastered!<br>";
-
-
-                data.standardInterName += "&nbsp;&nbsp;&nbsp;&nbsp;" + subcat.standard.subCategory + "<br>";
+                stdData[cat].push(stdSubcatData);
 
             }
         }
-        this.standardInternalisationScore = {};
+        data.stdProgress = stdData;
 
-        app.annalist.saveForLogs("challenge chain completed",
-			{"score": data.gradeOverall});
+
+        app.annalist.saveForLogs("challenge chain completed", {"score": data.gradeOverall});
 
 
         // Recalculate time

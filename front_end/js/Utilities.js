@@ -137,7 +137,6 @@ class Utilities
 
     generateSkillProgressBar(parentDiv, category, i, maxScore, currentScore )
     {
-
         var divId = "profile-" + category.replace(/\s/g, '') + "-" + i + "-progBar";
         var div = document.createElement("SPAN");
         div.id = divId;
@@ -233,8 +232,8 @@ class Utilities
             });
 
         this.fillTheChallengeBar("0", challengeNum);
-
     }
+
 
     fillTheChallengeBar(state, num)
     {
@@ -257,6 +256,64 @@ class Utilities
                 })
                 .attr('width', function(){
                     var index = states.indexOf(state);
+                    return (index ) * segmentWidth;
+                });
+    }
+
+
+    addSkillProgressionBar(parentDiv, barName, initScoreString){
+	    var svg = d3.select("#" + parentDiv ).append('svg').attr('height', 30).attr('width', 320);
+        var states = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], segmentWidth = 32, currentState = initScoreString;
+        var colorScale = d3.scaleOrdinal().domain(states).range(["#00CED1", "#00CED1", "#00CED1", "#00CED1", '#00CED1', '#00CED1','#00CED1', '#00CED1', '#00CED1', '#00CED1', "#00CED1" ]);
+
+        svg.append('rect')
+            .attr('class', 'bg-rect')
+            .attr('rx', 10)
+            .attr('ry', 10)
+            .attr('fill', 'gray')
+            .attr('height', 15)
+            .attr('width', function(){
+                return segmentWidth * (states.length-1);
+            })
+            .attr('x', 0)
+            .attr('y', 5);
+
+        var progBarId = barName;
+        var progress = svg.append('rect')
+                        .attr('class', 'progress-rect')
+                        .attr('id', progBarId)
+                        .attr('fill', function(){
+                            return colorScale(currentState);
+                        })
+                        .attr('height', 15)
+                        .attr('width', 0)
+                        .attr('rx', 10)
+                        .attr('ry', 10)
+                        .attr('x', 0).attr('y', 5);
+
+
+        progress.transition()
+            .attr('width', function(){
+                var index = states.indexOf(currentState);
+                return (index + 1) * segmentWidth;
+            });
+    }
+   fillTheSkillProgressBar(parentDiv, barName, scoreString, oldscore)
+   {
+        console.log("SCORE ", oldscore + "->" + scoreString);
+        var id = "#" + barName;
+        var states = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], segmentWidth = 32;
+
+        var colorScale = d3.scaleOrdinal().domain(states).range(["#00CED1", "#00CED1", "#00CED1", "#00CED1", '#00CED1', '#00CED1','#00CED1', '#00CED1', '#00CED1', '#00CED1', "#00CED1" ]);
+
+        var svg = d3.select("#"+parentDiv);
+        svg.selectAll(id).transition()
+                .duration(2000)
+                .attr('fill', function(){
+                    return colorScale(scoreString);
+                })
+                .attr('width', function(){
+                    var index = states.indexOf(scoreString);
                     return (index ) * segmentWidth;
                 });
     }
