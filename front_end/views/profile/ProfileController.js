@@ -113,6 +113,8 @@ class ProfileController
 
 		var userLevel = this.model.calculateLevel(standardName);
 		stdLevel.innerHTML = userLevel;
+		stdLevel.style.fontWeight = "Bolder";
+		stdLevel.style.fontSize = "150%";
 
 		var sortedKeys = [];
 		var stopSorting = false;
@@ -242,10 +244,12 @@ class ProfileController
                             {
                                 this.innerText = "Focused";
                                 this.style.backgroundColor = "#4a8c9a";
+
+
                                 focus[focusID] = {
                                     category:category,
                                     subCategory:subCategory,
-                                    number:number,
+                                    number:number
 
                                 };
                             }

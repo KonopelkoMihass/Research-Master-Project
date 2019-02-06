@@ -26,6 +26,41 @@ class EmailSystem:
 
         self.letter_signin_error = "Hello, <br> The student with email {0} reported a following issue when signing in: {1}"
 
+        self.letter_signin_forgot_password = "Hello, <br> The CodeReviewer system detected that you have forgotten your password for the system.  System generated a temporary password for you, which we advise you to change to one of your liking.<br><br>{0}<br><br>Have a good day!"
+
+
+
+    def send_signin_forgot_password(self, email, new_password):
+        msg = MIMEMultipart()
+        msg['From'] = self.EMAIL_ADDRESS
+        msg['To'] = email
+        msg['Subject'] = "Forgot Password"
+
+        content = self.letter_signin_forgot_password.format(new_password)
+
+        print ("From:", msg['From'])
+        print ("To:", msg['To'])
+        print ("Subject:", msg['Subject'])
+        print ("content:", content)
+
+        msg.attach(MIMEText(content, 'html'))
+
+        try:
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
+            s.sendmail(self.EMAIL_ADDRESS, email, msg.as_string())
+            s.quit()
+
+        except IOError:
+            print("Error sending 'send_signin_forgot_password' email: Unable to send to c00157576@itcarlow.ie")
+        except smtplib.SMTPConnectError:
+           print("Error sending 'send_signin_forgot_password' email: smtp exception c00157576@itcarlow.ie")
+
+
+
+
+
+
 
 
 

@@ -144,9 +144,16 @@ class User extends Model
         userData.email = email;
         userData.password = password;
 
-
         app.net.sendMessage("signin", userData);
     }
+
+    forgotPasswordRequest(email)
+    {
+        var userData = {};
+        userData.email = email;
+        app.net.sendMessage("forgot_password", userData);
+    }
+
 
     signout()
     {
@@ -158,6 +165,8 @@ class User extends Model
         data.email = email;
         data.issue = issue;
 
+        if (issue === "I forgot my password")
+            this.forgotPasswordRequest(email);
 
         app.net.sendMessage("signin_issue", data);
     }

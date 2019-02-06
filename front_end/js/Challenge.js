@@ -107,9 +107,9 @@ class Challenge extends Model
 
         var allFocuses = app.user.focus;
         var focusesForThisLanguage = [];
-        for (var i = 0; i < allFocuses.length; i++) {
-            if ( app.standards.getSubcategoryLanguage(allFocuses[i].language)  === language) {
-                focusesForThisLanguage.push(allFocuses[i]);
+        for (var key in allFocuses) {
+            if ( app.standards.getSubcategoryLanguage(allFocuses[key].number, allFocuses[key].category )  === language) {
+                focusesForThisLanguage.push(allFocuses[key]);
             }
         }
 

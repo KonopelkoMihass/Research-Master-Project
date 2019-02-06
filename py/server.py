@@ -138,7 +138,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "export_from_google_sheet":
             self.export_from_google_sheet(message_data)
 
-
+        elif message_type == "forgot_password":
+            self.forgot_password(message_data)
 
 
 
@@ -541,6 +542,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 
+    def forgot_password(self, message_data):
+        new_password = database_manager.forgot_password_temp_replacement(message_data["email"])
+        if new_password != "":
+            email_system.send_signin_forgot_password(message_data["email"], new_password)
 
 
 

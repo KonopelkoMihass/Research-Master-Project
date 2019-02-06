@@ -5,8 +5,7 @@ from mysql.connector.pooling import MySQLConnectionPool
 from mysql.connector import errorcode
 from passlib.hash import sha256_crypt
 import random
-
-
+import string
 
 class DatabaseManager:
 
@@ -373,6 +372,8 @@ class DatabaseManager:
         available_standards = []
 
 
+
+
         #Get standards which are enabled and focus is empty.
         if focus == 0 and chain_is_exam == False:
             query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
@@ -416,7 +417,7 @@ class DatabaseManager:
 
         else:
             for key in focus:
-                query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + focus[key]["category"] +"' AND Standards.sub_category='" + focus[key]["subCategory"] + "';")
+                query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + key["category"] +"' AND Standards.sub_category='" + key["subCategory"] + "';")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
             print("FOCUS ONLY")
@@ -699,6 +700,31 @@ class DatabaseManager:
         cursor.close()
         connector.close()
 
+
+    def forgot_password_temp_replacement(self, email):
+
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor(dictionary=True)
+
+        letters = string.ascii_lowercase
+        new_password = ''.join(random.choice(letters) for i in range(12))
+
+        sha_new_password = sha256_crypt.encrypt(new_password)
+
+        query = ("SELECT password, name, surname FROM Users WHERE Users.email='"+ email +"'")
+        cursor.execute(query)
+        if len(cursor.fetchall()) > 0:
+            query = "UPDATE Users SET Users.password = '" + sha_new_password + "' WHERE Users.email='" + email + "'"
+            cursor.execute(query)
+            connector.commit()
+
+        else: new_password = ""
+
+        cursor.close()
+        connector.close()
+
+
+        return new_password
 
 
 

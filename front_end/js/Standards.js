@@ -523,9 +523,25 @@ class Standards extends Model
          }
     }
 
-    getSubcategoryLanguage(number) {
-        var userSTD = app.user.stdInternalisation;
+    getSubcategoryLanguage(number, category) {
+        var stdColl = this.standards[category];
 
+        for (var i = 0; i < stdColl.length; i++)
+        {
+            if (stdColl[i].number == number)
+            {
+                return stdColl[i].name;
+            }
+
+        }
+
+
+
+
+
+
+
+       /*
         for (var language in userSTD) {
             for (var cat in userSTD[language]) {
                 var userSTDIntCategory = userSTD[language][cat];
@@ -543,7 +559,7 @@ class Standards extends Model
                 }
             }
         }
-        return "error";
+        return "error";*/
     }
 
 
