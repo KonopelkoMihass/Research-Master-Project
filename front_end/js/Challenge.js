@@ -22,6 +22,7 @@ class Challenge extends Model
         this.challengeIssueInformationDescription = [];
 
         this.standardInternalisationScore = {};
+        this.doingChallenge = false;
     }
 
     getChallengeId()

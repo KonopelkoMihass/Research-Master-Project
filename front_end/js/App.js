@@ -231,9 +231,24 @@ class App
 		{
             app.utils.assignFuncToButtonViaID("mps-profile-button", function () {
                 if (app.viewManager.currentView.title !== app.viewManager.VIEW.PROFILE) {
-                    app.annalist.saveForLogs("profile_visit", {});
-                    app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
-                    viewLabel.innerText = "Your Profile";
+                    var doingChallenge = app.challenge.doingChallenge;
+
+                    if(doingChallenge)
+                    {
+                        var r = confirm("You will lose progress if you leave now.  Sure?");
+                        if (r)
+                        {
+                            app.challenge.doingChallenge = false;
+                            app.annalist.saveForLogs("profile_visit", {});
+                            app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+                            viewLabel.innerText = "Your Profile";
+                        }
+                    }
+                    else{
+                        app.annalist.saveForLogs("profile_visit", {});
+                        app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+                        viewLabel.innerText = "Your Profile";
+                    }
                 }
             });
         }
@@ -242,7 +257,7 @@ class App
 			document.getElementById("mps-profile-button").style.display = 'none';
 			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
 			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
-			 app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+			app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
 		}
 
 
@@ -267,37 +282,99 @@ class App
 
         app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {
             if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
-                app.challenge.getChallengeChain("cpp");
+                var doingChallenge = app.challenge.doingChallenge;
+                if(doingChallenge) {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r)
+                    {
+                        app.challenge.doingChallenge = false;
+                        app.challenge.getChallengeChain("cpp");
+                    }
+                }
+                else {
+                    app.challenge.getChallengeChain("cpp");
+                }
+
+
             }
         });
 
         app.utils.assignFuncToButtonViaID("mps-challenges-js-button", function () {
             if (app.viewManager.currentView.title !== app.viewManager.VIEW.CHALLENGE) {
-                app.challenge.getChallengeChain("js");
+                var doingChallenge = app.challenge.doingChallenge;
+                if(doingChallenge)
+                {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r)
+                    {
+                        app.challenge.doingChallenge = false;
+                        app.challenge.getChallengeChain("js");
+                    }
+               }
+               else{
+                    app.challenge.getChallengeChain("js");
+                }
             }
         });
 
 		app.utils.assignFuncToButtonViaID("mps-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_STUDENT)
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
-				document.getElementById("view-title").innerText = "Assignments";
+			    var doingChallenge = app.challenge.doingChallenge;
+			    if(doingChallenge) {
+			        var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r){
+                        app.challenge.doingChallenge = false;
+                        app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
+                        document.getElementById("view-title").innerText = "Assignments";
+                    }
+				}
+
+				else {
+			        app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
+			        document.getElementById("view-title").innerText = "Assignments";
+			    }
 			}
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_STUDENT)
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
-				viewLabel.innerText = "Standards Available";
+			    var doingChallenge = app.challenge.doingChallenge;
+			    if(doingChallenge) {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r)
+                    {
+                        app.challenge.doingChallenge = false;
+                        app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+                        viewLabel.innerText = "Standards Available";
+                    }
+
+			    }
+			    else {
+			        app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
+			        viewLabel.innerText = "Standards Available";
+			    }
 			}
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-reviews-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.PERFORM_REVIEW_STUDENT)
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
-				viewLabel.innerText = "Reviews To Do";
+			    var doingChallenge = app.challenge.doingChallenge;
+			    if(doingChallenge) {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r) {
+                        app.challenge.doingChallenge = false;
+				        app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
+				        viewLabel.innerText = "Reviews To Do";
+                    }
+
+			    }
+			    else {
+			        app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
+			        viewLabel.innerText = "Reviews To Do";
+			    }
 			}
 		});
 
@@ -305,16 +382,40 @@ class App
 		app.utils.assignFuncToButtonViaID("mps-feedback-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.FEEDBACK)
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
-				viewLabel.innerText = "Feedback You Received";
+			    var doingChallenge = app.challenge.doingChallenge;
+			    if(doingChallenge) {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r) {
+                        app.challenge.doingChallenge = false;
+				        app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
+				        viewLabel.innerText = "Feedback You Received";
+			        }
+
+			    }
+			    else {
+			        app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
+			        viewLabel.innerText = "Feedback You Received";
+			    }
 			}
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT)
 			{
-				app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
-				viewLabel.innerText = "Your Submissions";
+			    var doingChallenge = app.challenge.doingChallenge;
+			    if(doingChallenge) {
+                    var r = confirm("You will lose progress if you leave now.  Sure?");
+                    if (r) {
+                        app.challenge.doingChallenge = false;
+				        app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
+				        viewLabel.innerText = "Your Submissions";
+                    }
+
+			    }
+			    else {
+                    app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
+                    viewLabel.innerText = "Your Submissions";
+                }
 			}
 		});
 
@@ -324,8 +425,19 @@ class App
 		});
 
 		app.utils.assignFuncToButtonViaID("mps-change-password-button" , function (){
-		    viewLabel.innerText = "Change the Password";
-		    app.viewManager.goToView(app.viewManager.VIEW.CHANGE_PASSWORD);
+		    var doingChallenge = app.challenge.doingChallenge;
+		    if(doingChallenge) {
+                var r = confirm("You will lose progress if you leave now.  Sure?");
+                if (r) {
+                    app.challenge.doingChallenge = false;
+                    viewLabel.innerText = "Change the Password";
+                    app.viewManager.goToView(app.viewManager.VIEW.CHANGE_PASSWORD);
+                }
+		    }
+		    else {
+		        viewLabel.innerText = "Change the Password";
+		        app.viewManager.goToView(app.viewManager.VIEW.CHANGE_PASSWORD);
+            }
         });
 
 
@@ -436,7 +548,19 @@ class App
 
 
 		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
-		app.utils.assignFuncToButtonViaID("mps-signout-button",function(){app.user.signout();});
+		app.utils.assignFuncToButtonViaID("mps-signout-button",function(){
+		    var doingChallenge = app.challenge.doingChallenge;
+		    if(doingChallenge) {
+		        var r = confirm("You will lose progress if you leave now.  Sure?");
+		        if (r)
+		        {
+		            app.user.signout();
+		        }
+		    }
+		    else{
+		        app.user.signout();
+            }
+		});
 	}
 
 	loadResources()

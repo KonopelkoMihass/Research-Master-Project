@@ -28,6 +28,8 @@ class ChallengeController
 
 		this.finishedChallenge = false;
 		this.sideModalOpened = false;
+
+
 	}
 
 	onKeyPress(key){
@@ -585,6 +587,8 @@ class ChallengeController
 	allowReview()
 	{
 		var controller = this;
+        this.model.doingChallenge = true;
+
 
 		document.getElementById("challenge-submit-div").style.display = "block";
 
@@ -731,6 +735,7 @@ class ChallengeController
 	showChallengeEndScreen()
 	{
 		this.parsedCodeHTMLs = {};
+        this.model.doingChallenge = true;
 
 		var controller = this;
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
@@ -749,15 +754,14 @@ class ChallengeController
 		for (var i = 0; i < closes.length; i++) {
 			closes[i].addEventListener("click", function () {
 
-			    if (app.user.gamified === "y"){
-			         app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
+			    controller.model.doingChallenge = true;
 
+			    if (app.user.gamified === "y") {
+			         app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
 			         try{
 			             document.getElementById("profile-std-button#"+controller.model.language).click();
-
                      }
 			         catch{}
-
                 }
                 else
                 {
