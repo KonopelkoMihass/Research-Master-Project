@@ -101,6 +101,15 @@ class User extends Model
                     app.submissions.getPersonalSubmissions(data.id);
                 }
                 else app.submissions.getAllSubmissions();
+
+
+
+
+
+
+
+
+
             }
         }
 
@@ -157,7 +166,11 @@ class User extends Model
 
     signout()
     {
+        window.localStorage.removeItem("nfdawjwawuemupcawuiehcpmuwehmcpuwauehpowdc");
         document.location.reload();
+
+
+
     }
 
     reportSigninIssue(email, issue){
@@ -189,6 +202,8 @@ class User extends Model
         this.focus = data.focus;
         this.teachers = data.teachers;
 
+
+        window.localStorage.setItem("nfdawjwawuemupcawuiehcpmuwehmcpuwauehpowdc", data.token)
     }
 
     standardsReadyForExam(language)

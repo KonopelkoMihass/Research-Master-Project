@@ -218,11 +218,6 @@ class App
 		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.GET_STUDENTS_SUCCESSFUL);
 		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.INVERT_SYSTEMS_SUCCESSFUL);
 		this.students.addObserver(manageSystemsTeacherView, this.net.messageHandler.types.ENABLE_SYSTEM_SWITCH_SUCCESSFUL);
-
-
-
-
-
 	}
 
 	setupMenuPanel()

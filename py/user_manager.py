@@ -13,6 +13,49 @@ class UserManager:
 
 
 
+    def restore_user_session(self, email):
+        message_type = "signin_successful"
+
+        data = {}
+        data["email"]=email
+
+        data = self.database_manager.get_user_info(data)
+
+        data["std_internalisation"] = json.loads(data["std_internalisation"])
+        data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
+        data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
+        data["focus"] = json.loads(data["focus"])
+        data["teachers"] = self.database_manager.get_teachers_names()
+
+        users = self.database_manager.get_all_users()
+        data["users"] = users
+
+        is_gamified = data["gamification"]
+        sent_instructions = data["got_instruction_emails"]
+        if is_gamified == "y":
+            if "sent_gamified" in sent_instructions:
+                pass
+            else:
+                data["got_instruction_emails"]["sent_gamified"] = "yes"
+                self.email_system.send_gamification_email(data)
+                self.database_manager.record_instruction_email_data(data["email"],
+                                                                    json.dumps(data["got_instruction_emails"]))
+
+
+        elif is_gamified == "n":
+            if "sent_non_gamified" in sent_instructions:
+                pass
+            else:
+                data["got_instruction_emails"]["sent_non_gamified"] = "yes"
+                self.email_system.send_non_gamification_email(data)
+                self.database_manager.record_instruction_email_data(data["email"],
+                                                                    json.dumps(data["got_instruction_emails"]))
+
+
+        return [message_type, data]
+
+
+
 
 
     def signin(self, message_data):

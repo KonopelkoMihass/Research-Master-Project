@@ -101,5 +101,14 @@ class MessageHandler
 
 		    document.body.removeChild(element);
         }
+
+        if("request_token" === type) {
+            var token = window.localStorage.getItem("nfdawjwawuemupcawuiehcpmuwehmcpuwauehpowdc");
+            app.net.sendMessage("analyze_token", {token:token});
+        }
+
+        if ("no_token" === type){
+            document.getElementsByClassName("signin-box")[0].style.display = "block";
+        }
 	}
 }

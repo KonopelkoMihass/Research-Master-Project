@@ -17,10 +17,18 @@ from tornado import websocket, web, ioloop, httpserver
 from tornado import autoreload
 from tornado.ioloop import PeriodicCallback
 
+from passlib.hash import sha256_crypt
+import string
+
+
+
+
 #A dictionary, key = ip:port, value = websocket associated with the ip
 #(techincally the websockethandler associated with the ip, but it's easier
 #to imagine as just the websocket.)
+
 connections={}
+
 
 def globalDaemonMethod():
     update_clients = planner.update()
@@ -42,9 +50,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def open(self):
-        pass
-        #standards_manager.download_standards_from_drive(self)
-        print ("WebSocket opened")
+        self.send_message("request_token",{})
+
+
+
 
 
     def on_message(self, message):
@@ -58,7 +67,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "signin":
             self.signin(message_data)
-
 
         elif message_type == "add_assignment":
             self.add_assignment(message_data)
@@ -141,7 +149,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         elif message_type == "forgot_password":
             self.forgot_password(message_data)
 
-
+        elif message_type == "analyze_token":
+            self.analyze_token(message_data["token"])
 
 
 
@@ -153,16 +162,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             challenges_manager.migrate_to_google_sheets()
 
 
-
-
-
-
-
-
-
     def signup(self, message_data):
         print ("server->signup")
-        message= user_manager.signup(message_data)
+        message = user_manager.signup(message_data)
         self.send_message(message[0], message[1])
 
         if  message[0] =="signup_successful":
@@ -199,6 +201,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def signin(self, message_data):
         print ("server->signin")
         message = user_manager.signin(message_data)
+        allchar = string.ascii_letters  + string.digits
+        string_of_token = "".join(random.choice(allchar) for x in range(8))
+        token = sha256_crypt.encrypt(string_of_token)
+        message[1]["token"] = token
+
         self.send_message(message[0], message[1])
 
         if message[0] =="signin_successful":
@@ -227,8 +234,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             connection["ip"] = ip_address
             connection["socket"] = self
             connection["user_data"] = message[1]
+            connection["token"] = token
 
             connections[message[1]["email"]] = 	connection
+
+
+
+
 
 
 
@@ -536,8 +548,29 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def report_error(self, data):
         teacher_email = database_manager.get_teacher_email(data["teacher_id"])
-
         email_system.send_error_report(teacher_email, data)
+
+
+
+    def analyze_token(self, token):
+        found = False
+        for k, item in connections.items():
+            if item["token"] == token:
+                found = True
+                print ("TOKENS MATCH")
+                user_email = item["user_data"]["email"]
+                message = user_manager.restore_user_session(user_email)
+                message[1]["token"] = token
+                self.send_message(message[0], message[1])
+                self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
+                self.send_message("get_standard_successful", standards_manager.get_standard("js"))
+                item["socket"] = self
+                item["user_data"] = message[1]
+
+        if found == False:
+            self.send_message("no_token", {})
+
+
 
 
 
@@ -550,15 +583,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 
-
-
     def kick_from_website(self):
         self.send_message("kick_from_website", {})
 
 
-
     def on_close(self):
-        print ("WebSocket closed")
+
+       """ print ("WebSocket closed")
         #Remove connection
         key = ""
         try:
@@ -568,7 +599,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             connections.pop(key)
         except:
             print("Key Error")
-        print("Total Connections: ", len(connections))
+        print("Total Connections: ", len(connections))"""
 
     def send_message(self,type,data):
         print("send_message")
