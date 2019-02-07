@@ -555,17 +555,18 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def analyze_token(self, token):
         found = False
         for k, item in connections.items():
-            if item["token"] == token:
-                found = True
-                print ("TOKENS MATCH")
-                user_email = item["user_data"]["email"]
-                message = user_manager.restore_user_session(user_email)
-                message[1]["token"] = token
-                self.send_message(message[0], message[1])
-                self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
-                self.send_message("get_standard_successful", standards_manager.get_standard("js"))
-                item["socket"] = self
-                item["user_data"] = message[1]
+            if "token" in item:
+                if item["token"] == token:
+                    found = True
+                    print ("TOKENS MATCH")
+                    user_email = item["user_data"]["email"]
+                    message = user_manager.restore_user_session(user_email)
+                    message[1]["token"] = token
+                    self.send_message(message[0], message[1])
+                    self.send_message("get_standard_successful", standards_manager.get_standard("cpp"))
+                    self.send_message("get_standard_successful", standards_manager.get_standard("js"))
+                    item["socket"] = self
+                    item["user_data"] = message[1]
 
         if found == False:
             self.send_message("no_token", {})
