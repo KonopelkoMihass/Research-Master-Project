@@ -7,6 +7,7 @@ class ManageSystemsTeacherView extends View
 		this.title = app.viewManager.VIEW.MANAGE_SYSTEMS_TEACHER;
 		this.controller = controller;
 		this.setup();
+		this.setupRadios = false;
 	}
 
 	onNotify (model, messageType)
@@ -19,6 +20,45 @@ class ManageSystemsTeacherView extends View
 			messageType === app.net.messageHandler.types.ENABLE_SYSTEM_SWITCH_SUCCESSFUL)
 		{
 			this.setupStudentTable();
+
+
+			if (!this.setupRadios){
+			    this.setupRadios = true;
+
+                var manageSystemsGroupSelect = document.getElementById("manage-systems-group-select");
+                var students = app.students.students;
+
+                var groups = [];
+
+                for (var i = 0; i < students.length; i++) {
+                    groups.push(students[i].team_name);
+                }
+
+                groups = Array.from(new Set(groups));
+
+                for (var i = 0; i < groups.length; i++) {
+                    var label = document.createElement( 'label');
+                    label.innerText = groups[i];
+                    manageSystemsGroupSelect.appendChild(label);
+
+
+                    var radio = document.createElement("input");
+                    radio.setAttribute('type',"radio");
+                    radio.setAttribute('name', "manage_system-group");
+                    radio.setAttribute('value', groups[i]);
+
+                    manageSystemsGroupSelect.appendChild(radio);
+
+
+                    var space = document.createElement( 'label');
+                    space.innerHTML = "&#09;";
+
+                    manageSystemsGroupSelect.appendChild(radio);
+                    manageSystemsGroupSelect.appendChild(space);
+                }
+
+            }
+
 		}
 	}
 
@@ -51,7 +91,7 @@ class ManageSystemsTeacherView extends View
 			var cell1 = row.insertCell(1);
 			cell1.innerText = students[i].surname + " " + students[i].name;
 			var cell2 = row.insertCell(2);
-			cell2.innerText = students[i].noun;
+			cell2.innerText = students[i].team_name;
 
 			var cell3 = row.insertCell(3);
 			var noLevel = true;

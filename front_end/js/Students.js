@@ -16,15 +16,15 @@ class Students extends Model
         app.net.sendMessage("get_students", data);
     }
 
-    invertSystems()
+    invertSystems(groupSelected)
     {
 
-         app.net.sendMessage("invert_systems", {});
+         app.net.sendMessage("invert_systems", {group: groupSelected});
     }
 
-    enableSystemSwitch()
+    enableSystemSwitch(groupSelected)
     {
-         app.net.sendMessage("enable_system_switch", {});
+         app.net.sendMessage("enable_system_switch", {group: groupSelected});
     }
 
     getPerformanceData(email)

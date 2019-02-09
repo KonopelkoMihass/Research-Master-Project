@@ -131,15 +131,15 @@ class UserManager:
         """Returns message type : string"""
         data = {}
         message_type = "signup_successful"
-        #try:
-        all_users = self.database_manager.select_all_from_table("Users")
-        team_name = message_data["team_name"]
-        if team_name == "other":
+        try:
+            all_users = self.database_manager.select_all_from_table("Users")
+            team_name = message_data["team_name"]
+
             gamified = 0
             non_gamified = 0
 
             for item in all_users:
-                if item["team_name"] == "other":
+                if item["team_name"] == team_name:
                     if item["gamification"] == 'n': non_gamified += 1
                     if item["gamification"] == 'y': gamified += 1
 
@@ -149,22 +149,17 @@ class UserManager:
             else:
                 message_data["gamification"] = 'y'
 
-        elif team_name == "y4":
-            message_data["gamification"] = 'y'
-        elif team_name == "y3":
-            message_data["gamification"] = 'n'
+            message_data["challenge_mode_only"] = self.database_manager.is_challenge_mode_only()
+            message_data["std_internalisation"] = json.dumps(message_data["std_internalisation"])
+            message_data["got_instruction_emails"] = json.dumps(message_data["got_instruction_emails"])
+            message_data["std_internalisation_changes"] = json.dumps(message_data["std_internalisation_changes"])
+            message_data["focus"] = json.dumps(message_data["focus"])
 
-        message_data["challenge_mode_only"] = self.database_manager.is_challenge_mode_only()
-        message_data["std_internalisation"] = json.dumps(message_data["std_internalisation"])
-        message_data["got_instruction_emails"] = json.dumps(message_data["got_instruction_emails"])
-        message_data["std_internalisation_changes"] = json.dumps(message_data["std_internalisation_changes"])
-        message_data["focus"] = json.dumps(message_data["focus"])
+            self.database_manager.insert_into_table("Users", message_data)
+            data = self.database_manager.get_user_info(message_data)
 
-        self.database_manager.insert_into_table("Users", message_data)
-        data = self.database_manager.get_user_info(message_data)
-
-        #except:
-        #    message_type = "signup_failed"
+        except:
+            message_type = "signup_failed"
 
         message = [message_type, data]
         return message

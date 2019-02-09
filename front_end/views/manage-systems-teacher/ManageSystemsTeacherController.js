@@ -9,12 +9,35 @@ class ManageSystemsTeacherController
 	setup()
 	{
 		var controller = this;
+
 		document.getElementById("manage-systems-teacher-switcher").addEventListener("click", function () {
-			controller.model.invertSystems();
+		    var groupSelected = "";
+
+            var radios = document.getElementsByName('manage_system-group');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                   groupSelected = radios[i].value;
+                    break;
+                }
+            }
+
+            if (groupSelected === "") alert("Select a group");
+            else controller.model.invertSystems(groupSelected);
         });
 
 		document.getElementById("manage-systems-teacher-choice").addEventListener("click", function () {
-			controller.model.enableSystemSwitch();
+		    var groupSelected = "";
+
+            var radios = document.getElementsByName('manage_system-group');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                   groupSelected = radios[i].value;
+                    break;
+                }
+            }
+
+            if (groupSelected === "") alert("Select a group");
+			else controller.model.enableSystemSwitch(groupSelected);
         });
 
 		var challengeOnlySwitchButton = document.getElementById("manage-systems-teacher-challenge-mode-only");

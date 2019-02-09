@@ -111,10 +111,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             self.get_students(message_data)
 
         elif message_type == "invert_systems":
-            self.invert_systems()
+            self.invert_systems(message_data["group"])
 
         elif message_type == "enable_system_switch":
-            self.enable_system_switch()
+            self.enable_system_switch(message_data["group"])
 
         elif message_type == "selected_system":
             self.selected_system(message_data)
@@ -444,11 +444,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.send_message(result, students)
 
 
-    def invert_systems(self):
+    def invert_systems(self, group_name):
         students = []
         result = "invert_systems_successful"
         try:
-            students = database_manager.invert_systems()
+            students = database_manager.invert_systems(group_name)
             for student in students:
                 student["std_internalisation"] = json.loads(student["std_internalisation"])
         except:
@@ -461,15 +461,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 item["socket"].kick_from_website()
 
 
-    def enable_system_switch(self):
+    def enable_system_switch(self, group_name):
         print("enable_system_switch()")
         students = []
         result = "enable_system_switch_successful"
         #try:
-        students = database_manager.enable_system_switch()
+        students = database_manager.enable_system_switch(group_name)
         for student in students:
             if "std_internalisation" in student:
-                print ("derere")
                 student["std_internalisation"] = json.loads(student["std_internalisation"])
 
 
@@ -558,7 +557,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             if "token" in item:
                 if item["token"] == token:
                     found = True
-                    print ("TOKENS MATCH")
                     user_email = item["user_data"]["email"]
                     message = user_manager.restore_user_session(user_email)
                     message[1]["token"] = token
@@ -567,6 +565,17 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                     self.send_message("get_standard_successful", standards_manager.get_standard("js"))
                     item["socket"] = self
                     item["user_data"] = message[1]
+
+                    print(message[1]["role"])
+                    if message[1]["role"] == "teacher":
+                        students = database_manager.get_students()
+                        for student in students:
+                            student["std_internalisation"] = json.loads(student["std_internalisation"])
+                            del student["password"]
+
+                        self.send_message("get_students_successful", students)
+
+
 
         if found == False:
             self.send_message("no_token", {})

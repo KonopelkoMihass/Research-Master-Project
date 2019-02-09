@@ -735,7 +735,7 @@ class ChallengeController
 	showChallengeEndScreen()
 	{
 		this.parsedCodeHTMLs = {};
-        this.model.doingChallenge = true;
+        this.model.doingChallenge = false;
 
 		var controller = this;
 		var modalBody = app.modalContentManager.getModalContent("challenge-end");
@@ -754,7 +754,7 @@ class ChallengeController
 		for (var i = 0; i < closes.length; i++) {
 			closes[i].addEventListener("click", function () {
 
-			    controller.model.doingChallenge = true;
+			    controller.model.doingChallenge = false;
 
 			    if (app.user.gamified === "y") {
 			         app.viewManager.goToView(app.viewManager.VIEW.PROFILE);

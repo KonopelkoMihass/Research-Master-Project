@@ -100,16 +100,10 @@ class User extends Model
                 {
                     app.submissions.getPersonalSubmissions(data.id);
                 }
-                else app.submissions.getAllSubmissions();
-
-
-
-
-
-
-
-
-
+                else
+                {
+                    app.submissions.getAllSubmissions();
+                }
             }
         }
 
@@ -152,8 +146,8 @@ class User extends Model
         var userData = {};
         userData.email = email;
         userData.password = password;
-
         app.net.sendMessage("signin", userData);
+        app.students.getStudents(email,password)
     }
 
     forgotPasswordRequest(email)

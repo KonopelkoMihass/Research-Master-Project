@@ -603,14 +603,14 @@ class DatabaseManager:
         connector.close()
         return students
 
-    def invert_systems(self):
+    def invert_systems(self, group_name):
         students = []
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
         query = ("UPDATE Users "
                  "SET Users.gamification = IF(Users.gamification = 'r' , 'r', "
-                 "IF(Users.gamification = 'y' , 'n', 'y' )) WHERE Users.role='student'")
+                 "IF(Users.gamification = 'y' , 'n', 'y' )) WHERE Users.role='student' AND Users.team_name='"+group_name +"'")
         cursor.execute(query)
         connector.commit()
 
@@ -623,12 +623,12 @@ class DatabaseManager:
         return students
 
 
-    def enable_system_switch(self):
+    def enable_system_switch(self, group_name):
         students = []
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        query = ("UPDATE Users SET Users.gamification = 'r'  WHERE Users.role='student'")
+        query = ("UPDATE Users SET Users.gamification = 'r'  WHERE Users.role='student' AND Users.team_name='"+group_name +"'")
         cursor.execute(query)
         connector.commit()
 
