@@ -372,8 +372,6 @@ class DatabaseManager:
         available_standards = []
 
 
-
-
         #Get standards which are enabled and focus is empty.
         if focus == 0 and chain_is_exam == False:
             query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='"+language +"' AND Standards.unlocked_at_level<="+ chain_user_level +";")
@@ -417,7 +415,7 @@ class DatabaseManager:
 
         else:
             for key in focus:
-                query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.category='" + key["category"] +"' AND Standards.sub_category='" + key["subCategory"] + "';")
+                query = ("SELECT sub_category, id FROM Standards WHERE Standards.enabled='yes' AND Standards.name='" + language + "' AND Standards.id='" + key["number"] + "';")
                 cursor.execute(query)
                 available_standards.extend(cursor.fetchall())
             print("FOCUS ONLY")
