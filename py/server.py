@@ -154,12 +154,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
 
-        #DEV METHOD
-        elif message_type == "poopoointhemoomoo":
-            challenges_manager.save_challenges_from_db_into_files()
-
-        elif message_type == "fromfakedreams":
-            challenges_manager.migrate_to_google_sheets()
 
 
     def signup(self, message_data):

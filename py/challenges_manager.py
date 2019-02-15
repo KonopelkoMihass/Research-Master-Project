@@ -40,6 +40,7 @@ class ChallengesManager:
         credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes = SCOPES)
 
         self.service = discovery.build('sheets', 'v4', credentials=credentials)
+
         self.export_from_google_sheet()
 
 
@@ -57,22 +58,33 @@ class ChallengesManager:
             message_data["code"] = code.replace("\t", "    ")
 
 
-        try:
-            self.database_manager.insert_into_table("Challenges", message_data)
-
-            values = self.database_manager.get_last_challenge_inserted()
-            for_google_sheet =  {'values': [values ]}
-            insert_here = 'A' + str(values[0]+1)
 
 
-            self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range=insert_here, body=for_google_sheet,
-                                                        valueInputOption="RAW").execute()
 
 
-            print("Added Challenge Successfully")
-        except:
-            type = "teacher_create_challenge_failed"
-            print("Added Challenge Failed")
+        #try:
+        self.database_manager.insert_into_table("Challenges", message_data)
+
+        values = self.database_manager.get_last_challenge_inserted()
+
+        for k in range(0,len(values)):
+            print (k, "->", values[k])
+
+
+
+
+        for_google_sheet =  {'values': [values ]}
+        insert_here = 'A' + str(values[0]+1)
+
+
+        self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range=insert_here, body=for_google_sheet,
+                                                    valueInputOption="RAW").execute()
+
+
+        print("Added Challenge Successfully")
+        #except:
+        #   type = "teacher_create_challenge_failed"
+        #   print("Added Challenge Failed")
 
 
 
@@ -80,29 +92,23 @@ class ChallengesManager:
         return message
 
 
-    def migrate_to_google_sheets(self):
-        fields = ("ID", "Code", "Issues", "Issues HTML", "Average Time in Seconds", "Standard Used", "Language Used", "Difficulty")
-        rows = self.database_manager.get_all_challenge_data()
-        root_dir = os.getcwd()
-        challenges_dir = root_dir + self.challenge_directory
-        language_dir = rows[0][5] + "/"
-        for i in range(0, len(rows)):
-            ch = open(challenges_dir + language_dir + str(rows[i][0]) + self.code_format, 'r')
-            rows[i][1] = ch.read()
 
-        rows.insert(0, fields)
-        data = {'values': rows}
-        self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range='A1', body=data,
-                                                    valueInputOption="RAW").execute()
+
+
 
 
 
 
     def export_from_google_sheet(self):
         self.database_manager.wipe_challenge_table()
+
         print("Wiped the old challenges")
-        rows = self.service.spreadsheets().values().get(spreadsheetId=SHEET_DB_ID, range='Sheet1').execute().get('values', [])
-        #remove the first row
+
+        rows = self.service.spreadsheets().values().get(spreadsheetId=SHEET_DB_ID, range='Sheet1').execute().get(
+            'values', [])
+
+        print (len(rows)-1, "Challenges are downloaded")
+        # remove the first row
         if rows:
             rows.pop(0)
             challenge_array = []
@@ -114,17 +120,18 @@ class ChallengesManager:
                     challenge_array.append(rows[i])
 
             for i in range(0, len(challenge_array)):
-                challenge_array[i].insert(0, i + 1 )
+                challenge_array[i].insert(0, i + 1)
 
-            print("retrieved challenges from the Google Sheets")
+
             print("inserting ", len(challenge_array), " challenges")
             self.database_manager.parse_challenges_from_array(challenge_array)
             print("successfully saved them into local DB")
 
-        #Push back the data from DB - in case it got re-organised.
+        # Push back the data from DB - in case it got re-organised.
         db_challenges = self.database_manager.get_all_challenge_data()
 
-        fields = ("ID", "Code", "Issues", "Issues HTML", "Average Time in Seconds", "Standard Used", "Language Used", "Difficulty")
+        fields = ("ID", "Code", "Issues", "Issues JSON", "Average Time in Seconds", "Standard Used", "Language Used",
+                  "Difficulty")
 
         db_challenges.insert(0, fields)
         data = {'values': db_challenges}
@@ -139,6 +146,14 @@ class ChallengesManager:
                                                     valueInputOption="RAW").execute()
 
         print ("Challenges are on board!")
+
+
+
+
+
+
+
+
 
 
 
@@ -227,6 +242,21 @@ class ChallengesManager:
                 ih.close()
 
 
+
+    def migrate_to_google_sheets(self):
+        fields = ("ID", "Code", "Issues", "Issues HTML", "Average Time in Seconds", "Standard Used", "Language Used", "Difficulty")
+        rows = self.database_manager.get_all_challenge_data()
+        root_dir = os.getcwd()
+        challenges_dir = root_dir + self.challenge_directory
+        language_dir = rows[0][5] + "/"
+        for i in range(0, len(rows)):
+            ch = open(challenges_dir + language_dir + str(rows[i][0]) + self.code_format, 'r')
+            rows[i][1] = ch.read()
+
+        rows.insert(0, fields)
+        data = {'values': rows}
+        self.service.spreadsheets().values().update(spreadsheetId=SHEET_DB_ID, range='A1', body=data,
+                                                    valueInputOption="RAW").execute()
 
 
 

@@ -24,11 +24,11 @@ const double MASS_KG = 1;
 const double PUCK_FORCE_MULTIPLIER = 0.004f;
 
 /// The minimal X axis for the field.
-const double MIN_X = 1.51f;
+const double MINX = 1.51f;
 /// The maximal X axis for the field.
-const double MAX_X = 8.76f;
+const double MAXX = 8.76f;
 /// The further end of the field.
-const double MIN_Z = -17.8f;
+const double MINZ = -17.8f;
  
 /// The launch position on Y axis. 
 const double LAUNCH_Y = 2.4f;

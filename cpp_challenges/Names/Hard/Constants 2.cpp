@@ -14,7 +14,7 @@
 #include "GameConstants.h"
 
 /// For curling stone on ice...0.0168;
-const double COEFF_KINETIC_FRICTION = 0.08f;                
+const double COEFFKINETICFRICTION = 0.08f;                
 /// Force of gravity...9.8 m/s
 const double GRAVITY = 9.81f;                                        
 /// Assume mass of 1Kg for the puck.
@@ -25,9 +25,9 @@ const double MASS_KG = 1;
 const double puck_force_multiplier = 0.004f;
 
 /// The minimal X axis for the field.
-const double MINX = 1.51f;
+const double MIN_X = 1.51f;
 /// The maximal X axis for the field.
-const double MAXX = 8.76f;
+const double MAX_X = 8.76f;
 /// The further end of the field.
 const double MIN_Z = -17.8f;
  
@@ -44,7 +44,7 @@ const double SCORING_LINE_2 = -7.0f;
 const double SCORING_LINE_3 = -12.15f;
  
 /// The line before scoring line 1, where pucks will be despawned. 
-const double FOUL_LINE = 1.75f;
+const double c_foulLine = 1.75f;
 
 /// Update physics subsystem every 1/100 second
 const double UPDATE_PHYSICS_GRANULARITY = 0.01f;

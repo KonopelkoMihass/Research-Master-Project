@@ -814,30 +814,6 @@ class DatabaseManager:
         cursor.close()
         connector.close()
 
-    def get_all_challenge_data(self):
-        connector = self.cnxpool.get_connection()
-        cursor = connector.cursor()
-
-        query = ("SELECT * FROM Challenges")
-        cursor.execute(query)
-        data = cursor.fetchall()
-        cursor.close()
-        connector.close()
-
-        for i in range(0, len(data)):
-            data[i] = list(data[i])
-            issue_text = ""
-            issues_dict = json.loads(data[i][2])
-            for key in issues_dict:
-                line_num = key.split('#')[1]
-                category = issues_dict[key]["standard"]["category"]
-                sub_category = issues_dict[key]["standard"]["subCategory"]
-                issue_text += "At line " + str(line_num) + ": '" + category + "'->'" + sub_category + "'\n"
-
-            data[i].insert(2, issue_text)
-        return data
-
-
 
     def get_last_challenge_inserted(self):
         connector = self.cnxpool.get_connection()
@@ -885,3 +861,39 @@ class DatabaseManager:
         cursor.close()
         connector.close()
         return result
+
+
+
+    def get_all_challenge_data(self):
+        connector = self.cnxpool.get_connection()
+        cursor = connector.cursor()
+
+        query = ("SELECT * FROM Challenges")
+        cursor.execute(query)
+        data = cursor.fetchall()
+        cursor.close()
+        connector.close()
+
+        print ("Reinserting", len(data), "challenges")
+        for i in range(0, len(data)):
+            data[i] = list(data[i])
+            issue_text = ""
+            issues_dict = json.loads(data[i][2])
+            for key in issues_dict:
+                line_num = key.split('#')[1]
+                category = issues_dict[key]["standard"]["category"]
+                sub_category = issues_dict[key]["standard"]["subCategory"]
+                issue_text += "At line " + str(line_num) + ": '" + category + "'->'" + sub_category + "'\n"
+
+                # Remove the html description
+                if "description" in issues_dict[key]["standard"].keys():
+                    del issues_dict[key]["standard"]["description"]
+
+            data[i][2] = json.dumps(issues_dict)
+            data[i].insert(2, issue_text)
+
+        return data
+
+
+
+

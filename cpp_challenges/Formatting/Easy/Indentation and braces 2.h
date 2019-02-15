@@ -14,8 +14,8 @@ struct Clip {
 };
 
 // And there is an if statement from somewhere in a game.
-Clip &clip = someClip;
-Bullet &bullet = someBullet;
+Clip & clip = someClip;
+Bullet & bullet = someBullet;
 
 if (clip.ammoCaliber == bullet.caliber)
 	clip.bullets.push(bullet);

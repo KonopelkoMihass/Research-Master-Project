@@ -169,6 +169,13 @@ class Challenge extends Model
         var data = {};
         data.code = this.code;
         data.issues = this.issues;
+
+        for (var k in data.issues)
+        {
+            delete data.issues[k].standard.description;
+        }
+
+
         data.average_time_seconds = this.averageTimeSeconds;
         data.standard = this.standard;
         data.language = this.language;

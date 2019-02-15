@@ -49,22 +49,24 @@ public:
 
 	/// <summary>
 	/// @brief Calculates the new position of the projectile.
-	/// If this projectile is currently in use (on screen, speed non-zero), it's next screen position
-	///  is calculated along a vector that extends directly from the tip of the tank turret.
-	/// If the newly calculated position is off-screen, then the projectile speed is reset to 0.
+	/// If this projectile is currently in use (on screen, speed non-zero), it's 
+	///  next screen position is calculated along a vector that extends directly
+	///  directly from the tip of the tank turret.
+	/// If the newly calculated position is off-screen, then the projectile speed 
+	///  is reset to 0.
 	/// Otherwise (projectile still on-screen), a collision check is performed between the projectile and every wall. 
 	///  If the projectile collides with a wall, it's speed is reset to 0.
 	/// </summary>
 	/// <param name="t_dt">The delta time</param>
 	/// <param name="t_wallSprites">A reference to the container of wall sprites</param>
-	/// <returns>True if this projectile is currently not in use (i.e. speed is zero).</returns>
+	/// <returns>True if this projectile is not in use (i.e. speed is zero).</returns>
 	bool update(double t_dt, 
 		        std::vector<sf::Sprite> const & t_wallSprites);
 	
 	/// <summary>
 	/// @brief Simpler helper function to determine if projectile is currently in use.
 	/// </summary>
-	/// <returns>True if this projectile is currently in use (i.e. speed is non zero).</returns>
+	/// <returns>True if this projectile is in use (i.e. speed is non zero).</returns>
 	bool inUse() const;
 
 private:
