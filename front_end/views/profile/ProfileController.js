@@ -42,12 +42,35 @@ class ProfileController
 			button.innerText = "[ " + percentage + "% / 100% ] " +  stdName;
 
 			button.addEventListener("click", function () {
+
+
+			    var data = controller.model.calculateProgressTillExamTime(this.id.split("#")[1]);
+
+                var barSpan = document.createElement("SPAN");
+                barSpan.id = "tillExamBarSpan";
+
+                document.getElementById("profile-std-exam-ready-div").style.display = "block";
+                document.getElementById("profile-std-exam-ready-bar-div").style.display = "block";
+                document.getElementById("profile-std-exam-ready-bar-div").innerHTML = "";
+                document.getElementById("profile-std-exam-ready-bar-div").appendChild(barSpan);
+
+                app.utils.addTillExamProgressionBar(barSpan.id, "tillExamBar", data.score.toString(),data.maxScore );
+
+                // profile-std-exam-ready-bar-div
+
+
+
+
 				document.getElementById("profile-std-internalization-progress").innerHTML = "";
 				controller.displaySTDProgress(this.id.split("#")[1], currentScorePack, currentMaxPack);
             });
 			stdSelectorDiv.appendChild(button);
 
 			hasStds = true;
+
+
+
+
 		}
 
 		if (!hasStds)

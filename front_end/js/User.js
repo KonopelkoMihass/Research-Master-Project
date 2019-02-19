@@ -162,9 +162,6 @@ class User extends Model
     {
         window.localStorage.removeItem("nfdawjwawuemupcawuiehcpmuwehmcpuwauehpowdc");
         document.location.reload();
-
-
-
     }
 
     reportSigninIssue(email, issue){
@@ -249,29 +246,88 @@ class User extends Model
         return false;
     }
 
-    isSubcategoryKnown( stdNum, ignoreMasteres)
+    isSubcategoryKnown( stdNum, ignoreMasteres, language)
     {
-        for (var name in this.stdInternalisation)
+
+        var std = this.stdInternalisation[language];
+        for (var key in std)
         {
-
-            var std = this.stdInternalisation[name];
-            for (var key in std)
+            for (var i = 0; i < std[key].subcategories.length; i++)
             {
-                for (var i = 0; i < std[key].subcategories.length; i++)
+                if (std[key].subcategories[i].number === stdNum)
                 {
-                    if (std[key].subcategories[i].number === stdNum)
-                    {
-                        var currentLevel =  this.calculateLevel(name);
-                        var isAvailable = app.standards.isLevelAllowToSeeThisSubcategory(name, key, stdNum, currentLevel);
+                    var currentLevel =  this.calculateLevel(language);
+                    var isAvailable = app.standards.isLevelAllowToSeeThisSubcategory(language, key, stdNum, currentLevel);
 
-                        if (ignoreMasteres && std[key].subcategories[i].score < 10 && isAvailable)
-                            return true;
-                        else if (!ignoreMasteres && std[key].subcategories[i].score >= 9 && isAvailable)
-                            return true;
+                    if (ignoreMasteres && std[key].subcategories[i].score < 10 && isAvailable)
+                        return true;
+                    else if (!ignoreMasteres && std[key].subcategories[i].score >= 9 && isAvailable)
+                        return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    calculateProgressTillExamTime(language)
+    {
+        var std = this.stdInternalisation[language];
+
+        var currentlyInLearningStds = [];
+
+        for (var key in std) {
+
+            for (var i = 0; i < std[key].subcategories.length; i++)
+            {
+                var subcat = std[key].subcategories[i];
+
+                var currentLevel =  this.calculateLevel(language);
+
+
+                var isAvailable = app.standards.isLevelAllowToSeeThisSubcategory(language, key, subcat.number , currentLevel);
+
+                if (isAvailable) {
+                    if (subcat.learnState === "Learning" || subcat.learnState === "Exam Ready" )
+                    {
+                        currentlyInLearningStds.push(subcat);
                     }
                 }
             }
         }
-        return false;
+
+
+        var comparator = function(a, b){
+            return b.score - a.score;
+        };
+        currentlyInLearningStds.sort(comparator);
+
+        const MAX_NUM_OF_EXAMS = 3;
+        var lessThanThreeStds =  currentlyInLearningStds.length < MAX_NUM_OF_EXAMS;
+
+        var currScoreTillExams = 0;
+        var totalStdsTillExam = 0;
+
+
+        var maxScoreTillExams = 0;
+
+
+        if (lessThanThreeStds) {
+            maxScoreTillExams = currentlyInLearningStds.length * 9;
+            totalStdsTillExam = currentlyInLearningStds.length;
+        } else {
+            maxScoreTillExams = MAX_NUM_OF_EXAMS * 9;
+            totalStdsTillExam = MAX_NUM_OF_EXAMS;
+        }
+
+        for (var i = 0; i < totalStdsTillExam; i++){
+            currScoreTillExams += currentlyInLearningStds[i].score;
+        }
+
+        var data = {};
+        data.maxScore = maxScoreTillExams;
+        data.score = currScoreTillExams;
+
+        return data;
     }
 }

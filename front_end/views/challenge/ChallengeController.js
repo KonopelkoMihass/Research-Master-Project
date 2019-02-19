@@ -168,9 +168,9 @@ class ChallengeController
                         if (difficulty === "easy") {
                             if (!controller.model.doesContainThisStandardSubCategory(subcategory.number)) continue;
                         } else if (difficulty === "mixed" || difficulty === "hard"){
-                            if (!app.user.isSubcategoryKnown(subcategory.number, true)) continue;
+                            if (!app.user.isSubcategoryKnown(subcategory.number, true, app.challenge.language)) continue;
                         } else {
-                             if (!app.user.isSubcategoryKnown(subcategory.number, false)) continue;
+                             if (!app.user.isSubcategoryKnown(subcategory.number, false, app.challenge.language)) continue;
                         }
 
                         var spanContainer = document.createElement("SPAN");
@@ -293,7 +293,7 @@ class ChallengeController
 
                 for (var i = 0; i < knownStandardsPool.length; i++) {
                     var std = knownStandardsPool[i];
-                    if (app.user.isSubcategoryKnown(std.number, ignoreMastered)) {
+                    if (app.user.isSubcategoryKnown(std.number, ignoreMastered, app.challenge.language)) {
                         availableStandards.push(std);
                     }
                 }

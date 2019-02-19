@@ -135,7 +135,7 @@ class Standards extends Model
              }
         }
 
-        const MAX_NUM_OF_EXAMS = 4;
+        const MAX_NUM_OF_EXAMS = 3;
 
         // Case 1 - there are enough stds to start an exam.
         if (stdsReadyForExam >= MAX_NUM_OF_EXAMS) return stdsExamReadyIDs;
@@ -477,7 +477,7 @@ class Standards extends Model
 
          for (var i = 0; i < category.length; i++)
          {
-             if (category[i].unlockedAtLevel <= level)
+             if (category[i].unlockedAtLevel <= level && category[i].enabled === "yes" )
              {
                   if (category[i].number === num)
                   {
@@ -534,32 +534,6 @@ class Standards extends Model
             }
 
         }
-
-
-
-
-
-
-
-       /*
-        for (var language in userSTD) {
-            for (var cat in userSTD[language]) {
-                var userSTDIntCategory = userSTD[language][cat];
-                for (var i = 0; i < userSTDIntCategory.subcategories.length; i++)
-                {
-                     var subCat = userSTDIntCategory.subcategories[i];
-
-                     if (subCat.number === number) {
-                         return language;
-                     }
-
-                     else {
-                         continue;
-                     }
-                }
-            }
-        }
-        return "error";*/
     }
 
 

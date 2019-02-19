@@ -6,6 +6,7 @@
 /// @Version 2.0
 /// 
 ///
+///
 /// A game where you click on little goblins who constantly
 /// try to steal chickens and cats from your farm.  Clicks
 /// reward you with upgrades and means to smash more goblins.

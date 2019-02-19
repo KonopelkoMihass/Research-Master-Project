@@ -298,8 +298,8 @@ class Utilities
                 return (index + 1) * segmentWidth;
             });
     }
-   fillTheSkillProgressBar(parentDiv, barName, scoreString, oldscore)
-   {
+    fillTheSkillProgressBar(parentDiv, barName, scoreString, oldscore)
+    {
         console.log("SCORE ", oldscore + "->" + scoreString);
         var id = "#" + barName;
         var states = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], segmentWidth = 32;
@@ -317,7 +317,164 @@ class Utilities
                     return (index ) * segmentWidth;
                 });
     }
+
+
+
+
+
+
+
+    addTillExamProgressionBar(parentDiv, barName, initScoreString, maxScore){
+        var svg = d3.select("#" + parentDiv ).append('svg').attr('height', 30).attr('width', 336 );
+
+
+        var states = [];
+        for (var i = 0; i < maxScore+1; i++) { states.push("" + i); }
+
+        var segmentWidth = Math.ceil(12 * (27/maxScore) );
+        var currentState = initScoreString;
+
+
+        var colRange = [];
+        for (var i = 0; i < maxScore + 1; i++){
+            let oneThird = Math.ceil(maxScore/3);
+
+            if ( i <= oneThird){
+                colRange.push("#ffff00");
+            }
+            if ( i > oneThird && i <= 2*oneThird){
+                colRange.push("#ff6600");
+            }
+            if ( i > 2*oneThird){
+                colRange.push("#ff0000");
+            }
+        }
+
+        var colorScale = d3.scaleOrdinal().domain(states).range(colRange);
+
+        svg.append('rect')
+            .attr('class', 'bg-rect')
+            .attr('rx', 10)
+            .attr('ry', 10)
+            .attr('fill', 'gray')
+            .attr('height', 15)
+            .attr('width', function(){
+                return segmentWidth * (states.length-1);
+            })
+            .attr('x', 0)
+            .attr('y', 5);
+
+        var progBarId = barName;
+        var progress = svg.append('rect')
+                        .attr('class', 'progress-rect')
+                        .attr('id', progBarId)
+                        .attr('fill', function(){
+                            return colorScale(currentState);
+                        })
+                        .attr('height', 15)
+                        .attr('width', 0)
+                        .attr('rx', 10)
+                        .attr('ry', 10)
+                        .attr('x', 0).attr('y', 5);
+
+
+        progress.transition()
+            .attr('width', function(){
+                var index = states.indexOf(currentState);
+                return (index ) * segmentWidth;
+            });
+    }
+
+   fillTheTillExamBar(parentDiv, barName, scoreString)
+   {
+        var id = "#" + barName;
+
+          var states = [];
+        for (var i = 0; i < maxScore+1; i++) { states.push("" + i); }
+
+        var segmentWidth = Math.ceil(12 * (27/maxScore) );
+
+        var colRange = [];
+        for (var i = 0; i < maxScore + 1; i++){
+            let oneThird = Math.ceil(maxScore/3);
+
+            if ( i <= oneThird){
+                colRange.push("#ffff00");
+            }
+            if ( i > oneThird && i <= 2*oneThird){
+                colRange.push("#ff6600");
+            }
+            if ( i > 2*oneThird){
+                colRange.push("#ff0000");
+            }
+        }
+
+        var colorScale = d3.scaleOrdinal().domain(states).range(colRange);
+
+        var svg = d3.select("#" + parentDiv);
+        svg.selectAll(id).transition()
+                .duration(5000)
+                .attr('fill', function(){
+                    return colorScale(scoreString);
+                })
+                .attr('width', function(){
+                    var index = states.indexOf(scoreString);
+                    return (index ) * segmentWidth;
+                });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

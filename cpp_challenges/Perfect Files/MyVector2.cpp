@@ -69,7 +69,7 @@ float vectorDotProduct(	const sf::Vector2f t_vectorA,
 /// <param name="t_vectorB">Input vector B</param>
 /// <returns>Angle in degrees</returns>
 float vectorAngleBetween(	const sf::Vector2f t_vectorA, 
-													const sf::Vector2f t_VectorB)
+							const sf::Vector2f t_VectorB)
 {
 	float cosine = vectorDotProduct(vectorUnitVector(t_vectorA), vectorUnitVector(t_VectorB));
 	if (cosine > 1.0f)
