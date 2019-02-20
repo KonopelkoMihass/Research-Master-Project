@@ -835,7 +835,8 @@ class ChallengeController
             for (var j = 0; j <barsAndNewScores.length;j++ )
             {
                 var elem = barsAndNewScores[j];
-                setTimeout(fillBarFun.bind(null, elem), j*1000);
+
+                setTimeout(fillBarFun.bind(null, elem), (j+1)*1000);
             }
 		}
 

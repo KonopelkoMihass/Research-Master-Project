@@ -537,7 +537,19 @@ class Standards extends Model
     }
 
 
-
+    getStandardDescription(language, number){
+        for (var key in this.standards)
+        {
+            for (var i = 0; i < this.standards[key].length; i++)
+            {
+                var std = this.standards[key][i];
+                 if (std.number == number  && std.name == language)
+                 {
+                     return std.description;
+                 }
+            }
+        }
+    }
 
 
 

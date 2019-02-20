@@ -260,6 +260,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def get_assignments(self):
         message = assignments_manager.get_assignments()
+        print ("WHAT TA HELL?: ", message)
         self.send_message(message[0], message[1])
 
     def submit_assignment(self, message_data):
@@ -606,11 +607,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         print("Total Connections: ", len(connections))"""
 
     def send_message(self,type,data):
-        print("send_message")
+
         msg=dict()
         msg["type"]=type
         msg["data"]=data
         msg=json.dumps(msg)
+        print("send_message", msg)
         self.write_message(msg)
 
 

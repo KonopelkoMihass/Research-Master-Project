@@ -228,7 +228,9 @@ class Utilities
             .duration(1000)
             .attr('width', function(){
                 var index = states.indexOf(currentState);
-                return (index + 1) * segmentWidth;
+                if (index > 0)
+                    return index  * segmentWidth;
+                else return 0;
             });
 
         this.fillTheChallengeBar("0", challengeNum);
@@ -256,7 +258,9 @@ class Utilities
                 })
                 .attr('width', function(){
                     var index = states.indexOf(state);
-                    return (index ) * segmentWidth;
+                    if (index>0)
+                        return index  * segmentWidth;
+                    else return 0;
                 });
     }
 
@@ -295,7 +299,9 @@ class Utilities
         progress.transition()
             .attr('width', function(){
                 var index = states.indexOf(currentState);
-                return (index + 1) * segmentWidth;
+                if (index>0)
+                    return index  * segmentWidth;
+                else return 0;
             });
     }
     fillTheSkillProgressBar(parentDiv, barName, scoreString, oldscore)
@@ -314,7 +320,9 @@ class Utilities
                 })
                 .attr('width', function(){
                     var index = states.indexOf(scoreString);
-                    return (index ) * segmentWidth;
+                    if (index>0)
+                        return index  * segmentWidth;
+                    else return 0;
                 });
     }
 
@@ -381,7 +389,9 @@ class Utilities
         progress.transition()
             .attr('width', function(){
                 var index = states.indexOf(currentState);
-                return (index ) * segmentWidth;
+                if (index>0)
+                    return index  * segmentWidth;
+                else return 0;
             });
     }
 
@@ -419,7 +429,9 @@ class Utilities
                 })
                 .attr('width', function(){
                     var index = states.indexOf(scoreString);
-                    return (index ) * segmentWidth;
+                    if (index>0)
+                        return index  * segmentWidth;
+                    else return 0;
                 });
     }
 

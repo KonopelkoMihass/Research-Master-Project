@@ -108,13 +108,48 @@ class Challenge extends Model
 
         var allFocuses = app.user.focus;
         var focusesForThisLanguage = [];
+
+        var focusesInExamReadyState = 0;
+        var totalFocuses = 0;
+
         for (var key in allFocuses) {
-            if ( app.standards.getSubcategoryLanguage(allFocuses[key].number, allFocuses[key].category )  === language) {
+            if ( app.standards.getSubcategoryLanguage(allFocuses[key].number, allFocuses[key].category ) === language)
+            {
                 focusesForThisLanguage.push(allFocuses[key]);
+                totalFocuses++;
+                if (app.standards.getSTDSubcategorySkill(language, allFocuses[key].category, allFocuses[key].number).learnState === "Exam Ready") {
+                    focusesInExamReadyState++;
+                }
             }
         }
 
         parameterPack.focus = focusesForThisLanguage;
+
+        if (focusesInExamReadyState > 0)
+        {
+            parameterPack.focus = [];
+            if (focusesInExamReadyState === totalFocuses)
+            {
+                alert("All of your focuses are ready for examination, yet you are not ready for exam.  Select other focuses or toggle them off");
+
+            }
+            else
+            {
+                alert("Some of your focuses are ready for examination, yet you are not ready for exam.  These focuses will be ignored.  ");
+
+
+                for (var i = 0; i < focusesForThisLanguage.length; i++){
+                    if (focusesForThisLanguage[i].learnState !== "Exam Ready");
+                         parameterPack.focus.push(focusesForThisLanguage[i]);
+
+                }
+            }
+        }
+
+
+
+
+
         parameterPack.gamified = app.user.gamified;
         parameterPack.std_internalisation = app.user.stdInternalisation[language];
 
@@ -230,7 +265,8 @@ class Challenge extends Model
                         }
                         else {
                             this.challengeIssueInformationName.push(this.issues[key].standard.category + "->" + this.issues[key].standard.subCategory);
-                            this.challengeIssueInformationDescription.push(this.issues[key].standard.description);
+                            var description = app.standards.getStandardDescription(this.issues[key].standard.name, this.issues[key].standard.number);
+                            this.challengeIssueInformationDescription.push(description);
                         }
                     }
 

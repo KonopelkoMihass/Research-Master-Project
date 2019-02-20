@@ -36,7 +36,11 @@ class ProfileController
             var currentScorePack = scoreData.score;
             var currentMaxPack = scoreData.max;
 
-            var percentage = Math.ceil((currentScorePack.total / currentMaxPack.total) * 100);
+
+			var percentage = 0;
+			if (currentScorePack.total > 0) {
+                percentage = Math.ceil((currentScorePack.total / currentMaxPack.total) * 100);
+			}
 
 
 			button.innerText = "[ " + percentage + "% / 100% ] " +  stdName;
@@ -193,8 +197,13 @@ class ProfileController
 			var fieldset = document.createElement("FIELDSET");
 			var legend = document.createElement("LEGEND");
 
-			var percentage = Math.ceil((currentScorePack[sortedKeys[c]] / currentMaxPack[sortedKeys[c]]) * 100);
 
+			var currentScore = currentScorePack[sortedKeys[c]];
+			var percentage = 0;
+
+			if (currentScore > 0) {
+			    percentage =  Math.ceil((currentScorePack[sortedKeys[c]] / currentMaxPack[sortedKeys[c]]) * 100);
+            }
 
 			legend.innerHTML = "[ " + percentage + "% / 100% ] " + sortedKeys[c];
 			fieldset.appendChild(legend);
@@ -227,11 +236,11 @@ class ProfileController
 				    var focusButton = document.createElement("BUTTON");
                     focusButton.classList.add("profile-focus-button");
                     focusButton.innerText = "Focus?";
-                    focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcat.name + "#" + subcat.number;
+                    focusButton.id = "profile-focus-button#" + sortedKeys[c] + "#" + subcatName + "#" + subcat.number;
 
                     subcatFieldset.appendChild(focusButton);
 
-                    if (focus[sortedKeys[c]+subcat.name]) {
+                    if (focus[sortedKeys[c]+subcatName]) {
                         focusButton.innerText = "Focused";
                         focusButton.style.backgroundColor = "#4a8c9a";
                     }
