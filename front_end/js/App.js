@@ -255,8 +255,6 @@ class App
         else if (gamified === "n")
 		{
 			document.getElementById("mps-profile-button").style.display = 'none';
-			document.getElementById("mps-challenges-cpp-button").innerText = "C++ Training";
-			document.getElementById("mps-challenges-js-button").innerText = "JS Training";
 			app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
 		}
 
