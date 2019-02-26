@@ -420,9 +420,9 @@ class App
 		});
 
 
-		app.utils.assignFuncToButtonViaID("mps-discord-button", function() {
-		    window.open('https://discord.gg/e8qvZDj', '_blank');
-		});
+		//app.utils.assignFuncToButtonViaID("mps-discord-button", function() {
+		 //   window.open('https://discord.gg/e8qvZDj', '_blank');
+		//});
 
 		app.utils.assignFuncToButtonViaID("mps-change-password-button" , function (){
 		    var doingChallenge = app.challenge.doingChallenge;

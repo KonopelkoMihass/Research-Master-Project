@@ -77,15 +77,28 @@ class ManageSystemsTeacherView extends View
 			var row = table.insertRow(table.rows.length);
 
 			var cell0 = row.insertCell(0);
+
 			var button = document.createElement("BUTTON");
-			button.innerText = "Get";
+			button.innerText = "Get Overview";
 			button.id = "manage-systems-get-performance#" + students[i].email;
 			button.addEventListener("click", function(){
 			    var email = this.id.split("#")[1];
-                app.students.getPerformanceData(email);
+                app.students.getPerformanceData(email, false);
             });
 
+
+			var button1 = document.createElement("BUTTON");
+			button1.innerText = "Get Full Log";
+			button1.id = "manage-systems-get-full-performance#" + students[i].email;
+			button1.addEventListener("click", function(){
+			    var email = this.id.split("#")[1];
+                app.students.getPerformanceData(email, true);
+            });
+
+
+
 			cell0.appendChild(button);
+			cell0.appendChild(button1);
 
 
 			var cell1 = row.insertCell(1);

@@ -176,6 +176,9 @@ class UserManager:
 
     def analyze_and_reform_student_data(self,message_data):
         student_data = self.database_manager.get_user_info(message_data)
+
+        raw_version = message_data["raw"]
+
         id = str(student_data["id"])
         log_directory = os.getcwd() + "/logs/" + id + "/" + id + ".txt"
 
@@ -193,7 +196,13 @@ class UserManager:
         std_inter_changes = json.loads(student_data["std_internalisation_changes"])
 
         file = "Student: " + student_data["name"] + " " + student_data["surname"] + "\n"
-        file += self.analyze_logs(log)
+
+        if not raw_version:
+            file += self.analyze_logs(log)
+        else:
+            file += "\n###The rate of internalisation of the standards\n"
+            file += log
+
         file += self.analyze_internalisation(std_inter_changes)
 
         data = {}

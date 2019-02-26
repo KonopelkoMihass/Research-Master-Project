@@ -27,11 +27,9 @@ class Students extends Model
          app.net.sendMessage("enable_system_switch", {group: groupSelected});
     }
 
-    getPerformanceData(email)
+    getPerformanceData(email, raw)
     {
-        app.net.sendMessage("get_student_performance", {email: email});
-
-
+        app.net.sendMessage("get_student_performance", {email: email, raw:raw});
     }
 
 
