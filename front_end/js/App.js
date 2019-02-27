@@ -269,15 +269,14 @@ class App
 		    document.getElementById("mps-submissions-button").style.display = 'none';
         }
 
-        if (team === "y4") {
+        if (team === "y4" || team === "y2"  || team === "y1a"  || team === "y1b") {
 		    document.getElementById("mps-challenges-js-button").style.display = 'none';
         }
 
-        if (team === "y3"  || team === "y2"  || team === "y1a"  || team === "y1b" ) {
+        if (team === "y3"  ) {
 		    document.getElementById("mps-challenges-cpp-button").style.display = 'none';
         }
-
-
+        
 
 
         app.utils.assignFuncToButtonViaID("mps-challenges-cpp-button", function () {
