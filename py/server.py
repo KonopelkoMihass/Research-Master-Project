@@ -357,8 +357,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 log += "User started a chain challenge\n"
 
             if type == "challenge started":
+                chal_data = json.loads(line["content"])
+
                 log = "[" + date + "] [" + side + "] "
-                log += "Challenge N" + str(line["content"]) + " started\n"
+                log += "Challenge N" + str(chal_data["number"]) + " [ID:" +str(chal_data["id"]) + "][" + chal_data["language"] + "] started\n"
 
             if type == "challenge completed":
                 content =  line["content"]
@@ -376,7 +378,13 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 log = "[" + date + "] [" + side + "] "
                 log += "User visited profile page\n"
 
+            if type == "tooltip_click":
+                log = "[" + date + "] [" + side + "] "
+                log += "Tooltip was pressed\n"
 
+            if type == "left_challenge":
+                log = "[" + date + "] [" + side + "] "
+                log += "Abandoned Challenge.\n"
 
 
             fh.write(log)

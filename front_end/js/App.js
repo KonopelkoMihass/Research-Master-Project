@@ -240,11 +240,12 @@ class App
                         {
                             app.challenge.doingChallenge = false;
                             app.annalist.saveForLogs("profile_visit", {});
+                            app.annalist.saveForLogs("left_challenge", "");
                             app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
                             viewLabel.innerText = "Your Profile";
                         }
                     }
-                    else{
+                    else {
                         app.annalist.saveForLogs("profile_visit", {});
                         app.viewManager.goToView(app.viewManager.VIEW.PROFILE);
                         viewLabel.innerText = "Your Profile";
@@ -286,6 +287,7 @@ class App
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r)
                     {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
                         app.challenge.getChallengeChain("cpp");
                     }
@@ -306,6 +308,7 @@ class App
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r)
                     {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
                         app.challenge.getChallengeChain("js");
                     }
@@ -323,6 +326,7 @@ class App
 			    if(doingChallenge) {
 			        var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r){
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
                         app.viewManager.goToView(app.viewManager.VIEW.ASSIGNMENTS_STUDENT);
                         document.getElementById("view-title").innerText = "Assignments";
@@ -344,6 +348,7 @@ class App
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r)
                     {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
                         app.viewManager.goToView(app.viewManager.VIEW.SEE_STANDARDS_STUDENT);
                         viewLabel.innerText = "Standards Available";
@@ -364,6 +369,7 @@ class App
 			    if(doingChallenge) {
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r) {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
 				        app.viewManager.goToView(app.viewManager.VIEW.PERFORM_REVIEW_STUDENT);
 				        viewLabel.innerText = "Reviews To Do";
@@ -385,6 +391,7 @@ class App
 			    if(doingChallenge) {
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r) {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
 				        app.viewManager.goToView(app.viewManager.VIEW.FEEDBACK);
 				        viewLabel.innerText = "Feedback You Received";
@@ -405,6 +412,7 @@ class App
 			    if(doingChallenge) {
                     var r = confirm("You will lose progress if you leave now.  Sure?");
                     if (r) {
+                        app.annalist.saveForLogs("left_challenge", "");
                         app.challenge.doingChallenge = false;
 				        app.viewManager.goToView(app.viewManager.VIEW.SEE_SUBMISSIONS_STUDENT);
 				        viewLabel.innerText = "Your Submissions";
@@ -423,6 +431,7 @@ class App
 		    if(doingChallenge) {
                 var r = confirm("You will lose progress if you leave now.  Sure?");
                 if (r) {
+                    app.annalist.saveForLogs("left_challenge", "");
                     app.challenge.doingChallenge = false;
                     viewLabel.innerText = "Change the Password";
                     app.viewManager.goToView(app.viewManager.VIEW.CHANGE_PASSWORD);
@@ -474,7 +483,6 @@ class App
 		});
 
 
-
 		app.utils.assignFuncToButtonViaID("mpt-reload-challenges-button", function() {
 		    var modalBody = app.modalContentManager.getModalContent("verify-user");
             var modalData = app.utils.createModal("verify-user-modal-reload-challenges", "Enter your credentials", modalBody, true);
@@ -495,25 +503,6 @@ class App
 				parentNode.removeChild(modalData.modal);
             });
 		});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		app.utils.assignFuncToButtonViaID("mpt-standards-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_STANDARDS_TEACHER)

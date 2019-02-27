@@ -79,7 +79,7 @@ class Challenge extends Model
             }
 
         }
-        else{
+        else {
             app.net.sendMessage("get_challenge", dataToSend);
             this.currentChallengeLink++;
 
@@ -87,7 +87,13 @@ class Challenge extends Model
             {
                  this.lastChallenge = true;
             }
-            app.annalist.saveForLogs("challenge started", this.currentChallengeLink);
+
+            var data = {};
+            data.id = this.challengeChain[this.currentChallengeLink-1];
+            data.language = this.language;
+            data.number = this.currentChallengeLink;
+
+            app.annalist.saveForLogs("challenge started", JSON.stringify(data));
         }
     }
 
@@ -172,7 +178,6 @@ class Challenge extends Model
 
         app.net.sendMessage("get_challenge_chain", parameterPack);
     }
-
 
 
     addCodeContent(content)

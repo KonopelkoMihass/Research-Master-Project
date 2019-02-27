@@ -200,7 +200,6 @@ class UserManager:
         if not raw_version:
             file += self.analyze_logs(log)
         else:
-            file += "\n###The rate of internalisation of the standards\n"
             file += log
 
         file += self.analyze_internalisation(std_inter_changes)
