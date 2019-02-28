@@ -106,6 +106,8 @@ class DatabaseManager:
                 stmt = "UPDATE Users SET Users.password = '" + password + "' WHERE Users.email='" + email + "'"
                 cursor.execute(stmt)
                 connector.commit()
+                cursor.close()
+                connector.close()
                 result = True
 
         return result
@@ -236,9 +238,7 @@ class DatabaseManager:
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
         query = ("SELECT * FROM Users")
-
-        #print(query)
-
+        
         cursor.execute(query)
         users_table = cursor.fetchall()
         cursor.close()
@@ -311,10 +311,7 @@ class DatabaseManager:
         for i in range(0,len(feedbacks)):
             if feedbacks[i]["reviewer_id"] == data["reviewer_id"]:
                 if feedbacks[i]["iteration_submitted"] == data["iteration_submitted"]:
-                    #print("FEEDback old:", feedbacks[i])
-                    print("FEEDback new:", data["review"])
-                    feedbacks[i]["review"] = data["review"] #TEST THIS PLACE
-                    print("WHY", feedbacks[i]["review"])
+                    feedbacks[i]["review"] = data["review"]
 
         submission["feedbacks"] = json.dumps(feedbacks)
         print ("RESULT:", submission["feedbacks"])
