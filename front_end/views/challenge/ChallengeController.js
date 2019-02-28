@@ -705,11 +705,14 @@ class ChallengeController
 			}
 		}
 
+		var timeTookToComplete = (this.minutes*60) + this.seconds;
+
 		var missedCount = Object.keys(challengeIssues).length - wrong;
 		app.annalist.saveForLogs("challenge completed",
 			{"missed": missedCount ,
 			 "correct": correct,
-			 "wrong": wrong,});
+			 "wrong": wrong,
+                "time":timeTookToComplete});
 	}
 
 	saveChallengeResults()

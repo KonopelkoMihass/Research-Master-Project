@@ -260,7 +260,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def get_assignments(self):
         message = assignments_manager.get_assignments()
-        print ("WHAT TA HELL?: ", message)
         self.send_message(message[0], message[1])
 
     def submit_assignment(self, message_data):
@@ -305,12 +304,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     def save_logs(self,message_data):
         user_id = str(message_data["user_id"])
         print ("Dealing with logs")
-
-        #saved_logs = database_manager.get_logs_for_user(user_id)
-        #saved_logs.extend( message_data["logs"])
-
-        #message_data["logs"] = json.dumps(saved_logs)
-
         type = "save_logs_successful"
 
 
@@ -327,7 +320,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         fh = open(user_logs_path + filename, 'a')
         for i in range(0, len(message_data["logs"])):
-            print("TEST:",  message_data["logs"][i]["type"])
             line = message_data["logs"][i]
             date = line["datetime"]
             side = line["side"]
@@ -340,57 +332,57 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             log = ""
 
             if type == "entered the site":
-                log = "["+date+"] [" + side + "] "
+                log = "["+date+"] {a1} "
                 log += "User entered the site\n"
 
             if type == "leaving the site":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a2} "
                 log += "User left the site\n"
 
             if type == "challenge chain completed":
                 content =  line["content"]
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a3} "
                 log += "User completed chain challenge: Total Score - " + str(content["score"]) + "\n"
 
             if type == "challenge chain started":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a4} "
                 log += "User started a chain challenge\n"
 
             if type == "challenge started":
                 chal_data = json.loads(line["content"])
 
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a5} "
                 log += "Challenge N" + str(chal_data["number"]) + " [ID:" +str(chal_data["id"]) + "][" + chal_data["language"] + "] started\n"
 
             if type == "challenge completed":
                 content =  line["content"]
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a6} "
                 log += "User completed challenge: \n"
-                log += "Missed - " + str(content["missed"]) + "\n"
-                log += "Found - " + str(content["correct"]) + "\n"
-                log += "Mistakes - " + str(content["wrong"]) + "\n"
+                log += "{b1}Missed - " + str(content["missed"]) + "\n"
+                log += "{b2}Found - " + str(content["correct"]) + "\n"
+                log += "{b3}Mistakes - " + str(content["wrong"]) + "\n"
+                log += "{b4}Time taken - " + str(content["time"]) + " seconds.\n"
 
             if type == "tooltip_click":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a7} "
                 log += "User clicked a tooltip\n"
 
             if type == "profile_visit":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a8} "
                 log += "User visited profile page\n"
 
             if type == "tooltip_click":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a9} "
                 log += "Tooltip was pressed\n"
 
             if type == "left_challenge":
-                log = "[" + date + "] [" + side + "] "
+                log = "[" + date + "] {a10} "
                 log += "Abandoned Challenge.\n"
 
 
             fh.write(log)
 
 
-        print("done")
         fh.close()
 
         self.send_message(type, {})
@@ -502,7 +494,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def challenge_mode_switch(self, message):
         result = database_manager.challenge_mode_switch(message)
-        print(result)
         self.send_message(result, {})
         for k, item in connections.items():
             item["socket"].get_assignments()
@@ -569,7 +560,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                     item["socket"] = self
                     item["user_data"] = message[1]
 
-                    print(message[1]["role"])
                     if message[1]["role"] == "teacher":
                         students = database_manager.get_students()
                         for student in students:
@@ -620,7 +610,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         msg["type"]=type
         msg["data"]=data
         msg=json.dumps(msg)
-        print("send_message", msg)
         self.write_message(msg)
 
 
