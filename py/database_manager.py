@@ -360,6 +360,9 @@ class DatabaseManager:
         query = ("UPDATE Users SET Users.challenge_performance = '" + json.dumps(past_performance) + "' WHERE Users.email='" + user_email + "';")
         cursor.execute(query)
         connector.commit()
+        cursor.close()
+        connector.close()
+
 
 
 

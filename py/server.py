@@ -61,6 +61,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         message = json.loads(message)
         message_type = message["type"]
         message_data = message["data"]
+        print("Meesage:",message_type)
 
         if message_type == "signup":
             self.signup(message_data)
@@ -189,7 +190,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             connections[message[1]["email"]] = 	connection
 
             print("Connections", connections)
-            self.send_message("signin_successful", message[1])
+            #self.send_message("signin_successful", message[1])
 
 
     def signin(self, message_data):
