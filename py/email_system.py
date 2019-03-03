@@ -56,15 +56,6 @@ class EmailSystem:
         except smtplib.SMTPConnectError:
            print("Error sending 'send_signin_forgot_password' email: smtp exception c00157576@itcarlow.ie")
 
-
-
-
-
-
-
-
-
-
     def send_signin_issue_report(self, data):
         msg = MIMEMultipart()
         msg['From'] = self.EMAIL_ADDRESS
@@ -160,16 +151,16 @@ class EmailSystem:
 
         msg.attach(MIMEText(content, 'html'))
 
-        try:
-            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
-            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
-            s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
-            s.quit()
+        #try:
+        s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+        s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
+        s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
+        s.quit()
 
-        except IOError:
-            print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
-        except smtplib.SMTPConnectError:
-           print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
+        #except IOError:
+        #    print("Error sending 'send_error_report' email: Unable to send to " + teacher_email)
+        #except smtplib.SMTPConnectError:
+        #    print("Error sending 'send_error_report' email: smtp exception " + teacher_email)
 
 
 
