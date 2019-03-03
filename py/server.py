@@ -535,7 +535,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if result == True:
             challenges_manager.export_from_google_sheet()
             for k, item in connections.items():
-                item["socket"].get_assignments()
                 if item["user_data"]["role"] == "student":
                     item["socket"].kick_from_website()
 
