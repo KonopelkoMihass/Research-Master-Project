@@ -17,12 +17,18 @@ class ManageSystemsTeacherController
             for (var i = 0, length = radios.length; i < length; i++) {
                 if (radios[i].checked) {
                    groupSelected = radios[i].value;
-                    break;
+                   break;
                 }
             }
 
+            var datetimeSwitchWasDone = new Date();
+
+
             if (groupSelected === "") alert("Select a group");
-            else controller.model.invertSystems(groupSelected);
+
+
+
+            else controller.model.invertSystems(groupSelected, datetimeSwitchWasDone);
         });
 
 		document.getElementById("manage-systems-teacher-choice").addEventListener("click", function () {

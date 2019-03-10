@@ -158,6 +158,8 @@ class UserManager:
             self.database_manager.insert_into_table("Users", message_data)
             data = self.database_manager.get_user_info(message_data)
 
+            data["gamification"] =  message_data["gamification"]
+
         except:
             message_type = "signup_failed"
 

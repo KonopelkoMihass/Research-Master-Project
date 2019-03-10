@@ -105,6 +105,10 @@ class User extends Model
                     app.submissions.getAllSubmissions();
                 }
             }
+
+            if (messageType === app.net.messageHandler.types.SIGN_UP_SUCCESSFUL){
+                app.annalist.saveForLogs("sign_up_system", data);
+            }
         }
 
         this.notify(messageType);

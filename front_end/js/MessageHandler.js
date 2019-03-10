@@ -62,7 +62,6 @@ class MessageHandler
 
             GO_TO_GOOGLE_SHEET_SUCCESSFUL: "go_to_google_sheet_successful",
             GO_TO_GOOGLE_SHEET_FAILED: "go_to_google_sheet_failed",
-
 		};
 	}
 
@@ -110,5 +109,6 @@ class MessageHandler
         if ("no_token" === type){
             document.getElementsByClassName("signin-box")[0].style.display = "block";
         }
+
 	}
 }

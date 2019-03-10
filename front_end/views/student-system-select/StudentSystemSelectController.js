@@ -16,10 +16,14 @@ class StudentSystemSelectController
 
 		document.getElementById("student-system-gamified").addEventListener("click", function () {
 			controller.model.sendSystemSelectionResult("y");
+			app.annalist.saveForLogs("selected_system", {"gamified":"y"});
+			document.location.reload();
         });
 
 		document.getElementById("student-system-nongamified").addEventListener("click", function () {
 			controller.model.sendSystemSelectionResult("n");
+			app.annalist.saveForLogs("selected_system", {"gamified":"n"});
+			document.location.reload();
         });
 	}
 

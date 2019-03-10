@@ -16,10 +16,10 @@ class Students extends Model
         app.net.sendMessage("get_students", data);
     }
 
-    invertSystems(groupSelected)
+    invertSystems(groupSelected, datetimeSwitchWasDone)
     {
 
-         app.net.sendMessage("invert_systems", {group: groupSelected});
+         app.net.sendMessage("invert_systems", {group: groupSelected, date_time: datetimeSwitchWasDone});
     }
 
     enableSystemSwitch(groupSelected)

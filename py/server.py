@@ -20,6 +20,7 @@ from tornado.ioloop import PeriodicCallback
 from passlib.hash import sha256_crypt
 import string
 
+import datetime
 
 
 
@@ -112,7 +113,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             self.get_students(message_data)
 
         elif message_type == "invert_systems":
-            self.invert_systems(message_data["group"])
+            self.invert_systems(message_data["group"], message_data["date_time"])
 
         elif message_type == "enable_system_switch":
             self.enable_system_switch(message_data["group"])
@@ -253,7 +254,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         message = assignments_manager.delete_assignment(id)
         self.send_message(message[0], {})
         for k, item in connections.items():
-            item["socket"].get_assignments()
+            try:
+                item["socket"].get_assignments()
+            except: pass
             if item["user_data"]["role"] == "teacher":
                 item["socket"].get_all_submissions()
             else:
@@ -380,6 +383,24 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 log = "[" + date + "] {a10} "
                 log += "Abandoned Challenge.\n"
 
+            if type == "sign_up_system":
+                log = "[" + date + "] "
+                if line["content"]["gamification"] == "y":
+                    log += "{a11a} On signup was assigned a gamified system.\n"
+
+                elif line["content"]["gamification"] == "n":
+                    log += "{a11b} On signup was assigned a non-gamified system.\n"
+
+            if type == "selected_system":
+                log = "[" + date + "] "
+                if line["content"]["gamified"] == "y":
+                    log += "{a13a} User selected gamified version.\n"
+
+                elif line["content"]["gamified"] == "n":
+                    log += "{a13b} User selected non-gamified version.\n"
+
+
+
 
             fh.write(log)
 
@@ -440,21 +461,62 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.send_message(result, students)
 
 
-    def invert_systems(self, group_name):
+    def invert_systems(self, group_name, date_time_done):
         students = []
         result = "invert_systems_successful"
         try:
             students = database_manager.invert_systems(group_name)
             for student in students:
                 student["std_internalisation"] = json.loads(student["std_internalisation"])
+                if student["team_name"] == group_name:
+                    user_id = str(student["id"])
+                    gamified = student["gamification"]
+
+                    date_time_done = date_time_done.replace("T", " ")
+                    date_time_done = date_time_done.split(".")[0]
+
+
+                    root_dir = os.getcwd()
+                    logs_dir = root_dir + "/logs/"
+                    if not os.path.exists(logs_dir):
+                        os.makedirs(logs_dir)
+
+                    user_logs_path = logs_dir + user_id + "/"
+                    if not os.path.exists(user_logs_path):
+                        os.makedirs(user_logs_path)
+
+                    filename = user_id + ".txt"
+
+                    fh = open(user_logs_path + filename, 'a')
+
+                    log = "[" + date_time_done + "] "
+
+                    if gamified == "y":
+                        log += "{a12a} System was inverted to gamified version.\n"
+
+                    elif gamified == "n":
+                        log += "{a12b} System was inverted to non-gamified version.\n"
+
+                    fh.write(log)
+
+                    fh.close()
+
+
         except:
             result = "invert_systems_failed"
+            
         self.send_message(result, students)
 
         for k, item in connections.items():
-            item["socket"].get_assignments()
+            try:
+                item["socket"].get_assignments()
+            except:
+                pass
+
             if item["user_data"]["role"] == "student":
                 item["socket"].kick_from_website()
+
+
 
 
     def enable_system_switch(self, group_name):
@@ -475,14 +537,22 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 item["socket"].kick_from_website()
 
 
+
+
+
+
+
     def selected_system(self, message_data):
         database_manager.selected_system(message_data)
         for k, item in connections.items():
-            item["socket"].get_assignments()
-            if item["user_data"]["role"] == "student":
-                item["socket"].kick_from_website()
-            elif item["user_data"]["role"] == "teacher":
+            try:
+                item["socket"].get_assignments()
+            except: pass
+
+            if item["user_data"]["role"] == "teacher":
                 item["socket"].get_students()
+
+
 
     def update_standards_configurations(self, message_data):
         result = standards_manager.update_standards_configurations(message_data)
@@ -605,7 +675,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         print("Total Connections: ", len(connections))"""
 
     def send_message(self,type,data):
-
         msg=dict()
         msg["type"]=type
         msg["data"]=data
