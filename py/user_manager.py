@@ -70,16 +70,23 @@ class UserManager:
             if result is True:
                 message_type="signin_successful"
 
+                print("reached here 0")
                 data = self.database_manager.get_user_info(message_data)
+                print("reached here 1")
 
                 data["std_internalisation"] = json.loads(data["std_internalisation"])
                 data["got_instruction_emails"] = json.loads(data["got_instruction_emails"])
                 data["std_internalisation_changes"] = json.loads(data["std_internalisation_changes"])
                 data["focus"] = json.loads(data["focus"])
+
+                print("reached here 2")
                 data["teachers"] = self.database_manager.get_teachers_names()
+                print("reached here 3")
 
-
+                print("reached here 4")
                 users = self.database_manager.get_all_users()
+                print("reached here 5")
+
                 data["users"] = users
 
                 is_gamified = data["gamification"]
@@ -90,7 +97,9 @@ class UserManager:
                     else:
                         data["got_instruction_emails"]["sent_gamified"] = "yes"
                         self.email_system.send_gamification_email(data)
+                        print("reached here 6")
                         self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
+                        print("reached here 7")
 
 
                 elif is_gamified == "n":
@@ -99,7 +108,9 @@ class UserManager:
                     else:
                         data["got_instruction_emails"]["sent_non_gamified"] = "yes"
                         self.email_system.send_non_gamification_email(data)
+                        print("reached here 6")
                         self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
+                        print("reached here 7")
 
 
 

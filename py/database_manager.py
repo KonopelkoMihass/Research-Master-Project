@@ -195,24 +195,34 @@ class DatabaseManager:
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
 
-        query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
 
-        cursor.execute(query)
-        data = cursor.fetchall()[0]
+        try:
+            query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
+            cursor.execute(query)
+            data = cursor.fetchall()[0]
+            if "$5$rounds=" in data["password"]:
+                if sha256_crypt.verify(password, data["password"]):
+                    result = True
+            else:
+                if password == data["password"]:
+                    password = sha256_crypt.encrypt(password)
+                    stmt = "UPDATE Users SET Users.password = '" + password + "' WHERE Users.email='" + email + "'"
+                    cursor.execute(stmt)
+                    connector.commit()
+                    result = True
+            cursor.close()
+            connector.close()
 
-        if "$5$rounds=" in data["password"]:
-            if sha256_crypt.verify(password, data["password"]):
-                result = True
-        else:
-            if password == data["password"]:
-                password = sha256_crypt.encrypt(password)
-                stmt = "UPDATE Users SET Users.password = '" + password + "' WHERE Users.email='" + email + "'"
-                cursor.execute(stmt)
-                connector.commit()
-                result = True
 
-        cursor.close()
-        connector.close()
+        except:
+            pass
+
+        finally:
+            cursor.close()
+            connector.close()
+
+
+
 
         return result
 
@@ -222,13 +232,16 @@ class DatabaseManager:
 
         connector = self.cnxpool.get_connection()
         cursor = connector.cursor(dictionary=True)
-        query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
 
-        #print(query)
+        try:
+            query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
 
-        cursor.execute(query)
-        data = cursor.fetchall()[0]
-        del data["password"]
+            #print(query)
+
+            cursor.execute(query)
+            data = cursor.fetchall()[0]
+            del data["password"]
+        except: pass
 
         cursor.close()
         connector.close()
