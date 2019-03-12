@@ -198,11 +198,16 @@ class DatabaseManager:
 
         try:
             query = ("SELECT * FROM Users WHERE Users.email='"+email+"'")
+            print("000")
             cursor.execute(query)
             data = cursor.fetchall()[0]
+
+            print("111")
+
             if "$5$rounds=" in data["password"]:
                 if sha256_crypt.verify(password, data["password"]):
                     result = True
+
             else:
                 if password == data["password"]:
                     password = sha256_crypt.encrypt(password)
@@ -210,12 +215,9 @@ class DatabaseManager:
                     cursor.execute(stmt)
                     connector.commit()
                     result = True
-            cursor.close()
-            connector.close()
-
 
         except:
-            pass
+            print("ERROR OCCURED")
 
         finally:
             cursor.close()
