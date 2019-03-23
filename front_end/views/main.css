@@ -72,12 +72,12 @@ legend
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #afa6a4;
+    background: #706766;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #afa6a4;
+    background: #5a5251;
 }
 
 .codebox-style

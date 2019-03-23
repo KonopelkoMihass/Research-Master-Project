@@ -175,8 +175,8 @@ class User extends Model
 
         if (issue === "I forgot my password")
             this.forgotPasswordRequest(email);
-
-        app.net.sendMessage("signin_issue", data);
+        else
+            app.net.sendMessage("signin_issue", data);
     }
 
 

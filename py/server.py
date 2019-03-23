@@ -24,6 +24,54 @@ import datetime
 
 
 
+
+
+
+import httplib2
+import io
+
+from apiclient import discovery
+from oauth2client import client
+from oauth2client import tools
+from oauth2client.file import Storage
+from apiclient import errors
+
+from google.oauth2 import service_account
+
+from apiclient.http import MediaFileUpload, MediaIoBaseDownload
+
+try:
+    import argparse
+    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+except ImportError:
+    flags = None
+
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+NOTIFICATION_DB_ID = "14ne9dhkVPf5Gv6lyHvk2ajd0MAnNpzYYAGyO9_8E-_k"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #A dictionary, key = ip:port, value = websocket associated with the ip
 #(techincally the websockethandler associated with the ip, but it's easier
 #to imagine as just the websocket.)
@@ -440,7 +488,32 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         database_manager.record_challenge_performance(message_data)
 
     def signin_issue(self, message_data):
-        email_system.send_signin_issue_report(message_data)
+        print("signin_issue")
+        #email_system.send_signin_issue_report(message_data)
+        credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes=SCOPES)
+        service = discovery.build('sheets', 'v4', credentials=credentials)
+
+        # Get previous notifications
+        rows = service.spreadsheets().values().get(spreadsheetId=NOTIFICATION_DB_ID, range='Sheet1').execute().get(
+            'values', [])
+
+        if not rows:
+            # Add first row with info
+            rows = []
+            fields = ("Type", "Message")
+            rows.insert(0, fields)
+
+        newline = (
+            "Signin issue", message_data["email"] + " cannot sign in.  Check if server is up")
+
+        rows = rows + [newline]
+        data_to_spreadsheet = {'values': rows}
+
+        range_all = '{0}!A1:Z'.format("Sheet1")
+        service.spreadsheets().values().clear(spreadsheetId=NOTIFICATION_DB_ID, range=range_all, body={}).execute()
+        service.spreadsheets().values().update(spreadsheetId=NOTIFICATION_DB_ID, range='A1',
+                                               body=data_to_spreadsheet,
+                                               valueInputOption="RAW").execute()
 
 
 
@@ -510,11 +583,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         for k, item in connections.items():
             try:
                 item["socket"].get_assignments()
+                if item["user_data"]["role"] == "student":
+                    item["socket"].kick_from_website()
             except:
                 pass
 
-            if item["user_data"]["role"] == "student":
-                item["socket"].kick_from_website()
+
 
 
 
@@ -532,9 +606,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         self.send_message(result, students)
         for k, item in connections.items():
-            item["socket"].get_assignments()
-            if item["user_data"]["role"] == "student":
-                item["socket"].kick_from_website()
+            try:
+                item["socket"].get_assignments()
+                if item["user_data"]["role"] == "student":
+                    item["socket"].kick_from_website()
+            except:
+                pass
 
 
 
@@ -610,8 +687,47 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def report_error(self, data):
-        teacher_email = database_manager.get_teacher_email(data["teacher_id"])
-        email_system.send_error_report(teacher_email, data)
+
+        #teacher_email = database_manager.get_teacher_email(data["teacher_id"])
+        #email_system.send_error_report(teacher_email, data)
+
+        credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes = SCOPES)
+        service = discovery.build('sheets', 'v4', credentials=credentials)
+
+        #Get previous notifications
+        rows = service.spreadsheets().values().get(spreadsheetId=NOTIFICATION_DB_ID, range='Sheet1').execute().get(
+        'values', [])
+
+        if not rows:
+            # Add first row with info
+            rows = []
+            fields = ( "Type", "Message")
+            rows.insert(0, fields)
+
+
+        newline = ("Error in Challenge",data["reporter_name"] + " " + data["reporter_surname"] + " has following error to"
+                 "report in challenge "+ str(data["challenge_id"]) + ": " + data["text"])
+
+        rows = rows + [newline]
+        data_to_spreadsheet = {'values': rows}
+
+        range_all = '{0}!A1:Z'.format("Sheet1")
+        service.spreadsheets().values().clear(spreadsheetId=NOTIFICATION_DB_ID, range=range_all, body={}).execute()
+        service.spreadsheets().values().update(spreadsheetId=NOTIFICATION_DB_ID, range='A1', body=data_to_spreadsheet,
+                                                    valueInputOption="RAW").execute()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -649,12 +765,34 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
 
     def forgot_password(self, message_data):
+        print("forgot_password")
         new_password = database_manager.forgot_password_temp_replacement(message_data["email"])
         if new_password != "":
-            email_system.send_signin_forgot_password(message_data["email"], new_password)
+            #email_system.send_signin_forgot_password(message_data["email"], new_password)
+            credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes=SCOPES)
+            service = discovery.build('sheets', 'v4', credentials=credentials)
 
+            # Get previous notifications
+            rows = service.spreadsheets().values().get(spreadsheetId=NOTIFICATION_DB_ID, range='Sheet1').execute().get(
+                'values', [])
 
+            if not rows:
+                # Add first row with info
+                rows = []
+                fields = ("Type", "Message")
+                rows.insert(0, fields)
 
+            newline = (
+            "Forgot Password", message_data["email"] + " forgot his password.  It is set to  " + new_password + "  and should be forwarded to that email." )
+
+            rows = rows + [newline]
+            data_to_spreadsheet = {'values': rows}
+
+            range_all = '{0}!A1:Z'.format("Sheet1")
+            service.spreadsheets().values().clear(spreadsheetId=NOTIFICATION_DB_ID, range=range_all, body={}).execute()
+            service.spreadsheets().values().update(spreadsheetId=NOTIFICATION_DB_ID, range='A1',
+                                                   body=data_to_spreadsheet,
+                                                   valueInputOption="RAW").execute()
 
     def kick_from_website(self):
         self.send_message("kick_from_website", {})
