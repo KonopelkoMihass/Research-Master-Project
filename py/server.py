@@ -9,6 +9,10 @@ from assignments_manager import AssignmentsManager
 from standards_manager import StandardsManager
 from email_system import EmailSystem
 
+from system_data_extractor import get_all_system_data
+
+
+
 
 import planner
 import os
@@ -100,6 +104,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         self.send_message("request_token",{})
+        #TEST
+        #get_all_system_data(database_manager)
 
 
 
@@ -201,6 +207,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         elif message_type == "analyze_token":
             self.analyze_token(message_data["token"])
+
+        elif message_type == "give_me_all_data":
+            get_all_system_data(database_manager)
 
 
 

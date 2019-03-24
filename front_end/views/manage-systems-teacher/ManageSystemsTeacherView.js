@@ -118,7 +118,7 @@ class ManageSystemsTeacherView extends View
 				{
 					for (var j = 0; j < std[key].subcategories.length; j++)
 					{
-						if (std[key].subcategories[j].score >= 7)
+						if (std[key].subcategories[j].score === 10)
 						{
 							level++;
 						}

@@ -30,12 +30,9 @@ def generate_data(team_name):
     credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes = SCOPES)
     service = discovery.build('sheets', 'v4', credentials=credentials)
 
-
     log_directory = "/logs/"
 
-
-
-    # There we implement the log transcription logic
+    #There we implement the log transcription logic
 
 
 
