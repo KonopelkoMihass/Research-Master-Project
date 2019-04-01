@@ -6,6 +6,7 @@ services:
   build:
    context: ../
    dockerfile: Docker/ApacheDockerfile
+  restart: always
   ports:
    - "8002:80"    # turn to "81:80" when putting on gamecore
   networks:
@@ -17,6 +18,7 @@ services:
    build:
     context: ../
     dockerfile: Docker/ServerDockerfile
+   restart: always
    ports:
     - "8001:8080" # turn to "8001:8080" when putting on gamecore
    networks:
@@ -27,6 +29,7 @@ services:
 
 
  mihass-g-mysql:
+  restart: always
   image: mysql:5.7.22
   ports:
     - "8017:3306"
