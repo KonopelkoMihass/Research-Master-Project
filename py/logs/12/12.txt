@@ -1,0 +1,132 @@
+[2018-10-30 12:29:58] [client] User entered the site
+[2018-10-30 12:33:36] [client] User left the site
+[2018-10-30 12:33:45] [client] User entered the site
+[2018-10-30 12:33:50] [client] Challenge N1 started
+[2018-10-30 12:33:50] [client] User started a chain challenge
+[2018-10-30 12:37:28] [client] User clicked a tooltip
+[2018-10-30 12:39:14] [client] User clicked a tooltip
+[2018-10-30 12:39:36] [client] User clicked a tooltip
+[2018-10-30 12:39:41] [client] User clicked a tooltip
+[2018-10-30 12:40:11] [client] User clicked a tooltip
+[2018-10-30 12:40:44] [client] User clicked a tooltip
+[2018-10-30 12:40:48] [client] User clicked a tooltip
+[2018-10-30 12:42:37] [client] User completed challenge: 
+Missed - 0
+Found - 0
+Mistakes - 3
+[2018-10-30 12:43:06] [client] Challenge N2 started
+[2018-10-30 12:43:24] [client] User clicked a tooltip
+[2018-10-30 12:43:52] [client] User clicked a tooltip
+[2018-10-30 12:43:55] [client] User clicked a tooltip
+[2018-10-30 12:43:59] [client] User clicked a tooltip
+[2018-10-30 12:44:06] [client] User completed challenge: 
+Missed - 0
+Found - 0
+Mistakes - 2
+[2018-10-30 12:45:02] [client] User left the site
+[2018-10-30 12:45:02] [client] User entered the site
+[2018-10-30 12:45:05] [client] User left the site
+[2018-10-30 12:45:05] [client] User entered the site
+[2018-10-30 12:45:06] [client] User left the site
+[2018-10-30 12:45:06] [client] User entered the site
+[2018-10-30 12:45:07] [client] User left the site
+[2018-10-30 12:45:07] [client] User entered the site
+[2018-10-30 12:45:07] [client] User left the site
+[2018-10-30 12:45:07] [client] User entered the site
+[2018-10-30 12:45:07] [client] User left the site
+[2018-10-30 12:45:08] [client] User entered the site
+[2018-10-30 12:45:08] [client] User left the site
+[2018-10-30 12:45:08] [client] User entered the site
+[2018-10-30 12:45:08] [client] User left the site
+[2018-10-30 12:45:09] [client] User entered the site
+[2018-10-30 12:45:09] [client] User left the site
+[2018-10-30 12:45:09] [client] User entered the site
+[2018-10-30 12:45:10] [client] User left the site
+[2018-10-30 12:45:10] [client] User entered the site
+[2018-10-30 12:45:10] [client] User left the site
+[2018-10-30 12:45:10] [client] User entered the site
+[2018-10-30 12:45:11] [client] User left the site
+[2018-10-30 12:45:11] [client] User entered the site
+[2018-10-30 12:45:11] [client] User left the site
+[2018-10-30 12:45:11] [client] User entered the site
+[2018-10-30 12:45:13] [client] User left the site
+[2018-10-30 12:45:13] [client] User entered the site
+[2018-10-30 12:45:13] [client] User left the site
+[2018-10-30 12:45:13] [client] User entered the site
+[2018-10-30 12:45:14] [client] User left the site
+[2018-10-30 12:45:14] [client] User entered the site
+[2018-10-30 12:45:15] [client] User left the site
+[2018-10-30 12:45:15] [client] User entered the site
+[2018-10-30 12:45:15] [client] User left the site
+[2018-10-30 12:45:15] [client] User entered the site
+[2018-10-30 12:45:16] [client] User left the site
+[2018-10-30 12:45:16] [client] User entered the site
+[2018-10-30 12:45:16] [client] User left the site
+[2018-10-30 12:45:16] [client] User entered the site
+[2018-10-30 12:45:17] [client] User left the site
+[2018-10-30 12:45:17] [client] User entered the site
+[2018-10-30 12:45:17] [client] User left the site
+[2018-10-30 12:45:17] [client] User entered the site
+[2018-10-30 12:45:18] [client] User left the site
+[2018-10-30 12:45:18] [client] User entered the site
+[2018-10-30 12:45:29] [client] User left the site
+[2018-10-30 12:45:29] [client] User entered the site
+[2018-10-30 12:45:30] [client] User left the site
+[2018-10-30 12:45:31] [client] User entered the site
+[2018-10-30 12:46:08] [client] User left the site
+[2018-11-06 12:42:20] [client] User entered the site
+[2018-11-06 12:42:38] [client] Challenge N1 started
+[2018-11-06 12:42:38] [client] User started a chain challenge
+[2018-11-06 12:43:57] [client] User clicked a tooltip
+[2018-11-06 12:44:14] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-11-06 12:44:19] [client] Challenge N2 started
+[2018-11-06 12:44:56] [client] User clicked a tooltip
+[2018-11-06 12:45:14] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-11-06 12:45:17] [client] Challenge N3 started
+[2018-11-06 12:45:25] [client] User completed challenge: 
+Missed - 2
+Found - 0
+Mistakes - 0
+[2018-11-06 12:45:48] [client] Challenge N4 started
+[2018-11-06 12:46:34] [client] User clicked a tooltip
+[2018-11-06 12:46:49] [client] User clicked a tooltip
+[2018-11-06 12:46:57] [client] User clicked a tooltip
+[2018-11-06 12:47:06] [client] User completed challenge: 
+Missed - 0
+Found - 0
+Mistakes - 1
+[2018-11-06 12:47:15] [client] User completed chain challenge: Total Score - 50
+[2018-11-06 12:47:28] [client] User left the site
+[2018-11-06 18:00:43] [client] User entered the site
+[2018-11-06 18:17:15] [client] User left the site
+[2018-11-06 18:27:53] [client] User entered the site
+[2018-11-06 18:29:25] [client] User left the site
+[2018-11-06 18:29:27] [client] User entered the site
+[2018-11-06 18:29:30] [client] User left the site
+[2018-11-06 18:29:33] [client] User entered the site
+[2018-11-06 18:33:53] [client] User visited profile page
+[2018-11-06 18:34:51] [client] User left the site
+[2018-11-06 18:34:54] [client] User entered the site
+[2018-11-06 18:35:45] [client] User left the site
+[2018-11-06 18:35:48] [client] User entered the site
+[2018-11-06 18:36:01] [client] User left the site
+[2018-11-06 18:36:04] [client] User entered the site
+[2018-11-06 18:36:06] [client] User left the site
+[2018-11-06 18:36:06] [client] User entered the site
+[2018-11-06 18:36:10] [client] User left the site
+[2018-11-06 19:17:19] [client] User entered the site
+[2018-11-06 19:20:05] [client] User left the site
+[2018-11-07 10:31:11] [client] User entered the site
+[2018-11-07 10:32:15] [client] User left the site
+[2018-11-07 12:41:41] [client] User entered the site
+[2018-11-07 12:43:07] [client] User left the site
+[2018-11-07 13:40:12] [client] User entered the site
+[2018-11-07 14:42:56] [client] User entered the site
+[2018-11-07 14:44:21] [client] User left the site
+[2018-11-07 14:44:21] [client] User entered the site

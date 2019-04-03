@@ -1,0 +1,10 @@
+[2019-03-01 10:26:18] {a1} User entered the site
+[2019-03-01 10:30:11] {a2} User left the site
+[2019-03-01 10:30:11] {a1} User entered the site
+[2019-03-01 10:30:23] {a2} User left the site
+[2019-03-01 10:30:23] {a1} User entered the site
+[2019-03-01 10:30:24] {a2} User left the site
+[2019-03-01 10:30:24] {a1} User entered the site
+[2019-03-01 10:32:51] {a2} User left the site
+[2019-03-01 10:32:51] {a1} User entered the site
+[2019-03-01 10:32:54] {a2} User left the site

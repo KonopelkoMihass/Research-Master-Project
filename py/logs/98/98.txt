@@ -1,0 +1,156 @@
+[2019-03-19 11:59:16] {a1} User entered the site
+[2019-03-19 12:00:20] {a11b} On signup was assigned a non-gamified system.
+[2019-03-19 12:00:22] {a2} User left the site
+[2019-03-19 12:00:22] {a1} User entered the site
+[2019-03-19 12:49:17] {a1} User entered the site
+[2019-03-19 12:49:49] {a5} Challenge N1 [ID:231][cpp] started
+[2019-03-19 12:49:49] {a4} User started a chain challenge
+[2019-03-19 12:50:07] {a9} Tooltip was pressed
+[2019-03-19 12:52:08] {a9} Tooltip was pressed
+[2019-03-19 12:52:39] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 168 seconds.
+[2019-03-19 12:52:44] {a5} Challenge N2 [ID:257][cpp] started
+[2019-03-19 12:52:56] {a10} Abandoned Challenge.
+[2019-03-19 15:44:02] {a2} User left the site
+[2019-03-19 16:49:39] {a1} User entered the site
+[2019-03-19 16:50:38] {a2} User left the site
+[2019-03-19 16:51:12] {a1} User entered the site
+[2019-03-19 16:51:33] {a2} User left the site
+[2019-03-19 16:51:37] {a1} User entered the site
+[2019-03-19 16:51:41] {a5} Challenge N1 [ID:241][cpp] started
+[2019-03-19 16:51:41] {a4} User started a chain challenge
+[2019-03-19 16:51:46] {a9} Tooltip was pressed
+[2019-03-19 16:52:26] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 45 seconds.
+[2019-03-19 16:52:28] {a5} Challenge N2 [ID:242][cpp] started
+[2019-03-19 16:52:32] {a9} Tooltip was pressed
+[2019-03-19 16:52:49] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 20 seconds.
+[2019-03-19 16:52:53] {a5} Challenge N3 [ID:231][cpp] started
+[2019-03-19 16:52:56] {a9} Tooltip was pressed
+[2019-03-19 16:53:25] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 31 seconds.
+[2019-03-19 16:53:27] {a5} Challenge N4 [ID:225][cpp] started
+[2019-03-19 16:53:29] {a9} Tooltip was pressed
+[2019-03-19 16:53:56] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 28 seconds.
+[2019-03-19 16:53:57] {a3} User completed chain challenge: Total Score - 100
+[2019-03-19 16:55:35] {a5} Challenge N1 [ID:241][cpp] started
+[2019-03-19 16:55:35] {a4} User started a chain challenge
+[2019-03-19 16:55:38] {a2} User left the site
+[2019-03-24 22:43:22] {a12a} System was inverted to gamified version.
+[2019-03-26 13:52:46] {a1} User entered the site
+[2019-03-26 13:53:36] {a8} User visited profile page
+[2019-03-26 13:54:48] {a1} User entered the site
+[2019-03-26 13:54:48] {a8} User visited profile page
+[2019-03-26 13:54:52] {a5} Challenge N1 [ID:242][cpp] started
+[2019-03-26 13:54:52] {a4} User started a chain challenge
+[2019-03-26 13:54:59] {a9} Tooltip was pressed
+[2019-03-26 13:55:25] {a9} Tooltip was pressed
+[2019-03-26 13:55:35] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 43 seconds.
+[2019-03-26 13:55:43] {a5} Challenge N2 [ID:226][cpp] started
+[2019-03-26 13:56:25] {a9} Tooltip was pressed
+[2019-03-26 13:56:25] {a9} Tooltip was pressed
+[2019-03-26 13:57:07] {a9} Tooltip was pressed
+[2019-03-26 13:57:14] {a9} Tooltip was pressed
+[2019-03-26 13:57:17] {a9} Tooltip was pressed
+[2019-03-26 13:57:43] {a9} Tooltip was pressed
+[2019-03-26 13:59:23] {a9} Tooltip was pressed
+[2019-03-26 13:59:30] {a9} Tooltip was pressed
+[2019-03-26 14:00:02] {a6} User completed challenge: 
+{b1}Missed - 2
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 255 seconds.
+[2019-03-26 14:00:32] {a5} Challenge N3 [ID:227][cpp] started
+[2019-03-26 14:01:23] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 51 seconds.
+[2019-03-26 14:01:25] {a5} Challenge N4 [ID:225][cpp] started
+[2019-03-26 14:01:32] {a9} Tooltip was pressed
+[2019-03-26 14:01:53] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 27 seconds.
+[2019-03-26 14:01:56] {a3} User completed chain challenge: Total Score - 75
+[2019-03-26 14:02:11] {a5} Challenge N1 [ID:261][cpp] started
+[2019-03-26 14:02:11] {a4} User started a chain challenge
+[2019-03-26 14:03:52] {a9} Tooltip was pressed
+[2019-03-26 14:03:58] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 105 seconds.
+[2019-03-26 14:04:00] {a5} Challenge N2 [ID:267][cpp] started
+[2019-03-26 14:07:22] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 198 seconds.
+[2019-03-26 14:07:24] {a5} Challenge N3 [ID:268][cpp] started
+[2019-03-26 14:09:18] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 113 seconds.
+[2019-03-26 14:09:21] {a3} User completed chain challenge: Total Score - 100
+[2019-03-26 14:13:21] {a5} Challenge N1 [ID:246][cpp] started
+[2019-03-26 14:13:21] {a4} User started a chain challenge
+[2019-03-26 14:13:26] {a9} Tooltip was pressed
+[2019-03-26 14:14:26] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 63 seconds.
+[2019-03-26 14:14:26] {a5} Challenge N2 [ID:244][cpp] started
+[2019-03-26 14:14:31] {a9} Tooltip was pressed
+[2019-03-26 14:15:59] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 91 seconds.
+[2019-03-26 14:16:00] {a5} Challenge N3 [ID:229][cpp] started
+[2019-03-26 14:16:11] {a9} Tooltip was pressed
+[2019-03-26 14:17:26] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 85 seconds.
+[2019-03-26 14:17:28] {a5} Challenge N4 [ID:243][cpp] started
+[2019-03-26 14:17:39] {a9} Tooltip was pressed
+[2019-03-26 14:18:03] {a9} Tooltip was pressed
+[2019-03-26 14:18:05] {a9} Tooltip was pressed
+[2019-03-26 14:18:38] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 3
+{b4}Time taken - 69 seconds.
+[2019-03-26 14:18:58] {a3} User completed chain challenge: Total Score - 75
+[2019-03-26 14:19:17] {a5} Challenge N1 [ID:277][cpp] started
+[2019-03-26 14:19:17] {a4} User started a chain challenge
+[2019-03-26 14:19:20] {a8} User visited profile page
+[2019-03-26 14:19:20] {a10} Abandoned Challenge.
+[2019-03-26 14:28:25] {a2} User left the site
+[2019-03-31 21:13:43] {a12b} System was inverted to non-gamified version.

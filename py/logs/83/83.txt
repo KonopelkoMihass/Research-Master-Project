@@ -1,0 +1,162 @@
+[2019-03-06 10:45:42] {a1} User entered the site
+{a11b} On signup was assigned a non-gamified system.
+[2019-03-06 10:46:38] {a2} User left the site
+[2019-03-06 10:46:39] {a1} User entered the site
+[2019-03-06 10:46:59] {a2} User left the site
+[2019-03-06 10:47:09] {a1} User entered the site
+[2019-03-06 10:47:13] {a5} Challenge N1 [ID:231][cpp] started
+[2019-03-06 10:47:13] {a4} User started a chain challenge
+[2019-03-06 10:49:11] {a9} Tooltip was pressed
+[2019-03-06 10:51:52] {a9} Tooltip was pressed
+[2019-03-06 10:52:24] {a9} Tooltip was pressed
+[2019-03-06 10:52:45] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 327 seconds.
+[2019-03-06 10:52:50] {a5} Challenge N2 [ID:256][cpp] started
+[2019-03-06 10:52:53] {a9} Tooltip was pressed
+[2019-03-06 10:53:17] {a9} Tooltip was pressed
+[2019-03-06 10:53:49] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 59 seconds.
+[2019-03-06 10:53:50] {a5} Challenge N3 [ID:225][cpp] started
+[2019-03-06 10:53:53] {a9} Tooltip was pressed
+[2019-03-06 10:54:12] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 21 seconds.
+[2019-03-06 10:54:14] {a5} Challenge N4 [ID:242][cpp] started
+[2019-03-06 10:54:29] {a9} Tooltip was pressed
+[2019-03-06 10:55:20] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 66 seconds.
+[2019-03-06 10:55:21] {a3} User completed chain challenge: Total Score - 100
+[2019-03-06 10:55:40] {a5} Challenge N1 [ID:256][cpp] started
+[2019-03-06 10:55:40] {a4} User started a chain challenge
+[2019-03-06 10:55:48] {a9} Tooltip was pressed
+[2019-03-06 10:56:03] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 23 seconds.
+[2019-03-06 10:56:04] {a5} Challenge N2 [ID:225][cpp] started
+[2019-03-06 10:56:16] {a9} Tooltip was pressed
+[2019-03-06 10:56:20] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 15 seconds.
+[2019-03-06 10:56:21] {a5} Challenge N3 [ID:241][cpp] started
+[2019-03-06 10:57:18] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 57 seconds.
+[2019-03-06 10:57:29] {a5} Challenge N4 [ID:226][cpp] started
+[2019-03-06 10:58:15] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 2
+{b4}Time taken - 46 seconds.
+[2019-03-06 10:58:25] {a3} User completed chain challenge: Total Score - 51
+[2019-03-06 10:58:29] {a5} Challenge N1 [ID:241][cpp] started
+[2019-03-06 10:58:29] {a4} User started a chain challenge
+[2019-03-06 10:58:48] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 19 seconds.
+[2019-03-06 10:58:49] {a5} Challenge N2 [ID:256][cpp] started
+[2019-03-06 10:58:58] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 9 seconds.
+[2019-03-06 10:58:59] {a5} Challenge N3 [ID:225][cpp] started
+[2019-03-06 10:59:12] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 12 seconds.
+[2019-03-06 10:59:14] {a5} Challenge N4 [ID:226][cpp] started
+[2019-03-06 10:59:25] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 11 seconds.
+[2019-03-06 10:59:26] {a3} User completed chain challenge: Total Score - 100
+[2019-03-06 11:00:35] {a2} User left the site
+[2019-03-06 11:00:36] {a1} User entered the site
+[2019-03-06 11:01:05] {a2} User left the site
+[2019-03-06 11:01:32] {a1} User entered the site
+[2019-03-06 11:01:33] {a2} User left the site
+[2019-03-11 10:55:19] {a1} User entered the site
+[2019-03-11 10:56:21] {a5} Challenge N1 [ID:261][cpp] started
+[2019-03-11 10:56:21] {a4} User started a chain challenge
+[2019-03-11 10:57:39] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 77 seconds.
+[2019-03-11 10:57:52] {a5} Challenge N2 [ID:268][cpp] started
+[2019-03-11 10:58:37] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 1
+{b4}Time taken - 44 seconds.
+[2019-03-11 10:58:46] {a5} Challenge N3 [ID:275][cpp] started
+[2019-03-13 10:50:31] {a1} User entered the site
+[2019-03-13 10:51:05] {a5} Challenge N1 [ID:261][cpp] started
+[2019-03-13 10:51:05] {a4} User started a chain challenge
+[2019-03-13 10:51:46] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 40 seconds.
+[2019-03-13 10:52:03] {a5} Challenge N2 [ID:268][cpp] started
+[2019-03-13 10:52:28] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 24 seconds.
+[2019-03-13 10:52:31] {a5} Challenge N3 [ID:275][cpp] started
+[2019-03-13 10:53:42] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 70 seconds.
+[2019-03-13 10:53:53] {a3} User completed chain challenge: Total Score - 33
+[2019-03-13 10:53:57] {a5} Challenge N1 [ID:232][cpp] started
+[2019-03-13 10:53:57] {a4} User started a chain challenge
+[2019-03-13 10:54:36] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 35 seconds.
+[2019-03-13 10:54:37] {a5} Challenge N2 [ID:231][cpp] started
+[2019-03-13 10:56:34] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 1
+{b4}Time taken - 117 seconds.
+[2019-03-13 10:57:49] {a5} Challenge N3 [ID:242][cpp] started
+[2019-03-13 10:58:13] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 22 seconds.
+[2019-03-13 10:58:15] {a5} Challenge N4 [ID:241][cpp] started
+[2019-03-13 10:58:24] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 8 seconds.
+[2019-03-13 10:58:25] {a3} User completed chain challenge: Total Score - 88
+[2019-03-13 10:59:09] {a2} User left the site
+[2019-03-18 18:04:49] {a12a} System was inverted to gamified version.

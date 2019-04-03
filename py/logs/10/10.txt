@@ -1,0 +1,12 @@
+[2018-10-30 12:29:26] [client] User entered the site
+[2018-10-30 12:30:42] [client] User left the site
+[2018-10-30 12:32:06] [client] User entered the site
+[2018-10-30 12:34:08] [client] Challenge N1 started
+[2018-10-30 12:34:08] [client] User started a chain challenge
+[2018-10-30 12:35:34] [client] User left the site
+[2018-10-30 12:36:04] [client] User entered the site
+[2018-10-30 12:36:06] [client] User left the site
+[2018-10-30 12:41:00] [client] User entered the site
+[2018-10-30 12:41:52] [client] User left the site
+[2018-10-30 12:41:53] [client] User entered the site
+[2018-10-30 12:45:56] [client] User left the site

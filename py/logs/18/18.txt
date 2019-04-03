@@ -1,0 +1,133 @@
+[2018-11-05 10:41:31] [client] User entered the site
+[2018-11-05 10:42:19] [client] User left the site
+[2018-11-05 10:42:45] [client] User entered the site
+[2018-11-05 10:42:48] [client] Challenge N1 started
+[2018-11-05 10:42:48] [client] User started a chain challenge
+[2018-11-05 10:42:59] [client] Challenge N1 started
+[2018-11-05 10:42:59] [client] User started a chain challenge
+[2018-11-05 10:44:59] [client] User clicked a tooltip
+[2018-11-05 10:45:31] [client] User completed challenge: 
+Missed - 0
+Found - 2
+Mistakes - 0
+[2018-11-05 10:45:33] [client] Challenge N2 started
+[2018-11-05 10:47:18] [client] User clicked a tooltip
+[2018-11-05 10:47:28] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-11-05 10:47:37] [client] Challenge N3 started
+[2018-11-05 10:50:27] [client] User clicked a tooltip
+[2018-11-05 10:50:37] [client] User clicked a tooltip
+[2018-11-05 10:52:35] [client] User left the site
+[2018-11-05 10:53:11] [client] User entered the site
+[2018-11-05 10:53:14] [client] Challenge N1 started
+[2018-11-05 10:53:14] [client] User started a chain challenge
+[2018-11-05 10:53:52] [client] User clicked a tooltip
+[2018-11-05 10:53:55] [client] User clicked a tooltip
+[2018-11-05 10:54:02] [client] User clicked a tooltip
+[2018-11-05 10:54:10] [client] User clicked a tooltip
+[2018-11-05 10:54:14] [client] User clicked a tooltip
+[2018-11-05 10:54:18] [client] User clicked a tooltip
+[2018-11-05 10:54:25] [client] User clicked a tooltip
+[2018-11-05 10:56:13] [client] User clicked a tooltip
+[2018-11-05 10:56:16] [client] User clicked a tooltip
+[2018-11-05 10:56:21] [client] User clicked a tooltip
+[2018-11-05 10:56:44] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2018-11-05 11:11:43] [client] User left the site
+[2018-12-11 11:12:12] [client] User entered the site
+[2018-12-11 11:12:59] [client] User left the site
+[2018-12-11 11:13:08] [client] User entered the site
+[2018-12-11 11:27:06] [client] Challenge N1 started
+[2018-12-11 11:27:06] [client] User started a chain challenge
+[2018-12-11 11:27:27] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:27:31] [client] Challenge N2 started
+[2018-12-11 11:27:57] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:27:58] [client] Challenge N3 started
+[2018-12-11 11:28:11] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:28:13] [client] Challenge N4 started
+[2018-12-11 11:29:06] [client] User clicked a tooltip
+[2018-12-11 11:29:24] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:29:25] [client] User completed chain challenge: Total Score - 100
+[2018-12-11 11:29:28] [client] Challenge N1 started
+[2018-12-11 11:29:28] [client] User started a chain challenge
+[2018-12-11 11:29:36] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:29:37] [client] Challenge N2 started
+[2018-12-11 11:29:42] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:29:43] [client] Challenge N3 started
+[2018-12-11 11:30:00] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:30:01] [client] Challenge N4 started
+[2018-12-11 11:30:09] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:30:10] [client] User completed chain challenge: Total Score - 100
+[2018-12-11 11:33:26] [client] Challenge N1 started
+[2018-12-11 11:33:26] [client] User started a chain challenge
+[2018-12-11 11:37:31] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:37:32] [client] Challenge N2 started
+[2018-12-11 11:37:38] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:37:39] [client] Challenge N3 started
+[2018-12-11 11:37:45] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:37:46] [client] Challenge N4 started
+[2018-12-11 11:37:53] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:37:54] [client] User completed chain challenge: Total Score - 100
+[2018-12-11 11:38:03] [client] Challenge N1 started
+[2018-12-11 11:38:03] [client] User started a chain challenge
+[2018-12-11 11:38:10] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:38:11] [client] Challenge N2 started
+[2018-12-11 11:38:15] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:38:16] [client] Challenge N3 started
+[2018-12-11 11:38:22] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:38:23] [client] Challenge N4 started
+[2018-12-11 11:38:27] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-12-11 11:38:29] [client] User completed chain challenge: Total Score - 100
+[2018-12-11 12:03:35] [client] User left the site

@@ -1,0 +1,20 @@
+[2019-02-27 12:31:27] [client] User entered the site
+[2019-02-27 12:33:58] [client] User left the site
+[2019-02-27 12:33:58] [client] User entered the site
+[2019-02-27 12:34:31] [client] User left the site
+[2019-02-27 12:34:44] [client] User entered the site
+[2019-02-27 12:34:47] [client] User left the site
+[2019-02-27 12:35:01] [client] User entered the site
+[2019-02-27 12:35:03] [client] Challenge N1 [ID:226][cpp] started
+[2019-02-27 12:35:03] [client] User started a chain challenge
+[2019-02-27 12:37:39] [client] User left the site
+[2019-02-27 12:38:57] [client] User entered the site
+[2019-02-27 12:39:00] [client] User left the site
+[2019-02-27 12:39:09] [client] User entered the site
+[2019-02-27 12:39:11] [client] User left the site
+[2019-02-27 12:39:13] [client] User entered the site
+[2019-02-27 12:39:14] [client] Challenge N1 [ID:226][cpp] started
+[2019-02-27 12:39:14] [client] User started a chain challenge
+[2019-02-27 12:39:16] [client] User left the site
+[2019-02-27 12:41:16] [client] User entered the site
+[2019-02-27 12:49:49] [client] User left the site

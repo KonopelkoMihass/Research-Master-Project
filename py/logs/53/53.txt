@@ -1,0 +1,6 @@
+[2019-02-28 14:53:06] [client] User entered the site
+[2019-02-28 14:53:49] [client] User left the site
+[2019-02-28 14:53:56] [client] User entered the site
+[2019-02-28 14:54:14] [client] User entered the site
+[2019-02-28 14:54:16] [client] User left the site
+[2019-02-28 15:46:52] [client] User left the site

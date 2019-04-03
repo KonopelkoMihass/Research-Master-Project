@@ -1,0 +1,16 @@
+[2019-02-05 17:02:26] [client] User entered the site
+[2019-02-05 17:03:46] [client] User visited profile page
+[2019-02-05 17:04:21] [client] User left the site
+[2019-02-05 17:04:23] [client] User entered the site
+[2019-02-05 17:04:40] [client] User visited profile page
+[2019-02-05 17:06:07] [client] User left the site
+[2019-02-06 13:15:17] [client] User entered the site
+[2019-02-06 13:15:31] [client] User visited profile page
+[2019-02-06 13:15:34] [client] Challenge N1 started
+[2019-02-06 13:15:34] [client] User started a chain challenge
+[2019-02-06 13:15:58] [client] User clicked a tooltip
+[2019-02-06 13:16:16] [client] User visited profile page
+[2019-02-06 13:16:17] [client] User left the site
+[2019-02-07 10:53:03] [client] User entered the site
+[2019-02-07 10:53:18] [client] User visited profile page
+[2019-02-07 10:53:22] [client] User left the site

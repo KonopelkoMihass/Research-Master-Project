@@ -1,0 +1,137 @@
+[2018-10-30 12:31:29] [client] User entered the site
+[2018-10-30 12:32:14] [client] User left the site
+[2018-10-30 12:34:01] [client] User entered the site
+[2018-10-30 12:34:06] [client] Challenge N1 started
+[2018-10-30 12:34:06] [client] User started a chain challenge
+[2018-10-30 12:39:02] [client] User left the site
+[2018-10-30 12:39:09] [client] User left the site
+[2018-10-30 12:39:09] [client] User entered the site
+[2018-10-30 12:39:11] [client] Challenge N1 started
+[2018-10-30 12:39:11] [client] User started a chain challenge
+[2018-10-30 12:39:12] [client] Challenge N1 started
+[2018-10-30 12:39:12] [client] User started a chain challenge
+[2018-10-30 12:39:16] [client] Challenge N1 started
+[2018-10-30 12:39:16] [client] User started a chain challenge
+[2018-10-30 12:39:19] [client] User left the site
+[2018-10-30 12:39:22] [client] User entered the site
+[2018-10-30 12:39:24] [client] Challenge N1 started
+[2018-10-30 12:39:24] [client] User started a chain challenge
+[2018-10-30 12:40:19] [client] User left the site
+[2018-10-30 12:40:19] [client] User entered the site
+[2018-10-30 12:40:21] [client] User left the site
+[2018-10-30 12:40:21] [client] User entered the site
+[2018-10-30 12:40:22] [client] User left the site
+[2018-10-30 12:40:22] [client] User entered the site
+[2018-10-30 12:40:23] [client] User left the site
+[2018-10-30 12:40:23] [client] User entered the site
+[2018-10-30 12:40:24] [client] User left the site
+[2018-10-30 12:40:24] [client] User entered the site
+[2018-10-30 12:40:25] [client] User left the site
+[2018-10-30 12:40:25] [client] User entered the site
+[2018-10-30 12:40:25] [client] User left the site
+[2018-10-30 12:40:25] [client] User entered the site
+[2018-10-30 12:40:32] [client] User left the site
+[2018-10-30 12:40:32] [client] User entered the site
+[2018-10-30 12:40:33] [client] User left the site
+[2018-10-30 12:40:33] [client] User entered the site
+[2018-10-30 12:40:33] [client] User left the site
+[2018-10-30 12:40:33] [client] User entered the site
+[2018-10-30 12:40:34] [client] User left the site
+[2018-10-30 12:40:34] [client] User entered the site
+[2018-10-30 12:40:34] [client] User left the site
+[2018-10-30 12:40:34] [client] User entered the site
+[2018-10-30 12:40:35] [client] User left the site
+[2018-10-30 12:40:35] [client] User entered the site
+[2018-10-30 12:40:35] [client] User left the site
+[2018-10-30 12:40:35] [client] User entered the site
+[2018-10-30 12:40:36] [client] User left the site
+[2018-10-30 12:40:36] [client] User entered the site
+[2018-10-30 12:40:36] [client] User left the site
+[2018-10-30 12:40:36] [client] User entered the site
+[2018-10-30 12:40:37] [client] User left the site
+[2018-10-30 12:40:37] [client] User entered the site
+[2018-10-30 12:40:37] [client] User left the site
+[2018-10-30 12:40:37] [client] User entered the site
+[2018-10-30 12:40:38] [client] User left the site
+[2018-10-30 12:40:38] [client] User entered the site
+[2018-10-30 12:40:38] [client] User left the site
+[2018-10-30 12:40:38] [client] User entered the site
+[2018-10-30 12:40:39] [client] User left the site
+[2018-10-30 12:40:39] [client] User entered the site
+[2018-10-30 12:40:39] [client] User left the site
+[2018-10-30 12:40:39] [client] User entered the site
+[2018-10-30 12:40:40] [client] User left the site
+[2018-10-30 12:40:40] [client] User entered the site
+[2018-10-30 12:40:41] [client] User left the site
+[2018-10-30 12:40:41] [client] User entered the site
+[2018-10-30 12:40:42] [client] User left the site
+[2018-10-30 12:40:42] [client] User entered the site
+[2018-10-30 12:40:46] [client] User left the site
+[2018-10-30 12:40:46] [client] User entered the site
+[2018-10-30 12:40:47] [client] User left the site
+[2018-10-30 12:40:47] [client] User entered the site
+[2018-10-30 12:40:47] [client] User left the site
+[2018-10-30 12:40:47] [client] User entered the site
+[2018-10-30 12:40:48] [client] User left the site
+[2018-10-30 12:40:48] [client] User entered the site
+[2018-10-30 12:40:49] [client] User left the site
+[2018-10-30 12:40:49] [client] User entered the site
+[2018-10-30 12:40:49] [client] User left the site
+[2018-10-30 12:40:49] [client] User entered the site
+[2018-10-30 12:40:51] [client] User left the site
+[2018-10-30 12:40:51] [client] User entered the site
+[2018-10-30 12:40:51] [client] User left the site
+[2018-10-30 12:40:51] [client] User entered the site
+[2018-10-30 12:40:52] [client] User left the site
+[2018-10-30 12:40:52] [client] User entered the site
+[2018-10-30 12:40:55] [client] Challenge N1 started
+[2018-10-30 12:40:55] [client] User started a chain challenge
+[2018-10-30 12:41:16] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2018-10-30 12:41:29] [client] Challenge N2 started
+[2018-10-30 12:42:05] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2018-10-30 12:42:12] [client] Challenge N3 started
+[2018-10-30 12:42:52] [client] User completed challenge: 
+Missed - 2
+Found - 0
+Mistakes - 1
+[2018-10-30 12:43:09] [client] Challenge N4 started
+[2018-10-30 12:43:32] [client] User completed challenge: 
+Missed - 0
+Found - 0
+Mistakes - 1
+[2018-10-30 12:43:37] [client] User completed chain challenge: Total Score - 0
+[2018-10-30 12:43:41] [client] Challenge N1 started
+[2018-10-30 12:43:41] [client] User started a chain challenge
+[2018-10-30 12:43:45] [client] Challenge N1 started
+[2018-10-30 12:43:45] [client] User started a chain challenge
+[2018-10-30 12:43:46] [client] Challenge N1 started
+[2018-10-30 12:43:46] [client] User started a chain challenge
+[2018-10-30 12:43:58] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-10-30 12:44:00] [client] Challenge N2 started
+[2018-10-30 12:44:44] [client] User completed challenge: 
+Missed - 3
+Found - 0
+Mistakes - 0
+[2018-10-30 12:45:02] [client] Challenge N3 started
+[2018-10-30 12:45:24] [client] User completed challenge: 
+Missed - 0
+Found - 1
+Mistakes - 0
+[2018-10-30 12:45:26] [client] Challenge N4 started
+[2018-10-30 12:45:51] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2018-10-30 12:45:55] [client] User completed chain challenge: Total Score - 50
+[2018-10-30 12:53:55] [client] User left the site
+[2018-10-30 12:53:57] [client] User entered the site
+[2018-10-30 13:22:14] [client] User left the site

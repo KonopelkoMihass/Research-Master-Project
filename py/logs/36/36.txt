@@ -1,0 +1,13 @@
+[2019-02-06 12:13:49] [client] User entered the site
+[2019-02-06 12:16:32] [client] User left the site
+[2019-02-06 15:52:10] [client] User entered the site
+[2019-02-06 15:52:40] [client] User left the site
+[2019-02-09 14:07:15] [client] User entered the site
+[2019-02-09 14:07:40] [client] Challenge N1 started
+[2019-02-09 14:07:40] [client] User started a chain challenge
+[2019-02-09 14:08:08] [client] User completed challenge: 
+Missed - 1
+Found - 0
+Mistakes - 0
+[2019-02-09 14:08:15] [client] Challenge N2 started
+[2019-02-09 14:09:10] [client] User left the site

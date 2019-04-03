@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e9fb3809-2208-45c1-80b6-694630b4c939" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front_end/js/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="765">
+              <caret line="63" column="55" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Net.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front_end/js/Net.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="31" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServerDockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Docker/ServerDockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/py/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="466">
+              <caret line="833" column="54" lean-forward="true" selection-start-line="833" selection-start-column="54" selection-end-line="833" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UnitTestsDockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Docker/UnitTestsDockerfile">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="MySQLDockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Docker/MySQLDockerfile">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="docker-compose.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Docker/docker-compose.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApacheDockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Docker/ApacheDockerfile">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>challengeChainPerformance</find>
+      <find>upload_challenge_results</find>
+      <find>upload_challenge_resultsrecord_challenge_performance</find>
+      <find>standardInternalisationScore</find>
+      <find>tool</find>
+      <find>ena</find>
+      <find>RESULT</find>
+      <find>goToView</find>
+      <find>difficulty</find>
+      <find>update_standards_configurations</find>
+      <find>app</find>
+      <find>setupMenuPanel</find>
+      <find>parse</find>
+      <find>Sheet1</find>
+      <find>get_all_challenge_data</find>
+      <find>standardsReadyForExam</find>
+      <find>foc</find>
+      <find>performance</find>
+      <find>get_student_performance</find>
+      <find>analyze_and_reform_student_data</find>
+      <find>tooltip_click</find>
+      <find>anna</find>
+      <find>print</find>
+      <find>notify_user_inverted_system</find>
+      <find>get_stu</find>
+      <find>get_</find>
+      <find>Meesa</find>
+      <find>signin</find>
+      <find>forg</find>
+      <find>wipe</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/front_end/modals/verify_user.html" />
+        <option value="$PROJECT_DIR$/front_end/modals/report-challenge-issue.html" />
+        <option value="$PROJECT_DIR$/front_end/views/challenge/challenge.css" />
+        <option value="$PROJECT_DIR$/front_end/js/ViewManager.js" />
+        <option value="$PROJECT_DIR$/front_end/js/ModalContentManager.js" />
+        <option value="$PROJECT_DIR$/front_end/modals/report-signin-error.html" />
+        <option value="$PROJECT_DIR$/front_end/views/challenge/challenge.html" />
+        <option value="$PROJECT_DIR$/front_end/views/profile/profile.css" />
+        <option value="$PROJECT_DIR$/py/assignments_manager.py" />
+        <option value="$PROJECT_DIR$/front_end/views/signin/signin.css" />
+        <option value="$PROJECT_DIR$/Docker/MySQL/setup.sql" />
+        <option value="$PROJECT_DIR$/front_end/views/signup/SignupController.js" />
+        <option value="$PROJECT_DIR$/front_end/views/create-challenge/create-challenge.html" />
+        <option value="$PROJECT_DIR$/front_end/views/create-challenge/CreateChallengeController.js" />
+        <option value="$PROJECT_DIR$/front_end/views/see-standards-teacher/SeeStandardsTeacherView.js" />
+        <option value="$PROJECT_DIR$/front_end/modals/challenge-end.css" />
+        <option value="$PROJECT_DIR$/front_end/modals/challenge-end.html" />
+        <option value="$PROJECT_DIR$/front_end/views/signin/SigninView.js" />
+        <option value="$PROJECT_DIR$/front_end/views/signin/signin.html" />
+        <option value="$PROJECT_DIR$/front_end/views/signin/SigninController.js" />
+        <option value="$PROJECT_DIR$/front_end/views/manage-systems-teacher/manage-systems-teacher.html" />
+        <option value="$PROJECT_DIR$/front_end/views/profile/profile.html" />
+        <option value="$PROJECT_DIR$/front_end/js/Standards.js" />
+        <option value="$PROJECT_DIR$/front_end/views/signup/signup.html" />
+        <option value="$PROJECT_DIR$/front_end/js/Utilities.js" />
+        <option value="$PROJECT_DIR$/front_end/views/profile/ProfileController.js" />
+        <option value="$PROJECT_DIR$/front_end/index.html" />
+        <option value="$PROJECT_DIR$/front_end/js/Challenge.js" />
+        <option value="$PROJECT_DIR$/front_end/views/challenge/ChallengeController.js" />
+        <option value="$PROJECT_DIR$/tests/tests.py" />
+        <option value="$PROJECT_DIR$/front_end/views/signup/SignupView.js" />
+        <option value="$PROJECT_DIR$/front_end/views/manage-systems-teacher/ManageSystemsTeacherController.js" />
+        <option value="$PROJECT_DIR$/front_end/js/Students.js" />
+        <option value="$PROJECT_DIR$/front_end/js/MessageHandler.js" />
+        <option value="$PROJECT_DIR$/front_end/views/student-system-select/StudentSystemSelectController.js" />
+        <option value="$PROJECT_DIR$/py/email_system.py" />
+        <option value="$PROJECT_DIR$/front_end/modals/report-challenge-error.html" />
+        <option value="$PROJECT_DIR$/py/user_manager.py" />
+        <option value="$PROJECT_DIR$/py/database_manager.py" />
+        <option value="$PROJECT_DIR$/front_end/views/main.css" />
+        <option value="$PROJECT_DIR$/front_end/js/User.js" />
+        <option value="$PROJECT_DIR$/py/script_get_log data_into_excel_sheet.py" />
+        <option value="$PROJECT_DIR$/py/system_data_extractor.py" />
+        <option value="$PROJECT_DIR$/front_end/views/manage-systems-teacher/ManageSystemsTeacherView.js" />
+        <option value="$PROJECT_DIR$/py/server.py" />
+        <option value="$PROJECT_DIR$/py/standards_manager.py" />
+        <option value="$PROJECT_DIR$/py/challenges_manager.py" />
+        <option value="$PROJECT_DIR$/Docker/requirements.txt" />
+        <option value="$PROJECT_DIR$/Docker/docker-compose.yml" />
+        <option value="$PROJECT_DIR$/Docker/ServerDockerfile" />
+        <option value="$PROJECT_DIR$/front_end/js/App.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2375" />
+    <option name="y" value="162" />
+    <option name="width" value="809" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="Docker" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="Docker" type="462c0819:PsiDirectoryNode" />
+              <item name="MySQL" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="modals" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="challenge" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="create-challenge" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="manage-systems-teacher" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="signin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="front_end" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="student-system-select" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="py" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GS" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e9fb3809-2208-45c1-80b6-694630b4c939" name="Default" comment="" />
+      <created>1527454022299</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527454022299</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1672" y="-8" width="1936" height="1216" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="3" />
+      <window_info anchor="bottom" id="Run" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="4" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.20520833" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="2" />
+      <window_info anchor="right" id="SciView" order="0" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Find" order="7" visible="true" weight="0.13430128" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="60" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/front_end/modals/challenge-end.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/modals/report-signin-error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="76" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/profile/profile.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signin/signin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/challenge/ChallengeView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="35" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/profile/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="71" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Standard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Standards.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="535" column="9" lean-forward="true" selection-start-line="535" selection-start-column="9" selection-end-line="535" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/profile/ProfileController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4403">
+          <caret line="259" selection-start-line="259" selection-end-line="259" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signup/signup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="30" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_signinup.py" />
+    <entry file="file://$PROJECT_DIR$/py/planner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="37" column="61" selection-start-line="37" selection-start-column="61" selection-end-line="37" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Challenge.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="94" selection-start-line="94" selection-end-line="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/challenge/ChallengeController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12138">
+          <caret line="714" column="16" selection-start-line="714" selection-start-column="16" selection-end-line="714" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/ViewManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="7" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signup/SignupController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="28" selection-start-column="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signup/SignupView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="49" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/student-system-select/StudentSystemSelectController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="66" selection-start-line="24" selection-start-column="58" selection-end-line="24" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Annalist.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="772">
+          <caret line="76" column="36" selection-start-line="76" selection-start-column="32" selection-end-line="76" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/manage-systems-teacher/manage-systems-teacher.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="52" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Students.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="52" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/MessageHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1666">
+          <caret line="98" column="28" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/modals/report-challenge-error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="59" selection-start-line="4" selection-start-column="59" selection-end-line="4" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signin/SigninView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Utilities.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="289" column="58" selection-start-line="289" selection-start-column="46" selection-end-line="289" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/signin/SigninController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/script_get_log data_into_excel_sheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="25" selection-start-line="16" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/User.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1043">
+          <caret line="178" column="12" selection-start-line="178" selection-start-column="12" selection-end-line="178" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/manage-systems-teacher/ManageSystemsTeacherController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/manage-systems-teacher/ManageSystemsTeacherView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="103" column="42" selection-start-line="103" selection-start-column="42" selection-end-line="103" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/views/create-challenge/CreateChallengeController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/MySQL/setup.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="55" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="53" column="53" selection-start-line="53" selection-start-column="53" selection-end-line="53" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/database_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9231">
+          <caret line="550" column="29" selection-start-line="550" selection-start-column="29" selection-end-line="550" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/system_data_extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="91" column="60" selection-start-line="91" selection-start-column="60" selection-end-line="91" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/user_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/standards_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="45" column="8" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/challenges_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/email_system.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="52" lean-forward="true" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/blank-index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/UnitTestsDockerfile">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/MySQLDockerfile">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/ApacheDockerfile">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Docker/ServerDockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="833" column="54" lean-forward="true" selection-start-line="833" selection-start-column="54" selection-end-line="833" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="63" column="55" selection-start-line="63" selection-start-column="55" selection-end-line="63" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front_end/js/Net.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="31" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

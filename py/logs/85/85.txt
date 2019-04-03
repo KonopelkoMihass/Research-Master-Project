@@ -1,0 +1,5 @@
+[2019-03-12 12:42:43] {a1} User entered the site
+[2019-03-12 12:44:21] {a11a} On signup was assigned a gamified system.
+[2019-03-12 12:44:22] {a2} User left the site
+[2019-03-12 12:44:22] {a1} User entered the site
+[2019-03-12 12:44:38] {a8} User visited profile page
