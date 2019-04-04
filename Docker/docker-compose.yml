@@ -8,11 +8,12 @@ services:
    dockerfile: Docker/ApacheDockerfile
   restart: always
   ports:
-   - "8002:80"    # turn to "81:80" when putting on gamecore
-  networks:
-   - "mihass-g-net"
+   - "80:80"    # turn to "81:80" when putting on gamecore
   volumes:
    - ../front_end:/usr/local/apache2/htdocs/
+  networks:
+   - net2
+
 
  mihass-g-server:
    build:
@@ -20,41 +21,29 @@ services:
     dockerfile: Docker/ServerDockerfile
    restart: always
    ports:
-    - "8001:8080" # turn to "8001:8080" when putting on gamecore
-   networks:
-    - "mihass-g-net"
+    - "443:443" # turn to "8001:8080" when putting on gamecore
    volumes:
     - ../py:/app
    tty: true
+   networks:
+    - net2
 
 
  mihass-g-mysql:
   restart: always
   image: mysql:5.7.22
   ports:
-    - "8017:3306"
+    - "3306:3306"
   command: --innodb_use_native_aio=0
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7
    MYSQL_DATABASE: ProjectOrganiser
-  networks:
-   - "mihass-g-net"
   volumes:
     - ./MySQL:/docker-entrypoint-initdb.d
     - ./MySQL/data:/var/lib/mysql
-
-
- unit-tests:
-   build:
-    context: ../
-    dockerfile: Docker/UnitTestsDockerfile
-   links:
-    - mihass-g-mysql:mihass-g-mysql
-   volumes:
-    - ..:/app
-   tty: true
-
+  networks:
+   - net2
 
 networks:
-  mihass-g-net:
+  net2:
     driver: bridge

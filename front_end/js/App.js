@@ -58,10 +58,10 @@ class App
 		this.challenge = new Challenge();
 		this.students = new Students();
 
-		this.net.setHost(location.hostname, 80);
+		this.net.setHost(location.hostname, 443);
 		this.net.connect();
 
-		this.urlChecker.setHost(location.hostname, 80);
+		this.urlChecker.setHost(location.hostname, 443);
 
 		this.setupViews();
         this.viewManager.goToView("signin");

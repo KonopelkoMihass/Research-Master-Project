@@ -100,9 +100,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     #This can be used to restrict which ip addresses can connect to the server
     #return True means any machine can connect
     def check_origin(self, origin):
+        print("check origin", origin)
         return True
 
     def open(self):
+        print("opened connection")
         self.send_message("request_token",{})
         #TEST
         #get_all_system_data(database_manager)
@@ -498,7 +500,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def signin_issue(self, message_data):
         print("signin_issue")
-        #email_system.send_signin_issue_report(message_data)
+        email_system.send_signin_issue_report(message_data)
         credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes=SCOPES)
         service = discovery.build('sheets', 'v4', credentials=credentials)
 
@@ -697,8 +699,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def report_error(self, data):
 
-        #teacher_email = database_manager.get_teacher_email(data["teacher_id"])
-        #email_system.send_error_report(teacher_email, data)
+        teacher_email = database_manager.get_teacher_email(data["teacher_id"])
+        email_system.send_error_report(teacher_email, data)
 
         credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes = SCOPES)
         service = discovery.build('sheets', 'v4', credentials=credentials)
@@ -777,7 +779,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         print("forgot_password")
         new_password = database_manager.forgot_password_temp_replacement(message_data["email"])
         if new_password != "":
-            #email_system.send_signin_forgot_password(message_data["email"], new_password)
+            email_system.send_signin_forgot_password(message_data["email"], new_password)
             credentials = service_account.Credentials.from_service_account_file('private-secret.json', scopes=SCOPES)
             service = discovery.build('sheets', 'v4', credentials=credentials)
 
@@ -848,7 +850,7 @@ app= tornado.web.Application([
 ], settings)
 
 if __name__ == '__main__':
-    server_port = 8080
+    server_port = 443
     print("server ON")
     app.listen(server_port)
     ioloop = tornado.ioloop.IOLoop.instance()

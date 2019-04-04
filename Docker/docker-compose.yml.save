@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+
+ mihass-g-apache:
+  build:
+   context: ../
+   dockerfile: Docker/ApacheDockerfile
+  restart: always
+  ports:
+   - "81:80"    # turn to "81:80" when putting on gamecore
+  networks:
+   - net2
+  volumes:
+   - ../front_end:/usr/local/apache2/htdocs/
+
+ mihass-g-server:
+   build:
+    context: ../
+    dockerfile: Docker/ServerDockerfile
+   restart: always
+   ports:
+    - "8081:8080" # turn to "8001:8080" when putting on gamecore
+   volumes:
+
+    - ../py:/app
+   tty: true
+
+
+ mihass-g-mysql:
+  restart: always
+  image: mysql:5.7.22
+  ports:
+    - "3306:3306"
+  command: --innodb_use_native_aio=0
+  environment:
+   MYSQL_ROOT_PASSWORD: xboxorpc7
+   MYSQL_DATABASE: ProjectOrganiser
+  volumes:
+    - ./MySQL:/docker-entrypoint-initdb.d
+    - ./MySQL/data:/var/lib/mysql
+
