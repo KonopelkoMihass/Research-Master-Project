@@ -13,8 +13,10 @@ class EmailSystem:
 
     def __init__(self):
         print("EmailSystem: __init__")
-        self.EMAIL_SERVER = 'akmac.itcarlow.ie'
-        self.EMAIL_ADDRESS = 'c00157576@itcarlow.ie'
+        self.email_server = 'smtp.gmail.com'
+        self.email_server_port = 465
+        self.EMAIL_ADDRESS = 'mihakonotest@gmail.com'
+        self.EMAIL_PASSWORD = "itcarlowtestpass123"
 
         self.letter_welcome_gamified = "Welcome, {0} {1}.<br>This email will shortly explain to you what you should do in a step-to-step guide.<br>1) When you are in the system, press the Challenge button and complete one set of challenges.  Use this opportunity to explore how to work with it. <br>2) Upon completion of the challenge chain, you should visit the Profile Page and explore it's content.  There you can track your progress in learning the standards.<br>3) Well done!  Now you are ready to use it on daily basis for as long as you want to.<br><br>Good luck!"
 
@@ -44,8 +46,8 @@ class EmailSystem:
         msg.attach(MIMEText(content, 'html'))
 
         try:
-            s = smtplib.SMTP(self.EMAIL_SERVER)
-
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
             s.sendmail(self.EMAIL_ADDRESS, email, msg.as_string())
             s.quit()
 
@@ -73,7 +75,8 @@ class EmailSystem:
         msg.attach(MIMEText(content, 'html'))
 
         try:
-            s = smtplib.SMTP(self.EMAIL_SERVER)
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
             s.sendmail(self.EMAIL_ADDRESS, "c00157576@itcarlow.ie", msg.as_string())
             s.quit()
 
@@ -97,7 +100,8 @@ class EmailSystem:
         msg.attach(MIMEText(content, 'html'))
 
         try:
-            s = smtplib.SMTP(self.EMAIL_SERVER)
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
             s.sendmail(self.EMAIL_ADDRESS, student["email"], msg.as_string())
             s.quit()
 
@@ -117,9 +121,11 @@ class EmailSystem:
         msg.attach(MIMEText(content, 'html'))
 
         try:
-            s = smtplib.SMTP(self.EMAIL_SERVER)
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
             s.sendmail(self.EMAIL_ADDRESS, student["email"], msg.as_string())
             s.quit()
+
 
         except IOError:
             print("Error sending 'send_non_gamification_email' email: Unable to send to " + student["email"])
@@ -147,7 +153,8 @@ class EmailSystem:
         msg.attach(MIMEText(content, 'html'))
 
         try:
-            s = smtplib.SMTP(self.EMAIL_SERVER)
+            s = smtplib.SMTP_SSL(self.email_server, self.email_server_port)
+            s.login(self.EMAIL_ADDRESS, self.EMAIL_PASSWORD)
             s.sendmail(self.EMAIL_ADDRESS, teacher_email, msg.as_string())
             s.quit()
 
