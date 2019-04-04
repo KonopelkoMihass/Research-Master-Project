@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9fb3809-2208-45c1-80b6-694630b4c939" name="Default" comment="" />
+    <list default="true" id="e9fb3809-2208-45c1-80b6-694630b4c939" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/py/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/py/server.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/py/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="690" column="13" lean-forward="true" selection-start-line="690" selection-start-column="13" selection-end-line="690" selection-end-column="13" />
+            <state relative-caret-position="333">
+              <caret line="750" column="28" selection-start-line="750" selection-start-column="25" selection-end-line="750" selection-end-column="28" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -59,11 +61,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="email_system.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="email_system.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/py/email_system.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="16" column="52" lean-forward="true" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+            <state relative-caret-position="406">
+              <caret line="24" column="95" lean-forward="true" selection-start-line="24" selection-start-column="95" selection-end-line="24" selection-end-column="95" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,7 +169,6 @@
         <option value="$PROJECT_DIR$/front_end/js/Students.js" />
         <option value="$PROJECT_DIR$/front_end/js/MessageHandler.js" />
         <option value="$PROJECT_DIR$/front_end/views/student-system-select/StudentSystemSelectController.js" />
-        <option value="$PROJECT_DIR$/py/email_system.py" />
         <option value="$PROJECT_DIR$/front_end/modals/report-challenge-error.html" />
         <option value="$PROJECT_DIR$/py/user_manager.py" />
         <option value="$PROJECT_DIR$/py/database_manager.py" />
@@ -173,13 +177,14 @@
         <option value="$PROJECT_DIR$/py/script_get_log data_into_excel_sheet.py" />
         <option value="$PROJECT_DIR$/py/system_data_extractor.py" />
         <option value="$PROJECT_DIR$/front_end/views/manage-systems-teacher/ManageSystemsTeacherView.js" />
-        <option value="$PROJECT_DIR$/py/server.py" />
         <option value="$PROJECT_DIR$/py/standards_manager.py" />
         <option value="$PROJECT_DIR$/py/challenges_manager.py" />
         <option value="$PROJECT_DIR$/Docker/requirements.txt" />
         <option value="$PROJECT_DIR$/Docker/docker-compose.yml" />
         <option value="$PROJECT_DIR$/Docker/ServerDockerfile" />
         <option value="$PROJECT_DIR$/front_end/js/App.js" />
+        <option value="$PROJECT_DIR$/py/email_system.py" />
+        <option value="$PROJECT_DIR$/py/server.py" />
       </list>
     </option>
   </component>
@@ -192,7 +197,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="2375" />
     <option name="y" value="162" />
     <option name="width" value="809" />
@@ -329,7 +334,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1672" y="-8" width="1936" height="1216" extended-state="6" />
+    <frame x="1672" y="-8" width="1936" height="1216" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="12" />
@@ -707,20 +712,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py/server.py">
+    <entry file="file://$PROJECT_DIR$/py/email_system.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="690" column="13" lean-forward="true" selection-start-line="690" selection-start-column="13" selection-end-line="690" selection-end-column="13" />
+        <state relative-caret-position="406">
+          <caret line="24" column="95" lean-forward="true" selection-start-line="24" selection-start-column="95" selection-end-line="24" selection-end-column="95" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py/email_system.py">
+    <entry file="file://$PROJECT_DIR$/py/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="52" lean-forward="true" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+        <state relative-caret-position="333">
+          <caret line="750" column="28" selection-start-line="750" selection-start-column="25" selection-end-line="750" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
