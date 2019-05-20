@@ -55,6 +55,7 @@ def get_all_system_data(database_manager):
             user["level_js"] = calculate_level(json.loads(raw_user["std_internalisation"]), "js")
 
             user["std_internalisation_changes"] = raw_user["std_internalisation_changes"]
+            user["std_internalisation"] = raw_user["std_internalisation"]
             user["log_content"] = get_log_text(user["id"])
 
             days_data = list_days_system_was_used(user["log_content"])
@@ -80,8 +81,9 @@ def get_all_system_data(database_manager):
     rows = rows + [create_row("JS Level", users, "level_js")]
     rows = rows + [create_row("Total Days Active", users, "total_days")]
     rows = rows + [create_row("List of days active", users, "days_active")]
-
-
+    rows = rows + [create_row("JSON of Standard internalisation progression", users, "std_internalisation_changes")]
+    rows = rows + [create_row("Raw Logs", users, "log_content")]
+    rows = rows + [create_row("JSON Internalisation score", users, "std_internalisation")]
 
 
 
