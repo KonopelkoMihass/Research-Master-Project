@@ -152,3 +152,10 @@
 [2019-03-06 11:06:01] {a5} Challenge N2 [ID:267][cpp] started
 [2019-03-06 11:06:23] {a2} User left the site
 [2019-03-18 18:02:38] {a12a} System was inverted to gamified version.
+[2019-04-05 11:17:38] {a1} User entered the site
+[2019-04-05 11:18:18] {a13a} User selected gamified version.
+[2019-04-05 11:18:18] {a2} User left the site
+[2019-04-05 11:18:19] {a1} User entered the site
+[2019-04-05 11:18:20] {a8} User visited profile page
+[2019-04-05 11:18:31] {a5} Challenge N1 [ID:261][cpp] started
+[2019-04-05 11:18:31] {a4} User started a chain challenge

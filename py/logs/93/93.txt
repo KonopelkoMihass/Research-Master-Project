@@ -442,3 +442,6 @@
 {b4}Time taken - 157 seconds.
 [2019-04-02 08:37:41] {a5} Challenge N2 [ID:272][cpp] started
 [2019-04-02 08:37:47] {a2} User left the site
+[2019-04-04 10:38:54] {a1} User entered the site
+[2019-04-04 10:39:17] {a8} User visited profile page
+[2019-04-04 10:40:09] {a2} User left the site

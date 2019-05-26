@@ -263,3 +263,9 @@
 [2019-03-27 20:52:05] {a9} Tooltip was pressed
 [2019-03-27 20:56:27] {a9} Tooltip was pressed
 [2019-03-27 20:57:31] {a2} User left the site
+[2019-04-04 10:39:49] {a1} User entered the site
+[2019-04-04 10:40:09] {a13a} User selected gamified version.
+[2019-04-04 10:40:09] {a2} User left the site
+[2019-04-04 10:40:10] {a1} User entered the site
+[2019-04-04 10:40:11] {a8} User visited profile page
+[2019-04-04 10:40:18] {a2} User left the site

@@ -810,3 +810,173 @@
 {b4}Time taken - 15 seconds.
 [2019-04-03 10:03:45] {a3} User completed chain challenge: Total Score - 75
 [2019-04-03 10:04:28] {a2} User left the site
+[2019-04-11 20:21:13] {a1} User entered the site
+[2019-04-11 20:21:46] {a8} User visited profile page
+[2019-04-11 20:22:01] {a5} Challenge N1 [ID:287][cpp] started
+[2019-04-11 20:22:01] {a4} User started a chain challenge
+[2019-04-11 20:22:09] {a9} Tooltip was pressed
+[2019-04-11 20:22:46] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 44 seconds.
+[2019-04-11 20:22:48] {a5} Challenge N2 [ID:278][cpp] started
+[2019-04-11 20:23:03] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 15 seconds.
+[2019-04-11 20:23:04] {a5} Challenge N3 [ID:279][cpp] started
+[2019-04-11 20:23:11] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 7 seconds.
+[2019-04-11 20:23:12] {a5} Challenge N4 [ID:288][cpp] started
+[2019-04-11 20:23:20] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 8 seconds.
+[2019-04-11 20:23:23] {a3} User completed chain challenge: Total Score - 75
+[2019-04-11 20:23:34] {a8} User visited profile page
+[2019-04-11 20:23:38] {a5} Challenge N1 [ID:288][cpp] started
+[2019-04-11 20:23:38] {a4} User started a chain challenge
+[2019-04-11 20:23:49] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 11 seconds.
+[2019-04-11 20:23:50] {a5} Challenge N2 [ID:287][cpp] started
+[2019-04-11 20:24:10] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 19 seconds.
+[2019-04-11 20:24:10] {a3} User completed chain challenge: Total Score - 100
+[2019-04-11 20:24:21] {a5} Challenge N1 [ID:277][cpp] started
+[2019-04-11 20:24:21] {a4} User started a chain challenge
+[2019-04-11 20:25:08] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 47 seconds.
+[2019-04-11 20:25:09] {a5} Challenge N2 [ID:283][cpp] started
+[2019-04-11 20:26:33] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 84 seconds.
+[2019-04-11 20:26:34] {a5} Challenge N3 [ID:280][cpp] started
+[2019-04-11 20:27:18] {a9} Tooltip was pressed
+[2019-04-11 20:27:27] {a9} Tooltip was pressed
+[2019-04-11 20:27:30] {a9} Tooltip was pressed
+[2019-04-11 20:29:01] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 2
+{b4}Time taken - 147 seconds.
+[2019-04-11 20:29:33] {a5} Challenge N4 [ID:266][cpp] started
+[2019-04-11 20:29:58] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 24 seconds.
+[2019-04-11 20:29:59] {a3} User completed chain challenge: Total Score - 75
+[2019-04-11 20:30:15] {a5} Challenge N1 [ID:278][cpp] started
+[2019-04-11 20:30:15] {a4} User started a chain challenge
+[2019-04-11 20:30:28] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 12 seconds.
+[2019-04-11 20:30:29] {a5} Challenge N2 [ID:279][cpp] started
+[2019-04-11 20:30:43] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 14 seconds.
+[2019-04-11 20:30:44] {a3} User completed chain challenge: Total Score - 100
+[2019-04-11 20:30:56] {a5} Challenge N1 [ID:260][cpp] started
+[2019-04-11 20:30:56] {a4} User started a chain challenge
+[2019-04-11 20:31:11] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 15 seconds.
+[2019-04-11 20:31:12] {a5} Challenge N2 [ID:284][cpp] started
+[2019-04-11 20:31:53] {a9} Tooltip was pressed
+[2019-04-11 20:32:17] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 5
+{b3}Mistakes - 0
+{b4}Time taken - 65 seconds.
+[2019-04-11 20:32:18] {a5} Challenge N3 [ID:281][cpp] started
+[2019-04-11 20:33:41] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 82 seconds.
+[2019-04-11 20:33:45] {a5} Challenge N4 [ID:277][cpp] started
+[2019-04-11 20:34:36] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 0
+{b4}Time taken - 51 seconds.
+[2019-04-11 20:34:37] {a3} User completed chain challenge: Total Score - 100
+[2019-04-11 20:34:52] {a5} Challenge N1 [ID:260][cpp] started
+[2019-04-11 20:34:52] {a4} User started a chain challenge
+[2019-04-11 20:35:15] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 23 seconds.
+[2019-04-11 20:35:15] {a5} Challenge N2 [ID:284][cpp] started
+[2019-04-11 20:35:37] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 5
+{b3}Mistakes - 0
+{b4}Time taken - 21 seconds.
+[2019-04-11 20:35:38] {a5} Challenge N3 [ID:283][cpp] started
+[2019-04-11 20:36:03] {a9} Tooltip was pressed
+[2019-04-11 20:36:05] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 27 seconds.
+[2019-04-11 20:36:06] {a5} Challenge N4 [ID:270][cpp] started
+[2019-04-11 20:37:20] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 1
+{b4}Time taken - 74 seconds.
+[2019-04-11 20:37:35] {a3} User completed chain challenge: Total Score - 88
+[2019-04-11 20:38:07] {a5} Challenge N1 [ID:284][cpp] started
+[2019-04-11 20:38:07] {a4} User started a chain challenge
+[2019-04-11 20:38:30] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 5
+{b3}Mistakes - 0
+{b4}Time taken - 23 seconds.
+[2019-04-11 20:38:31] {a5} Challenge N2 [ID:269][cpp] started
+[2019-04-11 20:39:52] {a9} Tooltip was pressed
+[2019-04-11 20:39:53] {a9} Tooltip was pressed
+[2019-04-11 20:40:03] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 91 seconds.
+[2019-04-11 20:40:04] {a5} Challenge N3 [ID:280][cpp] started
+[2019-04-11 20:40:35] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 0
+{b4}Time taken - 31 seconds.
+[2019-04-11 20:40:36] {a5} Challenge N4 [ID:267][cpp] started
+[2019-04-11 20:41:19] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 43 seconds.
+[2019-04-11 20:41:20] {a3} User completed chain challenge: Total Score - 100
+[2019-04-11 20:41:41] {a2} User left the site

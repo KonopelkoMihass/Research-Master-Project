@@ -516,3 +516,7 @@
 {b3}Mistakes - 0
 {b4}Time taken - 22 seconds.
 [2019-04-03 17:16:42] {a3} User completed chain challenge: Total Score - 75
+[2019-04-08 12:11:03] {a1} User entered the site
+[2019-04-08 12:11:48] {a2} User left the site
+[2019-04-08 12:11:55] {a1} User entered the site
+[2019-04-08 12:58:01] {a2} User left the site

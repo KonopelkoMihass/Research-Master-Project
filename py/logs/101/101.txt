@@ -855,3 +855,36 @@
 {b4}Time taken - 5 seconds.
 [2019-04-03 10:25:07] {a3} User completed chain challenge: Total Score - 84
 [2019-04-03 10:26:13] {a2} User left the site
+[2019-04-04 10:39:17] {a1} User entered the site
+[2019-04-04 12:24:22] {a5} Challenge N1 [ID:284][cpp] started
+[2019-04-04 12:24:22] {a4} User started a chain challenge
+[2019-04-04 12:24:45] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 5
+{b3}Mistakes - 0
+{b4}Time taken - 23 seconds.
+[2019-04-04 12:24:46] {a5} Challenge N2 [ID:285][cpp] started
+[2019-04-04 12:25:24] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 0
+{b3}Mistakes - 1
+{b4}Time taken - 38 seconds.
+[2019-04-04 12:25:30] {a5} Challenge N3 [ID:286][cpp] started
+[2019-04-04 12:26:18] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 2
+{b3}Mistakes - 1
+{b4}Time taken - 48 seconds.
+[2019-04-04 12:26:23] {a5} Challenge N4 [ID:271][cpp] started
+[2019-04-04 12:27:02] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 3
+{b3}Mistakes - 1
+{b4}Time taken - 38 seconds.
+[2019-04-04 12:27:09] {a5} Challenge N5 [ID:273][cpp] started
+[2019-04-04 12:27:22] {a6} User completed challenge: 
+{b1}Missed - 0
+{b2}Found - 1
+{b3}Mistakes - 0
+{b4}Time taken - 13 seconds.
+[2019-04-04 12:27:24] {a3} User completed chain challenge: Total Score - 62
