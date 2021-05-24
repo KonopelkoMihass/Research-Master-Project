@@ -1,5 +1,3 @@
-This is a gamified verison of Mihass Project 
-
 There is how versioning is done for this project: 
 
 -The Build system - each commit is assigned a build number. Each commit is buildable and should compile and be deployed. 
@@ -19,3 +17,12 @@ The commits may have a following heading:
 -Bxx: This is a fully operational, ready for test build.
 
 -IPxx:  This is a "In Progress" commit used by developer to store progress or to showcase something.
+
+
+There is an instruction to setting up the system:
+
+1). If you want to setup teacher accounts or add any dummy accounts - you need to go to Docker/MySQL/ and edit setup.sql
+  -) Locate a following line: "INSERT INTO ProjectOrganiser.Users"
+	-) Append or alter already present accounts to suit your needs.
+	
+2). If the server does not start up or starts up with issues - check that configuration in docker-compose.yml is correct.

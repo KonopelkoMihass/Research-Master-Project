@@ -12,7 +12,7 @@ services:
   networks:
    - "mihass-g-net"
   volumes:
-   - ../front_end:/usr/local/apache2/htdocs/
+   - ../front_end:/usr/local/apache2/htdocs/CodeReviewer
 
  mihass-g-server:
    build:
@@ -32,7 +32,7 @@ services:
   restart: always
   image: mysql:5.7.22
   ports:
-    - "8017:3306"
+    - "3306:3306"
   command: --innodb_use_native_aio=0
   environment:
    MYSQL_ROOT_PASSWORD: xboxorpc7

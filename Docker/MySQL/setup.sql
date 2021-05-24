@@ -29,7 +29,7 @@ CREATE UNIQUE INDEX `email_UNIQUE` ON `ProjectOrganiser`.`Users` (`email` ASC);
 
 INSERT INTO ProjectOrganiser.Users (email, team_name, name, surname, noun, password, role, std_internalisation,
                                     gamification, `challenge_mode_only`, got_instruction_emails, std_internalisation_changes, focus )
-VALUES ('c00157576@itcarlow.ie','teacher','Mihass','Konopelko','Potato','22021993','teacher', '{}', '0', 'y', '{}', '{}', '{}'),
+VALUES ('reviewer@mail.net','teacher','Reviewer',' ','Apple','a123242z','teacher', '{}', '0', 'y', '{}', '{}', '{}'),
   ('w','1','w','w','Bed','w','student', '{}', 'y', 'y', '{}', '{}', '{}'),
   ('e','1','e','e','Chair','e','student', '{}', 'y', 'y', '{}', '{}', '{}'),
   ('r','2','r','r','Pizza','r','student', '{}', 'n', 'y', '{}', '{}', '{}'),
