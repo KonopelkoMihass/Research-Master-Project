@@ -58,6 +58,8 @@ class ManageSystemsTeacherController
             this.innerText = app.user.challengeModeOnly  ? "Switch off" : "Switch on";
 			app.net.sendMessage("challenge_mode_switch",  app.user.challengeModeOnly);
         });
+				
+		document.getElementById("challenge-only-fieldset").style.display = 'none';		
 
 
 	}

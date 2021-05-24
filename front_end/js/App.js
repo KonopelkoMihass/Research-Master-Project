@@ -269,13 +269,11 @@ class App
 		    document.getElementById("mps-submissions-button").style.display = 'none';
         }
 
-        if (team === "y4" || team === "y2"  || team === "y1a"  || team === "y1b" || team === "y2x") {
-		    document.getElementById("mps-challenges-js-button").style.display = 'none';
-        }
+        
+		   document.getElementById("mps-challenges-js-button").style.display = 'none';
+        
 
-        if (team === "y3"  ) {
-		    document.getElementById("mps-challenges-cpp-button").style.display = 'none';
-        }
+
         
 
 
@@ -451,7 +449,7 @@ class App
 				viewLabel.innerText = "Assignments";
 			}
 		});
-	
+		document.getElementById("mpt-assignments-button").style.display = 'none';
 
 		app.utils.assignFuncToButtonViaID("mpt-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
@@ -528,7 +526,7 @@ class App
 				viewLabel.innerText = "Student's Submissions";
 			}
 		});
-
+		document.getElementById("mpt-submissions-button").style.display = 'none';
 
 
 		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
