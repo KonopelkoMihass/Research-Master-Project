@@ -443,7 +443,7 @@ class App
         });
 
 
-		/* disabled assignment logic
+
 		app.utils.assignFuncToButtonViaID("mpt-assignments-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.ASSIGNMENTS_TEACHER)
 			{
@@ -451,7 +451,7 @@ class App
 				viewLabel.innerText = "Assignments";
 			}
 		});
-		*/
+	
 
 		app.utils.assignFuncToButtonViaID("mpt-challenges-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.CREATE_CHALLENGE)
@@ -520,7 +520,7 @@ class App
 			}
 		});
 
-		/* disabled
+
 		app.utils.assignFuncToButtonViaID("mpt-submissions-button", function() {
 			if (app.viewManager.currentView.title !== app.viewManager.VIEW.SEE_SUBMISSIONS_TEACHER)
 			{
@@ -528,7 +528,7 @@ class App
 				viewLabel.innerText = "Student's Submissions";
 			}
 		});
-		*/
+
 
 
 		app.utils.assignFuncToButtonViaID("mpt-signout-button",function(){app.user.signout();});
