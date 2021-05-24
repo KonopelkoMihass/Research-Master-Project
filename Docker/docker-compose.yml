@@ -6,7 +6,7 @@ services:
   build:
    context: ../
    dockerfile: Docker/ApacheDockerfile
-   restart: always
+  restart: always
   ports:
    - "8002:80"    # turn to "81:80" when putting on gamecore
   networks:
