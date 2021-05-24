@@ -99,7 +99,7 @@ class UserManager:
                         pass
                     else:
                         data["got_instruction_emails"]["sent_gamified"] = "yes"
-                        self.email_system.send_gamification_email(data)
+                        #self.email_system.send_gamification_email(data)
                         print("reached here 6")
                         self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
                         print("reached here 7")
@@ -110,7 +110,7 @@ class UserManager:
                         pass
                     else:
                         data["got_instruction_emails"]["sent_non_gamified"] = "yes"
-                        self.email_system.send_non_gamification_email(data)
+                        #self.email_system.send_non_gamification_email(data)
                         print("reached here 6")
                         self.database_manager.record_instruction_email_data(data["email"], json.dumps(data["got_instruction_emails"]))
                         print("reached here 7")
