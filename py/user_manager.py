@@ -88,9 +88,9 @@ class UserManager:
                 print("reached here 5")
 								
                 data["users"] = users
-								print(users)
-								print("------")
-								print(data)
+                print(users)
+                print("------")
+                print(data)
 
                 is_gamified = data["gamification"]
                 sent_instructions = data["got_instruction_emails"]
