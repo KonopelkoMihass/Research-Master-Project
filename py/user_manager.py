@@ -86,8 +86,11 @@ class UserManager:
                 print("reached here 4")
                 users = self.database_manager.get_all_users()
                 print("reached here 5")
-
+								
                 data["users"] = users
+								print(users)
+								print("------")
+								print(data)
 
                 is_gamified = data["gamification"]
                 sent_instructions = data["got_instruction_emails"]
