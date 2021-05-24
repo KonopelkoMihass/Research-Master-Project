@@ -13,7 +13,7 @@ class Net
 		this.host = ip;
 		this.port = port;
 
-		if (this.host === "192.168.99.100" || this.host === "localhost")
+		if (this.host === "192.168.99.100")
 		{
 			this.port = 8001;
 		}
@@ -23,7 +23,7 @@ class Net
 	{
 		var that = this;
 
-		this.ws = new WebSocket("ws://"+this.host+":"+this.port+"/CRServer");
+		this.ws = new WebSocket("wss://"+this.host+"/CRServer");
 
 		this.ws.onopen = function()
 		{
